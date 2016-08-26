@@ -27,7 +27,7 @@ namespace GOAP
     };
 	//////////////////////////////////////////////////////////////////////////
 	template<class T>
-	inline void intrusive_ptr_setup( T *& _ptr, T * _other )
+	inline void IntrusivePtrSetup( T *& _ptr, T * _other )
 	{
 		_ptr = _other;
 
@@ -38,15 +38,15 @@ namespace GOAP
 	}
 	//////////////////////////////////////////////////////////////////////////
 	template<class T>
-	inline void intrusive_ptr_setup( T *& _ptr, const IntrusivePtr<T> & _other )
+	inline void IntrusivePtrSetup( T *& _ptr, const IntrusivePtr<T> & _other )
 	{
 		T * other_ptr = _other.get();
 		
-		stdex::intrusive_ptr_setup( _ptr, other_ptr );
+		GOAP::IntrusivePtrSetup( _ptr, other_ptr );
 	}
 	//////////////////////////////////////////////////////////////////////////
 	template<class T>
-	inline void intrusive_ptr_release( T *& _ptr )
+	inline void IntrusivePtrRelease( T *& _ptr )
 	{
 		if( _ptr != nullptr )
 		{
