@@ -1,0 +1,28 @@
+#	include "GOAP/TaskCallback.h"
+
+namespace GOAP
+{
+	//////////////////////////////////////////////////////////////////////////
+	TaskCallback::TaskCallback( const CallbackProviderPtr & _provider )
+		: m_provider( _provider )
+	{
+	}
+	//////////////////////////////////////////////////////////////////////////
+	TaskCallback::~TaskCallback()
+	{
+	}
+	//////////////////////////////////////////////////////////////////////////
+	bool TaskCallback::onRun()
+	{
+		bool skip = this->isSkip();
+
+		m_provider->call( this, skip );
+
+		return false;
+	}	
+	//////////////////////////////////////////////////////////////////////////
+	void TaskCallback::onCallback( bool _skip )
+	{
+		this->complete( true, _skip );
+	}
+}
