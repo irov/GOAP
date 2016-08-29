@@ -4,8 +4,9 @@ local s = Source:new()
 
 local TaskPrint = Task("Print")
 
-function TaskPrint:onInitialie(msg)
-    self.msg = msg
+function TaskPrint:onInitialize()
+    self.msg = "msg1 "..self.params.name
+    return true
 end
 
 function TaskPrint:onRun()
@@ -15,8 +16,9 @@ end
 
 local TaskPrint2 = Task("Print2")
 
-function TaskPrint2:onInitialie(msg)
-    self.msg = msg
+function TaskPrint2:onInitialize()
+    self.msg = "msg2 "..self.params.name
+    return true
 end
 
 function TaskPrint2:onRun()
@@ -24,13 +26,10 @@ function TaskPrint2:onRun()
     return true
 end
 
-local t0 = TaskPrint:new()
-t0:onInitialie("abc0")
+local t0 = TaskPrint:new({name="abc0"})
 
-local t1 = TaskPrint2:new()
-t1:onInitialie("abc1")
+local t1 = TaskPrint2:new({name="abc1"})
 
---sp = s:addParallel(2)
 s0, s1 = s:addParallel(2)
 
 s0:addTask(t0)
@@ -38,14 +37,11 @@ s1:addTask(t1)
 
 sr1, sr2, sr3 = s:addRace(3)
 
-local t30 = TaskPrint:new()
-t30:onInitialie("abc30")
+local t30 = TaskPrint:new({name="abc30"})
 
-local t31 = TaskPrint:new()
-t31:onInitialie("abc31")
+local t31 = TaskPrint:new({name="abc31"})
 
-local t32 = TaskPrint:new()
-t32:onInitialie("abc32")
+local t32 = TaskPrint:new({name="abc32"})
 
 sr1:addTask(t30)
 sr2:addTask(t31)

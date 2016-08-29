@@ -11,24 +11,26 @@ static const char * LUA_GOAP_Chain_Metaname = "luaL_GOAP_Chain";
 
 static int l_Task_constructor( lua_State * L )
 {
-	lua_getfield( L, -1, "__metaname" );
+	luaL_checktype( L, 1, LUA_TTABLE );
+	lua_getfield( L, 1, "__metaname" );
 	const char * metaname = lua_tostring( L, -1 );
 	lua_pop( L, 1 );
 
-	lua_newtable( L );
-
+	lua_createtable( L, 1, 0 );
 	lua_pushvalue( L, 1 );
-	lua_setmetatable( L, -2 );
-
+	
 	TaskLua ** udata = (TaskLua **)lua_newuserdata( L, sizeof( TaskLua * ) );
 
 	luaL_setmetatable( L, metaname );
 	lua_setfield( L, -2, "__self" );
 
+	lua_pushvalue( L, -3 );
+	lua_setfield( L, -2, "params" );
+
 	int ref = luaL_ref( L, LUA_REGISTRYINDEX );
 
 	GOAP::IntrusivePtrSetup( *udata, new TaskLua( L, metaname, ref ) );
-
+	
 	lua_rawgeti( L, LUA_REGISTRYINDEX, ref );
 
 	return 1;
