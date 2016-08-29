@@ -1,13 +1,13 @@
 #	pragma once
 
-#	include "IntrusivePtrBase.h"
+#	include "GOAP/IntrusivePtrBase.h"
 
 #	include <vector>
 
 namespace GOAP
 {
 	typedef IntrusivePtr<class Task> TaskPtr;
-	typedef IntrusivePtr<class Chain> TaskChainPtr;
+	typedef IntrusivePtr<class Chain> ChainPtr;
 
 	typedef std::vector<TaskPtr> TVectorTasks;
 
@@ -32,8 +32,8 @@ namespace GOAP
 		virtual ~Task();
 
 	public:
-		void setChain( const TaskChainPtr & _chain );
-		const TaskChainPtr & getChain() const;
+		void setChain( const ChainPtr & _chain );
+		const ChainPtr & getChain() const;
 
 	public:
 		bool isIdle() const;
@@ -56,10 +56,12 @@ namespace GOAP
 	public:
 		void complete( bool _running = true, bool _skiped = false );
 
-	protected:
-		virtual bool onValidate() const;
+	protected:		
 		virtual bool onInitialize();
 		virtual void onFinalize();
+
+	protected:
+		virtual bool onValidate() const;
 		virtual bool onCheck() const;
 		virtual bool onRun();
 		virtual bool onSkipable() const;
@@ -84,11 +86,12 @@ namespace GOAP
 		void addPrev_( Task * _task );
 		void removePrev_( Task * _task );
 		bool hasPrev_( const Task * _task ) const;
+		void finalize_();
 
 	protected:
 		ETaskState m_state;
 
-		TaskChainPtr m_chain;
+		ChainPtr m_chain;
 		
 		TVectorTasks m_nexts;
 		TVectorTasks m_prevs;

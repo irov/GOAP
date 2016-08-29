@@ -18,6 +18,6 @@ namespace GOAP
 	//////////////////////////////////////////////////////////////////////////
 	bool TaskRaceNeck::onCheckSkip() const
 	{
-		return false;
+		return true;
 	}
 }

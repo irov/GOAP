@@ -1,6 +1,6 @@
 #	pragma once
 
-#	include "IntrusivePtrBase.h"
+#	include "GOAP/IntrusivePtrBase.h"
 
 namespace GOAP
 {

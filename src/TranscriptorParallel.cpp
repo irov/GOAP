@@ -28,7 +28,7 @@ namespace GOAP
 		return m_sources;
 	}
 	//////////////////////////////////////////////////////////////////////////
-	TaskPtr TranscriptorParallel::generate( const TaskChainPtr & _chain, const TaskPtr & _task )
+	TaskPtr TranscriptorParallel::generate( const ChainPtr & _chain, const TaskPtr & _task )
 	{
 		TaskPtr task_parallel_neck = new TaskParallelNeck();
 		task_parallel_neck->setChain( _chain );
@@ -39,7 +39,7 @@ namespace GOAP
 		it != it_end;
 		++it )
 		{
-			const TaskSourcePtr & parallel_source = *it;
+			const SourcePtr & parallel_source = *it;
 
 			TaskPtr task = parallel_source->parse( _chain, _task );
 

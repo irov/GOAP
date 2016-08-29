@@ -1,21 +1,21 @@
 #	pragma once
 
-#	include "IntrusivePtrBase.h"
+#	include "GOAP/IntrusivePtrBase.h"
 
-#	include "FunctionProvider.h"
-#	include "CallbackProvider.h"
+#	include "GOAP/FunctionProvider.h"
+#	include "GOAP/CallbackProvider.h"
 
 #	include <vector>
 
 namespace GOAP
 {	
 	typedef IntrusivePtr<class Task> TaskPtr;
-	typedef IntrusivePtr<class Chain> TaskChainPtr;
-	typedef IntrusivePtr<class Source> TaskSourcePtr;
-	typedef IntrusivePtr<class Transcriptor> TaskDescriptionPtr;
+	typedef IntrusivePtr<class Chain> ChainPtr;
+	typedef IntrusivePtr<class Source> SourcePtr;
+	typedef IntrusivePtr<class Transcriptor> TranscriptorPtr;
 
-	typedef std::vector<TaskSourcePtr> TVectorSources;
-	typedef std::vector<TaskDescriptionPtr> TVectorDescriptions;
+	typedef std::vector<SourcePtr> TVectorSources;
+	typedef std::vector<TranscriptorPtr> TVectorTranscriptor;
 
 	class Source
 		: public IntrusivePtrBase<Source>
@@ -50,11 +50,11 @@ namespace GOAP
 		void addCallbackProvider( const CallbackProviderPtr & _provider );
 
 	public:
-		TaskPtr parse( const TaskChainPtr & _chain, const TaskPtr & _task );
+		TaskPtr parse( const ChainPtr & _chain, const TaskPtr & _task );
 
 	protected:
-		TVectorDescriptions m_descriptions;
+		TVectorTranscriptor m_descriptions;
 	};
 
-	typedef IntrusivePtr<Source> TaskSourcePtr;
+	typedef IntrusivePtr<Source> SourcePtr;
 }

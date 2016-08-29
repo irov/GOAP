@@ -1,8 +1,8 @@
 #	pragma once
 
-#	include "Task.h"
+#	include "GOAP/Task.h"
 
-#	include "CallbackProvider.h"
+#	include "GOAP/CallbackProvider.h"
 
 namespace GOAP
 {

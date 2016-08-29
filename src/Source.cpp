@@ -66,17 +66,17 @@ namespace GOAP
 		this->addTask( task );
 	}
 	//////////////////////////////////////////////////////////////////////////
-	TaskPtr Source::parse( const TaskChainPtr & _chain, const TaskPtr & _task )
+	TaskPtr Source::parse( const ChainPtr & _chain, const TaskPtr & _task )
 	{
 		TaskPtr current_task = _task;
 
-		for( TVectorDescriptions::iterator
+		for( TVectorTranscriptor::iterator
 			it = m_descriptions.begin(),
 			it_end = m_descriptions.end();
 		it != it_end;
 		++it )
 		{
-			const TaskDescriptionPtr & description = *it;
+			const TranscriptorPtr & description = *it;
 
 			TaskPtr last_task = description->generate( _chain, current_task );
 

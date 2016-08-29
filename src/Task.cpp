@@ -14,12 +14,12 @@ namespace GOAP
 	{
 	}
 	//////////////////////////////////////////////////////////////////////////
-	void Task::setChain( const TaskChainPtr & _chain )
+	void Task::setChain( const ChainPtr & _chain )
 	{
 		m_chain = _chain;
 	}
 	//////////////////////////////////////////////////////////////////////////
-	const TaskChainPtr & Task::getChain() const
+	const ChainPtr & Task::getChain() const
 	{
 		return m_chain;
 	}
@@ -202,7 +202,7 @@ namespace GOAP
 					}
 				}
 
-				this->onFinalize();
+				this->onFinally();
 
 				this->taskSkip_();
 			}break;
@@ -221,7 +221,7 @@ namespace GOAP
 
 		if( m_state != TASK_STATE_END )
 		{
-			this->onFinalize();
+			this->finalize_();
 		}
 
 		return true;
@@ -247,7 +247,7 @@ namespace GOAP
 			m_chain->completeTask( this );
 		}
 
-		this->onFinalize();
+		this->finalize_();
 	}
 	//////////////////////////////////////////////////////////////////////////
 	void Task::taskSkip_()
@@ -350,7 +350,7 @@ namespace GOAP
 			}
 		}
 
-		this->onFinalize();
+		this->finalize_();
 	}
 	//////////////////////////////////////////////////////////////////////////
 	bool Task::prevSkip_( Task * _task )
@@ -570,5 +570,16 @@ namespace GOAP
 		TVectorTasks::const_iterator it_found = std::find( m_prevs.begin(), m_prevs.end(), _task );
 
 		return it_found != m_prevs.end();
+	}
+	//////////////////////////////////////////////////////////////////////////
+	void Task::finalize_()
+	{
+		m_state = TASK_STATE_END;
+
+		this->onFinalize();
+
+		m_chain = nullptr;
+		m_nexts.clear();
+		m_prevs.clear();
 	}
 }

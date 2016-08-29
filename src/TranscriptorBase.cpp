@@ -10,7 +10,7 @@ namespace GOAP
 	{
 	}
 	//////////////////////////////////////////////////////////////////////////
-	TaskPtr TranscriptorBase::generate( const TaskChainPtr & _chain, const TaskPtr & _task )
+	TaskPtr TranscriptorBase::generate( const ChainPtr & _chain, const TaskPtr & _task )
 	{
 		(void)_chain;
 

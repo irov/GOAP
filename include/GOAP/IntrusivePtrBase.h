@@ -2,7 +2,7 @@
 
 #   include <stdint.h>
 
-#	include "IntrusivePtr.h"
+#	include "GOAP/IntrusivePtr.h"
 
 namespace GOAP
 {

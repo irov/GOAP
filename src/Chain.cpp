@@ -12,7 +12,7 @@
 namespace GOAP
 {
 	//////////////////////////////////////////////////////////////////////////
-	Chain::Chain( const TaskSourcePtr & _source, const FunctionProviderPtr & _cb )
+	Chain::Chain( const SourcePtr & _source, const FunctionProviderPtr & _cb )
 		: m_source(_source)
 		, m_cb(_cb)
 		, m_complete(false)

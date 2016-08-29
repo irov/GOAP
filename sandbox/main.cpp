@@ -6,6 +6,8 @@
 #	include "GOAP/Chain.h"
 #	include "GOAP/Source.h"
 
+#	include "luaGOAP.h"
+
 #	include "TaskDelay.h"
 #	include "TaskPrint.h"
 #	include "TaskRoll.h"
@@ -13,15 +15,34 @@
 #	include <Windows.h>
 #	include <time.h>
 
+#	include "lua.hpp"
+
 void main()
 {
-	srand( time( NULL ) );
+	lua_State * L = luaL_newstate();
+
+	luaopen_base( L );
+
+	luaGOAP( L );
+
+	int erred = luaL_dofile( L, "test.lua" );
+
+	if( erred )
+	{
+		printf( "Lua error: %s"
+			, luaL_checkstring( L, -1 )
+			);
+	}
+
+	lua_close( L );
+
+	srand( (unsigned int)time( NULL ) );
 
 	printf( "%f %f %f\n", fmod( 0.5, 1.0 ), fmod( 1.3, 1.0 ), fmod( 3.0, 1.0 ) );
 
 	Scheduler * sch = new Scheduler;
 		
-	GOAP::TaskSourcePtr source = new GOAP::Source();
+	GOAP::SourcePtr source = new GOAP::Source();
 
 	source->addTask( new TaskPrint( "begin" ) );
 	source->addTask( new TaskDelay( 2000.f, sch ) );
@@ -56,7 +77,7 @@ void main()
 	
 	source->addFunction( [] (){ printf( "WOW!!\n" ); } );
 
-	GOAP::TaskChainPtr tc = new GOAP::Chain( source, nullptr );
+	GOAP::ChainPtr tc = new GOAP::Chain( source, nullptr );
 
 	tc->run();
 

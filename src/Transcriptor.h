@@ -5,7 +5,7 @@
 namespace GOAP
 {
 	typedef IntrusivePtr<class Task> TaskPtr;
-	typedef IntrusivePtr<class Chain> TaskChainPtr;
+	typedef IntrusivePtr<class Chain> ChainPtr;
 	
 	class Transcriptor
 		: public IntrusivePtrBase<Transcriptor>
@@ -14,8 +14,8 @@ namespace GOAP
 		virtual ~Transcriptor() {};
 
 	public:
-		virtual TaskPtr generate( const TaskChainPtr & _chain, const TaskPtr & _task ) = 0;
+		virtual TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) = 0;
 	};
 
-	typedef IntrusivePtr<Transcriptor> TaskDescriptionPtr;
+	typedef IntrusivePtr<Transcriptor> TranscriptorPtr;
 }

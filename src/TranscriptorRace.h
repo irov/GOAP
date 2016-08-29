@@ -6,9 +6,9 @@
 
 namespace GOAP
 {
-	typedef IntrusivePtr<class Source> TaskSourcePtr;
+	typedef IntrusivePtr<class Source> SourcePtr;
 
-	typedef std::vector<TaskSourcePtr> TVectorSources;
+	typedef std::vector<SourcePtr> TVectorSources;
 
 	class TranscriptorRace
 		: public Transcriptor
@@ -20,7 +20,7 @@ namespace GOAP
 		TVectorSources & getSources();
 
 	public:
-		TaskPtr generate( const TaskChainPtr & _chain, const TaskPtr & _task ) override;
+		TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) override;
 
 	protected:
 		TVectorSources m_sources;
