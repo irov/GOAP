@@ -3,33 +3,36 @@
 #	include "GOAP/Task.h"
 #	include "GOAP/Chain.h"
 #	include "GOAP/Source.h"
+#	include "GOAP/TaskScope.h"
 
 #	include "TaskLua.h"
+#	include "LuaScopeProvider.h"
 
 static const char * LUA_GOAP_Source_Metaname = "luaL_GOAP_Source";
 static const char * LUA_GOAP_Chain_Metaname = "luaL_GOAP_Chain";
 
 static int l_Task_constructor( lua_State * L )
 {
-	luaL_checktype( L, 1, LUA_TTABLE );
 	lua_getfield( L, 1, "__metaname" );
 	const char * metaname = lua_tostring( L, -1 );
 	lua_pop( L, 1 );
 
-	lua_createtable( L, 1, 0 );
-	lua_pushvalue( L, 1 );
+	lua_createtable( L, 0, 0 );
+	luaL_setmetatable( L, metaname );
 	
 	TaskLua ** udata = (TaskLua **)lua_newuserdata( L, sizeof( TaskLua * ) );
-
 	luaL_setmetatable( L, metaname );
-	lua_setfield( L, -2, "__self" );
+	lua_setfield( L, -2, "__self");
 
-	lua_pushvalue( L, -3 );
+	lua_pushstring( L, metaname );
+	lua_setfield( L, -2, "__metaname" );
+		
+	lua_pushvalue( L, -2 );
 	lua_setfield( L, -2, "params" );
 
 	int ref = luaL_ref( L, LUA_REGISTRYINDEX );
-
-	GOAP::IntrusivePtrSetup( *udata, new TaskLua( L, metaname, ref ) );
+		
+	GOAP::IntrusivePtrSetup( *udata, new TaskLua( L, ref ) );
 	
 	lua_rawgeti( L, LUA_REGISTRYINDEX, ref );
 
@@ -101,8 +104,8 @@ static int l_Source_addTask( lua_State * L )
 
 	GOAP::Source * source = *(GOAP::Source **)luaL_checkudata( L, 1, LUA_GOAP_Source_Metaname );
 
-	luaL_checktype( L, 2, LUA_TTABLE );
-	lua_getfield( L, 2, "__self" );
+	luaL_checktype( L, -1, LUA_TTABLE );
+	lua_getfield( L, -1, "__self" );
 	TaskLua * task = *(TaskLua **)luaL_checkudata( L, -1, metaname );
 
 	source->addTask( task );
@@ -160,6 +163,26 @@ static int l_Source_addRace( lua_State * L )
 	return (int)pnum;
 }
 
+static int l_Source_addScope( lua_State * L )
+{
+	GOAP::Source * source = *(GOAP::Source **)luaL_checkudata( L, 1, LUA_GOAP_Source_Metaname );
+
+	luaL_checktype( L, 2, LUA_TFUNCTION );
+
+	lua_pushvalue( L, 2 );
+	lua_isfunction( L, -1 );
+
+	int ref = luaL_ref( L, LUA_REGISTRYINDEX );
+	
+	GOAP::ScopeProviderPtr provider = new LuaScopeProvider( L, ref );
+
+	GOAP::TaskPtr task = new GOAP::TaskScope( provider );
+
+	source->addTask( task );
+
+	return 0;
+}
+
 static void luaGOAP_Source( lua_State * L )
 {
 	luaL_newmetatable( L, LUA_GOAP_Source_Metaname );
@@ -171,6 +194,7 @@ static void luaGOAP_Source( lua_State * L )
 		{"addTask", l_Source_addTask},
 		{"addParallel", l_Source_addParallel},
 		{"addRace", l_Source_addRace},
+		{"addScope", l_Source_addScope},
 		{NULL, NULL}
 	};
 

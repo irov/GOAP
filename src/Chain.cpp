@@ -77,7 +77,7 @@ namespace GOAP
 
 		if( m_cb != nullptr )
 		{
-			m_cb->call();
+			m_cb->onFunction();
 		}
 	}
 }

@@ -8,7 +8,7 @@ class TaskLua
 	: public GOAP::Task
 {
 public:
-	TaskLua( lua_State * L, const std::string & _metaname, int _ref );
+	TaskLua( lua_State * L, int _ref );
 	~TaskLua();
 	
 protected:
@@ -35,7 +35,6 @@ protected:
 
 protected:
 	lua_State * m_L;
-	std::string m_metaname;
 	int m_ref;
 };
 

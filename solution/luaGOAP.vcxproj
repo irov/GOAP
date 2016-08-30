@@ -82,10 +82,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\luaGOAP\luaGOAP.cpp" />
+    <ClCompile Include="..\luaGOAP\LuaScopeProvider.cpp" />
     <ClCompile Include="..\luaGOAP\TaskLua.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\luaGOAP\luaGOAP.h" />
+    <ClInclude Include="..\luaGOAP\LuaScopeProvider.h" />
     <ClInclude Include="..\luaGOAP\TaskLua.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

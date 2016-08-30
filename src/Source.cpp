@@ -6,6 +6,7 @@
 #	include "GOAP/FunctionProvider.h"
 #	include "GOAP/TaskFunction.h"
 #	include "GOAP/TaskCallback.h"
+#	include "GOAP/TaskScope.h"
 
 #	include "TranscriptorBase.h"
 #	include "TranscriptorParallel.h"
@@ -16,11 +17,22 @@ namespace GOAP
 {
 	//////////////////////////////////////////////////////////////////////////
 	Source::Source()
+		: m_skip(false)
 	{
 	}
 	//////////////////////////////////////////////////////////////////////////
 	Source::~Source()
 	{
+	}
+	//////////////////////////////////////////////////////////////////////////
+	void Source::setSkip( bool _skip )
+	{
+		m_skip = _skip;
+	}
+	//////////////////////////////////////////////////////////////////////////
+	bool Source::isSkip() const
+	{
+		return m_skip;
 	}
 	//////////////////////////////////////////////////////////////////////////
 	void Source::addTask( const TaskPtr & _task )
@@ -66,6 +78,13 @@ namespace GOAP
 		this->addTask( task );
 	}
 	//////////////////////////////////////////////////////////////////////////
+	void Source::addScopeProvider( const ScopeProviderPtr & _provider )
+	{
+		TaskPtr task = new TaskScope( _provider );
+
+		this->addTask( task );
+	}
+	//////////////////////////////////////////////////////////////////////////
 	TaskPtr Source::parse( const ChainPtr & _chain, const TaskPtr & _task )
 	{
 		TaskPtr current_task = _task;
@@ -85,5 +104,4 @@ namespace GOAP
 
 		return current_task;
 	}
-
 }

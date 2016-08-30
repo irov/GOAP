@@ -8,7 +8,7 @@ namespace GOAP
 		: public IntrusivePtrBase<FunctionProvider>
 	{
 	public:
-		virtual void call() = 0;
+		virtual void onFunction() = 0;
 	};
 
 	typedef IntrusivePtr<FunctionProvider> FunctionProviderPtr;
@@ -24,7 +24,7 @@ namespace GOAP
 		}
 
 	public:
-		void call() override
+		void onFunction() override
 		{
 			m_f();
 		}

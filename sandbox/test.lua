@@ -10,7 +10,7 @@ function TaskPrint:onInitialize()
 end
 
 function TaskPrint:onRun()
-    print ("TaskPrint:onRun "..self.msg)
+    print(self.params.name)
     return true
 end
 
@@ -22,7 +22,6 @@ function TaskPrint2:onInitialize()
 end
 
 function TaskPrint2:onRun()
-    print ("TaskPrint2:onRun "..self.msg)
     return true
 end
 
@@ -46,6 +45,21 @@ local t32 = TaskPrint:new({name="abc32"})
 sr1:addTask(t30)
 sr2:addTask(t31)
 sr3:addTask(t32)
+
+
+function my_scope(scope)
+    local t0 = TaskPrint:new({name="scope0"})
+        
+    scope:addTask(t0)
+    
+    return true
+end
+
+s:addScope(my_scope)
+
+local t4 = TaskPrint:new({name="t4"})
+
+s:addTask(t4)
 
 print("CHAIN")
 

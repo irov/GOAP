@@ -77,6 +77,10 @@ void main()
 	
 	source->addFunction( [] (){ printf( "WOW!!\n" ); } );
 
+	source->addScope( [] ( const GOAP::SourcePtr & _scope ) -> bool { _scope->addFunction( [] () {printf( "SCOPE????? WOW!!!" ); } ); return true; } );
+
+	source->addFunction( [] (){ printf( "Oh\n" ); } );
+
 	GOAP::ChainPtr tc = new GOAP::Chain( source, nullptr );
 
 	tc->run();

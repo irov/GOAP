@@ -16,7 +16,10 @@ namespace GOAP
 	//////////////////////////////////////////////////////////////////////////
 	bool TaskFunction::onRun()
 	{
-		m_provider->call();
+		if( m_provider != nullptr )
+		{
+			m_provider->onFunction();
+		}
 
 		return true;
 	}	

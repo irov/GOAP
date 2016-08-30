@@ -1,9 +1,8 @@
 #	include "TaskLua.h"
 
 //////////////////////////////////////////////////////////////////////////
-TaskLua::TaskLua( lua_State * L, const std::string & _metaname, int _ref )
+TaskLua::TaskLua( lua_State * L, int _ref )
 	: m_L( L )
-	, m_metaname( _metaname )
 	, m_ref( _ref )
 { 
 }
@@ -78,7 +77,6 @@ bool TaskLua::onCheckRun() const
 	if( this->callMethod_( "onCheckRun" ) == true )
 	{
 		bool l_result = !!lua_toboolean( m_L, -1 );
-		return l_result;
 
 		return l_result;
 	}
@@ -91,7 +89,6 @@ bool TaskLua::onCheckSkip() const
 	if( this->callMethod_( "onCheckSkip" ) == true )
 	{
 		bool l_result = !!lua_toboolean( m_L, -1 );
-		return l_result;
 
 		return l_result;
 	}
@@ -124,6 +121,8 @@ bool TaskLua::askMethod_( const char * _method, bool _default ) const
 
 	if( !lua_isfunction( m_L, -1 ) )
 	{
+		lua_pop( m_L, 2 );
+
 		return _default;
 	}
 
