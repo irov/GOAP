@@ -75,9 +75,17 @@ namespace GOAP
 	{
 		m_complete = true;
 
+		m_state = TASK_CHAIN_STATE_COMPLETE;
+
 		if( m_cb != nullptr )
 		{
 			m_cb->onFunction();
+			m_cb = nullptr;
 		}
+		
+		m_source = nullptr;
+		m_runningTasks.clear();
+
+		m_state = TASK_CHAIN_STATE_FINALIZE;
 	}
 }
