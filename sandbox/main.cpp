@@ -5,6 +5,7 @@
 #	include "GOAP/Task.h"
 #	include "GOAP/Chain.h"
 #	include "GOAP/Source.h"
+#	include "GOAP/ChainProvider.h"
 
 #	include "luaGOAP.h"
 
@@ -73,13 +74,27 @@ void main()
 	source->addTask( new TaskPrint( "****WIN*****" ) );
 	source->addTask( new TaskDelay( 1000.f, sch ) );
 
-	source->addCallback( [] ( GOAP::CallbackObserver * _observer, bool isSkip ) { printf( "HTTP!!!!!\n" ); Sleep( 1000 ); _observer->onCallback( isSkip ); } );
+	source->addCallback( [] ( GOAP::CallbackObserver * _observer, bool isSkip ) { printf( "HTTP!!!!!\n" ); Sleep( 100 ); _observer->onCallback( isSkip ); } );
 	
 	source->addFunction( [] (){ printf( "WOW!!\n" ); } );
 
 	source->addScope( [] ( const GOAP::SourcePtr & _scope ) -> bool { _scope->addFunction( [] () {printf( "SCOPE????? WOW!!!" ); } ); return true; } );
 
 	source->addFunction( [] (){ printf( "Oh\n" ); } );
+
+
+	GOAP::IfSource source_if = source->addIf( [] (){ return rand() % 2 ? true : false; } );
+
+	source_if.source_true->addTask( new TaskPrint( "---TRUE---" ) );
+	source_if.source_false->addTask( new TaskPrint( "---FALSE---" ) );
+
+
+	GOAP::RepeatSource source_repeat = source->addRepeat();
+
+	source_repeat.source_repeat->addTask( new TaskDelay( 1000.f, sch ) );
+	source_repeat.source_repeat->addTask( new TaskPrint( "REPEAT!!!!" ) );
+
+	source_repeat.source_until->addTask( new TaskDelay( 10000.f, sch ) );
 
 	GOAP::ChainPtr tc = new GOAP::Chain( source, nullptr );
 
@@ -89,7 +104,7 @@ void main()
 	{
 		sch->update(100.f);
 
-		Sleep( 100 );
+		Sleep( 10 );
 	}
 
 	printf( "FINALIZE\n" );

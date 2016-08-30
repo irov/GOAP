@@ -6,9 +6,11 @@
 
 namespace GOAP
 {
+	class CallbackObserver;
+
 	typedef IntrusivePtr<class Task> TaskPtr;
 	typedef IntrusivePtr<class Source> SourcePtr;
-	typedef IntrusivePtr<class FunctionProvider> FunctionProviderPtr;
+	typedef IntrusivePtr<class ChainProvider> ChainProviderPtr;
 
 	typedef std::vector<TaskPtr> TVectorTask;
 
@@ -29,11 +31,13 @@ namespace GOAP
 		};
 
 	public:
-		Chain( const SourcePtr & _source, const FunctionProviderPtr & _cb );
+		Chain( const SourcePtr & _source, const ChainProviderPtr & _cb );
 		~Chain();
 
 	public:
 		bool run();
+		void cancel();
+		void skip();
 		
 	public:
 		bool isComplete() const;
@@ -44,7 +48,12 @@ namespace GOAP
 		void processTask( const TaskPtr & _task, bool _skip );
 
 	protected:
-		void complete();
+		void complete( CallbackObserver * _callback, bool _skip );
+
+	protected:
+		void skipRunningTasks_();
+		void cancelRunningTasks_();
+		void finalize_();
 
 	public:
 		ETaskChainState m_state;
@@ -53,7 +62,7 @@ namespace GOAP
 
 		TVectorTask m_runningTasks;
 
-		FunctionProviderPtr m_cb;
+		ChainProviderPtr m_cb;
 
 		bool m_complete;
 	};

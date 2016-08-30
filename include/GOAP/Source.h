@@ -5,6 +5,7 @@
 #	include "GOAP/FunctionProvider.h"
 #	include "GOAP/CallbackProvider.h"
 #	include "GOAP/ScopeProvider.h"
+#	include "GOAP/IfProvider.h"
 
 #	include <vector>
 
@@ -17,6 +18,18 @@ namespace GOAP
 
 	typedef std::vector<SourcePtr> TVectorSources;
 	typedef std::vector<TranscriptorPtr> TVectorTranscriptor;
+
+	struct IfSource
+	{
+		SourcePtr source_true;
+		SourcePtr source_false;
+	};
+
+	struct RepeatSource
+	{
+		SourcePtr source_repeat;
+		SourcePtr source_until;
+	};
 	
 	class Source
 		: public IntrusivePtrBase<Source>
@@ -58,10 +71,23 @@ namespace GOAP
 			this->addScopeProvider( provider );
 		}
 
+		template<class F>
+		IfSource addIf( F _f )
+		{
+			IfProviderPtr provider = new IfProviderT<F>( _f );
+
+			IfSource desc = this->addIfProvider( provider );
+
+			return desc;
+		}
+
+		RepeatSource addRepeat();
+
 	protected:
 		void addFunctionProvider( const FunctionProviderPtr & _provider );
 		void addCallbackProvider( const CallbackProviderPtr & _provider );
 		void addScopeProvider( const ScopeProviderPtr & _provider );
+		IfSource addIfProvider( const IfProviderPtr & _provider );
 
 	public:
 		TaskPtr parse( const ChainPtr & _chain, const TaskPtr & _task );

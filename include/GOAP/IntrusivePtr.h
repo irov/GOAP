@@ -76,6 +76,14 @@ namespace GOAP
 			return *this;
 		}
 
+		inline IntrusivePtr & operator = (nullptr_t)
+		{
+			this->decref();
+			m_ptr = nullptr;
+
+			return *this;
+		}
+
 	public:
 		inline element_type * get() const
 		{

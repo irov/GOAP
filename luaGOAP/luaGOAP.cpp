@@ -4,6 +4,7 @@
 #	include "GOAP/Chain.h"
 #	include "GOAP/Source.h"
 #	include "GOAP/TaskScope.h"
+#	include "GOAP/ChainProvider.h"
 
 #	include "TaskLua.h"
 #	include "LuaScopeProvider.h"

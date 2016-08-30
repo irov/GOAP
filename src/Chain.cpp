@@ -2,20 +2,21 @@
 #	include "GOAP/Task.h"
 #	include "GOAP/Source.h"
 
-#	include "GOAP/FunctionProvider.h"
+#	include "GOAP/ChainProvider.h"
+#	include "GOAP/CallbackProvider.h"
 
 #	include "GOAP/TaskDummy.h"
-#	include "GOAP/TaskFunction.h"
+#	include "GOAP/TaskCallback.h"
 
 #	include <algorithm>
 
 namespace GOAP
 {
 	//////////////////////////////////////////////////////////////////////////
-	Chain::Chain( const SourcePtr & _source, const FunctionProviderPtr & _cb )
-		: m_source(_source)
-		, m_cb(_cb)
-		, m_complete(false)
+	Chain::Chain( const SourcePtr & _source, const ChainProviderPtr & _cb )
+		: m_source( _source )
+		, m_cb( _cb )
+		, m_complete( false )
 	{
 	}
 	//////////////////////////////////////////////////////////////////////////
@@ -25,14 +26,16 @@ namespace GOAP
 	//////////////////////////////////////////////////////////////////////////
 	bool Chain::run()
 	{
+		m_state = TASK_CHAIN_STATE_RUN;
+
 		TaskPtr task_first = new TaskDummy();
 		task_first->setChain( this );
 
 		TaskPtr task_last = m_source->parse( this, task_first );
 
-		FunctionProviderPtr provider = makeFunctionProvider( [this] () { this->complete(); } );
+		CallbackProviderPtr provider = makeCallbackProvider( [this] ( CallbackObserver * _callback, bool _skip ) { this->complete( _callback, _skip ); } );
 
-		TaskPtr task_cb = new TaskFunction( provider );
+		TaskPtr task_cb = new TaskCallback( provider );
 		task_cb->setChain( this );
 
 		task_last->addNext( task_cb );
@@ -40,6 +43,43 @@ namespace GOAP
 		this->processTask( task_first, false );
 
 		return true;
+	}
+	//////////////////////////////////////////////////////////////////////////
+	void Chain::cancel()
+	{
+		if( m_state != TASK_CHAIN_STATE_IDLE &&
+			m_state != TASK_CHAIN_STATE_CANCEL &&
+			m_state != TASK_CHAIN_STATE_FINALIZE )
+		{
+			if( m_state == TASK_CHAIN_STATE_RUN )
+			{
+				this->skipRunningTasks_();
+				this->cancelRunningTasks_();
+			}
+
+			//if( m_state != TASK_CHAIN_STATE_COMPLETE &&
+			//	m_state != TASK_CHAIN_STATE_CANCEL &&
+			//	m_state != TASK_CHAIN_STATE_FINALIZE )
+			//{
+
+			//}
+		}
+
+		if( m_state != TASK_CHAIN_STATE_CANCEL &&
+			m_state != TASK_CHAIN_STATE_FINALIZE )
+		{
+			m_state = TASK_CHAIN_STATE_CANCEL;
+
+			this->finalize_();
+		}
+	}
+	//////////////////////////////////////////////////////////////////////////
+	void Chain::skip()
+	{
+		if( m_state == TASK_CHAIN_STATE_RUN )
+		{
+			this->skipRunningTasks_();
+		}
 	}
 	//////////////////////////////////////////////////////////////////////////
 	bool Chain::isComplete() const
@@ -71,18 +111,57 @@ namespace GOAP
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////
-	void Chain::complete()
+	void Chain::complete( CallbackObserver * _callback, bool _skip )
 	{
 		m_complete = true;
-
 		m_state = TASK_CHAIN_STATE_COMPLETE;
+
+		_callback->onCallback( _skip );
 
 		if( m_cb != nullptr )
 		{
-			m_cb->onFunction();
+			ChainProviderPtr cb = m_cb;
 			m_cb = nullptr;
+			cb->onChain( _skip );
 		}
+
+		this->finalize_();		
+	}
+	//////////////////////////////////////////////////////////////////////////
+	void Chain::skipRunningTasks_()
+	{
+		TVectorTask tasks = m_runningTasks;
 		
+		for( TVectorTask::iterator
+			it = tasks.begin(),
+			it_end = tasks.end();
+		it != it_end;
+		++it )
+		{
+			const TaskPtr & task = *it;
+
+			task->skip();
+		}
+	}
+	//////////////////////////////////////////////////////////////////////////
+	void Chain::cancelRunningTasks_()
+	{
+		TVectorTask tasks = m_runningTasks;
+
+		for( TVectorTask::iterator
+			it = tasks.begin(),
+			it_end = tasks.end();
+		it != it_end;
+		++it )
+		{
+			const TaskPtr & task = *it;
+
+			task->cancel();
+		}
+	}
+	//////////////////////////////////////////////////////////////////////////
+	void Chain::finalize_()
+	{
 		m_source = nullptr;
 		m_runningTasks.clear();
 

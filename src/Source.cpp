@@ -7,6 +7,8 @@
 #	include "GOAP/TaskFunction.h"
 #	include "GOAP/TaskCallback.h"
 #	include "GOAP/TaskScope.h"
+#	include "GOAP/TaskIf.h"
+#	include "GOAP/TaskRepeat.h"
 
 #	include "TranscriptorBase.h"
 #	include "TranscriptorParallel.h"
@@ -64,6 +66,22 @@ namespace GOAP
 		return sources;
 	}
 	//////////////////////////////////////////////////////////////////////////
+	RepeatSource Source::addRepeat()
+	{
+		SourcePtr source_repeat = new Source();
+		SourcePtr source_until = new Source();
+
+		TaskPtr task = new TaskRepeat( source_repeat, source_until );
+
+		this->addTask( task );
+
+		RepeatSource desc;
+		desc.source_repeat = source_repeat;
+		desc.source_until = source_until;
+
+		return desc;
+	}
+	//////////////////////////////////////////////////////////////////////////
 	void Source::addFunctionProvider( const FunctionProviderPtr & _provider )
 	{
 		TaskPtr task = new TaskFunction( _provider );
@@ -83,6 +101,22 @@ namespace GOAP
 		TaskPtr task = new TaskScope( _provider );
 
 		this->addTask( task );
+	}
+	//////////////////////////////////////////////////////////////////////////
+	IfSource Source::addIfProvider( const IfProviderPtr & _provider )
+	{
+		SourcePtr source_true = new Source();
+		SourcePtr source_false = new Source();
+
+		TaskPtr task = new TaskIf( _provider, source_true, source_false );
+
+		this->addTask( task );
+
+		IfSource desc;
+		desc.source_true = source_true;
+		desc.source_false = source_false;
+
+		return desc;
 	}
 	//////////////////////////////////////////////////////////////////////////
 	TaskPtr Source::parse( const ChainPtr & _chain, const TaskPtr & _task )

@@ -18,8 +18,10 @@
     <ClCompile Include="..\src\TaskDeadLock.cpp" />
     <ClCompile Include="..\src\TaskDummy.cpp" />
     <ClCompile Include="..\src\TaskFunction.cpp" />
+    <ClCompile Include="..\src\TaskIf.cpp" />
     <ClCompile Include="..\src\TaskParallelNeck.cpp" />
     <ClCompile Include="..\src\TaskRaceNeck.cpp" />
+    <ClCompile Include="..\src\TaskRepeat.cpp" />
     <ClCompile Include="..\src\TaskScope.cpp" />
     <ClCompile Include="..\src\TranscriptorBase.cpp" />
     <ClCompile Include="..\src\TranscriptorParallel.cpp" />
@@ -28,7 +30,9 @@
   <ItemGroup>
     <ClInclude Include="..\include\GOAP\CallbackProvider.h" />
     <ClInclude Include="..\include\GOAP\Chain.h" />
+    <ClInclude Include="..\include\GOAP\ChainProvider.h" />
     <ClInclude Include="..\include\GOAP\FunctionProvider.h" />
+    <ClInclude Include="..\include\GOAP\IfProvider.h" />
     <ClInclude Include="..\include\GOAP\IntrusivePtr.h" />
     <ClInclude Include="..\include\GOAP\IntrusivePtrBase.h" />
     <ClInclude Include="..\include\GOAP\ScopeProvider.h" />
@@ -38,6 +42,8 @@
     <ClInclude Include="..\include\GOAP\TaskDeadLock.h" />
     <ClInclude Include="..\include\GOAP\TaskDummy.h" />
     <ClInclude Include="..\include\GOAP\TaskFunction.h" />
+    <ClInclude Include="..\include\GOAP\TaskIf.h" />
+    <ClInclude Include="..\include\GOAP\TaskRepeat.h" />
     <ClInclude Include="..\include\GOAP\TaskScope.h" />
     <ClInclude Include="..\src\TaskParallelNeck.h" />
     <ClInclude Include="..\src\TaskRaceNeck.h" />
