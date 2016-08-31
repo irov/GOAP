@@ -16,6 +16,7 @@ namespace GOAP
 	Chain::Chain( const SourcePtr & _source, const ChainProviderPtr & _cb )
 		: m_source( _source )
 		, m_cb( _cb )
+		, m_state( TASK_CHAIN_STATE_IDLE )
 		, m_complete( false )
 	{
 	}
@@ -96,6 +97,11 @@ namespace GOAP
 	{
 		TVectorTask::iterator it_found = std::find( m_runningTasks.begin(), m_runningTasks.end(), _task );
 
+		if( it_found == m_runningTasks.end() )
+		{
+			return;
+		}
+
 		m_runningTasks.erase( it_found );
 	}
 	//////////////////////////////////////////////////////////////////////////
@@ -113,19 +119,19 @@ namespace GOAP
 	//////////////////////////////////////////////////////////////////////////
 	void Chain::complete( CallbackObserver * _callback, bool _skip )
 	{
+		_callback->onCallback( _skip );
+
 		m_complete = true;
 		m_state = TASK_CHAIN_STATE_COMPLETE;
 
-		_callback->onCallback( _skip );
+		ChainProviderPtr cb = m_cb;
 
-		if( m_cb != nullptr )
+		this->finalize_();
+				
+		if( cb != nullptr )
 		{
-			ChainProviderPtr cb = m_cb;
-			m_cb = nullptr;
 			cb->onChain( _skip );
-		}
-
-		this->finalize_();		
+		}						
 	}
 	//////////////////////////////////////////////////////////////////////////
 	void Chain::skipRunningTasks_()
@@ -163,7 +169,7 @@ namespace GOAP
 	void Chain::finalize_()
 	{
 		m_source = nullptr;
-		m_runningTasks.clear();
+		//m_runningTasks.clear();
 
 		m_state = TASK_CHAIN_STATE_FINALIZE;
 	}

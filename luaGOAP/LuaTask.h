@@ -4,12 +4,12 @@
 
 #	include "lua.hpp"
 
-class TaskLua
+class LuaTask
 	: public GOAP::Task
 {
 public:
-	TaskLua( lua_State * L, int _ref );
-	~TaskLua();
+	LuaTask( lua_State * L, int _ref );
+	~LuaTask();
 	
 protected:
 	bool onInitialize() override;
@@ -38,4 +38,4 @@ protected:
 	int m_ref;
 };
 
-typedef GOAP::IntrusivePtr<TaskLua> TaskLuaPtr;
+typedef GOAP::IntrusivePtr<LuaTask> TaskLuaPtr;

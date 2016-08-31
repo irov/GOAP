@@ -311,8 +311,6 @@ namespace GOAP
 
 		m_state = TASK_STATE_END;
 
-		m_chain->completeTask( this );
-
 		if( m_skip == false )
 		{
 			TVectorTasks copy_nexts = m_nexts;
@@ -350,7 +348,11 @@ namespace GOAP
 			}
 		}
 
+		ChainPtr chain = m_chain;
+
 		this->finalize_();
+
+		chain->completeTask( this );
 	}
 	//////////////////////////////////////////////////////////////////////////
 	bool Task::prevSkip_( Task * _task )

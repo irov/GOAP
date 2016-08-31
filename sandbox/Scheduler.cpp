@@ -29,20 +29,20 @@ uint32_t Scheduler::schedule( float _delay, bool _loop, SchedulerObserver * _obs
 
 void Scheduler::stop( uint32_t _id )
 {
-	Description & desc = m_schedulers[_id];
+	TMapSchedulers::iterator it_found = m_schedulers.find( _id );
+
+	if( it_found == m_schedulers.end() )
+	{
+		return;
+	}
+
+	Description & desc = it_found->second;
 
 	desc.dead = true;
 
 	desc.observer->onScheduleStop( _id );
+	desc.observer = nullptr;
 }
-
-struct Scheduler::PScheduleDead
-{
-	bool operator ()( const TMapSchedulers::value_type & _event ) const
-	{
-		return _event.second.dead;
-	}
-};
 
 void Scheduler::update( float _time )
 {
@@ -53,18 +53,23 @@ void Scheduler::update( float _time )
 	++it )
 	{
 		Description & desc = it->second;
-		
-		if( desc.time < 0.f )
+
+		if( desc.dead == true )
 		{
 			continue;
 		}
-
+		
 		desc.time += _time;
 
 		if( desc.loop == true )
 		{
 			while( desc.time >= desc.delay )
 			{
+				if( desc.dead == true )
+				{
+					break;
+				}
+
 				desc.time -= desc.delay;
 
 				uint32_t id = it->first;
@@ -86,6 +91,6 @@ void Scheduler::update( float _time )
 	}
 
 	TMapSchedulers::iterator it_erase = m_schedulers.begin();
-	while( (it_erase = std::find_if( it_erase, m_schedulers.end(), PScheduleDead() )) != m_schedulers.end() )
+	while( (it_erase = std::find_if( it_erase, m_schedulers.end(), [] ( const TMapSchedulers::value_type & _event ) { return _event.second.dead; } )) != m_schedulers.end() )
 		m_schedulers.erase( it_erase++ );
 }

@@ -6,8 +6,8 @@
 namespace GOAP
 {
 	//////////////////////////////////////////////////////////////////////////
-	TaskRepeat::TaskRepeat( const SourcePtr & _repeat, const SourcePtr & _until )
-		: m_sourceRepeat( _repeat )
+	TaskRepeat::TaskRepeat( const ScopeProviderPtr & _provider, const SourcePtr & _until )
+		: m_providerRepeat( _provider )
 		, m_sourceUntil(_until)
 		, m_repeat(true)
 	{
@@ -30,7 +30,7 @@ namespace GOAP
 	{
 		m_repeat = false;
 
-		m_sourceRepeat = nullptr;
+		m_providerRepeat = nullptr;
 		m_sourceUntil = nullptr;
 
 		if( m_chainRepeat != nullptr )
@@ -64,7 +64,17 @@ namespace GOAP
 			return true;
 		}
 
-		ChainPtr chainRepeat = __makeChain( m_sourceRepeat, [this] ( bool _skip ){this->repeatComplete_( _skip ); } );
+		GOAP::SourcePtr sourceRepeat = new GOAP::Source();
+
+		bool skip = this->isSkip();
+		sourceRepeat->setSkip( skip );
+
+		if( m_providerRepeat->onScope( sourceRepeat ) == false )
+		{
+			return true;
+		}
+
+		ChainPtr chainRepeat = __makeChain( sourceRepeat, [this] ( bool _skip ){this->repeatComplete_( _skip ); } );
 
 		m_chainRepeat = chainRepeat;
 
@@ -83,13 +93,26 @@ namespace GOAP
 			return;
 		}
 
-		ChainPtr chainRepeat = __makeChain( m_sourceRepeat, [this] ( bool _skip ){this->repeatComplete_( _skip ); } );
+		GOAP::SourcePtr sourceRepeat = new GOAP::Source();
+
+		sourceRepeat->setSkip( _skip );
+
+		if( m_providerRepeat->onScope( sourceRepeat ) == false )
+		{
+			this->complete( true, _skip );
+
+			return;
+		}
+
+		ChainPtr chainRepeat = __makeChain( sourceRepeat, [this] ( bool _skip ){this->repeatComplete_( _skip ); } );
 
 		m_chainRepeat = chainRepeat;
 
 		if( m_chainRepeat->run() == false )
 		{
 			this->complete( true, _skip );
+
+			return;
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////

@@ -10,6 +10,9 @@ class TaskDelay
 public:
 	TaskDelay( float _delay, Scheduler * _scheduler );
 	~TaskDelay();
+	
+protected:
+	void onFinalize() override;
 
 protected:
 	bool onRun() override;

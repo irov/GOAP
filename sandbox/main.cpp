@@ -18,13 +18,42 @@
 
 #	include "lua.hpp"
 
+Scheduler * sch;
+
+int l_Task_TaskDelay( lua_State * L )
+{
+	lua_Number l_delay = luaL_checknumber( L, 1 );
+
+	GOAP::TaskPtr task = new TaskDelay( (float)l_delay, sch );
+
+	luaGOAP_createTask( L, task, "TaskDelay" );
+
+	return 1;
+}
+
+int l_Task_TaskPrint( lua_State * L )
+{
+	const char * msg = luaL_checkstring( L, 1 );
+
+	GOAP::TaskPtr task = new TaskPrint( msg );
+
+	luaGOAP_createTask( L, task, "TaskPrint" );
+
+	return 1;
+}
+
 void main()
 {
+	sch = new Scheduler;
+
 	lua_State * L = luaL_newstate();
 
 	luaopen_base( L );
 
 	luaGOAP( L );
+
+	lua_register( L, "TaskDelay", &l_Task_TaskDelay );
+	lua_register( L, "TaskPrint", &l_Task_TaskPrint );
 
 	int erred = luaL_dofile( L, "test.lua" );
 
@@ -35,14 +64,10 @@ void main()
 			);
 	}
 
-	lua_close( L );
-
 	srand( (unsigned int)time( NULL ) );
 
 	printf( "%f %f %f\n", fmod( 0.5, 1.0 ), fmod( 1.3, 1.0 ), fmod( 3.0, 1.0 ) );
-
-	Scheduler * sch = new Scheduler;
-		
+	
 	GOAP::SourcePtr source = new GOAP::Source();
 
 	source->addTask( new TaskPrint( "begin" ) );
@@ -88,13 +113,17 @@ void main()
 	source_if.source_true->addTask( new TaskPrint( "---TRUE---" ) );
 	source_if.source_false->addTask( new TaskPrint( "---FALSE---" ) );
 
+	
 
-	GOAP::RepeatSource source_repeat = source->addRepeat();
+	GOAP::SourcePtr source_until = source->addRepeat( [] ( const GOAP::SourcePtr & _scope ) -> bool
+	{
+		_scope->addTask( new TaskDelay( 1000.f, sch ) );
+		_scope->addTask( new TaskPrint( "REPEAT!!!!" ) );
 
-	source_repeat.source_repeat->addTask( new TaskDelay( 1000.f, sch ) );
-	source_repeat.source_repeat->addTask( new TaskPrint( "REPEAT!!!!" ) );
+		return true;
+	} );
 
-	source_repeat.source_until->addTask( new TaskDelay( 10000.f, sch ) );
+	source_until->addTask( new TaskDelay( 10000.f, sch ) );
 
 	GOAP::ChainPtr tc = new GOAP::Chain( source, nullptr );
 
@@ -108,6 +137,8 @@ void main()
 	}
 
 	printf( "FINALIZE\n" );
+	
+	lua_close( L );
 
 	delete sch;
 }

@@ -66,20 +66,15 @@ namespace GOAP
 		return sources;
 	}
 	//////////////////////////////////////////////////////////////////////////
-	RepeatSource Source::addRepeat()
+	SourcePtr Source::addRepeatProvider( const ScopeProviderPtr & _provider )
 	{
-		SourcePtr source_repeat = new Source();
 		SourcePtr source_until = new Source();
 
-		TaskPtr task = new TaskRepeat( source_repeat, source_until );
+		TaskPtr task = new TaskRepeat( _provider, source_until );
 
 		this->addTask( task );
 
-		RepeatSource desc;
-		desc.source_repeat = source_repeat;
-		desc.source_until = source_until;
-
-		return desc;
+		return source_until;
 	}
 	//////////////////////////////////////////////////////////////////////////
 	void Source::addFunctionProvider( const FunctionProviderPtr & _provider )

@@ -23,8 +23,6 @@ namespace GOAP
 
 		if( m_provider->onScope( source ) == false )
 		{
-			//TODO - Error
-
 			return true;
 		}
 

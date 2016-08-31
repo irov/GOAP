@@ -38,6 +38,4 @@ protected:
 
 	typedef std::map<uint32_t, Description> TMapSchedulers;
 	TMapSchedulers m_schedulers;
-
-	struct PScheduleDead;
 };

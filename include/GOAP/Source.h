@@ -24,12 +24,6 @@ namespace GOAP
 		SourcePtr source_true;
 		SourcePtr source_false;
 	};
-
-	struct RepeatSource
-	{
-		SourcePtr source_repeat;
-		SourcePtr source_until;
-	};
 	
 	class Source
 		: public IntrusivePtrBase<Source>
@@ -81,13 +75,22 @@ namespace GOAP
 			return desc;
 		}
 
-		RepeatSource addRepeat();
+		template<class F>
+		SourcePtr addRepeat( F _f )
+		{
+			ScopeProviderPtr provider = new ScopeProviderT<F>( _f );
+
+			SourcePtr source = this->addRepeatProvider( provider );
+
+			return source;
+		}
 
 	protected:
 		void addFunctionProvider( const FunctionProviderPtr & _provider );
 		void addCallbackProvider( const CallbackProviderPtr & _provider );
 		void addScopeProvider( const ScopeProviderPtr & _provider );
 		IfSource addIfProvider( const IfProviderPtr & _provider );
+		SourcePtr addRepeatProvider( const ScopeProviderPtr & _provider );
 
 	public:
 		TaskPtr parse( const ChainPtr & _chain, const TaskPtr & _task );

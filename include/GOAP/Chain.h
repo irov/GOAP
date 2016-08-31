@@ -36,8 +36,8 @@ namespace GOAP
 
 	public:
 		bool run();
-		void cancel();
 		void skip();
+		void cancel();		
 		
 	public:
 		bool isComplete() const;

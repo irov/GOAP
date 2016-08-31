@@ -1,78 +1,78 @@
-#	include "TaskLua.h"
+#	include "LuaTask.h"
 
 //////////////////////////////////////////////////////////////////////////
-TaskLua::TaskLua( lua_State * L, int _ref )
+LuaTask::LuaTask( lua_State * L, int _ref )
 	: m_L( L )
 	, m_ref( _ref )
 { 
 }
 //////////////////////////////////////////////////////////////////////////
-TaskLua::~TaskLua()
+LuaTask::~LuaTask()
 {
 	luaL_unref( m_L, LUA_REGISTRYINDEX, m_ref );
 }
 //////////////////////////////////////////////////////////////////////////
-bool TaskLua::onInitialize()
+bool LuaTask::onInitialize()
 {
 	return this->askMethod_( "onInitialize", true );
 }
 //////////////////////////////////////////////////////////////////////////
-void TaskLua::onFinalize()
+void LuaTask::onFinalize()
 {
 	this->callMethod_( "onFinalize" );
 }
 //////////////////////////////////////////////////////////////////////////
-bool TaskLua::onValidate() const
+bool LuaTask::onValidate() const
 {
 	return this->askMethod_( "onValidate", true );
 }
 //////////////////////////////////////////////////////////////////////////
-bool TaskLua::onCheck() const
+bool LuaTask::onCheck() const
 {
 	return this->askMethod_( "onCheck", true );
 }
 //////////////////////////////////////////////////////////////////////////
-bool TaskLua::onRun()
+bool LuaTask::onRun()
 {
 	return this->askMethod_( "onRun", true );
 }
 //////////////////////////////////////////////////////////////////////////
-bool TaskLua::onSkipable() const
+bool LuaTask::onSkipable() const
 {
 	return this->askMethod_( "onSkipable", false );
 }
 //////////////////////////////////////////////////////////////////////////
-void TaskLua::onSkipNoSkiped()
+void LuaTask::onSkipNoSkiped()
 {
 	this->callMethod_( "onSkipNoSkiped" );
 }
 //////////////////////////////////////////////////////////////////////////
-bool TaskLua::onSkipBlock()
+bool LuaTask::onSkipBlock()
 {
 	return this->askMethod_( "onSkipBlock", false );
 }
 //////////////////////////////////////////////////////////////////////////
-void TaskLua::onComplete()
+void LuaTask::onComplete()
 {
 	this->callMethod_( "onComplete" );
 }
 //////////////////////////////////////////////////////////////////////////
-void TaskLua::onSkip()
+void LuaTask::onSkip()
 {
 	this->callMethod_( "onSkip" );
 }
 //////////////////////////////////////////////////////////////////////////
-void TaskLua::onCancel()
+void LuaTask::onCancel()
 {
 	this->callMethod_( "onCancel" );
 }
 //////////////////////////////////////////////////////////////////////////
-void TaskLua::onFinally()
+void LuaTask::onFinally()
 {
 	this->callMethod_( "onFinally" );
 }
 //////////////////////////////////////////////////////////////////////////
-bool TaskLua::onCheckRun() const
+bool LuaTask::onCheckRun() const
 {
 	if( this->callMethod_( "onCheckRun" ) == true )
 	{
@@ -84,7 +84,7 @@ bool TaskLua::onCheckRun() const
 	return Task::onCheckRun();
 }
 //////////////////////////////////////////////////////////////////////////
-bool TaskLua::onCheckSkip() const
+bool LuaTask::onCheckSkip() const
 {
 	if( this->callMethod_( "onCheckSkip" ) == true )
 	{
@@ -96,7 +96,7 @@ bool TaskLua::onCheckSkip() const
 	return Task::onCheckRun();
 }
 //////////////////////////////////////////////////////////////////////////
-bool TaskLua::callMethod_( const char * _method, int _return ) const
+bool LuaTask::callMethod_( const char * _method, int _return ) const
 {
 	lua_rawgeti( m_L, LUA_REGISTRYINDEX, m_ref );
 
@@ -113,7 +113,7 @@ bool TaskLua::callMethod_( const char * _method, int _return ) const
 	return true;
 }
 //////////////////////////////////////////////////////////////////////////
-bool TaskLua::askMethod_( const char * _method, bool _default ) const
+bool LuaTask::askMethod_( const char * _method, bool _default ) const
 {
 	lua_rawgeti( m_L, LUA_REGISTRYINDEX, m_ref );
 

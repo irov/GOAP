@@ -82,13 +82,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\luaGOAP\luaGOAP.cpp" />
+    <ClCompile Include="..\luaGOAP\LuaIfProvider.cpp" />
     <ClCompile Include="..\luaGOAP\LuaScopeProvider.cpp" />
-    <ClCompile Include="..\luaGOAP\TaskLua.cpp" />
+    <ClCompile Include="..\luaGOAP\LuaTask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\luaGOAP\luaGOAP.h" />
+    <ClInclude Include="..\luaGOAP\LuaIfProvider.h" />
     <ClInclude Include="..\luaGOAP\LuaScopeProvider.h" />
-    <ClInclude Include="..\luaGOAP\TaskLua.h" />
+    <ClInclude Include="..\luaGOAP\LuaTask.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

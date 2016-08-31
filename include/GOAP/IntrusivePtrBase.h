@@ -26,14 +26,16 @@ namespace GOAP
         uint32_t m_reference;
     };
 	//////////////////////////////////////////////////////////////////////////
-	template<class T>
-	inline void IntrusivePtrSetup( T *& _ptr, T * _other )
+	template<class T, class U>
+	inline void IntrusivePtrSetup( T *& _ptr, U * _other )
 	{
-		_ptr = _other;
+		_ptr = static_cast<T *>(_other);
 
 		if( _other != nullptr )
 		{
-			T::intrusive_ptr_add_ref( _other );
+			T * ptr = static_cast<T *>(_other);
+
+			T::intrusive_ptr_add_ref( ptr );
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////
