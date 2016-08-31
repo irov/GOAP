@@ -102,23 +102,23 @@ static int l_Source_constructor( lua_State * L )
 
 static int l_Source_destructor( lua_State * L )
 {
-	GOAP::Source * source = *(GOAP::Source **)luaL_checkudata( L, 1, LUA_GOAP_Source_Metaname );
+	GOAP::Source ** source = (GOAP::Source **)luaL_checkudata( L, 1, LUA_GOAP_Source_Metaname );
 	
-	GOAP::IntrusivePtrRelease( source );
+	GOAP::IntrusivePtrRelease( *source );
 
 	return 0;
 }
 
 static int l_Source_addTask( lua_State * L )
 {
-	GOAP::Source * source = *(GOAP::Source **)luaL_checkudata( L, 1, LUA_GOAP_Source_Metaname );
+	GOAP::Source ** source = (GOAP::Source **)luaL_checkudata( L, 1, LUA_GOAP_Source_Metaname );
 
 	luaL_checktype( L, -1, LUA_TTABLE );
 	lua_getfield( L, -1, "__self" );
-	GOAP::Task * task = *(GOAP::Task **)lua_touserdata( L, -1 );
+	GOAP::Task ** task = (GOAP::Task **)lua_touserdata( L, -1 );
 	lua_pop( L, 1 );
 
-	source->addTask( task );
+	(*source)->addTask( *task );
 
 	return 0;
 }
