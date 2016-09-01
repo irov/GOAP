@@ -1,0 +1,11 @@
+* text=auto
+
+# Source files
+*.h text diff=cpp
+*.c text diff=cpp
+*.hpp text diff=cpp
+*.cpp text diff=cpp
+
+# Project files
+*.vcxproj eol=crlf
+*.sln eol=crlf
