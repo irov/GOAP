@@ -90,7 +90,7 @@ namespace GOAP
 			return false;
 		}
 
-		m_state = TASK_STATE_RUN;
+		this->setState( TASK_STATE_RUN );
 
 		m_chain->runTask( this );
 
@@ -183,7 +183,7 @@ namespace GOAP
 
 				m_chain->runTask( this );
 
-				m_state = TASK_STATE_RUN;
+				this->setState( TASK_STATE_RUN );
 
 				if( this->onCheck() == true )
 				{
@@ -194,7 +194,7 @@ namespace GOAP
 						return true;
 					}
 
-					m_state = TASK_STATE_SKIP;
+					this->setState( TASK_STATE_SKIP );
 
 					if( done == false )
 					{
@@ -208,7 +208,7 @@ namespace GOAP
 			}break;
 		case TASK_STATE_RUN:
 			{
-				m_state = TASK_STATE_SKIP;
+				this->setState( TASK_STATE_SKIP );
 
 				this->onSkip();
 				this->onFinally();
@@ -238,7 +238,7 @@ namespace GOAP
 
 		if( m_state == TASK_STATE_RUN )
 		{
-			m_state = TASK_STATE_CANCEL;
+			this->setState( TASK_STATE_CANCEL );
 
 			this->onSkip();
 			this->onCancel();
@@ -296,11 +296,11 @@ namespace GOAP
 		if( _skiped == true )
 		{
 			m_skip = true;
-			m_state = TASK_STATE_SKIP;
+			this->setState( TASK_STATE_SKIP );
 		}
 		else
 		{
-			m_state = TASK_STATE_COMPLETE;
+			this->setState( TASK_STATE_COMPLETE );
 		}
 
 		if( _running == true )
@@ -309,7 +309,7 @@ namespace GOAP
 			this->onFinally();
 		}
 
-		m_state = TASK_STATE_END;
+		this->setState( TASK_STATE_END );
 
 		if( m_skip == false )
 		{
@@ -576,12 +576,17 @@ namespace GOAP
 	//////////////////////////////////////////////////////////////////////////
 	void Task::finalize_()
 	{
-		m_state = TASK_STATE_END;
+		this->setState( TASK_STATE_END );
 
 		this->onFinalize();
 
 		m_chain = nullptr;
 		m_nexts.clear();
 		m_prevs.clear();
+	}
+	//////////////////////////////////////////////////////////////////////////
+	void Task::setState( ETaskState _state )
+	{
+		m_state = _state;
 	}
 }

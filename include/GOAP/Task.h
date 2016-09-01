@@ -89,6 +89,9 @@ namespace GOAP
 		void finalize_();
 
 	protected:
+		void setState( ETaskState _state );
+
+	protected:
 		ETaskState m_state;
 
 		ChainPtr m_chain;
