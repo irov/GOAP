@@ -1,4 +1,12 @@
-print("Hello")
+local MetaSource = getmetatable(Source)
+
+function MetaSource:addPrint(msg)
+	self:addTask(TaskPrint(msg))
+end
+
+function MetaSource:addDelay(time)
+	self:addTask(TaskDelay(time))
+end
 
 local s = Source()
 
@@ -26,7 +34,6 @@ function TaskPrint2:onRun()
 end
 
 local t0 = TaskPrint1{name="abc0"}
-
 local t1 = TaskPrint2{name="abc1"}
 
 s0, s1 = s:addParallel(2)
@@ -37,13 +44,13 @@ s1:addTask(t1)
 sr1, sr2, sr3 = s:addRace(3)
 
 local t30 = TaskPrint1{name="abc30"}
-local t31 = TaskPrint1{name="abc31"}
-local t32 = TaskPrint1{name="abc32"}
-
 sr1:addTask(t30)
-sr2:addTask(t31)
-sr3:addTask(t32)
 
+local t31 = TaskPrint1{name="abc31"}
+sr2:addTask(t31)
+
+local t32 = TaskPrint1{name="abc32"}
+sr3:addTask(t32)
 
 function my_scope(scope)
     local t0 = TaskPrint1{name="scope0"}
@@ -56,7 +63,6 @@ end
 s:addScope(my_scope)
 
 local t4 = TaskPrint1{name="t4"}
-
 s:addTask(t4)
 
 function test()
@@ -68,26 +74,21 @@ st, sf = s:addIf(test)
 st:addTask(TaskPrint1{name="TRUE"})
 sf:addTask(TaskPrint1{name="FALSE"})
 
-local d0 = TaskDelay(7000.0)
+s:addDelay(7000.0)
 
-s:addTask(d0)
-
-local d0 = TaskPrint("WIIIIIIIIIIIIIIIIIIIIIIIIIIIN")
-
-s:addTask(d0)
+s:addPrint("WIIIIIIIIIIIIIIIIIIIIIIIIIIIN")
 
 function my_repeat(scope)
-    scope:addTask(TaskPrint("R1"))
-    scope:addTask(TaskDelay(500))
+    scope:addPrint("R1")
+    scope:addDelay(500)
     
     return true
-end
-    
+end    
 
 local su = s:addRepeat(my_repeat)
-su:addTask(TaskDelay(4000))
+su:addDelay(4000)
 
-s:addTask(TaskPrint("WOOOOOOOOOOOOOOOOOW!!!!"))
+s:addPrint("WOOOOOOOOOOOOOOOOOW!!!!")
 
 print("CHAIN")
 

@@ -48,8 +48,8 @@ void main()
 
 	lua_State * L = luaL_newstate();
 
-	luaopen_base( L );
-
+	luaL_openlibs( L );
+	
 	luaGOAP( L );
 
 	lua_register( L, "TaskDelay", &l_Task_TaskDelay );
