@@ -81,12 +81,14 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\luaGOAP\LuaFunctionProvider.cpp" />
     <ClCompile Include="..\luaGOAP\luaGOAP.cpp" />
     <ClCompile Include="..\luaGOAP\LuaIfProvider.cpp" />
     <ClCompile Include="..\luaGOAP\LuaScopeProvider.cpp" />
     <ClCompile Include="..\luaGOAP\LuaTask.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\luaGOAP\LuaFunctionProvider.h" />
     <ClInclude Include="..\luaGOAP\luaGOAP.h" />
     <ClInclude Include="..\luaGOAP\LuaIfProvider.h" />
     <ClInclude Include="..\luaGOAP\LuaScopeProvider.h" />

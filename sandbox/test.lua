@@ -10,6 +10,14 @@ end
 
 local s = Source()
 
+function __p(i, str)
+	print "OPPPPPPP!!!!"
+	print (i)
+	print (str)
+end
+
+s:addFunction(__p, 1, "bla")
+
 local TaskPrint1 = Task("TaskPrint1")
 
 function TaskPrint1:onInitialize()

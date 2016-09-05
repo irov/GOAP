@@ -3,6 +3,7 @@
 #	include "GOAP/Task.h"
 #	include "GOAP/Chain.h"
 #	include "GOAP/Source.h"
+#	include "GOAP/TaskFunction.h"
 #	include "GOAP/TaskScope.h"
 #	include "GOAP/TaskIf.h"
 #	include "GOAP/TaskRepeat.h"
@@ -10,6 +11,7 @@
 
 #	include "LuaTask.h"
 #	include "LuaScopeProvider.h"
+#	include "LuaFunctionProvider.h"
 #	include "LuaIfProvider.h"
 
 static const char * LUA_GOAP_Source_Metaname = "luaL_GOAP_Source";
@@ -173,6 +175,46 @@ static int l_Source_addRace( lua_State * L )
 	return (int)pnum;
 }
 
+static int l_Source_addFunction( lua_State * L )
+{
+	GOAP::Source * source = *(GOAP::Source **)luaL_checkudata( L, 1, LUA_GOAP_Source_Metaname );
+
+	luaL_checktype( L, 2, LUA_TFUNCTION );
+
+	int top = lua_gettop( L );
+
+	int args_count = top - 2;
+
+	int args_ref = -1;
+
+	if( args_count > 0 )
+	{		
+		lua_createtable( L, args_count, 0 );
+		for( int i = 0; i < args_count; i++ )
+		{
+			lua_pushvalue( L, 3 + i );
+			int t[] = {LUA_TNUMBER, LUA_TSTRING};
+			luaL_checktype( L, -1, t[i] );
+			lua_rawseti( L, -2, i + 1 );
+		}
+
+		args_ref = luaL_ref( L, LUA_REGISTRYINDEX );
+	}
+
+	lua_pushvalue( L, 2 );
+	lua_isfunction( L, -1 );
+
+	int ref = luaL_ref( L, LUA_REGISTRYINDEX );
+
+	GOAP::FunctionProviderPtr provider = new LuaFunctionProvider( L, ref, args_count, args_ref );
+
+	GOAP::TaskPtr task = new GOAP::TaskFunction( provider );
+
+	source->addTask( task );
+
+	return 0;
+}
+
 static int l_Source_addScope( lua_State * L )
 {
 	GOAP::Source * source = *(GOAP::Source **)luaL_checkudata( L, 1, LUA_GOAP_Source_Metaname );
@@ -264,6 +306,7 @@ static void luaGOAP_Source( lua_State * L )
 		{"addTask", l_Source_addTask},
 		{"addParallel", l_Source_addParallel},
 		{"addRace", l_Source_addRace},
+		{"addFunction", l_Source_addFunction},
 		{"addScope", l_Source_addScope},
 		{"addIf", l_Source_addIf},
 		{"addRepeat", l_Source_addRepeat},
