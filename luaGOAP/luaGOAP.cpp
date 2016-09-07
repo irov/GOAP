@@ -63,6 +63,14 @@ static int l_Task_constructor( lua_State * L )
 	return 1;
 }
 
+static int luaGOAP_Task_tostring( lua_State * L )
+{
+	const char * name = lua_tostring( L, lua_upvalueindex( 1 ) );
+	lua_pushfstring( L, "<goap: %s>", name );
+		
+	return 1;
+}
+
 static int bind_goap_task( lua_State * L )
 {
 	const char * metaname = luaL_checkstring( L, 1 );
@@ -80,6 +88,10 @@ static int bind_goap_task( lua_State * L )
 
 	lua_pushvalue( L, -1 );
 	lua_setfield( L, -2, "__index" );
+
+	lua_pushstring( L, metaname );
+	lua_pushcclosure( L, luaGOAP_Task_tostring, 1 );
+	lua_setfield( L, -2, "__tostring" );
 
 	luaL_setfuncs( L, regs, 0 );
 
@@ -295,6 +307,13 @@ static int l_Source_addRepeat( lua_State * L )
 	return 1;
 }
 
+static int luaGOAP_Source_tostring( lua_State * L )
+{
+	lua_pushliteral( L, "<goap: Source>" );
+
+	return 1;
+}
+
 static void luaGOAP_Source( lua_State * L )
 {
 	luaL_newmetatable( L, LUA_GOAP_Source_Metaname );
@@ -317,6 +336,9 @@ static void luaGOAP_Source( lua_State * L )
 
 	lua_pushvalue( L, -1 );
 	lua_setfield( L, -2, "__index" );
+
+	lua_pushcfunction( L, luaGOAP_Source_tostring );
+	lua_setfield( L, -2, "__tostring" );
 
 	lua_pop( L, 1 );
 
@@ -375,6 +397,13 @@ static int l_Chain_cancel( lua_State * L )
 	return 0;
 }
 
+static int luaGOAP_Chain_tostring( lua_State * L )
+{
+	lua_pushliteral( L, "<goap: Chain>" );
+
+	return 1;
+}
+
 static void luaGOAP_Chain( lua_State * L )
 {
 	luaL_newmetatable( L, LUA_GOAP_Chain_Metaname );
@@ -394,12 +423,22 @@ static void luaGOAP_Chain( lua_State * L )
 	lua_pushvalue( L, -1 );
 	lua_setfield( L, -2, "__index" );
 
+	lua_pushcfunction( L, luaGOAP_Chain_tostring );
+	lua_setfield( L, -2, "__tostring" );
+
 	lua_pop( L, 1 );
 
 	lua_createtable( L, 0, 0 );
 	luaL_setmetatable( L, LUA_GOAP_Chain_Metaname );
 
 	lua_setglobal( L, "Chain" );
+}
+
+int luaGOAP_TaskExternal_tostring( lua_State * L )
+{
+	lua_pushliteral( L, "<goap: External Task>" );
+
+	return 1;
 }
 
 static void luaGOAP_Task( lua_State * L )
@@ -415,7 +454,10 @@ static void luaGOAP_Task( lua_State * L )
 	luaL_setfuncs( L, regs, 0 );
 
 	lua_pushvalue( L, -1 );
-	lua_setfield( L, -1, "__index" );
+	lua_setfield( L, -2, "__index" );
+
+	lua_pushcfunction( L, luaGOAP_TaskExternal_tostring );
+	lua_setfield( L, -2, "__tostring" );
 
 	lua_pop( L, 1 );
 }
