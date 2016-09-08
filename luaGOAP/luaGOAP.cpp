@@ -31,26 +31,37 @@ static int l_Task_destructor( lua_State * L )
 	return 0;
 }
 
-static int l_Task_constructor( lua_State * L )
+static int l_Task_complete( lua_State * L )
 {
-	lua_getfield( L, 1, "metaname" );
-	const char * metaname = lua_tostring( L, -1 );
+	luaL_checktype( L, -1, LUA_TTABLE );
+
+	lua_getfield( L, -1, "__self" );
+	GOAP::Task ** task = (GOAP::Task **)lua_touserdata( L, -1 );
 	lua_pop( L, 1 );
 
+	(*task)->complete( true, false );
+
+	return 0;
+}
+
+static int l_Task_constructor( lua_State * L )
+{
+	lua_getmetatable( L, -1 );
+
 	lua_createtable( L, 0, 0 );
-	luaL_setmetatable( L, metaname );
+	lua_setmetatable( L, -2 );
 	
 	GOAP::Task ** udata = (GOAP::Task **)lua_newuserdata( L, sizeof( GOAP::Task * ) );
 	lua_setfield( L, -2, "__self");
 
 	lua_pushcfunction( L, l_Task_destructor );
 	lua_setfield( L, -2, "__gc" );
+
+	lua_pushcfunction( L, l_Task_complete );
+	lua_setfield( L, -2, "complete" );
 	
 	lua_pushvalue( L, -2 );
 	lua_setfield( L, -2, "params" );
-
-	lua_pushstring( L, metaname );
-	lua_setfield( L, -2, "type" );
 
 	int ref = luaL_ref( L, LUA_REGISTRYINDEX );
 
@@ -63,10 +74,11 @@ static int l_Task_constructor( lua_State * L )
 	return 1;
 }
 
-static int luaGOAP_Task_tostring( lua_State * L )
+static int l_Task_tostring( lua_State * L )
 {
 	const char * name = lua_tostring( L, lua_upvalueindex( 1 ) );
-	lua_pushfstring( L, "<goap: %s>", name );
+	const void * ptr = lua_topointer( L, lua_upvalueindex( 1 ) );
+	lua_pushfstring( L, "<goap: %s as %p>", name, ptr );
 		
 	return 1;
 }
@@ -83,22 +95,18 @@ static int bind_goap_task( lua_State * L )
 		{NULL, NULL}
 	};
 
-	lua_pushstring( L, metaname );
-	lua_setfield( L, -2, "metaname" );
-
 	lua_pushvalue( L, -1 );
 	lua_setfield( L, -2, "__index" );
 
 	lua_pushstring( L, metaname );
-	lua_pushcclosure( L, luaGOAP_Task_tostring, 1 );
+	lua_pushcclosure( L, l_Task_tostring, 1 );
 	lua_setfield( L, -2, "__tostring" );
 
 	luaL_setfuncs( L, regs, 0 );
-
-	lua_pop( L, 1 );
-
+	
 	lua_createtable( L, 0, 0 );
-	luaL_setmetatable( L, metaname );
+	lua_pushvalue( L, -2 );
+	lua_setmetatable( L, -2 );
 
 	return 1;
 }
@@ -309,7 +317,8 @@ static int l_Source_addRepeat( lua_State * L )
 
 static int luaGOAP_Source_tostring( lua_State * L )
 {
-	lua_pushliteral( L, "<goap: Source>" );
+	const void * ptr = lua_topointer( L, lua_upvalueindex( 1 ) );
+	lua_pushfstring( L, "<goap: Source as %p>", ptr );
 
 	return 1;
 }
@@ -399,7 +408,8 @@ static int l_Chain_cancel( lua_State * L )
 
 static int luaGOAP_Chain_tostring( lua_State * L )
 {
-	lua_pushliteral( L, "<goap: Chain>" );
+	const void * ptr = lua_topointer( L, lua_upvalueindex( 1 ) );
+	lua_pushfstring( L, "<goap: Chain as %p>", ptr );
 
 	return 1;
 }
@@ -436,8 +446,9 @@ static void luaGOAP_Chain( lua_State * L )
 
 int luaGOAP_TaskExternal_tostring( lua_State * L )
 {
-	lua_pushliteral( L, "<goap: External Task>" );
-
+	const void * ptr = lua_topointer( L, lua_upvalueindex( 1 ) );
+	lua_pushfstring( L, "<goap: external Task as %s>", ptr );
+	
 	return 1;
 }
 
@@ -448,6 +459,7 @@ static void luaGOAP_Task( lua_State * L )
 	static luaL_Reg regs[] =
 	{
 		{"__gc", l_Task_destructor},
+		{"complete", l_Task_complete},
 		{NULL, NULL}
 	};
 
