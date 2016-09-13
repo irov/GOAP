@@ -20,8 +20,6 @@ static const char * LUA_GOAP_Task_Metaname = "luaL_GOAP_Task";
 
 static int l_Task_destructor( lua_State * L )
 {
-	luaL_checktype( L, -1, LUA_TTABLE );
-
 	lua_getfield( L, -1, "__self" );
 	GOAP::Task ** task = (GOAP::Task **)lua_touserdata( L, -1 );
 	lua_pop( L, 1 );
@@ -33,8 +31,6 @@ static int l_Task_destructor( lua_State * L )
 
 static int l_Task_complete( lua_State * L )
 {
-	luaL_checktype( L, -1, LUA_TTABLE );
-
 	lua_getfield( L, -1, "__self" );
 	GOAP::Task ** task = (GOAP::Task **)lua_touserdata( L, -1 );
 	lua_pop( L, 1 );
@@ -46,10 +42,11 @@ static int l_Task_complete( lua_State * L )
 
 static int l_Task_constructor( lua_State * L )
 {
-	lua_getmetatable( L, -1 );
+	lua_getfield( L, 1, "__name" );
+	const char * metaname = lua_tostring( L, -1 );
+	lua_pop( L, 1 );
 
 	lua_createtable( L, 0, 0 );
-	lua_setmetatable( L, -2 );
 	
 	GOAP::Task ** udata = (GOAP::Task **)lua_newuserdata( L, sizeof( GOAP::Task * ) );
 	lua_setfield( L, -2, "__self");
@@ -62,10 +59,13 @@ static int l_Task_constructor( lua_State * L )
 	
 	lua_pushvalue( L, -2 );
 	lua_setfield( L, -2, "params" );
+	
+	lua_pushvalue( L, 1 );
+	lua_setmetatable( L, -2 );
 
 	int ref = luaL_ref( L, LUA_REGISTRYINDEX );
 
-	GOAP::TaskPtr task = new LuaTask( L, ref );
+	GOAP::TaskPtr task = new LuaTask( L, ref, metaname );
 		
 	GOAP::IntrusivePtrSetup( *udata, task );
 	
@@ -89,11 +89,8 @@ static int bind_goap_task( lua_State * L )
 
 	luaL_newmetatable( L, metaname );
 
-	static luaL_Reg regs[] =
-	{
-		{"__call", l_Task_constructor},		
-		{NULL, NULL}
-	};
+	lua_pushcclosure( L, l_Task_constructor, 0 );
+	lua_setfield( L, -2, "__call" );
 
 	lua_pushvalue( L, -1 );
 	lua_setfield( L, -2, "__index" );
@@ -101,10 +98,12 @@ static int bind_goap_task( lua_State * L )
 	lua_pushstring( L, metaname );
 	lua_pushcclosure( L, l_Task_tostring, 1 );
 	lua_setfield( L, -2, "__tostring" );
-
-	luaL_setfuncs( L, regs, 0 );
 	
 	lua_createtable( L, 0, 0 );
+
+	lua_pushvalue( L, -1 );
+	lua_setfield( L, -2, "__index" );
+
 	lua_pushvalue( L, -2 );
 	lua_setmetatable( L, -2 );
 
@@ -134,8 +133,7 @@ static int l_Source_destructor( lua_State * L )
 static int l_Source_addTask( lua_State * L )
 {
 	GOAP::Source ** source = (GOAP::Source **)luaL_checkudata( L, 1, LUA_GOAP_Source_Metaname );
-
-	luaL_checktype( L, -1, LUA_TTABLE );
+		
 	lua_getfield( L, -1, "__self" );
 	GOAP::Task ** task = (GOAP::Task **)lua_touserdata( L, -1 );
 	lua_pop( L, 1 );
@@ -349,8 +347,6 @@ static void luaGOAP_Source( lua_State * L )
 	lua_pushcfunction( L, luaGOAP_Source_tostring );
 	lua_setfield( L, -2, "__tostring" );
 
-	lua_pop( L, 1 );
-
 	lua_createtable( L, 0, 0 );
 	luaL_setmetatable( L, LUA_GOAP_Source_Metaname );
 
@@ -425,6 +421,7 @@ static void luaGOAP_Chain( lua_State * L )
 		{"run", l_Chain_run},
 		{"skip", l_Chain_skip},
 		{"cancel", l_Chain_cancel},
+		{"__tostring", luaGOAP_Chain_tostring},
 		{NULL, NULL}
 	};
 
@@ -432,11 +429,6 @@ static void luaGOAP_Chain( lua_State * L )
 
 	lua_pushvalue( L, -1 );
 	lua_setfield( L, -2, "__index" );
-
-	lua_pushcfunction( L, luaGOAP_Chain_tostring );
-	lua_setfield( L, -2, "__tostring" );
-
-	lua_pop( L, 1 );
 
 	lua_createtable( L, 0, 0 );
 	luaL_setmetatable( L, LUA_GOAP_Chain_Metaname );
@@ -470,8 +462,6 @@ static void luaGOAP_Task( lua_State * L )
 
 	lua_pushcfunction( L, luaGOAP_TaskExternal_tostring );
 	lua_setfield( L, -2, "__tostring" );
-
-	lua_pop( L, 1 );
 }
 
 void luaGOAP( lua_State * L )

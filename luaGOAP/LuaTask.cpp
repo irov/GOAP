@@ -1,9 +1,10 @@
 #	include "LuaTask.h"
 
 //////////////////////////////////////////////////////////////////////////
-LuaTask::LuaTask( lua_State * L, int _ref )
+LuaTask::LuaTask( lua_State * L, int _ref, const char * _metaname )
 	: m_L( L )
 	, m_ref( _ref )
+	, m_metaname(_metaname)
 { 
 }
 //////////////////////////////////////////////////////////////////////////
@@ -115,13 +116,13 @@ bool LuaTask::callMethod_( const char * _method, int _return ) const
 //////////////////////////////////////////////////////////////////////////
 bool LuaTask::askMethod_( const char * _method, bool _default ) const
 {
-	lua_rawgeti( m_L, LUA_REGISTRYINDEX, m_ref );
-
+	lua_rawgeti( m_L, LUA_REGISTRYINDEX, m_ref );	
+	
 	lua_getfield( m_L, -1, _method );
 
 	if( !lua_isfunction( m_L, -1 ) )
 	{
-		lua_pop( m_L, 2 );
+		lua_pop( m_L, 1 );
 
 		return _default;
 	}

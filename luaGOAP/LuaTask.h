@@ -8,7 +8,7 @@ class LuaTask
 	: public GOAP::Task
 {
 public:
-	LuaTask( lua_State * L, int _ref );
+	LuaTask( lua_State * L, int _ref, const char * _metaname );
 	~LuaTask();
 	
 protected:
@@ -36,6 +36,7 @@ protected:
 protected:
 	lua_State * m_L;
 	int m_ref;
+	const char * m_metaname;
 };
 
 typedef GOAP::IntrusivePtr<LuaTask> TaskLuaPtr;
