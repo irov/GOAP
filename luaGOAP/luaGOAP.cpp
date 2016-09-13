@@ -211,8 +211,6 @@ static int l_Source_addFunction( lua_State * L )
 		for( int i = 0; i < args_count; i++ )
 		{
 			lua_pushvalue( L, 3 + i );
-			int t[] = {LUA_TNUMBER, LUA_TSTRING};
-			luaL_checktype( L, -1, t[i] );
 			lua_rawseti( L, -2, i + 1 );
 		}
 
