@@ -7,8 +7,6 @@
 #	include "GOAP/Source.h"
 #	include "GOAP/ChainProvider.h"
 
-#	include "luaGOAP.h"
-
 #	include "TaskDelay.h"
 #	include "TaskPrint.h"
 #	include "TaskRoll.h"
@@ -16,53 +14,9 @@
 #	include <Windows.h>
 #	include <time.h>
 
-#	include "lua.hpp"
-
-Scheduler * sch;
-
-int l_Task_TaskDelay( lua_State * L )
-{
-	lua_Number l_delay = luaL_checknumber( L, 1 );
-
-	GOAP::TaskPtr task = new TaskDelay( (float)l_delay, sch );
-
-	luaGOAP_createTask( L, task, "TaskDelay" );
-
-	return 1;
-}
-
-int l_Task_TaskPrint( lua_State * L )
-{
-	const char * msg = luaL_checkstring( L, 1 );
-
-	GOAP::TaskPtr task = new TaskPrint( msg );
-
-	luaGOAP_createTask( L, task, "TaskPrint" );
-
-	return 1;
-}
-
 void main()
 {
-	sch = new Scheduler;
-
-	lua_State * L = luaL_newstate();
-
-	luaL_openlibs( L );
-	
-	luaGOAP( L );
-
-	lua_register( L, "TaskDelay", &l_Task_TaskDelay );
-	lua_register( L, "TaskPrint", &l_Task_TaskPrint );
-
-	int erred = luaL_dofile( L, "test.lua" );
-
-	if( erred )
-	{
-		printf( "Lua error: %s"
-			, luaL_checkstring( L, -1 )
-			);
-	}
+	Scheduler * sch = new Scheduler;
 
 	srand( (unsigned int)time( NULL ) );
 
@@ -115,7 +69,7 @@ void main()
 
 	
 
-	GOAP::SourcePtr source_until = source->addRepeat( [] ( const GOAP::SourcePtr & _scope ) -> bool
+	GOAP::SourcePtr source_until = source->addRepeat( [sch] ( const GOAP::SourcePtr & _scope ) -> bool
 	{
 		_scope->addTask( new TaskDelay( 1000.f, sch ) );
 		_scope->addTask( new TaskPrint( "REPEAT!!!!" ) );
@@ -137,8 +91,6 @@ void main()
 	}
 
 	printf( "FINALIZE\n" );
-	
-	lua_close( L );
 
 	delete sch;
 }
