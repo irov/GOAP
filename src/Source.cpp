@@ -13,6 +13,7 @@
 #	include "TranscriptorBase.h"
 #	include "TranscriptorParallel.h"
 #	include "TranscriptorRace.h"
+#	include "TranscriptorFork.h"
 
 
 namespace GOAP
@@ -64,6 +65,17 @@ namespace GOAP
 		TVectorSources & sources = description->getSources();
 
 		return sources;
+	}
+	//////////////////////////////////////////////////////////////////////////
+	SourcePtr Source::addFork()
+	{
+		TranscriptorFork * description = new TranscriptorFork();
+
+		m_descriptions.push_back( description );
+
+		SourcePtr source = description->getSource();
+
+		return source;
 	}
 	//////////////////////////////////////////////////////////////////////////
 	SourcePtr Source::addRepeatProvider( const ScopeProviderPtr & _provider )

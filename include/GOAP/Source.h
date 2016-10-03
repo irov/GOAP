@@ -40,6 +40,7 @@ namespace GOAP
 		void addTask( const TaskPtr & _task );
 		TVectorSources & addParallel( size_t _count );
 		TVectorSources & addRace( size_t _count );
+		SourcePtr addFork();
 
 		template<class F>
 		void addFunction( F _f )
