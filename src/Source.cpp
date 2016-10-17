@@ -9,11 +9,12 @@
 #	include "GOAP/TaskScope.h"
 #	include "GOAP/TaskIf.h"
 #	include "GOAP/TaskRepeat.h"
+#	include "GOAP/TaskSwitch.h"
+#	include "GOAP/TaskFork.h"
 
 #	include "TranscriptorBase.h"
 #	include "TranscriptorParallel.h"
 #	include "TranscriptorRace.h"
-#	include "TranscriptorFork.h"
 
 
 namespace GOAP
@@ -69,11 +70,11 @@ namespace GOAP
 	//////////////////////////////////////////////////////////////////////////
 	SourcePtr Source::addFork()
 	{
-		TranscriptorFork * description = new TranscriptorFork();
+		SourcePtr source = new Source();
 
-		m_descriptions.push_back( description );
+		TaskPtr task_fork = new TaskFork( source );
 
-		SourcePtr source = description->getSource();
+		this->addTask( task_fork );
 
 		return source;
 	}
@@ -87,6 +88,31 @@ namespace GOAP
 		this->addTask( task );
 
 		return source_until;
+	}
+	//////////////////////////////////////////////////////////////////////////
+	TVectorSources & Source::addSwitchProvider( const SwitchProviderPtr & _provider, size_t _count )
+	{
+		TVectorSources sources;
+		sources.resize( _count );
+
+		for( TVectorSources::iterator
+			it = sources.begin(),
+			it_end = sources.end();
+		it != it_end;
+		++it )
+		{
+			SourcePtr & source = *it;
+			
+			source = new Source();
+		}
+
+		TaskSwitchPtr task = new TaskSwitch( _provider, sources );
+
+		this->addTask( task );
+
+		TVectorSources & sources_switch = task->getSources();
+
+		return sources_switch;
 	}
 	//////////////////////////////////////////////////////////////////////////
 	void Source::addFunctionProvider( const FunctionProviderPtr & _provider )
