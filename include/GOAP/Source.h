@@ -6,6 +6,7 @@
 #	include "GOAP/CallbackProvider.h"
 #	include "GOAP/ScopeProvider.h"
 #	include "GOAP/IfProvider.h"
+#	include "GOAP/SwitchProvider.h"
 
 #	include <vector>
 
@@ -77,6 +78,16 @@ namespace GOAP
 		}
 
 		template<class F>
+		TVectorSources & addSwitch( size_t _count, F _f )
+		{
+			SwitchProviderPtr provider = new SwitchProviderT<F>( _f );
+
+			TVectorSources & sources = this->addSwitchProvider( provider, _count );
+
+			return sources;
+		}
+
+		template<class F>
 		SourcePtr addRepeat( F _f )
 		{
 			ScopeProviderPtr provider = new ScopeProviderT<F>( _f );
@@ -86,12 +97,13 @@ namespace GOAP
 			return source;
 		}
 
-	protected:
+	public:
 		void addFunctionProvider( const FunctionProviderPtr & _provider );
 		void addCallbackProvider( const CallbackProviderPtr & _provider );
 		void addScopeProvider( const ScopeProviderPtr & _provider );
 		IfSource addIfProvider( const IfProviderPtr & _provider );
 		SourcePtr addRepeatProvider( const ScopeProviderPtr & _provider );
+		TVectorSources & addSwitchProvider( const SwitchProviderPtr & _provider, size_t _count );
 
 	public:
 		TaskPtr parse( const ChainPtr & _chain, const TaskPtr & _task );
