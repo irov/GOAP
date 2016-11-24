@@ -96,9 +96,6 @@
     <ClInclude Include="..\sandbox\TaskPrint.h" />
     <ClInclude Include="..\sandbox\TaskRoll.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\sandbox\test.lua" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

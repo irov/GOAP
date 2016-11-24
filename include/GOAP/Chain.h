@@ -31,8 +31,19 @@ namespace GOAP
 		};
 
 	public:
-		Chain( const SourcePtr & _source, const ChainProviderPtr & _cb );
+		Chain(const SourcePtr & _source);
 		~Chain();
+
+	public:
+		template<class F>
+		void addCallback(F _f)
+		{
+			ChainProviderPtr untilChainProvider = makeChainProvider<F>(_f);
+
+			this->addCallbackProvider(untilChainProvider);
+		}
+
+		void addCallbackProvider(const ChainProviderPtr & _cb);
 
 	public:
 		bool run();

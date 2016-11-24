@@ -13,16 +13,18 @@
 namespace GOAP
 {
 	//////////////////////////////////////////////////////////////////////////
-	Chain::Chain( const SourcePtr & _source, const ChainProviderPtr & _cb )
-		: m_source( _source )
-		, m_cb( _cb )
-		, m_state( TASK_CHAIN_STATE_IDLE )
-		, m_complete( false )
-	{
-	}
+	Chain::Chain(const SourcePtr & _source)
+		: m_source(_source)
+		, m_state(TASK_CHAIN_STATE_IDLE)
+		, m_complete(false)
+	{}
 	//////////////////////////////////////////////////////////////////////////
 	Chain::~Chain()
+	{}
+	//////////////////////////////////////////////////////////////////////////
+	void Chain::addCallbackProvider(const ChainProviderPtr & _cb)
 	{
+		m_cb = _cb;
 	}
 	//////////////////////////////////////////////////////////////////////////
 	bool Chain::run()

@@ -20,8 +20,9 @@ namespace GOAP
 	template<class F>
 	static ChainPtr __makeChain( const SourcePtr & _source, F f )
 	{
-		ChainProviderPtr untilChainProvider = makeChainProvider<F>( f );
-		ChainPtr chain = new Chain( _source, untilChainProvider );
+		ChainPtr chain = new Chain(_source);
+
+		chain->addCallback(f);
 
 		return chain;
 	}

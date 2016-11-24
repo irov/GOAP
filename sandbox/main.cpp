@@ -67,7 +67,11 @@ void main()
 	source_if.source_true->addTask( new TaskPrint( "---TRUE---" ) );
 	source_if.source_false->addTask( new TaskPrint( "---FALSE---" ) );
 
-	
+	GOAP::TVectorSources & source_switch = source->addSwitch(3, [](){ return rand() % 3; });
+
+	source_switch[0]->addTask(new TaskPrint("---Switch 1---"));
+	source_switch[1]->addTask(new TaskPrint("---Switch 2---"));
+	source_switch[2]->addTask(new TaskPrint("---Switch 3---"));
 
 	GOAP::SourcePtr source_until = source->addRepeat( [sch] ( const GOAP::SourcePtr & _scope ) -> bool
 	{
@@ -79,7 +83,7 @@ void main()
 
 	source_until->addTask( new TaskDelay( 10000.f, sch ) );
 
-	GOAP::ChainPtr tc = new GOAP::Chain( source, nullptr );
+	GOAP::ChainPtr tc = new GOAP::Chain( source );
 
 	tc->run();
 
