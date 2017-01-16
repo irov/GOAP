@@ -11,6 +11,7 @@
 #	include "GOAP/TaskRepeat.h"
 #	include "GOAP/TaskSwitch.h"
 #	include "GOAP/TaskFork.h"
+#	include "GOAP/TaskGuard.h"
 
 #	include "TranscriptorBase.h"
 #	include "TranscriptorParallel.h"
@@ -113,6 +114,21 @@ namespace GOAP
 		TVectorSources & sources_switch = task->getSources();
 
 		return sources_switch;
+	}
+	//////////////////////////////////////////////////////////////////////////
+	SourcePtr Source::addGuardProvider(const GuardProviderPtr & _begin, const GuardProviderPtr & _end)
+	{
+		TVectorSources & race_source = this->addRace(2);
+
+		const SourcePtr & source_guard = race_source[0];
+
+		TaskGuardPtr task = new TaskGuard(_begin, _end);
+
+		source_guard->addTask(task);
+
+		const SourcePtr & source_code = race_source[1];
+
+		return source_code;
 	}
 	//////////////////////////////////////////////////////////////////////////
 	void Source::addFunctionProvider( const FunctionProviderPtr & _provider )

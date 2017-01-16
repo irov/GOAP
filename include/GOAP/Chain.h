@@ -65,7 +65,8 @@ namespace GOAP
 		void skipRunningTasks_();
 		void cancelRunningTasks_();
 		void finalize_();
-		void setChain_( ETaskChainState _state );
+		void setState_( ETaskChainState _state );
+		ETaskChainState getState_() const;
 
 	public:
 		ETaskChainState m_state;

@@ -168,6 +168,8 @@ namespace GOAP
 			{
 				this->onSkipNoSkiped();
 			}
+
+			return true;
 		}
 
 		m_skip = true;

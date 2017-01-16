@@ -19,4 +19,6 @@ namespace GOAP
 	protected:
 		FunctionProviderPtr m_provider;
 	};
+
+	typedef IntrusivePtr<TaskFunction> TaskFunctionPtr;
 }

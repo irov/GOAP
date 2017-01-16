@@ -7,6 +7,7 @@
 #	include "GOAP/ScopeProvider.h"
 #	include "GOAP/IfProvider.h"
 #	include "GOAP/SwitchProvider.h"
+#	include "GOAP/GuardProvider.h"
 
 #	include <vector>
 
@@ -97,6 +98,15 @@ namespace GOAP
 			return source;
 		}
 
+		template<class FB, class FE>
+		SourcePtr addGuard(FB _begin, FE _end)
+		{
+			GuardProviderPtr begin_provider = new GuardProviderT<FB>(_begin);
+			GuardProviderPtr end_provider = new GuardProviderT<FE>(_end);
+
+			SourcePtr source = this->addGuardProvider(begin_provider, end_provider);
+		}
+
 	public:
 		void addFunctionProvider( const FunctionProviderPtr & _provider );
 		void addCallbackProvider( const CallbackProviderPtr & _provider );
@@ -104,6 +114,7 @@ namespace GOAP
 		IfSource addIfProvider( const IfProviderPtr & _provider );
 		SourcePtr addRepeatProvider( const ScopeProviderPtr & _provider );
 		TVectorSources & addSwitchProvider( const SwitchProviderPtr & _provider, size_t _count );
+		SourcePtr addGuardProvider(const GuardProviderPtr & _begin, const GuardProviderPtr & _end);
 
 	public:
 		TaskPtr parse( const ChainPtr & _chain, const TaskPtr & _task );

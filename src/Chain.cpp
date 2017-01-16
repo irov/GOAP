@@ -29,7 +29,14 @@ namespace GOAP
 	//////////////////////////////////////////////////////////////////////////
 	bool Chain::run()
 	{
-		this->setChain_( TASK_CHAIN_STATE_RUN );
+		ETaskChainState state = this->getState_();
+
+		if(state != TASK_CHAIN_STATE_IDLE)
+		{
+			return false;
+		}
+
+		this->setState_( TASK_CHAIN_STATE_RUN );
 
 		TaskPtr task_first = new TaskDummy();
 		task_first->setChain( this );
@@ -71,7 +78,7 @@ namespace GOAP
 		if( m_state != TASK_CHAIN_STATE_CANCEL &&
 			m_state != TASK_CHAIN_STATE_FINALIZE )
 		{
-			this->setChain_( TASK_CHAIN_STATE_CANCEL );
+			this->setState_( TASK_CHAIN_STATE_CANCEL );
 
 			this->finalize_();
 		}
@@ -124,7 +131,7 @@ namespace GOAP
 		_callback->onCallback( _skip );
 
 		m_complete = true;
-		this->setChain_( TASK_CHAIN_STATE_COMPLETE );
+		this->setState_( TASK_CHAIN_STATE_COMPLETE );
 
 		ChainProviderPtr cb = m_cb;
 
@@ -173,11 +180,16 @@ namespace GOAP
 		m_source = nullptr;
 		//m_runningTasks.clear();
 
-		this->setChain_( TASK_CHAIN_STATE_FINALIZE );
+		this->setState_( TASK_CHAIN_STATE_FINALIZE );
 	}
 	//////////////////////////////////////////////////////////////////////////
-	void Chain::setChain_( ETaskChainState _state )
+	void Chain::setState_( ETaskChainState _state )
 	{
 		m_state = _state;
+	}
+	//////////////////////////////////////////////////////////////////////////
+	Chain::ETaskChainState Chain::getState_() const
+	{
+		return m_state;
 	}
 }
