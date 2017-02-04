@@ -7,7 +7,8 @@ namespace GOAP
 {
 	//////////////////////////////////////////////////////////////////////////
 	TaskRepeat::TaskRepeat( const ScopeProviderPtr & _provider, const SourcePtr & _until )
-		: m_providerRepeat( _provider )
+		: Task(TASK_EVENT_RUN | TASK_EVENT_FINALIZE )
+        , m_providerRepeat( _provider )
 		, m_sourceUntil(_until)
 		, m_repeat(true)
 	{
@@ -27,7 +28,7 @@ namespace GOAP
 		return chain;
 	}
 	//////////////////////////////////////////////////////////////////////////
-	void TaskRepeat::onFinalize()
+	void TaskRepeat::_onFinalize()
 	{
 		m_repeat = false;
 
@@ -49,7 +50,7 @@ namespace GOAP
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////
-	bool TaskRepeat::onRun()
+	bool TaskRepeat::_onRun()
 	{
 		ChainPtr chainUntil = __makeChain( m_sourceUntil, [this] ( bool _skip ){this->untilComplete_( _skip ); } );
 

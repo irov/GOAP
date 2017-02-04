@@ -15,7 +15,7 @@ namespace GOAP
 		~TaskFork();
 
 	public:
-		bool onRun() override;
+		bool _onRun() override;
 
 	protected:
 		SourcePtr m_fork;

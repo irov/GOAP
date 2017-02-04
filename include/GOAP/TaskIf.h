@@ -15,7 +15,7 @@ namespace GOAP
 		~TaskIf();
 
 	public:
-		bool onRun() override;
+		bool _onRun() override;
 
 	protected:
 		IfProviderPtr m_provider;

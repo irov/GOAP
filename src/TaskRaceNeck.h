@@ -12,7 +12,7 @@ namespace GOAP
 		~TaskRaceNeck();
 
 	protected:
-		bool onCheckRun() const override;
-		bool onCheckSkip() const override;
+		bool _onCheckRun() const override;
+		bool _onCheckSkip() const override;
 	};
 }

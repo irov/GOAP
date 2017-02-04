@@ -14,7 +14,7 @@ namespace GOAP
 		~TaskScope();
 
 	public:
-		bool onRun() override;
+		bool _onRun() override;
 
 	protected:
 		ScopeProviderPtr m_provider;

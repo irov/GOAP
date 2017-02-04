@@ -6,7 +6,8 @@ namespace GOAP
 {
 	//////////////////////////////////////////////////////////////////////////
 	TaskFunction::TaskFunction( const FunctionProviderPtr & _provider )
-		: m_provider( _provider )
+        : Task( TASK_EVENT_RUN )
+		, m_provider( _provider )
 	{
 	}
 	//////////////////////////////////////////////////////////////////////////
@@ -14,7 +15,7 @@ namespace GOAP
 	{
 	}
 	//////////////////////////////////////////////////////////////////////////
-	bool TaskFunction::onRun()
+	bool TaskFunction::_onRun()
 	{
 		if( m_provider != nullptr )
 		{

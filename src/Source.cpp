@@ -71,7 +71,7 @@ namespace GOAP
 	//////////////////////////////////////////////////////////////////////////
 	SourcePtr Source::addFork()
 	{
-		SourcePtr source = new Source();
+		SourcePtr source = this->_provideSource();
 
 		TaskPtr task_fork = new TaskFork( source );
 
@@ -82,7 +82,7 @@ namespace GOAP
 	//////////////////////////////////////////////////////////////////////////
 	SourcePtr Source::addRepeatProvider( const ScopeProviderPtr & _provider )
 	{
-		SourcePtr source_until = new Source();
+		SourcePtr source_until = this->_provideSource();
 
 		TaskPtr task = new TaskRepeat( _provider, source_until );
 
@@ -104,7 +104,7 @@ namespace GOAP
 		{
 			SourcePtr & source = *it;
 			
-			source = new Source();
+            source = this->_provideSource();
 		}
 
 		TaskSwitchPtr task = new TaskSwitch( _provider, sources );
@@ -154,8 +154,8 @@ namespace GOAP
 	//////////////////////////////////////////////////////////////////////////
 	IfSource Source::addIfProvider( const IfProviderPtr & _provider )
 	{
-		SourcePtr source_true = new Source();
-		SourcePtr source_false = new Source();
+		SourcePtr source_true = this->_provideSource();
+		SourcePtr source_false = this->_provideSource();
 
 		TaskPtr task = new TaskIf( _provider, source_true, source_false );
 
@@ -187,4 +187,9 @@ namespace GOAP
 
 		return current_task;
 	}
+    //////////////////////////////////////////////////////////////////////////
+    SourcePtr Source::_provideSource()
+    {
+        return new Source();
+    }
 }

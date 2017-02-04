@@ -22,7 +22,7 @@ namespace GOAP
 		TVectorSources & getSources();
 
 	public:
-		bool onRun() override;
+		bool _onRun() override;
 
 	protected:
 		SwitchProviderPtr m_provider;

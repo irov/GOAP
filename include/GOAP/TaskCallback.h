@@ -15,7 +15,7 @@ namespace GOAP
 		~TaskCallback();
 
 	public:
-		bool onRun() override;
+		bool _onRun() override;
 
 	protected:
 		void onCallback( bool _skip ) override;

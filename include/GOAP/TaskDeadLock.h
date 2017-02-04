@@ -12,6 +12,6 @@ namespace GOAP
 		~TaskDeadLock();
 
 	protected:
-		bool onRun() override;
+		bool _onRun() override;
 	};
 }

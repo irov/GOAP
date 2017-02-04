@@ -6,7 +6,8 @@ namespace GOAP
 {
 	//////////////////////////////////////////////////////////////////////////
 	TaskIf::TaskIf( const IfProviderPtr & _provider, const SourcePtr & _sourceTrue, const SourcePtr & _sourceFalse )
-		: m_provider( _provider )
+        : Task( TASK_EVENT_RUN )
+        , m_provider( _provider )
 		, m_sourceTrue( _sourceTrue )
 		, m_sourceFalse( _sourceFalse )
 	{
@@ -16,7 +17,7 @@ namespace GOAP
 	{
 	}
 	//////////////////////////////////////////////////////////////////////////
-	bool TaskIf::onRun()
+	bool TaskIf::_onRun()
 	{
 		bool result = m_provider->onIf();
 

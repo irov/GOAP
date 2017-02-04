@@ -4,7 +4,8 @@ namespace GOAP
 {
 	//////////////////////////////////////////////////////////////////////////
 	TaskCallback::TaskCallback( const CallbackProviderPtr & _provider )
-		: m_provider( _provider )
+        : Task( TASK_EVENT_RUN )
+		, m_provider( _provider )
 	{
 	}
 	//////////////////////////////////////////////////////////////////////////
@@ -12,11 +13,11 @@ namespace GOAP
 	{
 	}
 	//////////////////////////////////////////////////////////////////////////
-	bool TaskCallback::onRun()
+	bool TaskCallback::_onRun()
 	{
 		bool skip = this->isSkip();
 
-		m_provider->call( this, skip );
+		m_provider->onCallback( this, skip );
 
 		return false;
 	}	

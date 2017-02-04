@@ -6,7 +6,8 @@ namespace GOAP
 {
 	//////////////////////////////////////////////////////////////////////////
 	TaskScope::TaskScope( const ScopeProviderPtr & _provider )
-		: m_provider(_provider)
+        : Task( TASK_EVENT_RUN )
+		, m_provider(_provider)
 	{
 	}
 	//////////////////////////////////////////////////////////////////////////
@@ -14,7 +15,7 @@ namespace GOAP
 	{
 	}
 	//////////////////////////////////////////////////////////////////////////
-	bool TaskScope::onRun()
+	bool TaskScope::_onRun()
 	{
 		GOAP::SourcePtr source = new GOAP::Source();
 

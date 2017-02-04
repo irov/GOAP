@@ -13,8 +13,8 @@ public:
 	~TaskRoll();
 
 protected:
-	bool onRun() override;
-	void onSkip() override;
+	bool _onRun() override;
+	void _onSkip() override;
 
 protected:
 	void onScheduleComplete( uint32_t _id ) override;

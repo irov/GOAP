@@ -6,7 +6,8 @@ namespace GOAP
 {
 	//////////////////////////////////////////////////////////////////////////
 	TaskSwitch::TaskSwitch( const SwitchProviderPtr & _provider, const TVectorSources & _sources )
-		: m_provider( _provider )	
+        : Task( TASK_EVENT_RUN )
+        , m_provider( _provider )
 		, m_sources( _sources )
 	{		
 	}
@@ -20,7 +21,7 @@ namespace GOAP
 		return m_sources;
 	}
 	//////////////////////////////////////////////////////////////////////////
-	bool TaskSwitch::onRun()
+	bool TaskSwitch::_onRun()
 	{
 		uint32_t id = m_provider->onSwitch();
 

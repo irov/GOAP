@@ -4,6 +4,7 @@ namespace GOAP
 {
 	//////////////////////////////////////////////////////////////////////////
 	TaskParallelNeck::TaskParallelNeck()
+        : Task( TASK_EVENT_CHECK_RUN | TASK_EVENT_CHECK_SKIP )
 	{
 	}
 	//////////////////////////////////////////////////////////////////////////
@@ -11,7 +12,7 @@ namespace GOAP
 	{
 	}
 	//////////////////////////////////////////////////////////////////////////
-	bool TaskParallelNeck::onCheckRun() const
+	bool TaskParallelNeck::_onCheckRun() const
 	{
 		if( m_prevs.empty() == true )
 		{
@@ -21,7 +22,7 @@ namespace GOAP
 		return false;
 	}
 	//////////////////////////////////////////////////////////////////////////
-	bool TaskParallelNeck::onCheckSkip() const
+	bool TaskParallelNeck::_onCheckSkip() const
 	{
 		if( m_prevs.empty() == true )
 		{

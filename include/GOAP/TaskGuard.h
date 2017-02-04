@@ -14,8 +14,8 @@ namespace GOAP
 		~TaskGuard();
 
 	public:
-		bool onRun() override;
-		void onCancel() override;
+		bool _onRun() override;
+		void _onCancel() override;
 
 	protected:
 		GuardProviderPtr m_begin;

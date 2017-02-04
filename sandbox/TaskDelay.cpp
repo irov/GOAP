@@ -2,7 +2,8 @@
 
 //////////////////////////////////////////////////////////////////////////
 TaskDelay::TaskDelay( float _delay, Scheduler * _scheduler )
-	: m_delay( _delay )
+    : GOAP::Task( GOAP::TASK_EVENT_RUN | GOAP::TASK_EVENT_SKIP )
+	, m_delay( _delay )
 	, m_scheduler( _scheduler )
 	, m_id( 0 )
 {
@@ -12,18 +13,14 @@ TaskDelay::~TaskDelay()
 {
 }
 //////////////////////////////////////////////////////////////////////////
-void TaskDelay::onFinalize()
-{
-}
-//////////////////////////////////////////////////////////////////////////
-bool TaskDelay::onRun()
+bool TaskDelay::_onRun()
 {
 	m_id = m_scheduler->schedule( m_delay, false, this );
 
 	return false;
 }
 //////////////////////////////////////////////////////////////////////////
-void TaskDelay::onSkip()
+void TaskDelay::_onSkip()
 {
 	m_scheduler->stop( m_id );
 }

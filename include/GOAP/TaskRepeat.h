@@ -16,10 +16,10 @@ namespace GOAP
 		~TaskRepeat();
 
 	public:
-		void onFinalize() override;
+		void _onFinalize() override;
 
 	public:
-		bool onRun() override;
+		bool _onRun() override;
 
 	protected:
 		void repeatComplete_( bool _skip );

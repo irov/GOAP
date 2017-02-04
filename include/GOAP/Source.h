@@ -119,6 +119,9 @@ namespace GOAP
 	public:
 		TaskPtr parse( const ChainPtr & _chain, const TaskPtr & _task );
 
+    protected:
+        virtual SourcePtr _provideSource();
+
 	protected:
 		TVectorTranscriptor m_descriptions;
 

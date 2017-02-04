@@ -11,6 +11,24 @@ namespace GOAP
 
 	typedef std::vector<TaskPtr> TVectorTasks;
 
+    enum ETaskEvent
+    {
+        TASK_EVENT_INITIALIZE = 1 >> 0,
+        TASK_EVENT_FINALIZE = 1 >> 1,
+        TASK_EVENT_VALIDATE = 1 >> 2,
+        TASK_EVENT_CHECK = 1 >> 3,
+        TASK_EVENT_RUN = 1 >> 4,
+        TASK_EVENT_SKIPABLE = 1 >> 5,
+        TASK_EVENT_SKIP_NO_SKIPED = 1 >> 6,
+        TASK_EVENT_SKIP_BLOCK = 1 >> 7,
+        TASK_EVENT_COMPLETE = 1 >> 8,
+        TASK_EVENT_SKIP = 1 >> 9,
+        TASK_EVENT_CANCEL = 1 >> 10,
+        TASK_EVENT_FINALLY = 1 >> 11,
+        TASK_EVENT_CHECK_RUN = 1 >> 12,
+        TASK_EVENT_CHECK_SKIP = 1 >> 13
+    };
+
 	class Task
 		: public IntrusivePtrBase<Task>
 	{
@@ -29,9 +47,16 @@ namespace GOAP
 		
 	public:
 		Task();
+        Task( uint32_t _events );
+
+    public:
 		virtual ~Task();
 
-	public:
+    public:
+        void setEvents( uint32_t _events );
+        uint32_t getEvents() const;
+
+    public:
 		void setChain( const ChainPtr & _chain );
 		const ChainPtr & getChain() const;
 
@@ -57,22 +82,40 @@ namespace GOAP
 		void complete( bool _running = true, bool _skiped = false );
 
 	protected:		
-		virtual bool onInitialize();
-		virtual void onFinalize();
+		bool onInitialize();
+		void onFinalize();
 
 	protected:
-		virtual bool onValidate() const;
-		virtual bool onCheck() const;
-		virtual bool onRun();
-		virtual bool onSkipable() const;
-		virtual void onSkipNoSkiped();
-		virtual bool onSkipBlock();
-		virtual void onComplete();
-		virtual void onSkip();
-		virtual void onCancel();
-		virtual void onFinally();
-		virtual bool onCheckRun() const;
-		virtual bool onCheckSkip() const;
+		bool onValidate() const;
+		bool onCheck() const;
+		bool onRun();
+		bool onSkipable() const;
+		void onSkipNoSkiped();
+		bool onSkipBlock();
+		void onComplete();
+		void onSkip();
+		void onCancel();
+		void onFinally();
+		bool onCheckRun() const;
+		bool onCheckSkip() const;
+
+    protected:
+        virtual bool _onInitialize();
+        virtual void _onFinalize();
+
+    protected:
+        virtual bool _onValidate() const;
+        virtual bool _onCheck() const;
+        virtual bool _onRun();
+        virtual bool _onSkipable() const;
+        virtual void _onSkipNoSkiped();
+        virtual bool _onSkipBlock();
+        virtual void _onComplete();
+        virtual void _onSkip();
+        virtual void _onCancel();
+        virtual void _onFinally();
+        virtual bool _onCheckRun() const;
+        virtual bool _onCheckSkip() const;
 
 	protected:
 		void taskSkip_();
@@ -93,6 +136,8 @@ namespace GOAP
 
 	protected:
 		ETaskState m_state;
+
+        uint32_t m_events;
 
 		ChainPtr m_chain;
 		

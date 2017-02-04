@@ -12,7 +12,7 @@ public:
 	~TaskPrint();
 
 protected:
-	bool onRun() override;
+	bool _onRun() override;
 
 protected:
 	std::string m_message;

@@ -14,7 +14,7 @@ namespace GOAP
 		~TaskFunction();
 
 	public:
-		bool onRun() override;
+		bool _onRun() override;
 
 	protected:
 		FunctionProviderPtr m_provider;

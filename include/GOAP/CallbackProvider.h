@@ -14,7 +14,7 @@ namespace GOAP
 		: public IntrusivePtrBase<CallbackProvider>
 	{
 	public:
-		virtual void call( CallbackObserver * _callback, bool _skip ) = 0;
+        virtual void onCallback( CallbackObserver * _callback, bool _skip ) = 0;
 	};
 
 	typedef IntrusivePtr<CallbackProvider> CallbackProviderPtr;
@@ -30,7 +30,7 @@ namespace GOAP
 		}
 
 	public:
-		void call( CallbackObserver * _callback, bool _skip ) override
+		void onCallback( CallbackObserver * _callback, bool _skip ) override
 		{
 			m_f( _callback, _skip );
 		}
