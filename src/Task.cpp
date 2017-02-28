@@ -203,26 +203,29 @@ namespace GOAP
 
 				m_chain->runTask( this );
 
-				this->setState( TASK_STATE_RUN );
+                if( this->onFastSkip() == false )
+                {
+                    this->setState( TASK_STATE_RUN );
 
-				if( this->onCheck() == true )
-				{
-					bool done = this->onRun();
+                    if( this->onCheck() == true )
+                    {
+                        bool done = this->onRun();
 
-					if( m_state == TASK_STATE_END )
-					{
-						return true;
-					}
+                        if( m_state == TASK_STATE_END )
+                        {
+                            return true;
+                        }
 
-					this->setState( TASK_STATE_SKIP );
+                        this->setState( TASK_STATE_SKIP );
 
-					if( done == false )
-					{
-						this->onSkip();
-					}
-				}
+                        if( done == false )
+                        {
+                            this->onSkip();
+                        }
+                    }
 
-				this->onFinally();
+                    this->onFinally();
+                }
 
 				this->taskSkip_();
 			}break;
@@ -544,6 +547,11 @@ namespace GOAP
 	{
         TASK_EVENT( TASK_EVENT_COMPLETE, onComplete );
 	}
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::onFastSkip()
+    {
+        TASK_EVENTR( TASK_EVENT_FAST_SKIP, false, onFastSkip );
+    }
 	//////////////////////////////////////////////////////////////////////////
 	void Task::onSkip()
 	{
@@ -613,6 +621,11 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Task::_onComplete()
     {
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::_onFastSkip()
+    {
+        return false;
     }
     //////////////////////////////////////////////////////////////////////////
     void Task::_onSkip()

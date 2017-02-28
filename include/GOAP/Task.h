@@ -22,11 +22,12 @@ namespace GOAP
         TASK_EVENT_SKIP_NO_SKIPED = 1 >> 6,
         TASK_EVENT_SKIP_BLOCK = 1 >> 7,
         TASK_EVENT_COMPLETE = 1 >> 8,
-        TASK_EVENT_SKIP = 1 >> 9,
-        TASK_EVENT_CANCEL = 1 >> 10,
-        TASK_EVENT_FINALLY = 1 >> 11,
-        TASK_EVENT_CHECK_RUN = 1 >> 12,
-        TASK_EVENT_CHECK_SKIP = 1 >> 13
+        TASK_EVENT_FAST_SKIP = 1 >> 9,
+        TASK_EVENT_SKIP = 1 >> 10,
+        TASK_EVENT_CANCEL = 1 >> 11,
+        TASK_EVENT_FINALLY = 1 >> 12,
+        TASK_EVENT_CHECK_RUN = 1 >> 13,
+        TASK_EVENT_CHECK_SKIP = 1 >> 14
     };
 
 	class Task
@@ -93,6 +94,7 @@ namespace GOAP
 		void onSkipNoSkiped();
 		bool onSkipBlock();
 		void onComplete();
+        bool onFastSkip();
 		void onSkip();
 		void onCancel();
 		void onFinally();
@@ -111,6 +113,7 @@ namespace GOAP
         virtual void _onSkipNoSkiped();
         virtual bool _onSkipBlock();
         virtual void _onComplete();
+        virtual bool _onFastSkip();
         virtual void _onSkip();
         virtual void _onCancel();
         virtual void _onFinally();
