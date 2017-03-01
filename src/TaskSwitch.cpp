@@ -30,30 +30,7 @@ namespace GOAP
 		bool skip = this->isSkip();
 		source->setSkip( skip );
 
-		TVectorTasks nexts;
-		this->popNexts( nexts );
-
-		const ChainPtr & chain = this->getChain();
-
-		TaskPtr task = source->parse( chain, this );
-		
-		if( task == nullptr )
-		{
-			//TODO - Error
-
-			return true;
-		}
-
-		for( TVectorTasks::iterator
-			it = nexts.begin(),
-			it_end = nexts.end();
-		it != it_end;
-		++it )
-		{
-			const TaskPtr & next = *it;
-
-			task->addNext( next );
-		}
+        this->injectSource( source );
 
 		return true;
 	}

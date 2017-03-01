@@ -1,4 +1,5 @@
 #	include "GOAP/Task.h"
+#   include "GOAP/Source.h"
 #	include "GOAP/Chain.h"
 
 namespace GOAP
@@ -95,6 +96,34 @@ namespace GOAP
 
 		m_nexts.clear();
 	}
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::injectSource( const SourcePtr & _source )
+    {
+        TVectorTasks nexts;
+        this->popNexts( nexts );
+
+        const ChainPtr & chain = this->getChain();
+
+        TaskPtr task = _source->parse( chain, this );
+
+        if( task == nullptr )
+        {
+            return false;
+        }
+
+        for( TVectorTasks::iterator
+            it = nexts.begin(),
+            it_end = nexts.end();
+            it != it_end;
+            ++it )
+        {
+            const TaskPtr & next = *it;
+
+            task->addNext( next );
+        }
+
+        return true;
+    }
 	//////////////////////////////////////////////////////////////////////////
 	bool Task::run( bool _checkSkipedFalse )
 	{

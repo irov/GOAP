@@ -21,44 +21,12 @@ namespace GOAP
 	{
 		bool result = m_provider->onIf();
 
-		SourcePtr result_source;
-
-		if( result == true )
-		{
-			result_source = m_sourceTrue;
-		}
-		else
-		{
-			result_source = m_sourceFalse;
-		}
+		const SourcePtr & result_source = result == true ? m_sourceTrue : m_sourceFalse;
 
 		bool skip = this->isSkip();
 		result_source->setSkip( skip );
 
-		TVectorTasks nexts;
-		this->popNexts( nexts );
-
-		const ChainPtr & chain = this->getChain();
-
-		TaskPtr task = result_source->parse( chain, this );
-		
-		if( task == nullptr )
-		{
-			//TODO - Error
-
-			return true;
-		}
-
-		for( TVectorTasks::iterator
-			it = nexts.begin(),
-			it_end = nexts.end();
-		it != it_end;
-		++it )
-		{
-			const TaskPtr & next = *it;
-
-			task->addNext( next );
-		}
+        this->injectSource( result_source );
 
 		return true;
 	}

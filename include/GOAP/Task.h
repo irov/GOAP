@@ -7,6 +7,7 @@
 namespace GOAP
 {
 	typedef IntrusivePtr<class Task> TaskPtr;
+    typedef IntrusivePtr<class Source> SourcePtr;
 	typedef IntrusivePtr<class Chain> ChainPtr;
 
 	typedef std::vector<TaskPtr> TVectorTasks;
@@ -72,6 +73,7 @@ namespace GOAP
 		TVectorTasks & getNexts();
 		const TVectorTasks & getNexts() const;
 		void popNexts( TVectorTasks & _clone );
+        bool injectSource( const SourcePtr & _source );
 
 	public:
 		bool run( bool _checkSkipedFalse = false );
