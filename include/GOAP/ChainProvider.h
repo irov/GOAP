@@ -33,11 +33,14 @@ namespace GOAP
 		F m_f;
 	};
 
-	template<class F>
-	ChainProviderPtr makeChainProvider( F _f )
-	{
-		ChainProviderPtr provider = new ChainProviderT<F>( _f );
+    namespace Helper
+    {
+        template<class F>
+        ChainProviderPtr makeChainProvider( F _f )
+        {
+            ChainProviderPtr provider = new ChainProviderT<F>( _f );
 
-		return provider;
-	}
+            return provider;
+        }
+    }
 }

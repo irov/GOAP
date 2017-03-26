@@ -39,7 +39,7 @@ namespace GOAP
 		template<class F>
 		void addCallback(F _f)
 		{
-			ChainProviderPtr untilChainProvider = makeChainProvider<F>(_f);
+			ChainProviderPtr untilChainProvider = Helper::makeChainProvider<F>(_f);
 
 			this->addCallbackProvider(untilChainProvider);
 		}
