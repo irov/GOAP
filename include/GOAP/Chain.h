@@ -2,6 +2,8 @@
 
 #	include "GOAP/IntrusivePtrBase.h"
 
+#   include "GOAP/ChainProvider.h"
+
 #	include <vector>
 
 namespace GOAP
@@ -10,8 +12,7 @@ namespace GOAP
 
 	typedef IntrusivePtr<class Task> TaskPtr;
 	typedef IntrusivePtr<class Source> SourcePtr;
-	typedef IntrusivePtr<class ChainProvider> ChainProviderPtr;
-
+	
 	typedef std::vector<TaskPtr> TVectorTask;
 
 	class Chain
