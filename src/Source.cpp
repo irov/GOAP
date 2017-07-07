@@ -12,6 +12,7 @@
 #	include "GOAP/TaskSwitch.h"
 #	include "GOAP/TaskFork.h"
 #	include "GOAP/TaskGuard.h"
+#	include "GOAP/TaskDeadLock.h"
 
 #	include "TranscriptorBase.h"
 #	include "TranscriptorParallel.h"
@@ -79,6 +80,11 @@ namespace GOAP
 
 		return source;
 	}
+    //////////////////////////////////////////////////////////////////////////
+    void Source::addDeadLock()
+    {
+        this->addTask( new TaskDeadLock() );
+    }
 	//////////////////////////////////////////////////////////////////////////
 	SourcePtr Source::addRepeatProvider( const ScopeProviderPtr & _provider )
 	{

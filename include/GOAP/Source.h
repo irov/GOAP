@@ -43,6 +43,7 @@ namespace GOAP
 		TVectorSources & addParallel( size_t _count );
 		TVectorSources & addRace( size_t _count );
 		SourcePtr addFork();
+        void addDeadLock();
 
 		template<class F>
 		void addFunction( F _f )
