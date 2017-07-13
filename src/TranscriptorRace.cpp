@@ -30,6 +30,11 @@ namespace GOAP
 	//////////////////////////////////////////////////////////////////////////
 	TaskPtr TranscriptorRace::generate( const ChainPtr & _chain, const TaskPtr & _task )
 	{
+        if( m_sources.empty() == true )
+        {
+            return _task;
+        }
+
 		TaskPtr task_parallel_neck = new TaskRaceNeck();
 		task_parallel_neck->setChain( _chain );
 
