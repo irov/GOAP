@@ -18,6 +18,9 @@ namespace GOAP
 		const char * m_message;
 	};
 
-	void throw_exception( const char * _format, ... );
+    namespace Helper
+    {
+        void throw_exception( const char * _format, ... );
+    }
 }
 

@@ -2,6 +2,8 @@
 #	include "GOAP/Source.h"
 #	include "GOAP/ScopeProvider.h"
 
+#   include "GOAP/Exception.h"
+
 namespace GOAP
 {
 	//////////////////////////////////////////////////////////////////////////
@@ -29,7 +31,7 @@ namespace GOAP
 
         if( this->injectSource( source ) == false )
         {
-
+            Helper::throw_exception( "TaskScope invalid inject source" );
         }
 
 		return true;

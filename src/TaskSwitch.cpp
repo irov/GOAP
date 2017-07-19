@@ -2,6 +2,8 @@
 #	include "GOAP/Source.h"
 #	include "GOAP/SwitchProvider.h"
 
+#   include "GOAP/Exception.h"
+
 namespace GOAP
 {
 	//////////////////////////////////////////////////////////////////////////
@@ -30,7 +32,10 @@ namespace GOAP
 		bool skip = this->isSkip();
 		source->setSkip( skip );
 
-        this->injectSource( source );
+        if( this->injectSource( source ) == false )
+        {
+            Helper::throw_exception( "TaskSwitch invalid inject source" );
+        }
 
 		return true;
 	}

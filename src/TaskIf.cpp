@@ -1,6 +1,7 @@
 #	include "GOAP/TaskIf.h"
 #	include "GOAP/Source.h"
 #	include "GOAP/IfProvider.h"
+#   include "GOAP/Exception.h"
 
 namespace GOAP
 {
@@ -26,7 +27,10 @@ namespace GOAP
 		bool skip = this->isSkip();
 		result_source->setSkip( skip );
 
-        this->injectSource( result_source );
+        if( this->injectSource( result_source ) == false )
+        {
+            Helper::throw_exception( "TaskIf invalid inject source" );
+        }
 
 		return true;
 	}

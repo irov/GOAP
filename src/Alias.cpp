@@ -3,6 +3,8 @@
 #   include "GOAP/Source.h"
 #   include "GOAP/Chain.h"
 
+#   include "GOAP/Exception.h"
+
 namespace GOAP
 {
 	//////////////////////////////////////////////////////////////////////////
@@ -19,7 +21,7 @@ namespace GOAP
 
         if( this->injectSource( source ) == false )
         {
-
+            Helper::throw_exception( "Alias invalid inject source" );
         }
 
         return true;
