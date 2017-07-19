@@ -1,6 +1,6 @@
 #	pragma once
 
-#	include "GOAP/IntrusivePtrBase.h"
+#   include "GOAP/Config.h"
 
 #	include "GOAP/FunctionProvider.h"
 #	include "GOAP/CallbackProvider.h"
@@ -9,8 +9,6 @@
 #	include "GOAP/SwitchProvider.h"
 #	include "GOAP/GuardProvider.h"
 
-#	include <vector>
-
 namespace GOAP
 {	
 	typedef IntrusivePtr<class Task> TaskPtr;
@@ -18,8 +16,8 @@ namespace GOAP
 	typedef IntrusivePtr<class Source> SourcePtr;
 	typedef IntrusivePtr<class Transcriptor> TranscriptorPtr;
 
-	typedef std::vector<SourcePtr> TVectorSources;
-	typedef std::vector<TranscriptorPtr> TVectorTranscriptor;
+	typedef Vector<SourcePtr> TVectorSources;
+	typedef Vector<TranscriptorPtr> TVectorTranscriptor;
 
 	struct IfSource
 	{
@@ -28,7 +26,7 @@ namespace GOAP
 	};
 	
 	class Source
-		: public IntrusivePtrBase<Source>
+		: public IntrusiveBase<Source>
 	{
 	public:
 		Source();

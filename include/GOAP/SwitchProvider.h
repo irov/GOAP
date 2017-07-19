@@ -1,11 +1,11 @@
 #	pragma once
 
-#	include "IntrusivePtrBase.h"
+#	include "GOAP/Config.h"
 
 namespace GOAP
 {
 	class SwitchProvider
-		: public IntrusivePtrBase<SwitchProvider>
+		: public IntrusiveBase<SwitchProvider>
 	{
 	public:
 		virtual uint32_t onSwitch() = 0;

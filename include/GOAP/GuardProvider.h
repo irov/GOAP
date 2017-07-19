@@ -1,13 +1,13 @@
 #	pragma once
 
-#	include "IntrusivePtrBase.h"
+#	include "GOAP/Config.h"
 
 namespace GOAP
 {
 	typedef IntrusivePtr<class Source> SourcePtr;
 
 	class GuardProvider
-		: public IntrusivePtrBase<GuardProvider>
+		: public IntrusiveBase<GuardProvider>
 	{
 	public:
 		virtual void onGuard() = 0;

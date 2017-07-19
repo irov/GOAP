@@ -1,15 +1,15 @@
 #	pragma once
 
-#	include "GOAP/Task.h"
+#   include "GOAP/Config.h"
 
-#	include <vector>
+#	include "GOAP/Task.h"
 
 namespace GOAP
 {
 	typedef IntrusivePtr<class Source> SourcePtr;
 	typedef IntrusivePtr<class SwitchProvider> SwitchProviderPtr;
 
-	typedef std::vector<SourcePtr> TVectorSources;
+	typedef Vector<SourcePtr> TVectorSources;
 
 	class TaskSwitch
 		: public Task

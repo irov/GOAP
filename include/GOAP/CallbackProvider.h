@@ -1,6 +1,6 @@
 #	pragma once
 
-#	include "GOAP/IntrusivePtrBase.h"
+#	include "GOAP/Config.h"
 
 namespace GOAP
 {
@@ -11,7 +11,7 @@ namespace GOAP
 	};
 
 	class CallbackProvider
-		: public IntrusivePtrBase<CallbackProvider>
+		: public IntrusiveBase<CallbackProvider>
 	{
 	public:
         virtual void onCallback( CallbackObserver * _callback, bool _skip ) = 0;

@@ -1,11 +1,11 @@
 #	pragma once
 
-#	include "IntrusivePtrBase.h"
+#	include "GOAP/Config.h"
 
 namespace GOAP
 {
 	class ChainProvider
-		: public IntrusivePtrBase<ChainProvider>
+		: public IntrusiveBase<ChainProvider>
 	{
 	public:
 		virtual void onChain( bool _skip ) = 0;

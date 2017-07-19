@@ -1,13 +1,13 @@
 #	pragma once
 
-#	include "IntrusivePtrBase.h"
+#	include "GOAP/Config.h"
 
 namespace GOAP
 {
 	typedef IntrusivePtr<class Source> SourcePtr;
 
 	class ScopeProvider
-		: public IntrusivePtrBase<ScopeProvider>
+		: public IntrusiveBase<ScopeProvider>
 	{
 	public:
 		virtual bool onScope( const SourcePtr & _source ) = 0;

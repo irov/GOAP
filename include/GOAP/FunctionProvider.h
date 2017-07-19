@@ -1,11 +1,11 @@
 #	pragma once
 
-#	include "IntrusivePtrBase.h"
+#	include "GOAP/Config.h"
 
 namespace GOAP
 {
 	class FunctionProvider
-		: public IntrusivePtrBase<FunctionProvider>
+		: public IntrusiveBase<FunctionProvider>
 	{
 	public:
 		virtual void onFunction() = 0;

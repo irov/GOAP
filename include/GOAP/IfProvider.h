@@ -1,11 +1,11 @@
 #	pragma once
 
-#	include "IntrusivePtrBase.h"
+#	include "GOAP/Config.h"
 
 namespace GOAP
 {
 	class IfProvider
-		: public IntrusivePtrBase<IfProvider>
+		: public IntrusiveBase<IfProvider>
 	{
 	public:
 		virtual bool onIf() = 0;

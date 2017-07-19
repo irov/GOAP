@@ -1,6 +1,6 @@
 #	pragma once
 
-#	include "GOAP/IntrusivePtrBase.h"
+#	include "GOAP/Config.h"
 
 namespace GOAP
 {
@@ -8,7 +8,7 @@ namespace GOAP
 	typedef IntrusivePtr<class Chain> ChainPtr;
 	
 	class Transcriptor
-		: public IntrusivePtrBase<Transcriptor>
+		: public IntrusiveBase<Transcriptor>
 	{
 	public:
 		virtual ~Transcriptor() {};

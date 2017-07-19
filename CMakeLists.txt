@@ -31,6 +31,8 @@ ${SOURCE_DIR}/TaskSwitch.cpp
 ${SOURCE_DIR}/TranscriptorBase.cpp
 ${SOURCE_DIR}/TranscriptorParallel.cpp
 ${SOURCE_DIR}/TranscriptorRace.cpp
+${SOURCE_DIR}/Alias.cpp
+${SOURCE_DIR}/Exception.cpp
 
 ${INCLUDE_DIR}/TaskSwitch.h
 ${INCLUDE_DIR}/TaskRepeat.h
@@ -55,6 +57,9 @@ ${INCLUDE_DIR}/GOAP.h
 ${INCLUDE_DIR}/ChainProvider.h
 ${INCLUDE_DIR}/CallbackProvider.h
 ${INCLUDE_DIR}/Chain.h
+${INCLUDE_DIR}/Alias.h
+${INCLUDE_DIR}/Exception.h
+${INCLUDE_DIR}/Config.h
 )
 
 include_directories(${PROJECT_NAME} include)

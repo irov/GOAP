@@ -1,10 +1,8 @@
 #	pragma once
 
-#	include "GOAP/IntrusivePtrBase.h"
+#   include "GOAP/Config.h"
 
 #   include "GOAP/ChainProvider.h"
-
-#	include <vector>
 
 namespace GOAP
 {
@@ -13,10 +11,10 @@ namespace GOAP
 	typedef IntrusivePtr<class Task> TaskPtr;
 	typedef IntrusivePtr<class Source> SourcePtr;
 	
-	typedef std::vector<TaskPtr> TVectorTask;
+	typedef Vector<TaskPtr> TVectorTask;
 
 	class Chain
-		: public IntrusivePtrBase<Chain>
+		: public IntrusiveBase<Chain>
 	{
 	public:
 		enum ETaskChainState

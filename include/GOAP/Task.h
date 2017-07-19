@@ -1,8 +1,6 @@
 #	pragma once
 
-#	include "GOAP/IntrusivePtrBase.h"
-
-#	include <vector>
+#   include "GOAP/Config.h"
 
 namespace GOAP
 {
@@ -10,7 +8,7 @@ namespace GOAP
     typedef IntrusivePtr<class Source> SourcePtr;
 	typedef IntrusivePtr<class Chain> ChainPtr;
 
-	typedef std::vector<TaskPtr> TVectorTasks;
+	typedef Vector<TaskPtr> TVectorTasks;
 
     enum ETaskEvent
     {
@@ -32,7 +30,7 @@ namespace GOAP
     };
 
 	class Task
-		: public IntrusivePtrBase<Task>
+		: public IntrusiveBase<Task>
 	{
 	public:
 		enum ETaskState

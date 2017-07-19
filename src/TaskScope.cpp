@@ -27,7 +27,10 @@ namespace GOAP
 			return true;
 		}
 
-        this->injectSource( source );
+        if( this->injectSource( source ) == false )
+        {
+
+        }
 
 		return true;
 	}
