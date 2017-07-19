@@ -47,7 +47,7 @@ ${INCLUDE_DIR}/Task.h
 ${INCLUDE_DIR}/TaskCallback.h
 ${INCLUDE_DIR}/Source.h
 ${INCLUDE_DIR}/SwitchProvider.h
-${INCLUDE_DIR}/IntrusivePtrBase.h
+${INCLUDE_DIR}/IntrusiveBase.h
 ${INCLUDE_DIR}/ScopeProvider.h
 ${INCLUDE_DIR}/IntrusivePtr.h
 ${INCLUDE_DIR}/IfProvider.h
