@@ -60,6 +60,7 @@ ${INCLUDE_DIR}/Chain.h
 ${INCLUDE_DIR}/Alias.h
 ${INCLUDE_DIR}/Exception.h
 ${INCLUDE_DIR}/Config.h
+${INCLUDE_DIR}/Factorable
 )
 
 include_directories(${PROJECT_NAME} include)

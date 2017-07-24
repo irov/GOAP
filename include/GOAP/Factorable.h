@@ -7,7 +7,15 @@
 
 #   pragma once
 
-#   include "GOAP/Chain.h"
-#   include "GOAP/Source.h"
-#   include "GOAP/Task.h"
-#   include "GOAP/Alias.h"
+#	include "GOAP/Config.h"
+
+namespace GOAP
+{
+    class Factorable
+        : public IntrusiveBase<Factorable>
+    {
+    public:
+        Factorable(){};
+        virtual ~Factorable(){};
+    };
+}
