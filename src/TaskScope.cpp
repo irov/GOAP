@@ -14,9 +14,10 @@
 namespace GOAP
 {
 	//////////////////////////////////////////////////////////////////////////
-	TaskScope::TaskScope( const ScopeProviderPtr & _provider )
+	TaskScope::TaskScope( const FactoryPtr & _factory, const ScopeProviderPtr & _provider )
         : Task( TASK_EVENT_RUN )
-		, m_provider(_provider)
+        , m_factory( _factory )
+        , m_provider( _provider )
 	{
 	}
 	//////////////////////////////////////////////////////////////////////////
@@ -26,7 +27,7 @@ namespace GOAP
 	//////////////////////////////////////////////////////////////////////////
 	bool TaskScope::_onRun()
 	{
-		GOAP::SourcePtr source = new GOAP::Source();
+		GOAP::SourcePtr source = new GOAP::Source( m_factory );
 
 		bool skip = this->isSkip();
 		source->setSkip( skip );

@@ -11,6 +11,7 @@
 
 namespace GOAP
 {
+    typedef IntrusivePtr<class Factory> FactoryPtr;
 	typedef IntrusivePtr<class ScopeProvider> ScopeProviderPtr;
 	typedef IntrusivePtr<class Source> SourcePtr;
 	typedef IntrusivePtr<class Chain> ChainPtr;
@@ -19,7 +20,7 @@ namespace GOAP
 		: public Task
 	{
 	public:
-		TaskRepeat( const ScopeProviderPtr & _provider, const SourcePtr & _until );
+		TaskRepeat( const FactoryPtr & _factory, const ScopeProviderPtr & _provider, const SourcePtr & _until );
 		~TaskRepeat();
 
 	public:
@@ -33,6 +34,8 @@ namespace GOAP
 		void untilComplete_( bool _skip );		
 
 	protected:
+        FactoryPtr m_factory;
+
 		ScopeProviderPtr m_providerRepeat;
 		SourcePtr m_sourceUntil;
 

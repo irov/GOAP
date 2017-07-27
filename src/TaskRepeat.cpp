@@ -6,6 +6,7 @@
 */
 
 #	include "GOAP/TaskRepeat.h"
+#	include "GOAP/Factory.h"
 #	include "GOAP/Source.h"
 #	include "GOAP/Chain.h"
 #	include "GOAP/ChainProvider.h"
@@ -13,8 +14,9 @@
 namespace GOAP
 {
 	//////////////////////////////////////////////////////////////////////////
-	TaskRepeat::TaskRepeat( const ScopeProviderPtr & _provider, const SourcePtr & _until )
+	TaskRepeat::TaskRepeat( const FactoryPtr & _factory, const ScopeProviderPtr & _provider, const SourcePtr & _until )
 		: Task(TASK_EVENT_RUN | TASK_EVENT_FINALIZE )
+        , m_factory( _factory )
         , m_providerRepeat( _provider )
 		, m_sourceUntil(_until)
 		, m_repeat(true)
@@ -73,7 +75,7 @@ namespace GOAP
 			return true;
 		}
 
-		GOAP::SourcePtr sourceRepeat = new GOAP::Source();
+		GOAP::SourcePtr sourceRepeat = new GOAP::Source( m_factory );
 
 		bool skip = this->isSkip();
 		sourceRepeat->setSkip( skip );
@@ -102,7 +104,7 @@ namespace GOAP
 			return;
 		}
 
-		GOAP::SourcePtr sourceRepeat = new GOAP::Source();
+        GOAP::SourcePtr sourceRepeat = new GOAP::Source( m_factory );
 
 		sourceRepeat->setSkip( _skip );
 

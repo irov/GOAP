@@ -8,6 +8,7 @@
 #	pragma once
 
 #	include "GOAP/Task.h"
+#   include "GOAP/Factory.h"
 
 namespace GOAP
 {
@@ -17,13 +18,14 @@ namespace GOAP
 		: public Task
 	{
 	public:
-		TaskScope( const ScopeProviderPtr & _provider );
+		TaskScope( const FactoryPtr & _factory, const ScopeProviderPtr & _provider );
 		~TaskScope();
 
 	public:
 		bool _onRun() override;
 
 	protected:
+        FactoryPtr m_factory;
 		ScopeProviderPtr m_provider;
 	};
 }

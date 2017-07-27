@@ -11,16 +11,23 @@
 
 namespace GOAP
 {
+    typedef IntrusivePtr<class Factory> FactoryPtr;
     typedef IntrusivePtr<class Source> SourcePtr;
 
 	class Alias
 		: public Task
 	{
+    public:
+        Alias( const FactoryPtr & _factory );
+
     protected:
         bool _onRun() override;
 
     protected:
         virtual void _onGenerate( const SourcePtr & _source ) = 0;
+
+    protected:
+        FactoryPtr m_factory;
 	};
 
 	typedef IntrusivePtr<Alias> AliasPtr;

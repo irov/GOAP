@@ -16,7 +16,7 @@
 namespace GOAP
 {
 	//////////////////////////////////////////////////////////////////////////
-	TranscriptorParallel::TranscriptorParallel( size_t _count )
+	TranscriptorParallel::TranscriptorParallel( const FactoryPtr & _factory, size_t _count )
 	{
 		m_sources.resize( _count );
 
@@ -26,7 +26,7 @@ namespace GOAP
 		it != it_end;
 		++it )
 		{
-			*it = new Source();
+			*it = new Source( _factory );
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////

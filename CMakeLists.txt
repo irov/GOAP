@@ -8,6 +8,8 @@ IF( NOT LIBGOAP_EXTERNAL_BUILD )
     SET( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build_temp/${ENGINE_LIB_DIR} )
     SET( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin/libGOAP_win32 )
     SET( CMAKE_TEMP_DIR ${CMAKE_CURRENT_SOURCE_DIR}/CMakeTemp/libGOAP_win32/${CMAKE_GENERATOR}/${CMAKE_BUILD_TYPE} )    
+    
+    SET( CMAKE_CXX_FLAGS "/D_HAS_CXX17 /MP /EHsc /GR")
 ENDIF()
 
 SET( SOURCE_DIR src )
@@ -36,6 +38,7 @@ ${SOURCE_DIR}/TranscriptorRace.cpp
 ${SOURCE_DIR}/Alias.cpp
 ${SOURCE_DIR}/Exception.cpp
 ${SOURCE_DIR}/Factorable.cpp
+${SOURCE_DIR}/Factory.cpp
 
 ${INCLUDE_DIR}/TaskSwitch.h
 ${INCLUDE_DIR}/TaskRepeat.h
@@ -63,7 +66,8 @@ ${INCLUDE_DIR}/Chain.h
 ${INCLUDE_DIR}/Alias.h
 ${INCLUDE_DIR}/Exception.h
 ${INCLUDE_DIR}/Config.h
-${INCLUDE_DIR}/Factorable
+${INCLUDE_DIR}/Factorable.h
+${INCLUDE_DIR}/Factory.h
 )
 
 IF( LIBGOAP_EXTERNAL_INCLUDE )
