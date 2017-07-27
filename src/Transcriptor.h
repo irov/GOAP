@@ -15,7 +15,7 @@ namespace GOAP
 	typedef IntrusivePtr<class Chain> ChainPtr;
 	
 	class Transcriptor
-		: public IntrusiveBase<Transcriptor>
+		: public Factorable
 	{
 	public:
 		virtual ~Transcriptor() {};

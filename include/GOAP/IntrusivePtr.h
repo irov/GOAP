@@ -124,7 +124,7 @@ namespace GOAP
             {
                 if( m_ptr != nullptr )
                 {
-                    T::intrusive_ptr_add_ref( m_ptr );
+                    T::IntrusivePtrAddRef( m_ptr );
                 }
             }
 
@@ -132,7 +132,7 @@ namespace GOAP
             {
                 if( m_ptr != nullptr )
                 {
-                    T::intrusive_ptr_dec_ref( m_ptr );
+                    T::IntrusivePtrDecRef( m_ptr );
                 }
             }
 

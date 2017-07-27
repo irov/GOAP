@@ -7,7 +7,7 @@
 
 #	pragma once
 
-#   include "GOAP/Factorable.h"
+#	include "GOAP/Config.h"
 
 #   include "GOAP/ChainProvider.h"
 

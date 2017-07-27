@@ -7,15 +7,21 @@
 
 #   pragma once
 
-#	include "GOAP/Config.h"
+#	include "GOAP/IntrusiveBase.h"
 
 namespace GOAP
 {
-    class Factorable
-        : public IntrusiveBase<Factorable>
+    namespace Detail
     {
-    public:
-        Factorable(){};
-        virtual ~Factorable(){};
-    };
+        class Factorable
+            : public IntrusiveBase
+        {
+        public:
+            Factorable();
+            virtual ~Factorable();
+
+        protected:
+            void destroy() override;
+        };
+    }
 }

@@ -9,8 +9,8 @@
 
 #   include <vector>
 
-#   include "IntrusivePtr.h"
-#   include "IntrusiveBase.h"
+#   include "GOAP/IntrusivePtr.h"
+#   include "GOAP/Factorable.h"
 
 namespace GOAP
 {
@@ -19,7 +19,6 @@ namespace GOAP
 
     template<class T>
     using IntrusivePtr = Detail::IntrusivePtr<T>;
-
-    template<class T>
-    using IntrusiveBase = Detail::IntrusiveBase<T>;
+    
+    using Factorable = Detail::Factorable;
 }

@@ -15,7 +15,6 @@ namespace GOAP
 {
     namespace Detail
     {
-        template<class T>
         class IntrusiveBase
         {
         public:
@@ -25,26 +24,37 @@ namespace GOAP
             }
 
         public:
-            inline static void intrusive_ptr_add_ref( T * _ptr );
-            inline static void intrusive_ptr_dec_ref( T * _ptr );
+            inline static void IntrusivePtrAddRef( IntrusiveBase * _ptr );
+            inline static void IntrusivePtrDecRef( IntrusiveBase * _ptr );
 
         public:
-            inline static void intrusive_ptr_destroy( T * _ptr );
+            virtual void destroy() = 0;
 
         protected:
             uint32_t m_reference;
         };
         //////////////////////////////////////////////////////////////////////////
-        template<class T, class U>
-        inline void IntrusivePtrSetup( T *& _ptr, U * _other )
+        inline void IntrusiveBase::IntrusivePtrAddRef( IntrusiveBase * _ptr )
         {
-            _ptr = static_cast<T *>(_other);
+            ++_ptr->m_reference;
+        }
+        //////////////////////////////////////////////////////////////////////////
+        inline void IntrusiveBase::IntrusivePtrDecRef( IntrusiveBase * _ptr )
+        {
+            if( --_ptr->m_reference == 0 )
+            {
+                _ptr->destroy();
+            }
+        }
+        //////////////////////////////////////////////////////////////////////////
+        template<class T>
+        inline void IntrusivePtrSetup( T *& _ptr, T * _other )
+        {
+            _ptr = _other;
 
             if( _other != nullptr )
             {
-                T * ptr = static_cast<T *>(_other);
-
-                T::intrusive_ptr_add_ref( ptr );
+                T::IntrusivePtrAddRef( _other );
             }
         }
         //////////////////////////////////////////////////////////////////////////
@@ -53,7 +63,7 @@ namespace GOAP
         {
             T * other_ptr = _other.get();
 
-            GOAP::IntrusivePtrSetup( _ptr, other_ptr );
+            IntrusivePtrSetup( _ptr, other_ptr );
         }
         //////////////////////////////////////////////////////////////////////////
         template<class T>
@@ -61,31 +71,21 @@ namespace GOAP
         {
             if( _ptr != nullptr )
             {
-                T::intrusive_ptr_dec_ref( _ptr );
+                T::IntrusivePtrDecRef( _ptr );
                 _ptr = nullptr;
             }
         }
         //////////////////////////////////////////////////////////////////////////
         template<class T>
-        inline void IntrusiveBase<T>::intrusive_ptr_add_ref( T * _ptr )
+        inline void IntrusiveThisAcquire( T * _ptr )
         {
-            ++_ptr->m_reference;
+            T::IntrusivePtrAddRef( _ptr );
         }
         //////////////////////////////////////////////////////////////////////////
         template<class T>
-        inline void IntrusiveBase<T>::intrusive_ptr_dec_ref( T * _ptr )
+        inline void IntrusiveThisRelease( T * _ptr )
         {
-            if( --_ptr->m_reference == 0 )
-            {
-                T::intrusive_ptr_destroy( _ptr );
-            }
-        }
-        //////////////////////////////////////////////////////////////////////////
-        template<class T>
-        inline void IntrusiveBase<T>::intrusive_ptr_destroy( T * _ptr )
-        {
-            delete _ptr;
-            //Empty
+            T::IntrusivePtrDecRef( _ptr );
         }
     }
 }
