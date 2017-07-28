@@ -29,19 +29,13 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    Source::Source( const FactoryPtr & _fatory )
-        : m_factory( _fatory )
-        , m_skip( false )
+    Source::Source()
+        : m_skip( false )
     {
     }
     //////////////////////////////////////////////////////////////////////////
     Source::~Source()
     {
-    }
-    //////////////////////////////////////////////////////////////////////////
-    const FactoryPtr & Source::getFactory() const
-    {
-        return m_factory;
     }
     //////////////////////////////////////////////////////////////////////////
     void Source::setSkip( bool _skip )
@@ -61,16 +55,9 @@ namespace GOAP
         m_transcriptors.push_back( description );
     }
     //////////////////////////////////////////////////////////////////////////
-    void Source::addTask( const TypeId & _type, const Params & _params )
-    {
-        TaskPtr task = m_factory->generate( _type, _params );
-
-        this->addTask( task );
-    }
-    //////////////////////////////////////////////////////////////////////////
     TVectorSources & Source::addParallel( size_t _count )
     {
-        TranscriptorParallel * description = new TranscriptorParallel( m_factory, _count );
+        TranscriptorParallel * description = new TranscriptorParallel( _count );
 
         m_transcriptors.push_back( description );
 
@@ -81,7 +68,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     TVectorSources & Source::addRace( size_t _count )
     {
-        TranscriptorRace * description = new TranscriptorRace( m_factory, _count );
+        TranscriptorRace * description = new TranscriptorRace( _count );
 
         m_transcriptors.push_back( description );
 
@@ -110,7 +97,7 @@ namespace GOAP
     {
         SourcePtr source_until = this->_provideSource();
 
-        TaskPtr task = new TaskRepeat( m_factory, _provider, source_until );
+        TaskPtr task = new TaskRepeat( _provider, source_until );
 
         this->addTask( task );
 
@@ -173,7 +160,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Source::addScopeProvider( const ScopeProviderPtr & _provider )
     {
-        TaskPtr task = new TaskScope( m_factory, _provider );
+        TaskPtr task = new TaskScope( _provider );
 
         this->addTask( task );
     }
@@ -216,6 +203,6 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     SourcePtr Source::_provideSource()
     {
-        return new Source( m_factory );
+        return new Source();
     }
 }

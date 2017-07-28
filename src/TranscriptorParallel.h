@@ -13,7 +13,6 @@
 
 namespace GOAP
 {
-    typedef IntrusivePtr<class Factory> FactoryPtr;
 	typedef IntrusivePtr<class Source> SourcePtr;
 
 	typedef std::vector<SourcePtr> TVectorSources;
@@ -22,7 +21,7 @@ namespace GOAP
 		: public Transcriptor
 	{
 	public:
-		TranscriptorParallel( const FactoryPtr & _factory, size_t _count );
+		TranscriptorParallel( size_t _count );
 
 	public:
 		TVectorSources & getSources();

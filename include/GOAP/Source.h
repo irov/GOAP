@@ -18,7 +18,6 @@
 
 namespace GOAP
 {
-    typedef IntrusivePtr<class Factory> FactoryPtr;
     typedef IntrusivePtr<class Task> TaskPtr;
     typedef IntrusivePtr<class Chain> ChainPtr;
     typedef IntrusivePtr<class Source> SourcePtr;
@@ -37,11 +36,8 @@ namespace GOAP
         : public Factorable
     {
     public:
-        Source( const FactoryPtr & _fatory );
+        Source();
         ~Source();
-
-    public:
-        const FactoryPtr & getFactory() const;
 
     public:
         void setSkip( bool _skip );
@@ -49,7 +45,6 @@ namespace GOAP
         
     public:
         void addTask( const TaskPtr & _task );
-        void addTask( const TypeId & _type, const Params & _params );
 
     public:
         TVectorSources & addParallel( size_t _count );
@@ -136,8 +131,6 @@ namespace GOAP
         virtual SourcePtr _provideSource();
 
     protected:
-        FactoryPtr m_factory;
-
         TVectorTranscriptor m_transcriptors;
 
         bool m_skip;

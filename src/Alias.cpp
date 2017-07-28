@@ -7,7 +7,6 @@
 
 #	include "GOAP/Alias.h"
 
-#   include "GOAP/Factory.h"
 #   include "GOAP/Source.h"
 #   include "GOAP/Chain.h"
 
@@ -16,8 +15,7 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    Alias::Alias( const FactoryPtr & _factory )
-        : m_factory(_factory)
+    Alias::Alias()
     {
     }
 	//////////////////////////////////////////////////////////////////////////    
@@ -25,7 +23,7 @@ namespace GOAP
     {
         ChainPtr chain = m_chain;
 
-        GOAP::SourcePtr source = new GOAP::Source( m_factory );
+        GOAP::SourcePtr source = new GOAP::Source();
 
         bool skiped = this->isSkip();
         source->setSkip( skiped );
