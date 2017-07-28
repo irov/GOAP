@@ -39,6 +39,11 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
+    const FactoryPtr & Source::getFactory() const
+    {
+        return m_factory;
+    }
+    //////////////////////////////////////////////////////////////////////////
     void Source::setSkip( bool _skip )
     {
         m_skip = _skip;

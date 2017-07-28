@@ -41,6 +41,9 @@ namespace GOAP
         ~Source();
 
     public:
+        const FactoryPtr & getFactory() const;
+
+    public:
         void setSkip( bool _skip );
         bool isSkip() const;
         

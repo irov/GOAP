@@ -14,7 +14,7 @@ namespace GOAP
     namespace Detail
     {
         class Factorable
-            : public IntrusiveBase
+            : virtual public IntrusiveBase
         {
         public:
             Factorable();
