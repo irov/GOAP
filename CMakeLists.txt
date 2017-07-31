@@ -35,6 +35,7 @@ ${SOURCE_DIR}/TaskRaceNeck.h
 ${SOURCE_DIR}/TaskRepeat.cpp
 ${SOURCE_DIR}/TaskScope.cpp
 ${SOURCE_DIR}/TaskSwitch.cpp
+${SOURCE_DIR}/TaskWhile.cpp
 ${SOURCE_DIR}/Transcriptor.h
 ${SOURCE_DIR}/TranscriptorBase.cpp
 ${SOURCE_DIR}/TranscriptorBase.h
@@ -70,6 +71,7 @@ ${INCLUDE_DIR}/TaskIf.h
 ${INCLUDE_DIR}/TaskRepeat.h
 ${INCLUDE_DIR}/TaskScope.h
 ${INCLUDE_DIR}/TaskSwitch.h
+${INCLUDE_DIR}/TaskWhile.h
 )
 
 IF( LIBGOAP_EXTERNAL_INCLUDE )

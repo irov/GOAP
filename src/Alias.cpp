@@ -27,8 +27,10 @@ namespace GOAP
 
         bool skiped = this->isSkip();
         source->setSkip( skiped );
+        
+        SourcePtr guard_source = source->addGuard( [this](){ IntrusiveThisAcquire( this ); }, [this](){ IntrusiveThisRelease( this ); } );
 
-        this->_onGenerate( source );
+        this->_onGenerate( guard_source );
 
         if( this->injectSource( source ) == false )
         {

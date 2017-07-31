@@ -20,6 +20,7 @@
 #	include "GOAP/TaskFork.h"
 #	include "GOAP/TaskGuard.h"
 #	include "GOAP/TaskDeadLock.h"
+#   include "GOAP/TaskWhile.h"
 
 #	include "TranscriptorBase.h"
 #	include "TranscriptorParallel.h"
@@ -142,6 +143,13 @@ namespace GOAP
         const SourcePtr & source_code = race_source[1];
 
         return source_code;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Source::addWhileProvider( const ScopeProviderPtr & _scopeProvider )
+    {
+        TaskPtr task = new TaskWhile( _scopeProvider );
+
+        this->addTask( task );
     }
     //////////////////////////////////////////////////////////////////////////
     void Source::addFunctionProvider( const FunctionProviderPtr & _provider )

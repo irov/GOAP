@@ -106,6 +106,14 @@ namespace GOAP
             return source;
         }
 
+        template<class F>
+        void addWhile( F _f )
+        {
+            ScopeProviderT provider_scope = new ScopeProviderT<F>( _f );
+
+            this->addWhileProvider( provider_scope );
+        }
+
         template<class FB, class FE>
         SourcePtr addGuard( FB _begin, FE _end )
         {
@@ -113,6 +121,8 @@ namespace GOAP
             GuardProviderPtr end_provider = new GuardProviderT<FE>( _end );
 
             SourcePtr source = this->addGuardProvider( begin_provider, end_provider );
+
+            return source;
         }
 
     public:
@@ -123,6 +133,7 @@ namespace GOAP
         SourcePtr addRepeatProvider( const ScopeProviderPtr & _provider );
         TVectorSources & addSwitchProvider( const SwitchProviderPtr & _provider, size_t _count );
         SourcePtr addGuardProvider( const GuardProviderPtr & _begin, const GuardProviderPtr & _end );
+        void addWhileProvider( const ScopeProviderPtr & _providerScope );
 
     public:
         TaskPtr parse( const ChainPtr & _chain, const TaskPtr & _task );
