@@ -5,9 +5,9 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#	pragma once
+#   pragma once
 
-#	include "GOAP/Task.h"
+#   include "GOAP/Task.h"
 #   include "GOAP/Source.h"
 
 namespace GOAP
