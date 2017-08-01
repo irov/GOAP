@@ -8,6 +8,7 @@
 #	pragma once
 
 #	include "GOAP/Task.h"
+#   include "GOAP/Source.h"
 
 namespace GOAP
 {
