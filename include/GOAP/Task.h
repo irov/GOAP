@@ -54,7 +54,7 @@ namespace GOAP
 		
 	public:
 		Task();
-        Task( uint32_t _events );
+        explicit Task( uint32_t _events );
 
     public:
 		virtual ~Task();
