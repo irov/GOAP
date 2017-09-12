@@ -138,6 +138,8 @@ namespace GOAP
 
 		void addPrev_( Task * _task );
 		void removePrev_( Task * _task );
+        void removeNext_( Task * _task );
+        void unlink_( Task * _task );
 		bool hasPrev_( const Task * _task ) const;
 		void finalize_();
 

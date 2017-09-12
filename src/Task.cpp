@@ -306,6 +306,19 @@ namespace GOAP
 			m_chain->completeTask( this );
 		}
 
+        TVectorTasks copy_nexts = m_nexts;
+
+        for( TVectorTasks::const_iterator
+            it = copy_nexts.begin(),
+            it_end = copy_nexts.end();
+            it != it_end;
+            ++it )
+        {
+            const TaskPtr & task = *it;
+
+            task->cancel();
+        }
+
 		this->finalize_();
 	}
 	//////////////////////////////////////////////////////////////////////////
@@ -333,6 +346,8 @@ namespace GOAP
 				m_chain->processTask( next, true );
 			}
 		}
+
+        m_nexts.clear();
 	}
 	//////////////////////////////////////////////////////////////////////////
 	void Task::complete( bool _running, bool _skiped )
@@ -387,6 +402,8 @@ namespace GOAP
 					m_chain->processTask( next, false );
 				}
 			}
+
+            m_nexts.clear();
 		}
 		else
 		{
@@ -405,6 +422,8 @@ namespace GOAP
 					m_chain->processTask( next, true );
 				}
 			}
+
+            m_nexts.clear();
 		}
 
 		ChainPtr chain = m_chain;
@@ -428,7 +447,7 @@ namespace GOAP
 		}
 #	endif
 
-		this->removePrev_( _task );
+		this->unlink_( _task );
 
 		if( this->onCheckSkip() == false )
 		{
@@ -493,10 +512,12 @@ namespace GOAP
 				{
 					prev->cancelPrev_();
 					prev->cancel();
+                    this->unlink_( prev.get() );
 				}break;
 			case  TASK_STATE_RUN:
 				{
 					prev->cancel();
+                    this->unlink_( prev.get() );
 				}break;
 			default:
 				break;
@@ -517,7 +538,8 @@ namespace GOAP
 			return false;
 		}
 #	endif
-		this->removePrev_( _task );
+
+		this->unlink_( _task );
 
 		if( this->onCheckRun() == false )
 		{
@@ -697,6 +719,19 @@ namespace GOAP
 
 		m_prevs.erase( it_erase );
 	}
+    //////////////////////////////////////////////////////////////////////////
+    void Task::removeNext_( Task * _task )
+    {
+        TVectorTasks::iterator it_erase = std::find( m_nexts.begin(), m_nexts.end(), _task );
+
+        m_nexts.erase( it_erase );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Task::unlink_( Task * _task )
+    {
+        this->removePrev_( _task );
+        _task->removeNext_( this );
+    }
 	//////////////////////////////////////////////////////////////////////////
 	bool Task::hasPrev_( const Task * _task ) const
 	{
@@ -712,6 +747,7 @@ namespace GOAP
 		this->onFinalize();
 
 		m_chain = nullptr;
+
 		m_nexts.clear();
 		m_prevs.clear();
 	}
