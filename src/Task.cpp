@@ -724,6 +724,11 @@ namespace GOAP
     {
         TVectorTasks::iterator it_erase = std::find( m_nexts.begin(), m_nexts.end(), _task );
 
+        if( it_erase == m_nexts.end() )
+        {
+            return;
+        }
+
         m_nexts.erase( it_erase );
     }
     //////////////////////////////////////////////////////////////////////////
