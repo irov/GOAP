@@ -28,7 +28,7 @@ namespace GOAP
 	template<class F>
 	static ChainPtr __makeChain( const SourcePtr & _source, F f )
 	{
-		ChainPtr chain = new Chain(_source);
+		ChainPtr chain = GOAP_NEW Chain(_source);
 
 		chain->addCallback(f);
 
@@ -73,7 +73,7 @@ namespace GOAP
 			return true;
 		}
 
-		GOAP::SourcePtr sourceRepeat = new GOAP::Source();
+		GOAP::SourcePtr sourceRepeat = GOAP_NEW GOAP::Source();
 
 		bool skip = this->isSkip();
 		sourceRepeat->setSkip( skip );
@@ -102,7 +102,7 @@ namespace GOAP
 			return;
 		}
 
-        GOAP::SourcePtr sourceRepeat = new GOAP::Source();
+        GOAP::SourcePtr sourceRepeat = GOAP_NEW GOAP::Source();
 
 		sourceRepeat->setSkip( _skip );
 

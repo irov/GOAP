@@ -28,7 +28,7 @@ namespace GOAP
 		bool skip = this->isSkip();
 		m_fork->setSkip( skip );
 
-		ChainPtr chain = new Chain( m_fork );
+		ChainPtr chain = GOAP_NEW Chain( m_fork );
 
 		chain->run();
 

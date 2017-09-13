@@ -3,6 +3,7 @@ PROJECT(GOAP)
 OPTION(LIBGOAP_EXTERNAL_BUILD "LIBGOAP_EXTERNAL_BUILD" OFF)
 OPTION(LIBGOAP_EXTERNAL_INCLUDE "LIBGOAP_EXTERNAL_INCLUDE" OFF)
 OPTION(LIBGOAP_EXTERNAL_INCLUDE_PATH "LIBGOAP_EXTERNAL_INCLUDE_PATH" "")
+OPTION(LIBGOAP_SANDBOX "LIBGOAP_SANDBOX" OFF)
 
 IF( NOT LIBGOAP_EXTERNAL_BUILD )
     SET( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build_temp/${ENGINE_LIB_DIR} )
@@ -82,3 +83,25 @@ include_directories(${PROJECT_NAME} include)
 
 add_library( ${PROJECT_NAME} STATIC ${sources} )
 
+if( LIBGOAP_SANDBOX )
+    set(
+    Sandbox_SOURCES
+        sandbox/main.cpp
+        sandbox/Scheduler.cpp
+        sandbox/Scheduler.h
+        sandbox/TaskDelay.cpp
+        sandbox/TaskDelay.h
+        sandbox/TaskPrint.cpp
+        sandbox/TaskPrint.h
+        sandbox/TaskRoll.cpp
+        sandbox/TaskRoll.h
+    )
+    
+    ADD_DEFINITIONS(-D_CRT_SECURE_NO_DEPRECATE -D_SCL_SECURE_NO_WARNINGS)
+
+    INCLUDE_DIRECTORIES( Sandbox ../include )
+
+    ADD_EXECUTABLE( Sandbox ${Sandbox_SOURCES} )
+
+    TARGET_LINK_LIBRARIES( Sandbox ${PROJECT_NAME} )
+endif()

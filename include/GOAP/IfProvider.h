@@ -45,7 +45,7 @@ namespace GOAP
 	template<class F>
 	IfProviderPtr makeIfProvider( F _f )
 	{
-		IfProviderPtr provider = new IfProviderT<F>( _f );
+		IfProviderPtr provider = GOAP_NEW IfProviderT<F>( _f );
 
 		return provider;
 	}

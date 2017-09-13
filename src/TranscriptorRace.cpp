@@ -26,7 +26,7 @@ namespace GOAP
 		it != it_end;
 		++it )
 		{
-			*it = new Source();
+			*it = GOAP_NEW Source();
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////
@@ -42,7 +42,7 @@ namespace GOAP
             return _task;
         }
 
-		TaskPtr task_parallel_neck = new TaskRaceNeck();
+		TaskPtr task_parallel_neck = GOAP_NEW TaskRaceNeck();
 		task_parallel_neck->setChain( _chain );
 
 		for( TVectorSources::iterator

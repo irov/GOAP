@@ -55,7 +55,7 @@ namespace GOAP
         template<class F>
         void addFunction( F _f )
         {
-            FunctionProviderPtr provider = new FunctionProviderT<F>( _f );
+            FunctionProviderPtr provider = GOAP_NEW FunctionProviderT<F>( _f );
 
             this->addFunctionProvider( provider );
         }
@@ -63,7 +63,7 @@ namespace GOAP
         template<class F>
         void addCallback( F _f )
         {
-            CallbackProviderPtr provider = new CallbackProviderT<F>( _f );
+            CallbackProviderPtr provider = GOAP_NEW CallbackProviderT<F>( _f );
 
             this->addCallbackProvider( provider );
         }
@@ -71,7 +71,7 @@ namespace GOAP
         template<class F>
         void addScope( F _f )
         {
-            ScopeProviderPtr provider = new ScopeProviderT<F>( _f );
+            ScopeProviderPtr provider = GOAP_NEW ScopeProviderT<F>( _f );
 
             this->addScopeProvider( provider );
         }
@@ -79,7 +79,7 @@ namespace GOAP
         template<class F>
         IfSource addIf( F _f )
         {
-            IfProviderPtr provider = new IfProviderT<F>( _f );
+            IfProviderPtr provider = GOAP_NEW IfProviderT<F>( _f );
 
             IfSource desc = this->addIfProvider( provider );
 
@@ -89,7 +89,7 @@ namespace GOAP
         template<class F>
         TVectorSources & addSwitch( size_t _count, F _f )
         {
-            SwitchProviderPtr provider = new SwitchProviderT<F>( _f );
+            SwitchProviderPtr provider = GOAP_NEW SwitchProviderT<F>( _f );
 
             TVectorSources & sources = this->addSwitchProvider( provider, _count );
 
@@ -99,7 +99,7 @@ namespace GOAP
         template<class F>
         SourcePtr addRepeat( F _f )
         {
-            ScopeProviderPtr provider = new ScopeProviderT<F>( _f );
+            ScopeProviderPtr provider = GOAP_NEW ScopeProviderT<F>( _f );
 
             SourcePtr source = this->addRepeatProvider( provider );
 
@@ -109,7 +109,7 @@ namespace GOAP
         template<class F>
         void addWhile( F _f )
         {
-            ScopeProviderT provider_scope = new ScopeProviderT<F>( _f );
+            ScopeProviderT provider_scope = GOAP_NEW ScopeProviderT<F>( _f );
 
             this->addWhileProvider( provider_scope );
         }
@@ -117,8 +117,8 @@ namespace GOAP
         template<class FB, class FE>
         SourcePtr addGuard( FB _begin, FE _end )
         {
-            GuardProviderPtr begin_provider = new GuardProviderT<FB>( _begin );
-            GuardProviderPtr end_provider = new GuardProviderT<FE>( _end );
+            GuardProviderPtr begin_provider = GOAP_NEW GuardProviderT<FB>( _begin );
+            GuardProviderPtr end_provider = GOAP_NEW GuardProviderT<FE>( _end );
 
             SourcePtr source = this->addGuardProvider( begin_provider, end_provider );
 

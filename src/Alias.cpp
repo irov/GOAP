@@ -23,7 +23,7 @@ namespace GOAP
     {
         ChainPtr chain = m_chain;
 
-        GOAP::SourcePtr source = new GOAP::Source();
+        GOAP::SourcePtr source = GOAP_NEW GOAP::Source();
 
         bool skiped = this->isSkip();
         source->setSkip( skiped );

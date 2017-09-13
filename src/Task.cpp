@@ -286,7 +286,7 @@ namespace GOAP
 		return true;
 	}
 	//////////////////////////////////////////////////////////////////////////
-	void Task::cancel()
+	void Task::cancel( bool _withNexts )
 	{
 		if( m_state == TASK_STATE_END )
 		{
@@ -306,17 +306,20 @@ namespace GOAP
 			m_chain->completeTask( this );
 		}
 
-        TVectorTasks copy_nexts = m_nexts;
-
-        for( TVectorTasks::const_iterator
-            it = copy_nexts.begin(),
-            it_end = copy_nexts.end();
-            it != it_end;
-            ++it )
+        if( _withNexts == true )
         {
-            const TaskPtr & task = *it;
+            TVectorTasks copy_nexts = m_nexts;
 
-            task->cancel();
+            for( TVectorTasks::const_iterator
+                it = copy_nexts.begin(),
+                it_end = copy_nexts.end();
+                it != it_end;
+                ++it )
+            {
+                const TaskPtr & task = *it;
+
+                task->cancel( _withNexts );
+            }
         }
 
 		this->finalize_();
@@ -735,7 +738,7 @@ namespace GOAP
     void Task::unlink_( Task * _task )
     {
         this->removePrev_( _task );
-        _task->removeNext_( this );
+        //_task->removeNext_( this );
     }
 	//////////////////////////////////////////////////////////////////////////
 	bool Task::hasPrev_( const Task * _task ) const

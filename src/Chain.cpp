@@ -45,14 +45,14 @@ namespace GOAP
 
 		this->setState_( TASK_CHAIN_STATE_RUN );
 
-		TaskPtr task_first = new TaskDummy();
+		TaskPtr task_first = GOAP_NEW TaskDummy();
 		task_first->setChain( this );
 
 		TaskPtr task_last = m_source->parse( this, task_first );
 
 		CallbackProviderPtr provider = makeCallbackProvider( [this] ( CallbackObserver * _callback, bool _skip ) { this->complete( _callback, _skip ); } );
 
-		TaskPtr task_cb = new TaskCallback( provider );
+		TaskPtr task_cb = GOAP_NEW TaskCallback( provider );
 		task_cb->setChain( this );
 
 		task_last->addNext( task_cb );
@@ -178,7 +178,7 @@ namespace GOAP
 		{
 			const TaskPtr & task = *it;
 
-			task->cancel();
+			task->cancel( true );
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////

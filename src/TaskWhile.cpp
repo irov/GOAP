@@ -26,7 +26,7 @@ namespace GOAP
 	template<class F>
 	static ChainPtr __makeChain( const SourcePtr & _source, F f )
 	{
-		ChainPtr chain = new Chain(_source);
+		ChainPtr chain = GOAP_NEW Chain(_source);
 
 		chain->addCallback(f);
 
@@ -47,7 +47,7 @@ namespace GOAP
 	//////////////////////////////////////////////////////////////////////////
 	bool TaskWhile::_onRun()
 	{
-		GOAP::SourcePtr sourceWhile = new GOAP::Source();
+		GOAP::SourcePtr sourceWhile = GOAP_NEW GOAP::Source();
 
 		bool skip = this->isSkip();
 		sourceWhile->setSkip( skip );
@@ -71,7 +71,7 @@ namespace GOAP
 	//////////////////////////////////////////////////////////////////////////
 	void TaskWhile::whileComplete_( bool _skip )
 	{
-        GOAP::SourcePtr sourceWhile = new GOAP::Source();
+        GOAP::SourcePtr sourceWhile = GOAP_NEW GOAP::Source();
 
         sourceWhile->setSkip( _skip );
 

@@ -49,7 +49,7 @@ namespace GOAP
 	template<class F>
 	CallbackProviderPtr makeCallbackProvider( F _f )
 	{
-		CallbackProviderPtr provider = new CallbackProviderT<F>( _f );
+		CallbackProviderPtr provider = GOAP_NEW CallbackProviderT<F>( _f );
 
 		return provider;
 	}

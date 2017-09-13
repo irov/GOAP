@@ -45,7 +45,7 @@ namespace GOAP
         template<class F>
         ChainProviderPtr makeChainProvider( F _f )
         {
-            ChainProviderPtr provider = new ChainProviderT<F>( _f );
+            ChainProviderPtr provider = GOAP_NEW ChainProviderT<F>( _f );
 
             return provider;
         }

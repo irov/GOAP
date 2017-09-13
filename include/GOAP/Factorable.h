@@ -9,6 +9,21 @@
 
 #	include "GOAP/IntrusiveBase.h"
 
+#ifdef _DEBUG
+#   ifndef GOAP_NDEBUG
+#   define GOAP_DEBUG
+#   endif
+#endif
+
+#ifdef GOAP_DEBUG
+#   include <new>
+#define GOAP_NEW new(__FILE__, __LINE__)
+#define GOAP_DELETE delete(__FILE__, __LINE__)
+#else
+#define GOAP_NEW new
+#define GOAP_DELETE delete
+#endif
+
 namespace GOAP
 {
     namespace Detail
@@ -20,8 +35,22 @@ namespace GOAP
             Factorable();
             virtual ~Factorable();
 
+#ifdef GOAP_DEBUG
+        public:
+            void operator delete(void* _ptr);
+
+            void * operator new (std::size_t _size, const char * _file, int _line);
+            void operator delete(void* _ptr, const char * _file, int _line);
+#endif
+
         protected:
             void destroy() override;
+
+#ifdef GOAP_DEBUG
+        protected:
+            const char * m_debugfile;
+            uint32_t m_debugline;
+#endif
         };
     }
 }

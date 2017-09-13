@@ -84,7 +84,7 @@ namespace GOAP
 		bool run( bool _checkSkipedFalse = false );
 		bool skip();
 
-		void cancel();
+		void cancel( bool _withNexts = false );
 
 	public:
 		void complete( bool _running = true, bool _skiped = false );
