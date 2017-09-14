@@ -7,7 +7,7 @@
 
 #	pragma once
 
-#   include <stddef.h>
+#   include <cstddef>
 
 namespace GOAP
 {
@@ -33,7 +33,7 @@ namespace GOAP
             {
             }
 
-            inline IntrusivePtr( nullptr_t )
+            inline IntrusivePtr( std::nullptr_t )
                 : m_ptr( nullptr )
             {
             }
@@ -85,7 +85,7 @@ namespace GOAP
                 return *this;
             }
 
-            inline IntrusivePtr & operator = ( nullptr_t )
+            inline IntrusivePtr & operator = ( std::nullptr_t )
             {
                 this->decref();
                 m_ptr = nullptr;
@@ -239,7 +239,7 @@ namespace GOAP
         }
         //////////////////////////////////////////////////////////////////////////
         template<class T>
-        inline bool operator != ( const IntrusivePtr<T> & _left, nullptr_t )
+        inline bool operator != ( const IntrusivePtr<T> & _left, std::nullptr_t )
         {
             const T * ptr = _left.get();
 
@@ -247,7 +247,7 @@ namespace GOAP
         }
         //////////////////////////////////////////////////////////////////////////
         template<class T>
-        inline bool operator != ( nullptr_t, const IntrusivePtr<T> & _right )
+        inline bool operator != ( std::nullptr_t, const IntrusivePtr<T> & _right )
         {
             const T * ptr = intrusive_get<T *>( _right );
 
@@ -255,7 +255,7 @@ namespace GOAP
         }
         //////////////////////////////////////////////////////////////////////////
         template<class T>
-        inline bool operator == ( nullptr_t, const IntrusivePtr<T> & _right )
+        inline bool operator == ( std::nullptr_t, const IntrusivePtr<T> & _right )
         {
             const T * ptr = intrusive_get<T *>( _right );
 
@@ -263,7 +263,7 @@ namespace GOAP
         }
         //////////////////////////////////////////////////////////////////////////
         template<class T>
-        inline bool operator == ( const IntrusivePtr<T> & _left, nullptr_t )
+        inline bool operator == ( const IntrusivePtr<T> & _left, std::nullptr_t )
         {
             const T * ptr = _left.get();
 
