@@ -109,7 +109,7 @@ namespace GOAP
         template<class F>
         void addWhile( F _f )
         {
-            ScopeProviderT provider_scope = GOAP_NEW ScopeProviderT<F>( _f );
+            ScopeProviderPtr provider_scope = GOAP_NEW ScopeProviderT<F>( _f );
 
             this->addWhileProvider( provider_scope );
         }

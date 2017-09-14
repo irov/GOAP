@@ -7,7 +7,7 @@
 
 #	pragma once
 
-#	include <cstddef>
+#   include <stddef.h>
 
 namespace GOAP
 {
@@ -33,7 +33,7 @@ namespace GOAP
             {
             }
 
-            inline IntrusivePtr( std::nullptr_t )
+            inline IntrusivePtr( nullptr_t )
                 : m_ptr( nullptr )
             {
             }

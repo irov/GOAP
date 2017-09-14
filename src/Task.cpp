@@ -9,6 +9,8 @@
 #   include "GOAP/Source.h"
 #	include "GOAP/Chain.h"
 
+#   include <algorithm>
+
 namespace GOAP
 {
 	//////////////////////////////////////////////////////////////////////////
