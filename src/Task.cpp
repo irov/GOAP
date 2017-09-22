@@ -740,7 +740,7 @@ namespace GOAP
     void Task::unlink_( Task * _task )
     {
         this->removePrev_( _task );
-        //_task->removeNext_( this );
+        _task->removeNext_( this );
     }
 	//////////////////////////////////////////////////////////////////////////
 	bool Task::hasPrev_( const Task * _task ) const
