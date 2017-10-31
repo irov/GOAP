@@ -13,78 +13,78 @@
 
 namespace GOAP
 {
-	class CallbackObserver;
+    class CallbackObserver;
 
-	typedef IntrusivePtr<class Task> TaskPtr;
-	typedef IntrusivePtr<class Source> SourcePtr;
-	
-	typedef Vector<TaskPtr> TVectorTask;
+    typedef IntrusivePtr<class Task> TaskPtr;
+    typedef IntrusivePtr<class Source> SourcePtr;
 
-	class Chain
-		: public Factorable
-	{
-	public:
-		enum ETaskChainState
-		{
-			TASK_CHAIN_STATE_IDLE,
-			TASK_CHAIN_STATE_RUN,
-			TASK_CHAIN_STATE_SKIP,
-			TASK_CHAIN_STATE_COMPLETE,
-			TASK_CHAIN_STATE_STOP_IDLE,
-			TASK_CHAIN_STATE_STOP_RUN,
-			TASK_CHAIN_STATE_CANCEL,
-			TASK_CHAIN_STATE_FINALIZE,
-		};
+    typedef Vector<TaskPtr> TVectorTask;
 
-	public:
-		Chain(const SourcePtr & _source);
-		~Chain();
+    class Chain
+        : public Factorable
+    {
+    public:
+        enum ETaskChainState
+        {
+            TASK_CHAIN_STATE_IDLE,
+            TASK_CHAIN_STATE_RUN,
+            TASK_CHAIN_STATE_SKIP,
+            TASK_CHAIN_STATE_COMPLETE,
+            TASK_CHAIN_STATE_STOP_IDLE,
+            TASK_CHAIN_STATE_STOP_RUN,
+            TASK_CHAIN_STATE_CANCEL,
+            TASK_CHAIN_STATE_FINALIZE,
+        };
 
-	public:
-		template<class F>
-		void addCallback(F _f)
-		{
-			ChainProviderPtr untilChainProvider = Helper::makeChainProvider<F>(_f);
+    public:
+        Chain( const SourcePtr & _source );
+        ~Chain();
 
-			this->addCallbackProvider(untilChainProvider);
-		}
+    public:
+        template<class F>
+        void addCallback( F _f )
+        {
+            ChainProviderPtr untilChainProvider = Helper::makeChainProvider<F>( _f );
 
-		void addCallbackProvider(const ChainProviderPtr & _cb);
+            this->addCallbackProvider( untilChainProvider );
+        }
 
-	public:
-		bool run();
-		void skip();
-		void cancel();		
-		
-	public:
-		bool isComplete() const;
+        void addCallbackProvider( const ChainProviderPtr & _cb );
 
-	public:
-		void runTask( const TaskPtr & _task );
-		void completeTask( const TaskPtr & _task );
-		void processTask( const TaskPtr & _task, bool _skip );
+    public:
+        bool run();
+        void skip();
+        void cancel();
 
-	protected:
-		void complete( CallbackObserver * _callback, bool _skip );
+    public:
+        bool isComplete() const;
 
-	protected:
-		void skipRunningTasks_();
-		void cancelRunningTasks_();
-		void finalize_();
-		void setState_( ETaskChainState _state );
-		ETaskChainState getState_() const;
+    public:
+        void runTask( const TaskPtr & _task );
+        void completeTask( const TaskPtr & _task );
+        void processTask( const TaskPtr & _task, bool _skip );
 
-	public:
-		ETaskChainState m_state;
+    protected:
+        void complete( CallbackObserver * _callback, bool _skip );
 
-		SourcePtr m_source;
+    protected:
+        void skipRunningTasks_();
+        void cancelRunningTasks_();
+        void finalize_();
+        void setState_( ETaskChainState _state );
+        ETaskChainState getState_() const;
 
-		TVectorTask m_runningTasks;
+    public:
+        ETaskChainState m_state;
 
-		ChainProviderPtr m_cb;
+        SourcePtr m_source;
 
-		bool m_complete;
-	};
+        TVectorTask m_runningTasks;
 
-	typedef IntrusivePtr<Chain> ChainPtr;
+        ChainProviderPtr m_cb;
+
+        bool m_complete;
+    };
+
+    typedef IntrusivePtr<Chain> ChainPtr;
 }

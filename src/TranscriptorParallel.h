@@ -24,7 +24,7 @@ namespace GOAP
 		TranscriptorParallel( size_t _count );
 
 	public:
-		TVectorSources & getSources();
+		const TVectorSources & getSources() const;
 
 	public:
 		TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) override;

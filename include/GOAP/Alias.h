@@ -14,9 +14,9 @@ namespace GOAP
 {
     typedef IntrusivePtr<class Source> SourcePtr;
 
-	class Alias
-		: public Task
-	{
+    class Alias
+        : public Task
+    {
     public:
         Alias();
 
@@ -27,5 +27,5 @@ namespace GOAP
         virtual void _onGenerate( const SourcePtr & _source ) = 0;
     };
 
-	typedef IntrusivePtr<Alias> AliasPtr;
+    typedef IntrusivePtr<Alias> AliasPtr;
 }

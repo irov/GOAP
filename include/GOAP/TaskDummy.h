@@ -11,11 +11,11 @@
 
 namespace GOAP
 {
-	class TaskDummy
-		: public Task
-	{
-	public:
-		TaskDummy();
-		~TaskDummy();
-	};
+    class TaskDummy
+        : public Task
+    {
+    public:
+        TaskDummy();
+        ~TaskDummy();
+    };
 }

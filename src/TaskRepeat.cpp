@@ -12,130 +12,130 @@
 
 namespace GOAP
 {
-	//////////////////////////////////////////////////////////////////////////
-	TaskRepeat::TaskRepeat( const ScopeProviderPtr & _provider, const SourcePtr & _until )
-		: Task(TASK_EVENT_RUN | TASK_EVENT_FINALIZE )
+    //////////////////////////////////////////////////////////////////////////
+    TaskRepeat::TaskRepeat( const ScopeProviderPtr & _provider, const SourcePtr & _until )
+        : Task( TASK_EVENT_RUN | TASK_EVENT_FINALIZE )
         , m_providerRepeat( _provider )
-		, m_sourceUntil(_until)
-		, m_repeat(true)
-	{
-	}
-	//////////////////////////////////////////////////////////////////////////
-	TaskRepeat::~TaskRepeat()
-	{
-	}
-	//////////////////////////////////////////////////////////////////////////
-	template<class F>
-	static ChainPtr __makeChain( const SourcePtr & _source, F f )
-	{
-		ChainPtr chain = GOAP_NEW Chain(_source);
+        , m_sourceUntil( _until )
+        , m_repeat( true )
+    {
+    }
+    //////////////////////////////////////////////////////////////////////////
+    TaskRepeat::~TaskRepeat()
+    {
+    }
+    //////////////////////////////////////////////////////////////////////////
+    template<class F>
+    static ChainPtr __makeChain( const SourcePtr & _source, F f )
+    {
+        ChainPtr chain = GOAP_NEW Chain( _source );
 
-		chain->addCallback(f);
+        chain->addCallback( f );
 
-		return chain;
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void TaskRepeat::_onFinalize()
-	{
-		m_repeat = false;
+        return chain;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void TaskRepeat::_onFinalize()
+    {
+        m_repeat = false;
 
-		m_providerRepeat = nullptr;
-		m_sourceUntil = nullptr;
+        m_providerRepeat = nullptr;
+        m_sourceUntil = nullptr;
 
-		if( m_chainRepeat != nullptr )
-		{
-			ChainPtr chain = m_chainRepeat;
-			m_chainRepeat = nullptr;
-			chain->cancel();
-		}
+        if( m_chainRepeat != nullptr )
+        {
+            ChainPtr chain = m_chainRepeat;
+            m_chainRepeat = nullptr;
+            chain->cancel();
+        }
 
-		if( m_chainUntil != nullptr )
-		{
-			ChainPtr chain = m_chainUntil;
-			m_chainUntil = nullptr;
-			chain->cancel();
-		}
-	}
-	//////////////////////////////////////////////////////////////////////////
-	bool TaskRepeat::_onRun()
-	{
-		ChainPtr chainUntil = __makeChain( m_sourceUntil, [this] ( bool _skip ){this->untilComplete_( _skip ); } );
+        if( m_chainUntil != nullptr )
+        {
+            ChainPtr chain = m_chainUntil;
+            m_chainUntil = nullptr;
+            chain->cancel();
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool TaskRepeat::_onRun()
+    {
+        ChainPtr chainUntil = __makeChain( m_sourceUntil, [this]( bool _skip ){this->untilComplete_( _skip ); } );
 
-		m_chainUntil = chainUntil;
+        m_chainUntil = chainUntil;
 
-		if( m_chainUntil->run() == false )
-		{
-			return true;
-		}
+        if( m_chainUntil->run() == false )
+        {
+            return true;
+        }
 
-		if( m_repeat == false )
-		{
-			return true;
-		}
-
-		GOAP::SourcePtr sourceRepeat = GOAP_NEW GOAP::Source();
-
-		bool skip = this->isSkip();
-		sourceRepeat->setSkip( skip );
-
-		if( m_providerRepeat->onScope( sourceRepeat ) == false )
-		{
-			return true;
-		}
-
-		ChainPtr chainRepeat = __makeChain( sourceRepeat, [this] ( bool _skip ){this->repeatComplete_( _skip ); } );
-
-		m_chainRepeat = chainRepeat;
-
-		if( m_chainRepeat->run() == false )
-		{
-			return true;
-		}
-
-		return false;
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void TaskRepeat::repeatComplete_( bool _skip )
-	{
-		if( m_repeat == false )
-		{
-			return;
-		}
+        if( m_repeat == false )
+        {
+            return true;
+        }
 
         GOAP::SourcePtr sourceRepeat = GOAP_NEW GOAP::Source();
 
-		sourceRepeat->setSkip( _skip );
+        bool skip = this->isSkip();
+        sourceRepeat->setSkip( skip );
 
-		if( m_providerRepeat->onScope( sourceRepeat ) == false )
-		{
-			this->complete( true, _skip );
+        if( m_providerRepeat->onScope( sourceRepeat ) == false )
+        {
+            return true;
+        }
 
-			return;
-		}
+        ChainPtr chainRepeat = __makeChain( sourceRepeat, [this]( bool _skip ){this->repeatComplete_( _skip ); } );
 
-		ChainPtr chainRepeat = __makeChain( sourceRepeat, [this] ( bool _skip ){this->repeatComplete_( _skip ); } );
+        m_chainRepeat = chainRepeat;
 
-		m_chainRepeat = chainRepeat;
+        if( m_chainRepeat->run() == false )
+        {
+            return true;
+        }
 
-		if( m_chainRepeat->run() == false )
-		{
-			this->complete( true, _skip );
+        return false;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void TaskRepeat::repeatComplete_( bool _skip )
+    {
+        if( m_repeat == false )
+        {
+            return;
+        }
 
-			return;
-		}
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void TaskRepeat::untilComplete_( bool _skip )
-	{
-		m_repeat = false;
+        GOAP::SourcePtr sourceRepeat = GOAP_NEW GOAP::Source();
 
-		if( m_chainRepeat != nullptr )
-		{
-			ChainPtr chain = m_chainRepeat;
-			m_chainRepeat = nullptr;
-			chain->cancel();
-		}
+        sourceRepeat->setSkip( _skip );
 
-		this->complete( true, _skip );
-	}
+        if( m_providerRepeat->onScope( sourceRepeat ) == false )
+        {
+            this->complete( true, _skip );
+
+            return;
+        }
+
+        ChainPtr chainRepeat = __makeChain( sourceRepeat, [this]( bool _skip ){this->repeatComplete_( _skip ); } );
+
+        m_chainRepeat = chainRepeat;
+
+        if( m_chainRepeat->run() == false )
+        {
+            this->complete( true, _skip );
+
+            return;
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void TaskRepeat::untilComplete_( bool _skip )
+    {
+        m_repeat = false;
+
+        if( m_chainRepeat != nullptr )
+        {
+            ChainPtr chain = m_chainRepeat;
+            m_chainRepeat = nullptr;
+            chain->cancel();
+        }
+
+        this->complete( true, _skip );
+    }
 }

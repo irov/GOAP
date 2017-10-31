@@ -19,6 +19,6 @@ namespace GOAP
 
     template<class T>
     using IntrusivePtr = Detail::IntrusivePtr<T>;
-    
+
     using Factorable = Detail::Factorable;
 }

@@ -13,13 +13,13 @@
 
 namespace GOAP
 {
-	//////////////////////////////////////////////////////////////////////////
-	Task::Task()
-		: m_state( TASK_STATE_IDLE )
+    //////////////////////////////////////////////////////////////////////////
+    Task::Task()
+        : m_state( TASK_STATE_IDLE )
         , m_events( 0 )
-		, m_skip( false )
-	{
-	}
+        , m_skip( false )
+    {
+    }
     //////////////////////////////////////////////////////////////////////////
     Task::Task( uint32_t _events )
         : m_state( TASK_STATE_IDLE )
@@ -27,10 +27,10 @@ namespace GOAP
         , m_skip( false )
     {
     }
-	//////////////////////////////////////////////////////////////////////////
-	Task::~Task()
-	{
-	}
+    //////////////////////////////////////////////////////////////////////////
+    Task::~Task()
+    {
+    }
     //////////////////////////////////////////////////////////////////////////
     void Task::setEvents( uint32_t _events )
     {
@@ -42,69 +42,69 @@ namespace GOAP
         return m_events;
     }
     //////////////////////////////////////////////////////////////////////////
-	void Task::setChain( const ChainPtr & _chain )
-	{
-		m_chain = _chain;
-	}
-	//////////////////////////////////////////////////////////////////////////
-	const ChainPtr & Task::getChain() const
-	{
-		return m_chain;
-	}
-	//////////////////////////////////////////////////////////////////////////
-	bool Task::isIdle() const
-	{
-		return m_state == TASK_STATE_IDLE;
-	}
-	//////////////////////////////////////////////////////////////////////////
-	bool Task::isRunning() const
-	{
-		return m_state == TASK_STATE_RUN;
-	}
-	//////////////////////////////////////////////////////////////////////////
-	bool Task::isEnd() const
-	{
-		return m_state == TASK_STATE_END;
-	}
-	//////////////////////////////////////////////////////////////////////////
-	bool Task::isSkip() const
-	{
-		return m_skip;
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void Task::addNext( const TaskPtr & _task )
-	{
-		m_nexts.push_back( _task );
-		_task->addPrev_( this );
-	}
-	//////////////////////////////////////////////////////////////////////////
-	TVectorTasks & Task::getNexts()
-	{
-		return m_nexts;
-	}
-	//////////////////////////////////////////////////////////////////////////
-	const TVectorTasks & Task::getNexts() const
-	{
-		return m_nexts;
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void Task::popNexts( TVectorTasks & _clone )
-	{
-		for( TVectorTasks::iterator
-			it = m_nexts.begin(),
-			it_end = m_nexts.end();
-		it != it_end;
-		++it )
-		{
-			const TaskPtr & next = *it;
+    void Task::setChain( const ChainPtr & _chain )
+    {
+        m_chain = _chain;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    const ChainPtr & Task::getChain() const
+    {
+        return m_chain;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::isIdle() const
+    {
+        return m_state == TASK_STATE_IDLE;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::isRunning() const
+    {
+        return m_state == TASK_STATE_RUN;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::isEnd() const
+    {
+        return m_state == TASK_STATE_END;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::isSkip() const
+    {
+        return m_skip;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Task::addNext( const TaskPtr & _task )
+    {
+        m_nexts.push_back( _task );
+        _task->addPrev_( this );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    TVectorTasks & Task::getNexts()
+    {
+        return m_nexts;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    const TVectorTasks & Task::getNexts() const
+    {
+        return m_nexts;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Task::popNexts( TVectorTasks & _clone )
+    {
+        for( TVectorTasks::iterator
+            it = m_nexts.begin(),
+            it_end = m_nexts.end();
+            it != it_end;
+            ++it )
+        {
+            const TaskPtr & next = *it;
 
-			next->removePrev_( this );
-		}
+            next->removePrev_( this );
+        }
 
-		_clone.swap( m_nexts );
+        _clone.swap( m_nexts );
 
-		m_nexts.clear();
-	}
+        m_nexts.clear();
+    }
     //////////////////////////////////////////////////////////////////////////
     bool Task::injectSource( const SourcePtr & _source )
     {
@@ -133,113 +133,113 @@ namespace GOAP
 
         return true;
     }
-	//////////////////////////////////////////////////////////////////////////
-	bool Task::run( bool _checkSkipedFalse )
-	{
-		if( m_state != TASK_STATE_IDLE )
-		{
-			return false;
-		}
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::run( bool _checkSkipedFalse )
+    {
+        if( m_state != TASK_STATE_IDLE )
+        {
+            return false;
+        }
 
-		if( this->onValidate() == false )
-		{
-			return false;
-		}
+        if( this->onValidate() == false )
+        {
+            return false;
+        }
 
-		this->setState( TASK_STATE_RUN );
+        this->setState( TASK_STATE_RUN );
 
-		m_chain->runTask( this );
+        m_chain->runTask( this );
 
-		if( this->onInitialize() == false )
-		{
-			return false;
-		}
+        if( this->onInitialize() == false )
+        {
+            return false;
+        }
 
-		if( this->onCheck() == false )
-		{
-			this->complete( false );
+        if( this->onCheck() == false )
+        {
+            this->complete( false );
 
-			return true;
-		}
+            return true;
+        }
 
-		bool done = this->onRun();
+        bool done = this->onRun();
 
-		if( m_state != TASK_STATE_RUN )
-		{
-			return true;
-		}
+        if( m_state != TASK_STATE_RUN )
+        {
+            return true;
+        }
 
-		if( done == false )
-		{
-			return true;
-		}
+        if( done == false )
+        {
+            return true;
+        }
 
-		if( _checkSkipedFalse == true )
-		{
-			if( this->onSkipBlock() == true )
-			{
-				this->complete( true, false );
+        if( _checkSkipedFalse == true )
+        {
+            if( this->onSkipBlock() == true )
+            {
+                this->complete( true, false );
 
-				return true;
-			}
+                return true;
+            }
 
-			if( this->onSkipable() == false )
-			{
-				return false;
-			}
-		}
+            if( this->onSkipable() == false )
+            {
+                return false;
+            }
+        }
 
-		this->complete( true, false );
+        this->complete( true, false );
 
-		return true;
-	}
-	//////////////////////////////////////////////////////////////////////////
-	bool Task::skip()
-	{
-		if( m_state == TASK_STATE_SKIP )
-		{
-			return true;
-		}
+        return true;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::skip()
+    {
+        if( m_state == TASK_STATE_SKIP )
+        {
+            return true;
+        }
 
-		if( m_state == TASK_STATE_END )
-		{
-			return true;
-		}
+        if( m_state == TASK_STATE_END )
+        {
+            return true;
+        }
 
-		if( m_skip == true )
-		{
-			return false;
-		}
+        if( m_skip == true )
+        {
+            return false;
+        }
 
-		if( this->onSkipable() == false )
-		{
-			if( m_state == TASK_STATE_IDLE )
-			{
-				if( this->run( true ) == false )
-				{
-					return false;
-				}
-			}
-			else
-			{
-				this->onSkipNoSkiped();
-			}
+        if( this->onSkipable() == false )
+        {
+            if( m_state == TASK_STATE_IDLE )
+            {
+                if( this->run( true ) == false )
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                this->onSkipNoSkiped();
+            }
 
-			return true;
-		}
+            return true;
+        }
 
-		m_skip = true;
+        m_skip = true;
 
-		switch( m_state )
-		{
-		case TASK_STATE_IDLE:
-			{
-				if( this->onInitialize() == false )
-				{
-					return false;
-				}
+        switch( m_state )
+        {
+        case TASK_STATE_IDLE:
+            {
+                if( this->onInitialize() == false )
+                {
+                    return false;
+                }
 
-				m_chain->runTask( this );
+                m_chain->runTask( this );
 
                 if( this->onFastSkip() == false )
                 {
@@ -265,48 +265,48 @@ namespace GOAP
                     this->onFinally();
                 }
 
-				this->taskSkip_();
-			}break;
-		case TASK_STATE_RUN:
-			{
-				this->setState( TASK_STATE_SKIP );
+                this->taskSkip_();
+            }break;
+        case TASK_STATE_RUN:
+            {
+                this->setState( TASK_STATE_SKIP );
 
-				this->onSkip();
-				this->onFinally();
+                this->onSkip();
+                this->onFinally();
 
-				this->taskSkip_();
-			}break;
-		default:
-			break;
-		}
+                this->taskSkip_();
+            }break;
+        default:
+            break;
+        }
 
-		if( m_state != TASK_STATE_END )
-		{
-			this->finalize_();
-		}
+        if( m_state != TASK_STATE_END )
+        {
+            this->finalize_();
+        }
 
-		return true;
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void Task::cancel( bool _withNexts )
-	{
-		if( m_state == TASK_STATE_END )
-		{
-			return;
-		}
+        return true;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Task::cancel( bool _withNexts )
+    {
+        if( m_state == TASK_STATE_END )
+        {
+            return;
+        }
 
-		m_skip = true;
+        m_skip = true;
 
-		if( m_state == TASK_STATE_RUN )
-		{
-			this->setState( TASK_STATE_CANCEL );
+        if( m_state == TASK_STATE_RUN )
+        {
+            this->setState( TASK_STATE_CANCEL );
 
-			this->onSkip();
-			this->onCancel();
-			this->onFinally();
+            this->onSkip();
+            this->onCancel();
+            this->onFinally();
 
-			m_chain->completeTask( this );
-		}
+            m_chain->completeTask( this );
+        }
 
         if( _withNexts == true )
         {
@@ -324,322 +324,322 @@ namespace GOAP
             }
         }
 
-		this->finalize_();
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void Task::taskSkip_()
-	{
-		if( m_state == TASK_STATE_END )
-		{
-			return;
-		}
+        this->finalize_();
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Task::taskSkip_()
+    {
+        if( m_state == TASK_STATE_END )
+        {
+            return;
+        }
 
-		m_chain->completeTask( this );
+        m_chain->completeTask( this );
 
-		TVectorTasks copy_nexts = m_nexts;
+        TVectorTasks copy_nexts = m_nexts;
 
-		for( TVectorTasks::iterator
-			it = copy_nexts.begin(),
-			it_end = copy_nexts.end();
-		it != it_end;
-		++it )
-		{
-			const TaskPtr & next = *it;
+        for( TVectorTasks::iterator
+            it = copy_nexts.begin(),
+            it_end = copy_nexts.end();
+            it != it_end;
+            ++it )
+        {
+            const TaskPtr & next = *it;
 
-			if( next->prevSkip_( this ) == true )
-			{
-				m_chain->processTask( next, true );
-			}
-		}
+            if( next->prevSkip_( this ) == true )
+            {
+                m_chain->processTask( next, true );
+            }
+        }
 
         m_nexts.clear();
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void Task::complete( bool _running, bool _skiped )
-	{
-		switch( m_state )
-		{
-		case TASK_STATE_SKIP:
-		case TASK_STATE_END:
-		case TASK_STATE_CANCEL:
-			return;
-		default:
-			break;
-		};
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Task::complete( bool _running, bool _skiped )
+    {
+        switch( m_state )
+        {
+        case TASK_STATE_SKIP:
+        case TASK_STATE_END:
+        case TASK_STATE_CANCEL:
+            return;
+        default:
+            break;
+        };
 
-		if( m_state != TASK_STATE_RUN )
-		{
-			return;
-		}
+        if( m_state != TASK_STATE_RUN )
+        {
+            return;
+        }
 
-		if( _skiped == true )
-		{
-			m_skip = true;
-			this->setState( TASK_STATE_SKIP );
-		}
-		else
-		{
-			this->setState( TASK_STATE_COMPLETE );
-		}
+        if( _skiped == true )
+        {
+            m_skip = true;
+            this->setState( TASK_STATE_SKIP );
+        }
+        else
+        {
+            this->setState( TASK_STATE_COMPLETE );
+        }
 
-		if( _running == true )
-		{
-			this->onComplete();
-			this->onFinally();
-		}
+        if( _running == true )
+        {
+            this->onComplete();
+            this->onFinally();
+        }
 
-		this->setState( TASK_STATE_END );
+        this->setState( TASK_STATE_END );
 
-		if( m_skip == false )
-		{
-			TVectorTasks copy_nexts = m_nexts;
+        if( m_skip == false )
+        {
+            TVectorTasks copy_nexts = m_nexts;
 
-			for( TVectorTasks::iterator
-				it = copy_nexts.begin(),
-				it_end = copy_nexts.end();
-			it != it_end;
-			++it )
-			{
-				const TaskPtr & next = *it;
+            for( TVectorTasks::iterator
+                it = copy_nexts.begin(),
+                it_end = copy_nexts.end();
+                it != it_end;
+                ++it )
+            {
+                const TaskPtr & next = *it;
 
-				if( next->prevComplete_( this ) == true )
-				{
-					m_chain->processTask( next, false );
-				}
-			}
-
-            m_nexts.clear();
-		}
-		else
-		{
-			TVectorTasks copy_nexts = m_nexts;
-
-			for( TVectorTasks::iterator
-				it = copy_nexts.begin(),
-				it_end = copy_nexts.end();
-			it != it_end;
-			++it )
-			{
-				const TaskPtr & next = *it;
-
-				if( next->prevSkip_( this ) == true )
-				{
-					m_chain->processTask( next, true );
-				}
-			}
+                if( next->prevComplete_( this ) == true )
+                {
+                    m_chain->processTask( next, false );
+                }
+            }
 
             m_nexts.clear();
-		}
+        }
+        else
+        {
+            TVectorTasks copy_nexts = m_nexts;
 
-		ChainPtr chain = m_chain;
+            for( TVectorTasks::iterator
+                it = copy_nexts.begin(),
+                it_end = copy_nexts.end();
+                it != it_end;
+                ++it )
+            {
+                const TaskPtr & next = *it;
 
-		this->finalize_();
+                if( next->prevSkip_( this ) == true )
+                {
+                    m_chain->processTask( next, true );
+                }
+            }
 
-		chain->completeTask( this );
-	}
-	//////////////////////////////////////////////////////////////////////////
-	bool Task::prevSkip_( Task * _task )
-	{
-		if( m_state == TASK_STATE_END )
-		{
-			return false;
-		}
+            m_nexts.clear();
+        }
 
-#	ifdef _DEBUG
-		if( this->hasPrev_( _task ) == false )
-		{
-			return false;
-		}
-#	endif
+        ChainPtr chain = m_chain;
 
-		this->unlink_( _task );
+        this->finalize_();
 
-		if( this->onCheckSkip() == false )
-		{
-			return false;
-		}
-
-		this->cancelPrev_();
-
-		if( m_state == TASK_STATE_END )
-		{
-			return false;
-		}
-
-		return true;
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void Task::skipPrev_()
-	{
-		TVectorTasks clone_prevs = m_prevs;
-
-		for( TVectorTasks::iterator
-			it = clone_prevs.begin(),
-			it_end = clone_prevs.end();
-		it != it_end;
-		++it )
-		{
-			const TaskPtr & prev = *it;
-
-			switch( prev->m_state )
-			{
-			case TASK_STATE_IDLE:
-				{
-					prev->skipPrev_();
-					prev->cancelPrev_();
-				}break;
-			case  TASK_STATE_RUN:
-				{
-					prev->skip();
-					prev->cancel();
-				}break;
-			default:
-				break;
-			}
-		}
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void Task::cancelPrev_()
-	{
-		TVectorTasks clone_prevs = m_prevs;
-
-		for( TVectorTasks::iterator
-			it = clone_prevs.begin(),
-			it_end = clone_prevs.end();
-		it != it_end;
-		++it )
-		{
-			const TaskPtr & prev = *it;
-
-			switch( prev->m_state )
-			{
-			case TASK_STATE_IDLE:
-				{
-					prev->cancelPrev_();
-					prev->cancel();
-                    this->unlink_( prev.get() );
-				}break;
-			case  TASK_STATE_RUN:
-				{
-					prev->cancel();
-                    this->unlink_( prev.get() );
-				}break;
-			default:
-				break;
-			}
-		}
-	}
-	//////////////////////////////////////////////////////////////////////////
-	bool Task::prevComplete_( Task *_task )
-	{
-		if( m_state != TASK_STATE_IDLE )
-		{
-			return false;
-		}
+        chain->completeTask( this );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::prevSkip_( Task * _task )
+    {
+        if( m_state == TASK_STATE_END )
+        {
+            return false;
+        }
 
 #	ifdef _DEBUG
-		if( this->hasPrev_( _task ) == false )
-		{
-			return false;
-		}
+        if( this->hasPrev_( _task ) == false )
+        {
+            return false;
+        }
 #	endif
 
-		this->unlink_( _task );
+        this->unlink_( _task );
 
-		if( this->onCheckRun() == false )
-		{
-			return false;
-		}
+        if( this->onCheckSkip() == false )
+        {
+            return false;
+        }
 
-		this->cancelPrev_();
+        this->cancelPrev_();
 
-		if( m_state == TASK_STATE_END )
-		{
-			return false;
-		}
+        if( m_state == TASK_STATE_END )
+        {
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Task::skipPrev_()
+    {
+        TVectorTasks clone_prevs = m_prevs;
+
+        for( TVectorTasks::iterator
+            it = clone_prevs.begin(),
+            it_end = clone_prevs.end();
+            it != it_end;
+            ++it )
+        {
+            const TaskPtr & prev = *it;
+
+            switch( prev->m_state )
+            {
+            case TASK_STATE_IDLE:
+                {
+                    prev->skipPrev_();
+                    prev->cancelPrev_();
+                }break;
+            case  TASK_STATE_RUN:
+                {
+                    prev->skip();
+                    prev->cancel();
+                }break;
+            default:
+                break;
+            }
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Task::cancelPrev_()
+    {
+        TVectorTasks clone_prevs = m_prevs;
+
+        for( TVectorTasks::iterator
+            it = clone_prevs.begin(),
+            it_end = clone_prevs.end();
+            it != it_end;
+            ++it )
+        {
+            const TaskPtr & prev = *it;
+
+            switch( prev->m_state )
+            {
+            case TASK_STATE_IDLE:
+                {
+                    prev->cancelPrev_();
+                    prev->cancel();
+                    this->unlink_( prev.get() );
+                }break;
+            case  TASK_STATE_RUN:
+                {
+                    prev->cancel();
+                    this->unlink_( prev.get() );
+                }break;
+            default:
+                break;
+            }
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::prevComplete_( Task *_task )
+    {
+        if( m_state != TASK_STATE_IDLE )
+        {
+            return false;
+        }
+
+#	ifdef _DEBUG
+        if( this->hasPrev_( _task ) == false )
+        {
+            return false;
+        }
+#	endif
+
+        this->unlink_( _task );
+
+        if( this->onCheckRun() == false )
+        {
+            return false;
+        }
+
+        this->cancelPrev_();
+
+        if( m_state == TASK_STATE_END )
+        {
+            return false;
+        }
+
+        return true;
+    }
     //////////////////////////////////////////////////////////////////////////
 #   define TASK_EVENTR( Event, R, M )\
     return (m_events & Event) ? R : this-> _##M ()
 #   define TASK_EVENT( Event, M )\
     TASK_EVENTR(Event, (void)(0), M)
-	//////////////////////////////////////////////////////////////////////////
-	bool Task::onInitialize()
-	{
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::onInitialize()
+    {
         TASK_EVENTR( TASK_EVENT_INITIALIZE, true, onInitialize );
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void Task::onFinalize()
-	{
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Task::onFinalize()
+    {
         TASK_EVENT( TASK_EVENT_FINALIZE, onFinalize );
-	}
+    }
     //////////////////////////////////////////////////////////////////////////
     bool Task::onValidate() const
     {
         TASK_EVENTR( TASK_EVENT_VALIDATE, true, onValidate );
     }
-	//////////////////////////////////////////////////////////////////////////
-	bool Task::onCheck() const
-	{
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::onCheck() const
+    {
         TASK_EVENTR( TASK_EVENT_CHECK, true, onCheck );
-	}
-	//////////////////////////////////////////////////////////////////////////
-	bool Task::onRun()
-	{
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::onRun()
+    {
         TASK_EVENTR( TASK_EVENT_RUN, true, onRun );
-	}
-	//////////////////////////////////////////////////////////////////////////
-	bool Task::onSkipable() const
-	{
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::onSkipable() const
+    {
         TASK_EVENTR( TASK_EVENT_SKIPABLE, false, onSkipable );
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void Task::onSkipNoSkiped()
-	{
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Task::onSkipNoSkiped()
+    {
         TASK_EVENT( TASK_EVENT_SKIP_NO_SKIPED, onSkipNoSkiped );
-	}
-	//////////////////////////////////////////////////////////////////////////
-	bool Task::onSkipBlock()
-	{
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::onSkipBlock()
+    {
         TASK_EVENTR( TASK_EVENT_SKIP_BLOCK, false, onSkipBlock );
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void Task::onComplete()
-	{
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Task::onComplete()
+    {
         TASK_EVENT( TASK_EVENT_COMPLETE, onComplete );
-	}
+    }
     //////////////////////////////////////////////////////////////////////////
     bool Task::onFastSkip()
     {
         TASK_EVENTR( TASK_EVENT_FAST_SKIP, false, onFastSkip );
     }
-	//////////////////////////////////////////////////////////////////////////
-	void Task::onSkip()
-	{
+    //////////////////////////////////////////////////////////////////////////
+    void Task::onSkip()
+    {
         TASK_EVENT( TASK_EVENT_SKIP, onSkip );
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void Task::onCancel()
-	{
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Task::onCancel()
+    {
         TASK_EVENT( TASK_EVENT_CANCEL, onCancel );
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void Task::onFinally()
-	{
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Task::onFinally()
+    {
         TASK_EVENT( TASK_EVENT_FINALLY, onFinally );
-	}
-	//////////////////////////////////////////////////////////////////////////
-	bool Task::onCheckRun() const
-	{
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::onCheckRun() const
+    {
         TASK_EVENTR( TASK_EVENT_CHECK_RUN, m_prevs.empty(), onCheckRun );
-	}
-	//////////////////////////////////////////////////////////////////////////
-	bool Task::onCheckSkip() const
-	{
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::onCheckSkip() const
+    {
         TASK_EVENTR( TASK_EVENT_CHECK_SKIP, m_prevs.empty(), onCheckSkip );
-	}
+    }
     //////////////////////////////////////////////////////////////////////////
 #   undef TASK_EVENTR
 #   undef TASK_EVENT
@@ -712,18 +712,18 @@ namespace GOAP
     {
         return true;
     }
-//////////////////////////////////////////////////////////////////////////
-	void Task::addPrev_( Task * _task )
-	{
-		m_prevs.push_back( _task );
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void Task::removePrev_( Task * _task )
-	{
-		TVectorTasks::iterator it_erase = std::find( m_prevs.begin(), m_prevs.end(), _task );
+    //////////////////////////////////////////////////////////////////////////
+    void Task::addPrev_( Task * _task )
+    {
+        m_prevs.push_back( _task );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Task::removePrev_( Task * _task )
+    {
+        TVectorTasks::iterator it_erase = std::find( m_prevs.begin(), m_prevs.end(), _task );
 
-		m_prevs.erase( it_erase );
-	}
+        m_prevs.erase( it_erase );
+    }
     //////////////////////////////////////////////////////////////////////////
     void Task::removeNext_( Task * _task )
     {
@@ -742,28 +742,28 @@ namespace GOAP
         this->removePrev_( _task );
         _task->removeNext_( this );
     }
-	//////////////////////////////////////////////////////////////////////////
-	bool Task::hasPrev_( const Task * _task ) const
-	{
-		TVectorTasks::const_iterator it_found = std::find( m_prevs.begin(), m_prevs.end(), _task );
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::hasPrev_( const Task * _task ) const
+    {
+        TVectorTasks::const_iterator it_found = std::find( m_prevs.begin(), m_prevs.end(), _task );
 
-		return it_found != m_prevs.end();
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void Task::finalize_()
-	{
-		this->setState( TASK_STATE_END );
+        return it_found != m_prevs.end();
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Task::finalize_()
+    {
+        this->setState( TASK_STATE_END );
 
-		this->onFinalize();
+        this->onFinalize();
 
-		m_chain = nullptr;
+        m_chain = nullptr;
 
-		m_nexts.clear();
-		m_prevs.clear();
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void Task::setState( ETaskState _state )
-	{
-		m_state = _state;
-	}
+        m_nexts.clear();
+        m_prevs.clear();
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Task::setState( ETaskState _state )
+    {
+        m_state = _state;
+    }
 }

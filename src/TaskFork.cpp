@@ -12,28 +12,28 @@
 
 namespace GOAP
 {
-	//////////////////////////////////////////////////////////////////////////
-	TaskFork::TaskFork( const SourcePtr & _fork )
+    //////////////////////////////////////////////////////////////////////////
+    TaskFork::TaskFork( const SourcePtr & _fork )
         : Task( TASK_EVENT_RUN )
-		, m_fork(_fork)
-	{
-	}
-	//////////////////////////////////////////////////////////////////////////
-	TaskFork::~TaskFork()
-	{
-	}
-	//////////////////////////////////////////////////////////////////////////
-	bool TaskFork::_onRun()
-	{
-		bool skip = this->isSkip();
-		m_fork->setSkip( skip );
+        , m_fork( _fork )
+    {
+    }
+    //////////////////////////////////////////////////////////////////////////
+    TaskFork::~TaskFork()
+    {
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool TaskFork::_onRun()
+    {
+        bool skip = this->isSkip();
+        m_fork->setSkip( skip );
 
-		ChainPtr chain = GOAP_NEW Chain( m_fork );
+        ChainPtr chain = GOAP_NEW Chain( m_fork );
 
-		chain->run();
+        chain->run();
 
-		m_chain = chain;
+        m_chain = chain;
 
-		return true;
-	}
+        return true;
+    }
 }

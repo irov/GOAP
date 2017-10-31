@@ -11,19 +11,19 @@
 
 namespace GOAP
 {
-	class Exception
-		: public std::exception
-	{
-	public:
+    class Exception
+        : public std::exception
+    {
+    public:
         Exception( const char * _message );
-		~Exception() throw();
+        ~Exception() throw();
 
-	public:
-		const char * what() const throw() override;
+    public:
+        const char * what() const throw() override;
 
-	protected:
-		const char * m_message;
-	};
+    protected:
+        const char * m_message;
+    };
 
     namespace Helper
     {

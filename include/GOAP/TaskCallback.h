@@ -13,21 +13,21 @@
 
 namespace GOAP
 {
-	class TaskCallback
-		: public Task
-		, public CallbackObserver
-	{
-	public:
-		TaskCallback( const CallbackProviderPtr & _provider );
-		~TaskCallback();
+    class TaskCallback
+        : public Task
+        , public CallbackObserver
+    {
+    public:
+        TaskCallback( const CallbackProviderPtr & _provider );
+        ~TaskCallback();
 
-	public:
-		bool _onRun() override;
+    public:
+        bool _onRun() override;
 
-	protected:
-		void onCallback( bool _skip ) override;
-		
-	protected:
-		CallbackProviderPtr m_provider;
-	};
+    protected:
+        void onCallback( bool _skip ) override;
+
+    protected:
+        CallbackProviderPtr m_provider;
+    };
 }

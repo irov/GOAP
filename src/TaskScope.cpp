@@ -13,34 +13,34 @@
 
 namespace GOAP
 {
-	//////////////////////////////////////////////////////////////////////////
-	TaskScope::TaskScope( const ScopeProviderPtr & _provider )
+    //////////////////////////////////////////////////////////////////////////
+    TaskScope::TaskScope( const ScopeProviderPtr & _provider )
         : Task( TASK_EVENT_RUN )
         , m_provider( _provider )
-	{
-	}
-	//////////////////////////////////////////////////////////////////////////
-	TaskScope::~TaskScope()
-	{
-	}
-	//////////////////////////////////////////////////////////////////////////
-	bool TaskScope::_onRun()
-	{
-		GOAP::SourcePtr source = GOAP_NEW GOAP::Source();
+    {
+    }
+    //////////////////////////////////////////////////////////////////////////
+    TaskScope::~TaskScope()
+    {
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool TaskScope::_onRun()
+    {
+        GOAP::SourcePtr source = GOAP_NEW GOAP::Source();
 
-		bool skip = this->isSkip();
-		source->setSkip( skip );
+        bool skip = this->isSkip();
+        source->setSkip( skip );
 
-		if( m_provider->onScope( source ) == false )
-		{
-			return true;
-		}
+        if( m_provider->onScope( source ) == false )
+        {
+            return true;
+        }
 
         if( this->injectSource( source ) == false )
         {
             Helper::throw_exception( "TaskScope invalid inject source" );
         }
 
-		return true;
-	}
+        return true;
+    }
 }

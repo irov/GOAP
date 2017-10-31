@@ -15,49 +15,49 @@
 
 namespace GOAP
 {
-	//////////////////////////////////////////////////////////////////////////
-	TranscriptorParallel::TranscriptorParallel( size_t _count )
-	{
-		m_sources.resize( _count );
+    //////////////////////////////////////////////////////////////////////////
+    TranscriptorParallel::TranscriptorParallel( size_t _count )
+    {
+        m_sources.resize( _count );
 
-		for( TVectorSources::iterator
-			it = m_sources.begin(),
-			it_end = m_sources.end();
-		it != it_end;
-		++it )
-		{
-			*it = GOAP_NEW Source();
-		}
-	}
-	//////////////////////////////////////////////////////////////////////////
-	TVectorSources & TranscriptorParallel::getSources()
-	{
-		return m_sources;
-	}
-	//////////////////////////////////////////////////////////////////////////
-	TaskPtr TranscriptorParallel::generate( const ChainPtr & _chain, const TaskPtr & _task )
-	{
+        for( TVectorSources::iterator
+            it = m_sources.begin(),
+            it_end = m_sources.end();
+            it != it_end;
+            ++it )
+        {
+            *it = GOAP_NEW Source();
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////
+    const TVectorSources & TranscriptorParallel::getSources() const
+    {
+        return m_sources;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    TaskPtr TranscriptorParallel::generate( const ChainPtr & _chain, const TaskPtr & _task )
+    {
         if( m_sources.empty() == true )
         {
             return _task;
         }
 
-		TaskPtr task_parallel_neck = GOAP_NEW TaskParallelNeck();
-		task_parallel_neck->setChain( _chain );
+        TaskPtr task_parallel_neck = GOAP_NEW TaskParallelNeck();
+        task_parallel_neck->setChain( _chain );
 
-		for( TVectorSources::iterator
-			it = m_sources.begin(),
-			it_end = m_sources.end();
-		it != it_end;
-		++it )
-		{
-			const SourcePtr & parallel_source = *it;
+        for( TVectorSources::iterator
+            it = m_sources.begin(),
+            it_end = m_sources.end();
+            it != it_end;
+            ++it )
+        {
+            const SourcePtr & parallel_source = *it;
 
-			TaskPtr task = parallel_source->parse( _chain, _task );
+            TaskPtr task = parallel_source->parse( _chain, _task );
 
-			task->addNext( task_parallel_neck );
-		}
+            task->addNext( task_parallel_neck );
+        }
 
-		return task_parallel_neck;
-	}
+        return task_parallel_neck;
+    }
 }

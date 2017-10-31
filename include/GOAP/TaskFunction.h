@@ -11,21 +11,21 @@
 
 namespace GOAP
 {
-	typedef IntrusivePtr<class FunctionProvider> FunctionProviderPtr;
+    typedef IntrusivePtr<class FunctionProvider> FunctionProviderPtr;
 
-	class TaskFunction
-		: public Task
-	{
-	public:
-		TaskFunction( const FunctionProviderPtr & _provider );
-		~TaskFunction();
+    class TaskFunction
+        : public Task
+    {
+    public:
+        TaskFunction( const FunctionProviderPtr & _provider );
+        ~TaskFunction();
 
-	public:
-		bool _onRun() override;
+    public:
+        bool _onRun() override;
 
-	protected:
-		FunctionProviderPtr m_provider;
-	};
+    protected:
+        FunctionProviderPtr m_provider;
+    };
 
-	typedef IntrusivePtr<TaskFunction> TaskFunctionPtr;
+    typedef IntrusivePtr<TaskFunction> TaskFunctionPtr;
 }

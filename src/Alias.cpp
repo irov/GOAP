@@ -18,7 +18,7 @@ namespace GOAP
     Alias::Alias()
     {
     }
-	//////////////////////////////////////////////////////////////////////////    
+    //////////////////////////////////////////////////////////////////////////    
     bool Alias::_onRun()
     {
         ChainPtr chain = m_chain;
@@ -27,7 +27,7 @@ namespace GOAP
 
         bool skiped = this->isSkip();
         source->setSkip( skiped );
-        
+
         SourcePtr guard_source = source->addGuard( [this](){ IntrusiveThisAcquire( this ); }, [this](){ IntrusiveThisRelease( this ); } );
 
         this->_onGenerate( guard_source );

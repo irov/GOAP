@@ -11,44 +11,44 @@
 
 namespace GOAP
 {
-	typedef IntrusivePtr<class Source> SourcePtr;
+    typedef IntrusivePtr<class Source> SourcePtr;
 
-	class ScopeProvider
-		: public Factorable
-	{
-	public:
-		virtual bool onScope( const SourcePtr & _source ) = 0;
-	};
+    class ScopeProvider
+        : public Factorable
+    {
+    public:
+        virtual bool onScope( const SourcePtr & _source ) = 0;
+    };
 
-	typedef IntrusivePtr<ScopeProvider> ScopeProviderPtr;
+    typedef IntrusivePtr<ScopeProvider> ScopeProviderPtr;
 
-	template<class F>
-	class ScopeProviderT
-		: public ScopeProvider
-	{
-	public:
-		ScopeProviderT( F _f )
-			: m_f( _f )
-		{
-		}
+    template<class F>
+    class ScopeProviderT
+        : public ScopeProvider
+    {
+    public:
+        ScopeProviderT( F _f )
+            : m_f( _f )
+        {
+        }
 
-	public:
-		bool onScope( const SourcePtr & _source ) override
-		{
-			bool successful = m_f( _source );
+    public:
+        bool onScope( const SourcePtr & _source ) override
+        {
+            bool successful = m_f( _source );
 
-			return successful;
-		}
+            return successful;
+        }
 
-	protected:
-		F m_f;
-	};
+    protected:
+        F m_f;
+    };
 
-	template<class F>
-	ScopeProviderPtr makeScopeProvider( F _f )
-	{
-		ScopeProviderPtr provider = GOAP_NEW ScopeProviderT<F>( _f );
+    template<class F>
+    ScopeProviderPtr makeScopeProvider( F _f )
+    {
+        ScopeProviderPtr provider = GOAP_NEW ScopeProviderT<F>( _f );
 
-		return provider;
-	}
+        return provider;
+    }
 }

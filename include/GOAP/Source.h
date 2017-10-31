@@ -42,13 +42,13 @@ namespace GOAP
     public:
         void setSkip( bool _skip );
         bool isSkip() const;
-        
+
     public:
         void addTask( const TaskPtr & _task );
 
     public:
-        TVectorSources & addParallel( size_t _count );
-        TVectorSources & addRace( size_t _count );
+        const TVectorSources & addParallel( size_t _count );
+        const TVectorSources & addRace( size_t _count );
         SourcePtr addFork();
         void addDeadLock();
 

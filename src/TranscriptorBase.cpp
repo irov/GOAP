@@ -11,18 +11,18 @@
 
 namespace GOAP
 {
-	//////////////////////////////////////////////////////////////////////////
-	TranscriptorBase::TranscriptorBase( const TaskPtr & _task )
-		: m_task( _task )
-	{
-	}
-	//////////////////////////////////////////////////////////////////////////
-	TaskPtr TranscriptorBase::generate( const ChainPtr & _chain, const TaskPtr & _task )
-	{
-		m_task->setChain( _chain );
+    //////////////////////////////////////////////////////////////////////////
+    TranscriptorBase::TranscriptorBase( const TaskPtr & _task )
+        : m_task( _task )
+    {
+    }
+    //////////////////////////////////////////////////////////////////////////
+    TaskPtr TranscriptorBase::generate( const ChainPtr & _chain, const TaskPtr & _task )
+    {
+        m_task->setChain( _chain );
 
-		_task->addNext( m_task );
+        _task->addNext( m_task );
 
-		return m_task;
-	}
+        return m_task;
+    }
 }

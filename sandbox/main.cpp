@@ -27,7 +27,7 @@ void main()
 	source->addTask( GOAP_NEW TaskPrint( "begin" ) );
 	source->addTask( GOAP_NEW TaskDelay( 2000.f, sch ) );
 
-	GOAP::TVectorSources & source_parallel = source->addParallel( 2 );
+	const GOAP::TVectorSources & source_parallel = source->addParallel( 2 );
 
 	source_parallel[0]->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
 	source_parallel[1]->addTask( GOAP_NEW TaskPrint( "process" ) );
@@ -38,7 +38,7 @@ void main()
 	source->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
 
 
-	GOAP::TVectorSources & source_race = source->addRace( 3 );
+	const GOAP::TVectorSources & source_race = source->addRace( 3 );
 
 	source_race[0]->addTask( GOAP_NEW TaskRoll( 200.f, 1, 6, sch ) );
 	source_race[0]->addTask( GOAP_NEW TaskPrint( "---1---" ) );

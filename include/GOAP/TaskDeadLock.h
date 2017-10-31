@@ -11,14 +11,14 @@
 
 namespace GOAP
 {
-	class TaskDeadLock
-		: public Task
-	{
-	public:
-		TaskDeadLock();
-		~TaskDeadLock();
+    class TaskDeadLock
+        : public Task
+    {
+    public:
+        TaskDeadLock();
+        ~TaskDeadLock();
 
-	protected:
-		bool _onRun() override;
-	};
+    protected:
+        bool _onRun() override;
+    };
 }

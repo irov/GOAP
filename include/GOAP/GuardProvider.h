@@ -11,42 +11,42 @@
 
 namespace GOAP
 {
-	typedef IntrusivePtr<class Source> SourcePtr;
+    typedef IntrusivePtr<class Source> SourcePtr;
 
-	class GuardProvider
-		: public Factorable
-	{
-	public:
-		virtual void onGuard() = 0;
-	};
+    class GuardProvider
+        : public Factorable
+    {
+    public:
+        virtual void onGuard() = 0;
+    };
 
-	typedef IntrusivePtr<GuardProvider> GuardProviderPtr;
+    typedef IntrusivePtr<GuardProvider> GuardProviderPtr;
 
-	template<class F>
-	class GuardProviderT
-		: public GuardProvider
-	{
-	public:
-		GuardProviderT(F _f)
-			: m_f( _f )
-		{
-		}
+    template<class F>
+    class GuardProviderT
+        : public GuardProvider
+    {
+    public:
+        GuardProviderT( F _f )
+            : m_f( _f )
+        {
+        }
 
-	public:
-		void onGuard() override
-		{
-			m_f();
-		}
+    public:
+        void onGuard() override
+        {
+            m_f();
+        }
 
-	protected:
-		F m_f;
-	};
+    protected:
+        F m_f;
+    };
 
-	template<class F>
-	GuardProviderPtr makeGuardProvider( F _f )
-	{
-		GuardProviderPtr provider = GOAP_NEW GuardProviderT<F>(_f);
+    template<class F>
+    GuardProviderPtr makeGuardProvider( F _f )
+    {
+        GuardProviderPtr provider = GOAP_NEW GuardProviderT<F>( _f );
 
-		return provider;
-	}
+        return provider;
+    }
 }

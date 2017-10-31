@@ -11,11 +11,11 @@
 
 namespace GOAP
 {
-	typedef IntrusivePtr<class Task> TaskPtr;
+    typedef IntrusivePtr<class Task> TaskPtr;
     typedef IntrusivePtr<class Source> SourcePtr;
-	typedef IntrusivePtr<class Chain> ChainPtr;
+    typedef IntrusivePtr<class Chain> ChainPtr;
 
-	typedef Vector<TaskPtr> TVectorTasks;
+    typedef Vector<TaskPtr> TVectorTasks;
 
     enum ETaskEvent
     {
@@ -36,77 +36,77 @@ namespace GOAP
         TASK_EVENT_CHECK_SKIP = 1 >> 14
     };
 
-	class Task
-		: public Factorable
-	{
-	public:
-		enum ETaskState
-		{
-			TASK_STATE_INVALID,
-			TASK_STATE_IDLE,
-			TASK_STATE_RUN,
-			TASK_STATE_SKIP,
-			TASK_STATE_STOP,
-			TASK_STATE_CANCEL,
-			TASK_STATE_COMPLETE,
-			TASK_STATE_END
-		};
-		
-	public:
-		Task();
+    class Task
+        : public Factorable
+    {
+    public:
+        enum ETaskState
+        {
+            TASK_STATE_INVALID,
+            TASK_STATE_IDLE,
+            TASK_STATE_RUN,
+            TASK_STATE_SKIP,
+            TASK_STATE_STOP,
+            TASK_STATE_CANCEL,
+            TASK_STATE_COMPLETE,
+            TASK_STATE_END
+        };
+
+    public:
+        Task();
         explicit Task( uint32_t _events );
 
     public:
-		virtual ~Task();
+        virtual ~Task();
 
     public:
         void setEvents( uint32_t _events );
         uint32_t getEvents() const;
 
     public:
-		void setChain( const ChainPtr & _chain );
-		const ChainPtr & getChain() const;
+        void setChain( const ChainPtr & _chain );
+        const ChainPtr & getChain() const;
 
-	public:
-		bool isIdle() const;
-		bool isRunning() const;
-		bool isEnd() const;
-		bool isSkip() const;
+    public:
+        bool isIdle() const;
+        bool isRunning() const;
+        bool isEnd() const;
+        bool isSkip() const;
 
-	public:
-		void addNext( const TaskPtr & _task );
-		TVectorTasks & getNexts();
-		const TVectorTasks & getNexts() const;
-		void popNexts( TVectorTasks & _clone );
+    public:
+        void addNext( const TaskPtr & _task );
+        TVectorTasks & getNexts();
+        const TVectorTasks & getNexts() const;
+        void popNexts( TVectorTasks & _clone );
         bool injectSource( const SourcePtr & _source );
 
-	public:
-		bool run( bool _checkSkipedFalse = false );
-		bool skip();
+    public:
+        bool run( bool _checkSkipedFalse = false );
+        bool skip();
 
-		void cancel( bool _withNexts = false );
+        void cancel( bool _withNexts = false );
 
-	public:
-		void complete( bool _running = true, bool _skiped = false );
+    public:
+        void complete( bool _running = true, bool _skiped = false );
 
-	protected:		
-		bool onInitialize();
-		void onFinalize();
+    protected:
+        bool onInitialize();
+        void onFinalize();
 
-	protected:
-		bool onValidate() const;
-		bool onCheck() const;
-		bool onRun();
-		bool onSkipable() const;
-		void onSkipNoSkiped();
-		bool onSkipBlock();
-		void onComplete();
+    protected:
+        bool onValidate() const;
+        bool onCheck() const;
+        bool onRun();
+        bool onSkipable() const;
+        void onSkipNoSkiped();
+        bool onSkipBlock();
+        void onComplete();
         bool onFastSkip();
-		void onSkip();
-		void onCancel();
-		void onFinally();
-		bool onCheckRun() const;
-		bool onCheckSkip() const;
+        void onSkip();
+        void onCancel();
+        void onFinally();
+        bool onCheckRun() const;
+        bool onCheckSkip() const;
 
     protected:
         virtual bool _onInitialize();
@@ -127,37 +127,37 @@ namespace GOAP
         virtual bool _onCheckRun() const;
         virtual bool _onCheckSkip() const;
 
-	protected:
-		void taskSkip_();
+    protected:
+        void taskSkip_();
 
-		bool prevSkip_( Task * _task );
-		void skipPrev_();
-		void cancelPrev_();
+        bool prevSkip_( Task * _task );
+        void skipPrev_();
+        void cancelPrev_();
 
-		bool prevComplete_( Task *_task );
+        bool prevComplete_( Task *_task );
 
-		void addPrev_( Task * _task );
-		void removePrev_( Task * _task );
+        void addPrev_( Task * _task );
+        void removePrev_( Task * _task );
         void removeNext_( Task * _task );
         void unlink_( Task * _task );
-		bool hasPrev_( const Task * _task ) const;
-		void finalize_();
+        bool hasPrev_( const Task * _task ) const;
+        void finalize_();
 
-	protected:
-		void setState( ETaskState _state );
+    protected:
+        void setState( ETaskState _state );
 
-	protected:
-		ETaskState m_state;
+    protected:
+        ETaskState m_state;
 
         uint32_t m_events;
 
-		ChainPtr m_chain;
-		
-		TVectorTasks m_nexts;
-		TVectorTasks m_prevs;
+        ChainPtr m_chain;
 
-		bool m_skip;
-	};
+        TVectorTasks m_nexts;
+        TVectorTasks m_prevs;
 
-	typedef IntrusivePtr<Task> TaskPtr;
+        bool m_skip;
+    };
+
+    typedef IntrusivePtr<Task> TaskPtr;
 }

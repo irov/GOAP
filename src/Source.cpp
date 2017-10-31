@@ -57,24 +57,24 @@ namespace GOAP
         m_transcriptors.push_back( description );
     }
     //////////////////////////////////////////////////////////////////////////
-    TVectorSources & Source::addParallel( size_t _count )
+    const TVectorSources & Source::addParallel( size_t _count )
     {
         TranscriptorParallel * description = GOAP_NEW TranscriptorParallel( _count );
 
         m_transcriptors.push_back( description );
 
-        TVectorSources & sources = description->getSources();
+        const TVectorSources & sources = description->getSources();
 
         return sources;
     }
     //////////////////////////////////////////////////////////////////////////
-    TVectorSources & Source::addRace( size_t _count )
+    const TVectorSources & Source::addRace( size_t _count )
     {
         TranscriptorRace * description = GOAP_NEW TranscriptorRace( _count );
 
         m_transcriptors.push_back( description );
 
-        TVectorSources & sources = description->getSources();
+        const TVectorSources & sources = description->getSources();
 
         return sources;
     }
@@ -133,7 +133,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     SourcePtr Source::addGuardProvider( const GuardProviderPtr & _begin, const GuardProviderPtr & _end )
     {
-        TVectorSources & race_source = this->addRace( 2 );
+        const TVectorSources & race_source = this->addRace( 2 );
 
         const SourcePtr & source_guard = race_source[0];
 

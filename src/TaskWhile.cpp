@@ -12,85 +12,85 @@
 
 namespace GOAP
 {
-	//////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
     TaskWhile::TaskWhile( const ScopeProviderPtr & _providerScope )
-		: Task(TASK_EVENT_RUN | TASK_EVENT_FINALIZE )
+        : Task( TASK_EVENT_RUN | TASK_EVENT_FINALIZE )
         , m_providerScope( _providerScope )
-	{
-	}
-	//////////////////////////////////////////////////////////////////////////
+    {
+    }
+    //////////////////////////////////////////////////////////////////////////
     TaskWhile::~TaskWhile()
-	{
-	}
-	//////////////////////////////////////////////////////////////////////////
-	template<class F>
-	static ChainPtr __makeChain( const SourcePtr & _source, F f )
-	{
-		ChainPtr chain = GOAP_NEW Chain(_source);
+    {
+    }
+    //////////////////////////////////////////////////////////////////////////
+    template<class F>
+    static ChainPtr __makeChain( const SourcePtr & _source, F f )
+    {
+        ChainPtr chain = GOAP_NEW Chain( _source );
 
-		chain->addCallback(f);
+        chain->addCallback( f );
 
-		return chain;
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void TaskWhile::_onFinalize()
-	{
+        return chain;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void TaskWhile::_onFinalize()
+    {
         m_providerScope = nullptr;
 
-		if( m_providerScope != nullptr )
-		{
-			ChainPtr chain = m_chainWhile;
-			m_chainWhile = nullptr;
-			chain->cancel();
-		}
-	}
-	//////////////////////////////////////////////////////////////////////////
-	bool TaskWhile::_onRun()
-	{
-		GOAP::SourcePtr sourceWhile = GOAP_NEW GOAP::Source();
+        if( m_providerScope != nullptr )
+        {
+            ChainPtr chain = m_chainWhile;
+            m_chainWhile = nullptr;
+            chain->cancel();
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool TaskWhile::_onRun()
+    {
+        GOAP::SourcePtr sourceWhile = GOAP_NEW GOAP::Source();
 
-		bool skip = this->isSkip();
-		sourceWhile->setSkip( skip );
+        bool skip = this->isSkip();
+        sourceWhile->setSkip( skip );
 
-		if( m_providerScope->onScope( sourceWhile ) == false )
-		{
-			return true;
-		}
+        if( m_providerScope->onScope( sourceWhile ) == false )
+        {
+            return true;
+        }
 
-		ChainPtr chainWhile = __makeChain( sourceWhile, [this] ( bool _skip ){this->whileComplete_( _skip ); } );
+        ChainPtr chainWhile = __makeChain( sourceWhile, [this]( bool _skip ){this->whileComplete_( _skip ); } );
 
         m_chainWhile = chainWhile;
 
-		if( m_chainWhile->run() == false )
-		{
-			return true;
-		}
+        if( m_chainWhile->run() == false )
+        {
+            return true;
+        }
 
-		return false;
-	}
-	//////////////////////////////////////////////////////////////////////////
-	void TaskWhile::whileComplete_( bool _skip )
-	{
+        return false;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void TaskWhile::whileComplete_( bool _skip )
+    {
         GOAP::SourcePtr sourceWhile = GOAP_NEW GOAP::Source();
 
         sourceWhile->setSkip( _skip );
 
-		if( m_providerScope->onScope( sourceWhile ) == false )
-		{
-			this->complete( true, _skip );
+        if( m_providerScope->onScope( sourceWhile ) == false )
+        {
+            this->complete( true, _skip );
 
-			return;
-		}
+            return;
+        }
 
-		ChainPtr chainWhile = __makeChain( sourceWhile, [this] ( bool _skip ){this->whileComplete_( _skip ); } );
+        ChainPtr chainWhile = __makeChain( sourceWhile, [this]( bool _skip ){this->whileComplete_( _skip ); } );
 
         m_chainWhile = chainWhile;
 
-		if( m_chainWhile->run() == false )
-		{
-			this->complete( true, _skip );
+        if( m_chainWhile->run() == false )
+        {
+            this->complete( true, _skip );
 
-			return;
-		}
-	}
+            return;
+        }
+    }
 }

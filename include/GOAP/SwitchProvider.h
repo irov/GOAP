@@ -11,42 +11,42 @@
 
 namespace GOAP
 {
-	class SwitchProvider
-		: public Factorable
-	{
-	public:
-		virtual uint32_t onSwitch() = 0;
-	};
+    class SwitchProvider
+        : public Factorable
+    {
+    public:
+        virtual uint32_t onSwitch() = 0;
+    };
 
-	typedef IntrusivePtr<SwitchProvider> SwitchProviderPtr;
+    typedef IntrusivePtr<SwitchProvider> SwitchProviderPtr;
 
-	template<class F>
-	class SwitchProviderT
-		: public SwitchProvider
-	{
-	public:
-		SwitchProviderT( F _f )
-			: m_f( _f )
-		{
-		}
+    template<class F>
+    class SwitchProviderT
+        : public SwitchProvider
+    {
+    public:
+        SwitchProviderT( F _f )
+            : m_f( _f )
+        {
+        }
 
-	public:
-		uint32_t onSwitch() override
-		{
-			uint32_t result = m_f();
+    public:
+        uint32_t onSwitch() override
+        {
+            uint32_t result = m_f();
 
-			return result;
-		}
+            return result;
+        }
 
-	protected:
-		F m_f;
-	};
+    protected:
+        F m_f;
+    };
 
-	template<class F>
-	SwitchProviderPtr makeSwitchProvider( F _f )
-	{
-		SwitchProviderPtr provider = GOAP_NEW SwitchProviderT<F>( _f );
+    template<class F>
+    SwitchProviderPtr makeSwitchProvider( F _f )
+    {
+        SwitchProviderPtr provider = GOAP_NEW SwitchProviderT<F>( _f );
 
-		return provider;
-	}
+        return provider;
+    }
 }
