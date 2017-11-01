@@ -67,7 +67,7 @@ void main()
 	source_if.source_true->addTask( GOAP_NEW TaskPrint( "---TRUE---" ) );
 	source_if.source_false->addTask( GOAP_NEW TaskPrint( "---FALSE---" ) );
 
-	GOAP::TVectorSources & source_switch = source->addSwitch(3, [](){ return rand() % 3; });
+	const GOAP::TVectorSources & source_switch = source->addSwitch(3, [](){ return rand() % 3; });
 
 	source_switch[0]->addTask( GOAP_NEW TaskPrint("---Switch 1---"));
 	source_switch[1]->addTask( GOAP_NEW TaskPrint("---Switch 2---"));

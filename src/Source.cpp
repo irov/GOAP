@@ -106,7 +106,7 @@ namespace GOAP
         return source_until;
     }
     //////////////////////////////////////////////////////////////////////////
-    TVectorSources & Source::addSwitchProvider( const SwitchProviderPtr & _provider, size_t _count )
+    const TVectorSources & Source::addSwitchProvider( const SwitchProviderPtr & _provider, size_t _count )
     {
         TVectorSources sources;
         sources.resize( _count );
@@ -126,7 +126,7 @@ namespace GOAP
 
         this->addTask( task );
 
-        TVectorSources & sources_switch = task->getSources();
+        const TVectorSources & sources_switch = task->getSources();
 
         return sources_switch;
     }

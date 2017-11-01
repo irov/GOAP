@@ -26,7 +26,7 @@ namespace GOAP
 		~TaskSwitch();
 
 	public:
-		TVectorSources & getSources();
+		const TVectorSources & getSources() const;
 
 	public:
 		bool _onRun() override;

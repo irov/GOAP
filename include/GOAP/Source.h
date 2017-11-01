@@ -87,11 +87,11 @@ namespace GOAP
         }
 
         template<class F>
-        TVectorSources & addSwitch( size_t _count, F _f )
+        const TVectorSources & addSwitch( size_t _count, F _f )
         {
             SwitchProviderPtr provider = GOAP_NEW SwitchProviderT<F>( _f );
 
-            TVectorSources & sources = this->addSwitchProvider( provider, _count );
+            const TVectorSources & sources = this->addSwitchProvider( provider, _count );
 
             return sources;
         }
@@ -131,7 +131,7 @@ namespace GOAP
         void addScopeProvider( const ScopeProviderPtr & _provider );
         IfSource addIfProvider( const IfProviderPtr & _provider );
         SourcePtr addRepeatProvider( const ScopeProviderPtr & _provider );
-        TVectorSources & addSwitchProvider( const SwitchProviderPtr & _provider, size_t _count );
+        const TVectorSources & addSwitchProvider( const SwitchProviderPtr & _provider, size_t _count );
         SourcePtr addGuardProvider( const GuardProviderPtr & _begin, const GuardProviderPtr & _end );
         void addWhileProvider( const ScopeProviderPtr & _providerScope );
 

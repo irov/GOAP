@@ -25,7 +25,7 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    TVectorSources & TaskSwitch::getSources()
+    const TVectorSources & TaskSwitch::getSources() const
     {
         return m_sources;
     }
