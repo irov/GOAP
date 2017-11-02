@@ -87,6 +87,16 @@ namespace GOAP
         }
 
         template<class F>
+        IfSource addUnless( F _f )
+        {
+            IfProviderPtr provider = GOAP_NEW IfProviderT<F>( _f );
+
+            IfSource desc = this->addUnlessProvider( provider );
+
+            return desc;
+        }
+
+        template<class F>
         const TVectorSources & addSwitch( size_t _count, F _f )
         {
             SwitchProviderPtr provider = GOAP_NEW SwitchProviderT<F>( _f );
@@ -130,6 +140,7 @@ namespace GOAP
         void addCallbackProvider( const CallbackProviderPtr & _provider );
         void addScopeProvider( const ScopeProviderPtr & _provider );
         IfSource addIfProvider( const IfProviderPtr & _provider );
+        IfSource addUnlessProvider( const IfProviderPtr & _provider );
         SourcePtr addRepeatProvider( const ScopeProviderPtr & _provider );
         const TVectorSources & addSwitchProvider( const SwitchProviderPtr & _provider, size_t _count );
         SourcePtr addGuardProvider( const GuardProviderPtr & _begin, const GuardProviderPtr & _end );

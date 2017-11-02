@@ -190,6 +190,22 @@ namespace GOAP
         return desc;
     }
     //////////////////////////////////////////////////////////////////////////
+    IfSource Source::addUnlessProvider( const IfProviderPtr & _provider )
+    {
+        SourcePtr source_true = this->_provideSource();
+        SourcePtr source_false = this->_provideSource();
+
+        TaskPtr task = GOAP_NEW TaskIf( _provider, source_true, source_false );
+
+        this->addTask( task );
+
+        IfSource desc;
+        desc.source_true = source_false;
+        desc.source_false = source_true;
+
+        return desc;
+    }
+    //////////////////////////////////////////////////////////////////////////
     TaskPtr Source::parse( const ChainPtr & _chain, const TaskPtr & _task )
     {
         TaskPtr current_task = _task;
