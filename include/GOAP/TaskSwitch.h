@@ -16,25 +16,26 @@ namespace GOAP
 	typedef IntrusivePtr<class Source> SourcePtr;
 	typedef IntrusivePtr<class SwitchProvider> SwitchProviderPtr;
 
-	typedef Vector<SourcePtr> TVectorSources;
+	typedef Vector<SourcePtr> VectorSources;
 
 	class TaskSwitch
 		: public Task
 	{
 	public:
-		TaskSwitch( const SwitchProviderPtr & _provider, const TVectorSources & _sources );
+		TaskSwitch( const SwitchProviderPtr & _provider, const VectorSources & _sources );
 		~TaskSwitch();
 
 	public:
-		const TVectorSources & getSources() const;
+		const VectorSources & getSources() const;
 
 	public:
 		bool _onRun() override;
+        void _onFinally() override;
 
 	protected:
 		SwitchProviderPtr m_provider;
 
-		TVectorSources m_sources;
+		VectorSources m_sources;
 	};
 
 	typedef IntrusivePtr<TaskSwitch> TaskSwitchPtr;

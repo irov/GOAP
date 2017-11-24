@@ -12,8 +12,7 @@ namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     TaskGuard::TaskGuard( const GuardProviderPtr & _begin, const GuardProviderPtr & _end )
-        : Task( TASK_EVENT_RUN | TASK_EVENT_CANCEL )
-        , m_begin( _begin )
+        : m_begin( _begin )
         , m_end( _end )
     {
     }
@@ -27,6 +26,12 @@ namespace GOAP
         m_begin->onGuard();
 
         return false;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void TaskGuard::_onFinally()
+    {
+        m_begin = nullptr;
+        m_end = nullptr;
     }
     //////////////////////////////////////////////////////////////////////////
     void TaskGuard::_onCancel()

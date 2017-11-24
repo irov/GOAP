@@ -14,8 +14,7 @@ namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     TaskRepeat::TaskRepeat( const ScopeProviderPtr & _provider, const SourcePtr & _until )
-        : Task( TASK_EVENT_RUN | TASK_EVENT_FINALIZE )
-        , m_providerRepeat( _provider )
+        : m_providerRepeat( _provider )
         , m_sourceUntil( _until )
         , m_repeat( true )
     {

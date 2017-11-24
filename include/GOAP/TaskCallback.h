@@ -23,6 +23,7 @@ namespace GOAP
 
     public:
         bool _onRun() override;
+        void _onFinally() override;
 
     protected:
         void onCallback( bool _skip ) override;

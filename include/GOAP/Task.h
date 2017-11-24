@@ -17,25 +17,6 @@ namespace GOAP
 
     typedef Vector<TaskPtr> TVectorTasks;
 
-    enum ETaskEvent
-    {
-        TASK_EVENT_INITIALIZE = 1 >> 0,
-        TASK_EVENT_FINALIZE = 1 >> 1,
-        TASK_EVENT_VALIDATE = 1 >> 2,
-        TASK_EVENT_CHECK = 1 >> 3,
-        TASK_EVENT_RUN = 1 >> 4,
-        TASK_EVENT_SKIPABLE = 1 >> 5,
-        TASK_EVENT_SKIP_NO_SKIPED = 1 >> 6,
-        TASK_EVENT_SKIP_BLOCK = 1 >> 7,
-        TASK_EVENT_COMPLETE = 1 >> 8,
-        TASK_EVENT_FAST_SKIP = 1 >> 9,
-        TASK_EVENT_SKIP = 1 >> 10,
-        TASK_EVENT_CANCEL = 1 >> 11,
-        TASK_EVENT_FINALLY = 1 >> 12,
-        TASK_EVENT_CHECK_RUN = 1 >> 13,
-        TASK_EVENT_CHECK_SKIP = 1 >> 14
-    };
-
     class Task
         : public Factorable
     {
@@ -54,14 +35,7 @@ namespace GOAP
 
     public:
         Task();
-        explicit Task( uint32_t _events );
-
-    public:
-        virtual ~Task();
-
-    public:
-        void setEvents( uint32_t _events );
-        uint32_t getEvents() const;
+        ~Task() override;
 
     public:
         void setChain( const ChainPtr & _chain );
@@ -148,8 +122,6 @@ namespace GOAP
 
     protected:
         ETaskState m_state;
-
-        uint32_t m_events;
 
         ChainPtr m_chain;
 

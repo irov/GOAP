@@ -15,8 +15,7 @@ namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     TaskScope::TaskScope( const ScopeProviderPtr & _provider )
-        : Task( TASK_EVENT_RUN )
-        , m_provider( _provider )
+        : m_provider( _provider )
     {
     }
     //////////////////////////////////////////////////////////////////////////
@@ -42,5 +41,10 @@ namespace GOAP
         }
 
         return true;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void TaskScope::_onFinally()
+    {
+        m_provider = nullptr;
     }
 }

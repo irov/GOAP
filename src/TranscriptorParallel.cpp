@@ -20,7 +20,7 @@ namespace GOAP
     {
         m_sources.resize( _count );
 
-        for( TVectorSources::iterator
+        for( VectorSources::iterator
             it = m_sources.begin(),
             it_end = m_sources.end();
             it != it_end;
@@ -30,7 +30,7 @@ namespace GOAP
         }
     }
     //////////////////////////////////////////////////////////////////////////
-    const TVectorSources & TranscriptorParallel::getSources() const
+    const VectorSources & TranscriptorParallel::getSources() const
     {
         return m_sources;
     }
@@ -45,7 +45,7 @@ namespace GOAP
         TaskPtr task_parallel_neck = GOAP_NEW TaskParallelNeck();
         task_parallel_neck->setChain( _chain );
 
-        for( TVectorSources::iterator
+        for( VectorSources::iterator
             it = m_sources.begin(),
             it_end = m_sources.end();
             it != it_end;

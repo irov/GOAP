@@ -2,8 +2,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 TaskDelay::TaskDelay( float _delay, Scheduler * _scheduler )
-    : GOAP::Task( GOAP::TASK_EVENT_RUN | GOAP::TASK_EVENT_SKIP )
-	, m_delay( _delay )
+    : m_delay( _delay )
 	, m_scheduler( _scheduler )
 	, m_id( 0 )
 {

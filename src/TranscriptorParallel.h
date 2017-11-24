@@ -15,7 +15,7 @@ namespace GOAP
 {
 	typedef IntrusivePtr<class Source> SourcePtr;
 
-	typedef std::vector<SourcePtr> TVectorSources;
+	typedef std::vector<SourcePtr> VectorSources;
 
 	class TranscriptorParallel
 		: public Transcriptor
@@ -24,12 +24,12 @@ namespace GOAP
 		TranscriptorParallel( size_t _count );
 
 	public:
-		const TVectorSources & getSources() const;
+		const VectorSources & getSources() const;
 
 	public:
 		TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) override;
 
 	protected:
-		TVectorSources m_sources;
+		VectorSources m_sources;
 	};
 }

@@ -23,7 +23,7 @@ namespace GOAP
     typedef IntrusivePtr<class Source> SourcePtr;
     typedef IntrusivePtr<class Transcriptor> TranscriptorPtr;
 
-    typedef Vector<SourcePtr> TVectorSources;
+    typedef Vector<SourcePtr> VectorSources;
     typedef Vector<TranscriptorPtr> TVectorTranscriptor;
 
     struct IfSource
@@ -47,8 +47,8 @@ namespace GOAP
         void addTask( const TaskPtr & _task );
 
     public:
-        const TVectorSources & addParallel( size_t _count );
-        const TVectorSources & addRace( size_t _count );
+        const VectorSources & addParallel( size_t _count );
+        const VectorSources & addRace( size_t _count );
         SourcePtr addFork();
         void addDeadLock();
 
@@ -97,11 +97,11 @@ namespace GOAP
         }
 
         template<class F>
-        const TVectorSources & addSwitch( size_t _count, F _f )
+        const VectorSources & addSwitch( size_t _count, F _f )
         {
             SwitchProviderPtr provider = GOAP_NEW SwitchProviderT<F>( _f );
 
-            const TVectorSources & sources = this->addSwitchProvider( provider, _count );
+            const VectorSources & sources = this->addSwitchProvider( provider, _count );
 
             return sources;
         }
@@ -142,7 +142,7 @@ namespace GOAP
         IfSource addIfProvider( const IfProviderPtr & _provider );
         IfSource addUnlessProvider( const IfProviderPtr & _provider );
         SourcePtr addRepeatProvider( const ScopeProviderPtr & _provider );
-        const TVectorSources & addSwitchProvider( const SwitchProviderPtr & _provider, size_t _count );
+        const VectorSources & addSwitchProvider( const SwitchProviderPtr & _provider, size_t _count );
         SourcePtr addGuardProvider( const GuardProviderPtr & _begin, const GuardProviderPtr & _end );
         void addWhileProvider( const ScopeProviderPtr & _providerScope );
 

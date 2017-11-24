@@ -4,8 +4,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 TaskRoll::TaskRoll( float _delay, uint32_t _roll, uint32_t _max, Scheduler * _scheduler )
-    : GOAP::Task( GOAP::TASK_EVENT_RUN | GOAP::TASK_EVENT_SKIP )
-	, m_delay( _delay )
+    : m_delay( _delay )
 	, m_roll( _roll )
 	, m_max( _max )
 	, m_scheduler( _scheduler )

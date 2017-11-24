@@ -16,30 +16,12 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     Task::Task()
         : m_state( TASK_STATE_IDLE )
-        , m_events( 0 )
-        , m_skip( false )
-    {
-    }
-    //////////////////////////////////////////////////////////////////////////
-    Task::Task( uint32_t _events )
-        : m_state( TASK_STATE_IDLE )
-        , m_events( _events )
         , m_skip( false )
     {
     }
     //////////////////////////////////////////////////////////////////////////
     Task::~Task()
     {
-    }
-    //////////////////////////////////////////////////////////////////////////
-    void Task::setEvents( uint32_t _events )
-    {
-        m_events = _events;
-    }
-    //////////////////////////////////////////////////////////////////////////
-    uint32_t Task::getEvents() const
-    {
-        return m_events;
     }
     //////////////////////////////////////////////////////////////////////////
     void Task::setChain( const ChainPtr & _chain )
@@ -561,84 +543,97 @@ namespace GOAP
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
-#   define TASK_EVENTR( Event, R, M )\
-    return (m_events & Event) ? R : this-> _##M ()
-#   define TASK_EVENT( Event, M )\
-    TASK_EVENTR(Event, (void)(0), M)
-    //////////////////////////////////////////////////////////////////////////
     bool Task::onInitialize()
     {
-        TASK_EVENTR( TASK_EVENT_INITIALIZE, true, onInitialize );
+        bool successful = this->_onInitialize();
+
+        return successful;
     }
     //////////////////////////////////////////////////////////////////////////
     void Task::onFinalize()
     {
-        TASK_EVENT( TASK_EVENT_FINALIZE, onFinalize );
+        this->_onFinalize();
     }
     //////////////////////////////////////////////////////////////////////////
     bool Task::onValidate() const
     {
-        TASK_EVENTR( TASK_EVENT_VALIDATE, true, onValidate );
+        bool valid = this->_onValidate();
+
+        return valid;
     }
     //////////////////////////////////////////////////////////////////////////
     bool Task::onCheck() const
     {
-        TASK_EVENTR( TASK_EVENT_CHECK, true, onCheck );
+        bool check = this->_onCheck();
+
+        return check;
     }
     //////////////////////////////////////////////////////////////////////////
     bool Task::onRun()
     {
-        TASK_EVENTR( TASK_EVENT_RUN, true, onRun );
+        bool successful = this->_onRun();
+
+        return successful;
     }
     //////////////////////////////////////////////////////////////////////////
     bool Task::onSkipable() const
     {
-        TASK_EVENTR( TASK_EVENT_SKIPABLE, false, onSkipable );
+        bool result = _onSkipable();
+
+        return result;
     }
     //////////////////////////////////////////////////////////////////////////
     void Task::onSkipNoSkiped()
     {
-        TASK_EVENT( TASK_EVENT_SKIP_NO_SKIPED, onSkipNoSkiped );
+        this->_onSkipNoSkiped();
     }
     //////////////////////////////////////////////////////////////////////////
     bool Task::onSkipBlock()
     {
-        TASK_EVENTR( TASK_EVENT_SKIP_BLOCK, false, onSkipBlock );
+        bool result = this->_onSkipBlock();
+
+        return result;
     }
     //////////////////////////////////////////////////////////////////////////
     void Task::onComplete()
     {
-        TASK_EVENT( TASK_EVENT_COMPLETE, onComplete );
+        this->_onComplete();
     }
     //////////////////////////////////////////////////////////////////////////
     bool Task::onFastSkip()
     {
-        TASK_EVENTR( TASK_EVENT_FAST_SKIP, false, onFastSkip );
+        bool result = this->_onFastSkip();
+
+        return result;
     }
     //////////////////////////////////////////////////////////////////////////
     void Task::onSkip()
     {
-        TASK_EVENT( TASK_EVENT_SKIP, onSkip );
+        this->_onSkip();
     }
     //////////////////////////////////////////////////////////////////////////
     void Task::onCancel()
     {
-        TASK_EVENT( TASK_EVENT_CANCEL, onCancel );
+        this->_onCancel();
     }
     //////////////////////////////////////////////////////////////////////////
     void Task::onFinally()
     {
-        TASK_EVENT( TASK_EVENT_FINALLY, onFinally );
+        this->_onFinally();
     }
     //////////////////////////////////////////////////////////////////////////
     bool Task::onCheckRun() const
     {
-        TASK_EVENTR( TASK_EVENT_CHECK_RUN, m_prevs.empty(), onCheckRun );
+        bool result = this->_onCheckRun();
+
+        return result;
     }
     //////////////////////////////////////////////////////////////////////////
     bool Task::onCheckSkip() const
     {
-        TASK_EVENTR( TASK_EVENT_CHECK_SKIP, m_prevs.empty(), onCheckSkip );
+        bool result = this->_onCheckSkip();
+
+        return result;
     }
     //////////////////////////////////////////////////////////////////////////
 #   undef TASK_EVENTR
@@ -675,6 +670,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Task::_onSkipNoSkiped()
     {
+        //Empty
     }
     //////////////////////////////////////////////////////////////////////////
     bool Task::_onSkipBlock()
@@ -705,12 +701,16 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool Task::_onCheckRun() const
     {
-        return true;
+        bool result = m_prevs.empty();
+
+        return result;
     }
     //////////////////////////////////////////////////////////////////////////
     bool Task::_onCheckSkip() const
     {
-        return true;
+        bool result = m_prevs.empty();
+
+        return result;
     }
     //////////////////////////////////////////////////////////////////////////
     void Task::addPrev_( Task * _task )

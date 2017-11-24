@@ -57,24 +57,24 @@ namespace GOAP
         m_transcriptors.push_back( description );
     }
     //////////////////////////////////////////////////////////////////////////
-    const TVectorSources & Source::addParallel( size_t _count )
+    const VectorSources & Source::addParallel( size_t _count )
     {
         TranscriptorParallel * description = GOAP_NEW TranscriptorParallel( _count );
 
         m_transcriptors.push_back( description );
 
-        const TVectorSources & sources = description->getSources();
+        const VectorSources & sources = description->getSources();
 
         return sources;
     }
     //////////////////////////////////////////////////////////////////////////
-    const TVectorSources & Source::addRace( size_t _count )
+    const VectorSources & Source::addRace( size_t _count )
     {
         TranscriptorRace * description = GOAP_NEW TranscriptorRace( _count );
 
         m_transcriptors.push_back( description );
 
-        const TVectorSources & sources = description->getSources();
+        const VectorSources & sources = description->getSources();
 
         return sources;
     }
@@ -106,12 +106,12 @@ namespace GOAP
         return source_until;
     }
     //////////////////////////////////////////////////////////////////////////
-    const TVectorSources & Source::addSwitchProvider( const SwitchProviderPtr & _provider, size_t _count )
+    const VectorSources & Source::addSwitchProvider( const SwitchProviderPtr & _provider, size_t _count )
     {
-        TVectorSources sources;
+        VectorSources sources;
         sources.resize( _count );
 
-        for( TVectorSources::iterator
+        for( VectorSources::iterator
             it = sources.begin(),
             it_end = sources.end();
             it != it_end;
@@ -126,14 +126,14 @@ namespace GOAP
 
         this->addTask( task );
 
-        const TVectorSources & sources_switch = task->getSources();
+        const VectorSources & sources_switch = task->getSources();
 
         return sources_switch;
     }
     //////////////////////////////////////////////////////////////////////////
     SourcePtr Source::addGuardProvider( const GuardProviderPtr & _begin, const GuardProviderPtr & _end )
     {
-        const TVectorSources & race_source = this->addRace( 2 );
+        const VectorSources & race_source = this->addRace( 2 );
 
         const SourcePtr & source_guard = race_source[0];
 

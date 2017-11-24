@@ -22,6 +22,7 @@ namespace GOAP
 
 	public:
 		bool _onRun() override;
+        void _onFinally() override;
 
 	protected:
         ScopeProviderPtr m_provider;

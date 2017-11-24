@@ -14,9 +14,8 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskSwitch::TaskSwitch( const SwitchProviderPtr & _provider, const TVectorSources & _sources )
-        : Task( TASK_EVENT_RUN )
-        , m_provider( _provider )
+    TaskSwitch::TaskSwitch( const SwitchProviderPtr & _provider, const VectorSources & _sources )
+        : m_provider( _provider )
         , m_sources( _sources )
     {
     }
@@ -25,7 +24,7 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    const TVectorSources & TaskSwitch::getSources() const
+    const VectorSources & TaskSwitch::getSources() const
     {
         return m_sources;
     }
@@ -45,5 +44,12 @@ namespace GOAP
         }
 
         return true;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void TaskSwitch::_onFinally()
+    {
+        m_provider = nullptr;
+        
+        m_sources.clear();
     }
 }

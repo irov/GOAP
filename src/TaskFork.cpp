@@ -14,8 +14,7 @@ namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     TaskFork::TaskFork( const SourcePtr & _fork )
-        : Task( TASK_EVENT_RUN )
-        , m_fork( _fork )
+        : m_fork( _fork )
     {
     }
     //////////////////////////////////////////////////////////////////////////
@@ -35,5 +34,11 @@ namespace GOAP
         m_chain = chain;
 
         return true;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void TaskFork::_onFinally()
+    {
+        //m_chain = nullptr; FixMe???
+        m_fork = nullptr;
     }
 }

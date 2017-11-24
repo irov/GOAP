@@ -23,6 +23,7 @@ namespace GOAP
 
     public:
         bool _onRun() override;
+        void _onFinally() override;
 
     protected:
         SourcePtr m_fork;

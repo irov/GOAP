@@ -14,8 +14,7 @@ namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     TaskWhile::TaskWhile( const ScopeProviderPtr & _providerScope )
-        : Task( TASK_EVENT_RUN | TASK_EVENT_FINALIZE )
-        , m_providerScope( _providerScope )
+        : m_providerScope( _providerScope )
     {
     }
     //////////////////////////////////////////////////////////////////////////
