@@ -60,19 +60,19 @@ namespace GOAP
         _task->addPrev_( this );
     }
     //////////////////////////////////////////////////////////////////////////
-    TVectorTasks & Task::getNexts()
+    VectorTasks & Task::getNexts()
     {
         return m_nexts;
     }
     //////////////////////////////////////////////////////////////////////////
-    const TVectorTasks & Task::getNexts() const
+    const VectorTasks & Task::getNexts() const
     {
         return m_nexts;
     }
     //////////////////////////////////////////////////////////////////////////
-    void Task::popNexts( TVectorTasks & _clone )
+    void Task::popNexts( VectorTasks & _clone )
     {
-        for( TVectorTasks::iterator
+        for( VectorTasks::iterator
             it = m_nexts.begin(),
             it_end = m_nexts.end();
             it != it_end;
@@ -90,7 +90,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool Task::injectSource( const SourcePtr & _source )
     {
-        TVectorTasks nexts;
+        VectorTasks nexts;
         this->popNexts( nexts );
 
         const ChainPtr & chain = this->getChain();
@@ -102,7 +102,7 @@ namespace GOAP
             return false;
         }
 
-        for( TVectorTasks::iterator
+        for( VectorTasks::iterator
             it = nexts.begin(),
             it_end = nexts.end();
             it != it_end;
@@ -292,9 +292,9 @@ namespace GOAP
 
         if( _withNexts == true )
         {
-            TVectorTasks copy_nexts = m_nexts;
+            VectorTasks copy_nexts = m_nexts;
 
-            for( TVectorTasks::const_iterator
+            for( VectorTasks::const_iterator
                 it = copy_nexts.begin(),
                 it_end = copy_nexts.end();
                 it != it_end;
@@ -318,9 +318,9 @@ namespace GOAP
 
         m_chain->completeTask( this );
 
-        TVectorTasks copy_nexts = m_nexts;
+        VectorTasks copy_nexts = m_nexts;
 
-        for( TVectorTasks::iterator
+        for( VectorTasks::iterator
             it = copy_nexts.begin(),
             it_end = copy_nexts.end();
             it != it_end;
@@ -374,9 +374,9 @@ namespace GOAP
 
         if( m_skip == false )
         {
-            TVectorTasks copy_nexts = m_nexts;
+            VectorTasks copy_nexts = m_nexts;
 
-            for( TVectorTasks::iterator
+            for( VectorTasks::iterator
                 it = copy_nexts.begin(),
                 it_end = copy_nexts.end();
                 it != it_end;
@@ -394,9 +394,9 @@ namespace GOAP
         }
         else
         {
-            TVectorTasks copy_nexts = m_nexts;
+            VectorTasks copy_nexts = m_nexts;
 
-            for( TVectorTasks::iterator
+            for( VectorTasks::iterator
                 it = copy_nexts.begin(),
                 it_end = copy_nexts.end();
                 it != it_end;
@@ -453,9 +453,9 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Task::skipPrev_()
     {
-        TVectorTasks clone_prevs = m_prevs;
+        VectorTasks clone_prevs = m_prevs;
 
-        for( TVectorTasks::iterator
+        for( VectorTasks::iterator
             it = clone_prevs.begin(),
             it_end = clone_prevs.end();
             it != it_end;
@@ -483,9 +483,9 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Task::cancelPrev_()
     {
-        TVectorTasks clone_prevs = m_prevs;
+        VectorTasks clone_prevs = m_prevs;
 
-        for( TVectorTasks::iterator
+        for( VectorTasks::iterator
             it = clone_prevs.begin(),
             it_end = clone_prevs.end();
             it != it_end;
@@ -720,14 +720,14 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Task::removePrev_( Task * _task )
     {
-        TVectorTasks::iterator it_erase = std::find( m_prevs.begin(), m_prevs.end(), _task );
+        VectorTasks::iterator it_erase = std::find( m_prevs.begin(), m_prevs.end(), _task );
 
         m_prevs.erase( it_erase );
     }
     //////////////////////////////////////////////////////////////////////////
     void Task::removeNext_( Task * _task )
     {
-        TVectorTasks::iterator it_erase = std::find( m_nexts.begin(), m_nexts.end(), _task );
+        VectorTasks::iterator it_erase = std::find( m_nexts.begin(), m_nexts.end(), _task );
 
         if( it_erase == m_nexts.end() )
         {
@@ -745,7 +745,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool Task::hasPrev_( const Task * _task ) const
     {
-        TVectorTasks::const_iterator it_found = std::find( m_prevs.begin(), m_prevs.end(), _task );
+        VectorTasks::const_iterator it_found = std::find( m_prevs.begin(), m_prevs.end(), _task );
 
         return it_found != m_prevs.end();
     }

@@ -24,7 +24,7 @@ namespace GOAP
     typedef IntrusivePtr<class Transcriptor> TranscriptorPtr;
 
     typedef Vector<SourcePtr> VectorSources;
-    typedef Vector<TranscriptorPtr> TVectorTranscriptor;
+    typedef Vector<TranscriptorPtr> VectorTranscriptor;
 
     struct IfSource
     {
@@ -153,7 +153,7 @@ namespace GOAP
         virtual SourcePtr _provideSource();
 
     protected:
-        TVectorTranscriptor m_transcriptors;
+        VectorTranscriptor m_transcriptors;
 
         bool m_skip;
     };

@@ -15,7 +15,7 @@ namespace GOAP
     typedef IntrusivePtr<class Source> SourcePtr;
     typedef IntrusivePtr<class Chain> ChainPtr;
 
-    typedef Vector<TaskPtr> TVectorTasks;
+    typedef Vector<TaskPtr> VectorTasks;
 
     class Task
         : public Factorable
@@ -49,9 +49,9 @@ namespace GOAP
 
     public:
         void addNext( const TaskPtr & _task );
-        TVectorTasks & getNexts();
-        const TVectorTasks & getNexts() const;
-        void popNexts( TVectorTasks & _clone );
+        VectorTasks & getNexts();
+        const VectorTasks & getNexts() const;
+        void popNexts( VectorTasks & _clone );
         bool injectSource( const SourcePtr & _source );
 
     public:
@@ -125,8 +125,8 @@ namespace GOAP
 
         ChainPtr m_chain;
 
-        TVectorTasks m_nexts;
-        TVectorTasks m_prevs;
+        VectorTasks m_nexts;
+        VectorTasks m_prevs;
 
         bool m_skip;
     };

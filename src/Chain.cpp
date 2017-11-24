@@ -113,7 +113,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Chain::completeTask( const TaskPtr & _task )
     {
-        TVectorTask::iterator it_found = std::find( m_runningTasks.begin(), m_runningTasks.end(), _task );
+        VectorTask::iterator it_found = std::find( m_runningTasks.begin(), m_runningTasks.end(), _task );
 
         if( it_found == m_runningTasks.end() )
         {
@@ -154,9 +154,9 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Chain::skipRunningTasks_()
     {
-        TVectorTask tasks = m_runningTasks;
+        VectorTask tasks = m_runningTasks;
 
-        for( TVectorTask::iterator
+        for( VectorTask::iterator
             it = tasks.begin(),
             it_end = tasks.end();
             it != it_end;
@@ -170,9 +170,9 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Chain::cancelRunningTasks_()
     {
-        TVectorTask tasks = m_runningTasks;
+        VectorTask tasks = m_runningTasks;
 
-        for( TVectorTask::iterator
+        for( VectorTask::iterator
             it = tasks.begin(),
             it_end = tasks.end();
             it != it_end;

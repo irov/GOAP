@@ -18,7 +18,7 @@ namespace GOAP
     typedef IntrusivePtr<class Task> TaskPtr;
     typedef IntrusivePtr<class Source> SourcePtr;
 
-    typedef Vector<TaskPtr> TVectorTask;
+    typedef Vector<TaskPtr> VectorTask;
 
     class Chain
         : public Factorable
@@ -79,7 +79,7 @@ namespace GOAP
 
         SourcePtr m_source;
 
-        TVectorTask m_runningTasks;
+        VectorTask m_runningTasks;
 
         ChainProviderPtr m_cb;
 
