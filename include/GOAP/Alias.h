@@ -1,4 +1,4 @@
-/*
+/*virtual 
 * Copyright (C) 2017, Levchenko Yuriy <irov13@mail.ru>
 *
 * This software may be modified and distributed under the terms
@@ -21,10 +21,12 @@ namespace GOAP
         Alias();
 
     protected:
-        bool _onRun() override;
+        bool _onRun() override final;
+        void _onFinally() override final;
 
     protected:
         virtual void _onGenerate( const SourcePtr & _source ) = 0;
+        virtual void _onAliasFinally();
     };
 
     typedef IntrusivePtr<Alias> AliasPtr;
