@@ -37,7 +37,7 @@ namespace GOAP
     {
         m_providerScope = nullptr;
 
-        if( m_providerScope != nullptr )
+        if( m_chainWhile != nullptr )
         {
             ChainPtr chain = m_chainWhile;
             m_chainWhile = nullptr;
