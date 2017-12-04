@@ -578,7 +578,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool Task::onSkipable() const
     {
-        bool result = _onSkipable();
+        bool result = this->_onSkipable();
 
         return result;
     }
@@ -665,7 +665,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool Task::_onSkipable() const
     {
-        return false;
+        return true;
     }
     //////////////////////////////////////////////////////////////////////////
     void Task::_onSkipNoSkiped()

@@ -45,6 +45,8 @@ namespace GOAP
             return false;
         }
 
+        IntrusiveThisAcquire( this );
+
         this->setState_( TASK_CHAIN_STATE_RUN );
 
         TaskPtr task_first = GOAP_NEW TaskDummy();
@@ -61,11 +63,15 @@ namespace GOAP
 
         this->processTask( task_first, false );
 
+        IntrusiveThisRelease( this );
+
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
     void Chain::cancel()
     {
+        IntrusiveThisAcquire( this );
+
         if( m_state != TASK_CHAIN_STATE_IDLE &&
             m_state != TASK_CHAIN_STATE_CANCEL &&
             m_state != TASK_CHAIN_STATE_FINALIZE )
@@ -91,14 +97,20 @@ namespace GOAP
 
             this->finalize_();
         }
+
+        IntrusiveThisRelease( this );
     }
     //////////////////////////////////////////////////////////////////////////
     void Chain::skip()
     {
+        IntrusiveThisAcquire( this );
+
         if( m_state == TASK_CHAIN_STATE_RUN )
         {
             this->skipRunningTasks_();
         }
+
+        IntrusiveThisRelease( this );
     }
     //////////////////////////////////////////////////////////////////////////
     bool Chain::isComplete() const

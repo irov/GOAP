@@ -21,8 +21,6 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////    
     bool Alias::_onRun()
     {
-        ChainPtr chain = m_chain;
-
         GOAP::SourcePtr source = GOAP_NEW GOAP::Source();
 
         bool skiped = this->isSkip();
