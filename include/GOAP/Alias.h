@@ -18,6 +18,7 @@ namespace GOAP
     {
     public:
         Alias();
+        ~Alias() override;
 
     protected:
         bool _onRun() override final;

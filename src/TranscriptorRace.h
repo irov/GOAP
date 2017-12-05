@@ -22,6 +22,7 @@ namespace GOAP
 	{
 	public:
 		TranscriptorRace( size_t _count );
+        ~TranscriptorRace() override;
 
 	public:
 		const VectorSources & getSources() const;

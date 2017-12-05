@@ -16,7 +16,7 @@ namespace GOAP
 	{
 	public:
 		TaskRaceNeck();
-		~TaskRaceNeck();
+		~TaskRaceNeck() override;
 
 	protected:
 		bool _onCheckRun() const override;

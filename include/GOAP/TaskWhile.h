@@ -19,8 +19,8 @@ namespace GOAP
 		: public Task
 	{
 	public:
-        TaskWhile( const ScopeProviderPtr & _providerScope );
-		~TaskWhile();
+        explicit TaskWhile( const ScopeProviderPtr & _providerScope );
+		~TaskWhile() override;
 
 	public:
 		void _onFinalize() override;

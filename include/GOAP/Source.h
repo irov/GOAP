@@ -37,7 +37,7 @@ namespace GOAP
     {
     public:
         Source();
-        ~Source();
+        ~Source() override;
 
     public:
         void setSkip( bool _skip );

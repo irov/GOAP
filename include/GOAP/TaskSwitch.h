@@ -23,7 +23,7 @@ namespace GOAP
 	{
 	public:
 		TaskSwitch( const SwitchProviderPtr & _provider, const VectorSources & _sources );
-		~TaskSwitch();
+		~TaskSwitch() override;
 
 	public:
 		const VectorSources & getSources() const;

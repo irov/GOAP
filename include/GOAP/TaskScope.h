@@ -17,8 +17,8 @@ namespace GOAP
 		: public Task
 	{
 	public:
-		TaskScope( const ScopeProviderPtr & _provider );
-		~TaskScope();
+        explicit TaskScope( const ScopeProviderPtr & _provider );
+		~TaskScope() override;
 
 	public:
 		bool _onRun() override;

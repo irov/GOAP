@@ -15,7 +15,8 @@ namespace GOAP
 		: public Transcriptor
 	{
 	public:
-		TranscriptorBase( const TaskPtr & _task );
+		explicit TranscriptorBase( const TaskPtr & _task );
+        ~TranscriptorBase() override;
 
 	public:
 		TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) override;

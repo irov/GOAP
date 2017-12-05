@@ -17,8 +17,8 @@ namespace GOAP
         : public Task
     {
     public:
-        TaskFunction( const FunctionProviderPtr & _provider );
-        ~TaskFunction();
+        explicit TaskFunction( const FunctionProviderPtr & _provider );
+        ~TaskFunction() override;
 
     public:
         bool _onRun() override;

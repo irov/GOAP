@@ -18,12 +18,14 @@ namespace GOAP
     {
     public:
         TaskGuard( const GuardProviderPtr & _begin, const GuardProviderPtr & _end );
-        ~TaskGuard();
+        ~TaskGuard() override;
 
     public:
         bool _onRun() override;
         void _onFinally() override;
-        void _onCancel() override;
+
+    public:
+        bool _onSkipable() const override;
 
     protected:
         GuardProviderPtr m_begin;

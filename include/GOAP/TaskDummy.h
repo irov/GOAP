@@ -16,6 +16,6 @@ namespace GOAP
     {
     public:
         TaskDummy();
-        ~TaskDummy();
+        ~TaskDummy() override;
     };
 }

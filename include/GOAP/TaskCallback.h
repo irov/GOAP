@@ -18,8 +18,8 @@ namespace GOAP
         , public CallbackObserver
     {
     public:
-        TaskCallback( const CallbackProviderPtr & _provider );
-        ~TaskCallback();
+        explicit TaskCallback( const CallbackProviderPtr & _provider );
+        ~TaskCallback() override;
 
     public:
         bool _onRun() override;

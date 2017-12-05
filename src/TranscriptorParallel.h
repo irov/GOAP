@@ -21,7 +21,8 @@ namespace GOAP
 		: public Transcriptor
 	{
 	public:
-		TranscriptorParallel( size_t _count );
+		explicit TranscriptorParallel( size_t _count );
+        ~TranscriptorParallel() override;
 
 	public:
 		const VectorSources & getSources() const;

@@ -72,7 +72,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Task::popNexts( VectorTasks & _clone )
     {
-        for( VectorTasks::iterator
+        for( VectorTasks::const_iterator
             it = m_nexts.begin(),
             it_end = m_nexts.end();
             it != it_end;
@@ -102,7 +102,7 @@ namespace GOAP
             return false;
         }
 
-        for( VectorTasks::iterator
+        for( VectorTasks::const_iterator
             it = nexts.begin(),
             it_end = nexts.end();
             it != it_end;
@@ -320,7 +320,7 @@ namespace GOAP
 
         VectorTasks copy_nexts = m_nexts;
 
-        for( VectorTasks::iterator
+        for( VectorTasks::const_iterator
             it = copy_nexts.begin(),
             it_end = copy_nexts.end();
             it != it_end;
@@ -376,7 +376,7 @@ namespace GOAP
         {
             VectorTasks copy_nexts = m_nexts;
 
-            for( VectorTasks::iterator
+            for( VectorTasks::const_iterator
                 it = copy_nexts.begin(),
                 it_end = copy_nexts.end();
                 it != it_end;
@@ -396,7 +396,7 @@ namespace GOAP
         {
             VectorTasks copy_nexts = m_nexts;
 
-            for( VectorTasks::iterator
+            for( VectorTasks::const_iterator
                 it = copy_nexts.begin(),
                 it_end = copy_nexts.end();
                 it != it_end;
@@ -441,7 +441,7 @@ namespace GOAP
             return false;
         }
 
-        this->cancelPrev_();
+        //this->cancelPrev_();
 
         if( m_state == TASK_STATE_END )
         {
@@ -455,7 +455,7 @@ namespace GOAP
     {
         VectorTasks clone_prevs = m_prevs;
 
-        for( VectorTasks::iterator
+        for( VectorTasks::const_iterator
             it = clone_prevs.begin(),
             it_end = clone_prevs.end();
             it != it_end;
@@ -485,7 +485,7 @@ namespace GOAP
     {
         VectorTasks clone_prevs = m_prevs;
 
-        for( VectorTasks::iterator
+        for( VectorTasks::const_iterator
             it = clone_prevs.begin(),
             it_end = clone_prevs.end();
             it != it_end;
@@ -635,9 +635,6 @@ namespace GOAP
 
         return result;
     }
-    //////////////////////////////////////////////////////////////////////////
-#   undef TASK_EVENTR
-#   undef TASK_EVENT
     //////////////////////////////////////////////////////////////////////////
     bool Task::_onInitialize()
     {

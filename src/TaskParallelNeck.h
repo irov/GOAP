@@ -16,7 +16,7 @@ namespace GOAP
 	{
 	public:
 		TaskParallelNeck();
-		~TaskParallelNeck();
+		~TaskParallelNeck() override;
 
 	protected:
 		bool _onCheckRun() const override;

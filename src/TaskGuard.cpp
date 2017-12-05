@@ -30,12 +30,14 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void TaskGuard::_onFinally()
     {
+        m_end->onGuard();
+
         m_begin = nullptr;
         m_end = nullptr;
     }
     //////////////////////////////////////////////////////////////////////////
-    void TaskGuard::_onCancel()
+    bool TaskGuard::_onSkipable() const
     {
-        m_end->onGuard();
+        return false;
     }
 }

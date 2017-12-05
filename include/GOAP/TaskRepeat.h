@@ -20,7 +20,7 @@ namespace GOAP
 	{
 	public:
 		TaskRepeat( const ScopeProviderPtr & _provider, const SourcePtr & _until );
-		~TaskRepeat();
+		~TaskRepeat() override;
 
 	public:
 		void _onFinalize() override;

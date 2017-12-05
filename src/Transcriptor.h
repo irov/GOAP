@@ -18,9 +18,6 @@ namespace GOAP
 		: public Factorable
 	{
 	public:
-		virtual ~Transcriptor() {};
-
-	public:
 		virtual TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) = 0;
 	};
 

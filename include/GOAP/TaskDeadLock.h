@@ -16,7 +16,7 @@ namespace GOAP
     {
     public:
         TaskDeadLock();
-        ~TaskDeadLock();
+        ~TaskDeadLock() override;
 
     protected:
         bool _onRun() override;

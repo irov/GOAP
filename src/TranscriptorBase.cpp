@@ -17,6 +17,10 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
+    TranscriptorBase::~TranscriptorBase()
+    {
+    }
+    //////////////////////////////////////////////////////////////////////////
     TaskPtr TranscriptorBase::generate( const ChainPtr & _chain, const TaskPtr & _task )
     {
         m_task->setChain( _chain );

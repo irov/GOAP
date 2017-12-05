@@ -168,7 +168,7 @@ namespace GOAP
     {
         VectorTask tasks = m_runningTasks;
 
-        for( VectorTask::iterator
+        for( VectorTask::const_iterator
             it = tasks.begin(),
             it_end = tasks.end();
             it != it_end;
@@ -184,7 +184,7 @@ namespace GOAP
     {
         VectorTask tasks = m_runningTasks;
 
-        for( VectorTask::iterator
+        for( VectorTask::const_iterator
             it = tasks.begin(),
             it_end = tasks.end();
             it != it_end;

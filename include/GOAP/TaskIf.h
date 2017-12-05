@@ -19,7 +19,7 @@ namespace GOAP
 	{
 	public:
 		TaskIf( const IfProviderPtr & _provider, const SourcePtr & _sourceTrue, const SourcePtr & _sourceFalse );
-		~TaskIf();
+		~TaskIf() override;
 
 	public:
 		bool _onRun() override;

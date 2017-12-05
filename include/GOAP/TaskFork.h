@@ -18,8 +18,8 @@ namespace GOAP
         : public Task
     {
     public:
-        TaskFork( const SourcePtr & _fork );
-        ~TaskFork();
+        explicit TaskFork( const SourcePtr & _fork );
+        ~TaskFork() override;
 
     public:
         bool _onRun() override;

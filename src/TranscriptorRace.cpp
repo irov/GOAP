@@ -30,6 +30,10 @@ namespace GOAP
         }
     }
     //////////////////////////////////////////////////////////////////////////
+    TranscriptorRace::~TranscriptorRace()
+    {
+    }
+    //////////////////////////////////////////////////////////////////////////
     const VectorSources & TranscriptorRace::getSources() const
     {
         return m_sources;
@@ -45,7 +49,7 @@ namespace GOAP
         TaskPtr task_parallel_neck = GOAP_NEW TaskRaceNeck();
         task_parallel_neck->setChain( _chain );
 
-        for( VectorSources::iterator
+        for( VectorSources::const_iterator
             it = m_sources.begin(),
             it_end = m_sources.end();
             it != it_end;

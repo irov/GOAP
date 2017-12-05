@@ -210,7 +210,7 @@ namespace GOAP
     {
         TaskPtr current_task = _task;
 
-        for( VectorTranscriptor::iterator
+        for( VectorTranscriptor::const_iterator
             it = m_transcriptors.begin(),
             it_end = m_transcriptors.end();
             it != it_end;
