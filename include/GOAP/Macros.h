@@ -7,13 +7,4 @@
 
 #   pragma once
 
-#   include "GOAP/IntrusivePtr.h"
-#   include "GOAP/Factorable.h"
-
-namespace GOAP
-{
-    template<class T>
-    using IntrusivePtr = Detail::IntrusivePtr<T>;
-
-    using Factorable = Detail::Factorable;
-}
+#   define GOAP_UNUSED(expr) ((void)(expr))

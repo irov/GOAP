@@ -7,13 +7,10 @@
 
 #   pragma once
 
-#   include "GOAP/IntrusivePtr.h"
-#   include "GOAP/Factorable.h"
+#   include <vector>
 
 namespace GOAP
 {
     template<class T>
-    using IntrusivePtr = Detail::IntrusivePtr<T>;
-
-    using Factorable = Detail::Factorable;
+    using Vector = std::vector<T>;
 }

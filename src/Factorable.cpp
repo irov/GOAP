@@ -6,6 +6,7 @@
 */
 
 #	include "GOAP/Factorable.h"
+#	include "GOAP/Macros.h"
 
 #   include <malloc.h>
 
@@ -42,8 +43,8 @@ namespace GOAP
         //////////////////////////////////////////////////////////////////////////
         void Factorable::operator delete(void* _ptr, const char * _file, int _line)
         {
-            (void)_file;
-            (void)_line;
+            GOAP_UNUSED( _file );
+            GOAP_UNUSED( _line );
 
             free( _ptr );
         }

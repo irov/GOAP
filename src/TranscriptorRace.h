@@ -7,6 +7,8 @@
 
 #	pragma once
 
+#   include "GOAP/Vector.h"
+
 #	include "Transcriptor.h"
 
 namespace GOAP

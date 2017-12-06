@@ -53,6 +53,8 @@ ${INCLUDE_DIR}/CallbackProvider.h
 ${INCLUDE_DIR}/Chain.h
 ${INCLUDE_DIR}/ChainProvider.h
 ${INCLUDE_DIR}/Config.h
+${INCLUDE_DIR}/Vector.h
+${INCLUDE_DIR}/Macros.h
 ${INCLUDE_DIR}/Exception.h
 ${INCLUDE_DIR}/Factorable.h
 ${INCLUDE_DIR}/FunctionProvider.h

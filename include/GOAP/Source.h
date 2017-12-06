@@ -8,6 +8,7 @@
 #	pragma once
 
 #	include "GOAP/Config.h"
+#	include "GOAP/Vector.h"
 
 #	include "GOAP/FunctionProvider.h"
 #	include "GOAP/CallbackProvider.h"
@@ -24,7 +25,7 @@ namespace GOAP
     typedef IntrusivePtr<class Source> SourcePtr;
     typedef IntrusivePtr<class Transcriptor> TranscriptorPtr;
     typedef IntrusivePtr<class Semaphore> SemaphorePtr;
-
+    //////////////////////////////////////////////////////////////////////////
     typedef Vector<SourcePtr> VectorSources;
     typedef Vector<TranscriptorPtr> VectorTranscriptor;
     //////////////////////////////////////////////////////////////////////////

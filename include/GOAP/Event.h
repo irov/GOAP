@@ -8,6 +8,7 @@
 #	pragma once
 
 #	include "GOAP/Config.h"
+#	include "GOAP/Vector.h"
 
 namespace GOAP
 {

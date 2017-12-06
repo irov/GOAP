@@ -8,6 +8,7 @@
 #	pragma once
 
 #	include "GOAP/Config.h"
+#   include "GOAP/Vector.h"
 
 #   include "GOAP/ChainProvider.h"
 
@@ -15,11 +16,11 @@ namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     class CallbackObserver;
-
+    //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class Task> TaskPtr;
     typedef IntrusivePtr<class Source> SourcePtr;
     typedef IntrusivePtr<class Chain> ChainPtr;
-
+    //////////////////////////////////////////////////////////////////////////
     typedef Vector<TaskPtr> VectorTasks;
     typedef Vector<ChainPtr> VectorChains;
     //////////////////////////////////////////////////////////////////////////

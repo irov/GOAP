@@ -8,6 +8,7 @@
 #	pragma once
 
 #   include "GOAP/Config.h"
+#   include "GOAP/Vector.h"
 
 namespace GOAP
 {
@@ -15,7 +16,7 @@ namespace GOAP
     typedef IntrusivePtr<class Task> TaskPtr;
     typedef IntrusivePtr<class Source> SourcePtr;
     typedef IntrusivePtr<class Chain> ChainPtr;
-
+    //////////////////////////////////////////////////////////////////////////
     typedef Vector<TaskPtr> VectorTasks;
     //////////////////////////////////////////////////////////////////////////
     class Task

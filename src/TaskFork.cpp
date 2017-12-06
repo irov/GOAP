@@ -6,6 +6,9 @@
 */
 
 #	include "GOAP/TaskFork.h"
+
+#   include "GOAP/Macros.h"
+
 #	include "GOAP/Source.h"
 #	include "GOAP/Chain.h"
 #	include "GOAP/ChainProvider.h"
@@ -31,6 +34,8 @@ namespace GOAP
 
         chain->setCallback( [this, chain]( bool _skip )
         { 
+            GOAP_UNUSED( _skip );
+
             m_chain->removeFork( chain );
         } );
 
