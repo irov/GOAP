@@ -18,20 +18,22 @@
 
 namespace GOAP
 {
+    //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class Task> TaskPtr;
     typedef IntrusivePtr<class Chain> ChainPtr;
     typedef IntrusivePtr<class Source> SourcePtr;
     typedef IntrusivePtr<class Transcriptor> TranscriptorPtr;
+    typedef IntrusivePtr<class Semaphore> SemaphorePtr;
 
     typedef Vector<SourcePtr> VectorSources;
     typedef Vector<TranscriptorPtr> VectorTranscriptor;
-
+    //////////////////////////////////////////////////////////////////////////
     struct IfSource
     {
         SourcePtr source_true;
         SourcePtr source_false;
     };
-
+    //////////////////////////////////////////////////////////////////////////
     class Source
         : public Factorable
     {
@@ -55,7 +57,7 @@ namespace GOAP
         template<class F>
         void addFunction( F _f )
         {
-            FunctionProviderPtr provider = GOAP_NEW FunctionProviderT<F>( _f );
+            FunctionProviderPtr provider = Helper::makeFunctionProvider( _f );
 
             this->addFunctionProvider( provider );
         }
@@ -63,7 +65,7 @@ namespace GOAP
         template<class F>
         void addCallback( F _f )
         {
-            CallbackProviderPtr provider = GOAP_NEW CallbackProviderT<F>( _f );
+            CallbackProviderPtr provider = Helper::makeCallbackProvider( _f );
 
             this->addCallbackProvider( provider );
         }
@@ -71,7 +73,7 @@ namespace GOAP
         template<class F>
         void addScope( F _f )
         {
-            ScopeProviderPtr provider = GOAP_NEW ScopeProviderT<F>( _f );
+            ScopeProviderPtr provider = Helper::makeScopeProvider( _f );
 
             this->addScopeProvider( provider );
         }
@@ -79,7 +81,7 @@ namespace GOAP
         template<class F>
         IfSource addIf( F _f )
         {
-            IfProviderPtr provider = GOAP_NEW IfProviderT<F>( _f );
+            IfProviderPtr provider = Helper::makeIfProvider( _f );
 
             IfSource desc = this->addIfProvider( provider );
 
@@ -89,7 +91,7 @@ namespace GOAP
         template<class F>
         IfSource addUnless( F _f )
         {
-            IfProviderPtr provider = GOAP_NEW IfProviderT<F>( _f );
+            IfProviderPtr provider = Helper::makeIfProvider( _f );
 
             IfSource desc = this->addUnlessProvider( provider );
 
@@ -99,7 +101,7 @@ namespace GOAP
         template<class F>
         const VectorSources & addSwitch( size_t _count, F _f )
         {
-            SwitchProviderPtr provider = GOAP_NEW SwitchProviderT<F>( _f );
+            SwitchProviderPtr provider = Helper::makeSwitchProvider( _f );
 
             const VectorSources & sources = this->addSwitchProvider( provider, _count );
 
@@ -109,7 +111,7 @@ namespace GOAP
         template<class F>
         SourcePtr addRepeat( F _f )
         {
-            ScopeProviderPtr provider = GOAP_NEW ScopeProviderT<F>( _f );
+            ScopeProviderPtr provider = Helper::makeScopeProvider<F>( _f );
 
             SourcePtr source = this->addRepeatProvider( provider );
 
@@ -119,7 +121,7 @@ namespace GOAP
         template<class F>
         void addWhile( F _f )
         {
-            ScopeProviderPtr provider_scope = GOAP_NEW ScopeProviderT<F>( _f );
+            ScopeProviderPtr provider_scope = Helper::makeScopeProvider<F>( _f );
 
             this->addWhileProvider( provider_scope );
         }
@@ -127,13 +129,15 @@ namespace GOAP
         template<class FB, class FE>
         SourcePtr addGuard( FB _begin, FE _end )
         {
-            GuardProviderPtr begin_provider = GOAP_NEW GuardProviderT<FB>( _begin );
-            GuardProviderPtr end_provider = GOAP_NEW GuardProviderT<FE>( _end );
+            GuardProviderPtr begin_provider = Helper::makeGuardProvider( _begin );
+            GuardProviderPtr end_provider = Helper::makeGuardProvider( _end );
 
             SourcePtr source = this->addGuardProvider( begin_provider, end_provider );
 
             return source;
         }
+
+        void addSemaphore( const SemaphorePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply );
 
     public:
         void addFunctionProvider( const FunctionProviderPtr & _provider );
@@ -157,6 +161,7 @@ namespace GOAP
 
         bool m_skip;
     };
-
+    //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Source> SourcePtr;
+    //////////////////////////////////////////////////////////////////////////
 }

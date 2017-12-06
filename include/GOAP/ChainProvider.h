@@ -11,15 +11,16 @@
 
 namespace GOAP
 {
+    //////////////////////////////////////////////////////////////////////////
     class ChainProvider
         : public Factorable
     {
     public:
         virtual void onChain( bool _skip ) = 0;
     };
-
+    //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<ChainProvider> ChainProviderPtr;
-
+    //////////////////////////////////////////////////////////////////////////
     template<class F>
     class ChainProviderT
         : public ChainProvider
@@ -39,7 +40,7 @@ namespace GOAP
     protected:
         F m_f;
     };
-
+    //////////////////////////////////////////////////////////////////////////
     namespace Helper
     {
         template<class F>

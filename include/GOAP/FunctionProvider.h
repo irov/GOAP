@@ -11,15 +11,16 @@
 
 namespace GOAP
 {
+    //////////////////////////////////////////////////////////////////////////
     class FunctionProvider
         : public Factorable
     {
     public:
         virtual void onFunction() = 0;
     };
-
+    //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<FunctionProvider> FunctionProviderPtr;
-
+    //////////////////////////////////////////////////////////////////////////
     template<class F>
     class FunctionProviderT
         : public FunctionProvider
@@ -39,12 +40,15 @@ namespace GOAP
     protected:
         F m_f;
     };
-
-    template<class F>
-    FunctionProviderPtr makeFunctionProvider( F _f )
+    //////////////////////////////////////////////////////////////////////////
+    namespace Helper
     {
-        FunctionProviderPtr provider = GOAP_NEW FunctionProviderT<F>( _f );
+        template<class F>
+        FunctionProviderPtr makeFunctionProvider( F _f )
+        {
+            FunctionProviderPtr provider = GOAP_NEW FunctionProviderT<F>( _f );
 
-        return provider;
+            return provider;
+        }
     }
 }

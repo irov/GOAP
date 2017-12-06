@@ -54,7 +54,7 @@ namespace GOAP
 
         TaskPtr task_last = m_source->parse( this, task_first );
 
-        CallbackProviderPtr provider = makeCallbackProvider( [this]( CallbackObserver * _callback, bool _skip ) { this->complete( _callback, _skip ); } );
+        CallbackProviderPtr provider = Helper::makeCallbackProvider( [this]( CallbackObserver * _callback, bool _skip ) { this->complete( _callback, _skip ); } );
 
         TaskPtr task_cb = GOAP_NEW TaskCallback( provider );
         task_cb->setChain( this );

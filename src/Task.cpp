@@ -562,7 +562,7 @@ namespace GOAP
         return valid;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool Task::onCheck() const
+    bool Task::onCheck()
     {
         bool check = this->_onCheck();
 
@@ -650,7 +650,7 @@ namespace GOAP
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool Task::_onCheck() const
+    bool Task::_onCheck()
     {
         return true;
     }

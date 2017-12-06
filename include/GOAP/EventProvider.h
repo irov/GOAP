@@ -12,33 +12,31 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Source> SourcePtr;
-    //////////////////////////////////////////////////////////////////////////
-    class ScopeProvider
+    class EventProvider
         : public Factorable
     {
     public:
-        virtual bool onScope( const SourcePtr & _source ) = 0;
+        virtual bool onEvent() = 0;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<ScopeProvider> ScopeProviderPtr;
+    typedef IntrusivePtr<EventProvider> EventProviderPtr;
     //////////////////////////////////////////////////////////////////////////
     template<class F>
-    class ScopeProviderT
-        : public ScopeProvider
+    class EventProviderT
+        : public EventProvider
     {
     public:
-        ScopeProviderT( F _f )
+        EventProviderT( F _f )
             : m_f( _f )
         {
         }
 
     public:
-        bool onScope( const SourcePtr & _source ) override
+        bool onEvent() override
         {
-            bool successful = m_f( _source );
+            bool result = m_f();
 
-            return successful;
+            return result;
         }
 
     protected:
@@ -48,9 +46,9 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        ScopeProviderPtr makeScopeProvider( F _f )
+        EventProviderPtr makeEventProvider( F _f )
         {
-            ScopeProviderPtr provider = GOAP_NEW ScopeProviderT<F>( _f );
+            EventProviderPtr provider = GOAP_NEW EventProviderT<F>( _f );
 
             return provider;
         }

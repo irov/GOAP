@@ -13,13 +13,14 @@
 
 namespace GOAP
 {
+    //////////////////////////////////////////////////////////////////////////
     class CallbackObserver;
 
     typedef IntrusivePtr<class Task> TaskPtr;
     typedef IntrusivePtr<class Source> SourcePtr;
 
     typedef Vector<TaskPtr> VectorTask;
-
+    //////////////////////////////////////////////////////////////////////////
     class Chain
         : public Factorable
     {
@@ -44,7 +45,7 @@ namespace GOAP
         template<class F>
         void addCallback( F _f )
         {
-            ChainProviderPtr untilChainProvider = Helper::makeChainProvider<F>( _f );
+            ChainProviderPtr untilChainProvider = Helper::makeChainProvider( _f );
 
             this->addCallbackProvider( untilChainProvider );
         }
@@ -85,6 +86,7 @@ namespace GOAP
 
         bool m_complete;
     };
-
+    //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Chain> ChainPtr;
+    //////////////////////////////////////////////////////////////////////////
 }

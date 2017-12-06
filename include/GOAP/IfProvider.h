@@ -11,15 +11,16 @@
 
 namespace GOAP
 {
+    //////////////////////////////////////////////////////////////////////////
     class IfProvider
         : public Factorable
     {
     public:
         virtual bool onIf() = 0;
     };
-
+    //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<IfProvider> IfProviderPtr;
-
+    //////////////////////////////////////////////////////////////////////////
     template<class F>
     class IfProviderT
         : public IfProvider
@@ -41,12 +42,15 @@ namespace GOAP
     protected:
         F m_f;
     };
-
-    template<class F>
-    IfProviderPtr makeIfProvider( F _f )
+    //////////////////////////////////////////////////////////////////////////
+    namespace Helper
     {
-        IfProviderPtr provider = GOAP_NEW IfProviderT<F>( _f );
+        template<class F>
+        IfProviderPtr makeIfProvider( F _f )
+        {
+            IfProviderPtr provider = GOAP_NEW IfProviderT<F>( _f );
 
-        return provider;
+            return provider;
+        }
     }
 }

@@ -11,12 +11,13 @@
 
 namespace GOAP
 {
+    //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class Task> TaskPtr;
     typedef IntrusivePtr<class Source> SourcePtr;
     typedef IntrusivePtr<class Chain> ChainPtr;
 
     typedef Vector<TaskPtr> VectorTasks;
-
+    //////////////////////////////////////////////////////////////////////////
     class Task
         : public Factorable
     {
@@ -69,7 +70,7 @@ namespace GOAP
 
     protected:
         bool onValidate() const;
-        bool onCheck() const;
+        bool onCheck();
         bool onRun();
         bool onSkipable() const;
         void onSkipNoSkiped();
@@ -88,7 +89,7 @@ namespace GOAP
 
     protected:
         virtual bool _onValidate() const;
-        virtual bool _onCheck() const;
+        virtual bool _onCheck();
         virtual bool _onRun();
         virtual bool _onSkipable() const;
         virtual void _onSkipNoSkiped();
@@ -130,6 +131,7 @@ namespace GOAP
 
         bool m_skip;
     };
-
+    //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Task> TaskPtr;
+    //////////////////////////////////////////////////////////////////////////
 }

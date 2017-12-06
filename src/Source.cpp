@@ -22,6 +22,7 @@
 #	include "GOAP/TaskGuard.h"
 #	include "GOAP/TaskDeadLock.h"
 #   include "GOAP/TaskWhile.h"
+#   include "GOAP/TaskSemaphore.h"
 
 #	include "TranscriptorBase.h"
 #	include "TranscriptorParallel.h"
@@ -93,6 +94,11 @@ namespace GOAP
     void Source::addDeadLock()
     {
         this->addTask( GOAP_NEW TaskDeadLock() );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Source::addSemaphore( const SemaphorePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply )
+    {
+        this->addTask( GOAP_NEW TaskSemaphore( _semaphore, _flags, _test, _apply ) );
     }
     //////////////////////////////////////////////////////////////////////////
     SourcePtr Source::addRepeatProvider( const ScopeProviderPtr & _provider )

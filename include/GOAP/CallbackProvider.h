@@ -11,21 +11,22 @@
 
 namespace GOAP
 {
+    //////////////////////////////////////////////////////////////////////////
     class CallbackObserver
     {
     public:
         virtual void onCallback( bool _skip ) = 0;
     };
-
+    //////////////////////////////////////////////////////////////////////////
     class CallbackProvider
         : public Factorable
     {
     public:
         virtual void onCallback( CallbackObserver * _callback, bool _skip ) = 0;
     };
-
+    //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<CallbackProvider> CallbackProviderPtr;
-
+    //////////////////////////////////////////////////////////////////////////
     template<class F>
     class CallbackProviderT
         : public CallbackProvider
@@ -45,12 +46,15 @@ namespace GOAP
     protected:
         F m_f;
     };
-
-    template<class F>
-    CallbackProviderPtr makeCallbackProvider( F _f )
+    //////////////////////////////////////////////////////////////////////////
+    namespace Helper
     {
-        CallbackProviderPtr provider = GOAP_NEW CallbackProviderT<F>( _f );
+        template<class F>
+        CallbackProviderPtr makeCallbackProvider( F _f )
+        {
+            CallbackProviderPtr provider = GOAP_NEW CallbackProviderT<F>( _f );
 
-        return provider;
+            return provider;
+        }
     }
 }

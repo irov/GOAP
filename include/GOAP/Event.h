@@ -7,27 +7,31 @@
 
 #	pragma once
 
-#	include "GOAP/Task.h"
+#	include "GOAP/Config.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class FunctionProvider> FunctionProviderPtr;
+    typedef IntrusivePtr<class EventProvider> EventProviderPtr;
     //////////////////////////////////////////////////////////////////////////
-    class TaskFunction
-        : public Task
+    class Event
+        : public Factorable
     {
     public:
-        explicit TaskFunction( const FunctionProviderPtr & _provider );
-        ~TaskFunction() override;
+        Event();
+        ~Event();
 
     public:
-        bool _onRun() override;
-        void _onFinally() override;
+        void addObserver( const EventProviderPtr & _eventProvider );
+        bool removeObserver( const EventProviderPtr & _eventProvider );
+
+    public:
+        void call();
 
     protected:
-        FunctionProviderPtr m_provider;
+        typedef Vector<EventProviderPtr> VectorEventProvider;
+        VectorEventProvider m_eventProviders;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<TaskFunction> TaskFunctionPtr;
+    typedef IntrusivePtr<Event> EventPtr;
 }

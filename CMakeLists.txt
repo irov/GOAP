@@ -44,6 +44,9 @@ ${SOURCE_DIR}/TranscriptorParallel.cpp
 ${SOURCE_DIR}/TranscriptorParallel.h
 ${SOURCE_DIR}/TranscriptorRace.cpp
 ${SOURCE_DIR}/TranscriptorRace.h
+${SOURCE_DIR}/Semaphore.cpp
+${SOURCE_DIR}/Event.cpp
+${SOURCE_DIR}/TaskSemaphore.cpp
 
 ${INCLUDE_DIR}/Alias.h
 ${INCLUDE_DIR}/CallbackProvider.h
@@ -73,6 +76,10 @@ ${INCLUDE_DIR}/TaskRepeat.h
 ${INCLUDE_DIR}/TaskScope.h
 ${INCLUDE_DIR}/TaskSwitch.h
 ${INCLUDE_DIR}/TaskWhile.h
+${INCLUDE_DIR}/Semaphore.h
+${INCLUDE_DIR}/Event.h
+${INCLUDE_DIR}/EventProvider.h
+${INCLUDE_DIR}/TaskSemaphore.h
 )
 
 IF( LIBGOAP_EXTERNAL_INCLUDE )

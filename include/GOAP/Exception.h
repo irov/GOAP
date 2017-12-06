@@ -11,6 +11,7 @@
 
 namespace GOAP
 {
+    //////////////////////////////////////////////////////////////////////////
     class Exception
         : public std::exception
     {
@@ -24,7 +25,7 @@ namespace GOAP
     protected:
         const char * m_message;
     };
-
+    //////////////////////////////////////////////////////////////////////////
     namespace Helper
     {
         void throw_exception( const char * _format, ... );
