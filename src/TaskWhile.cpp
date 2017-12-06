@@ -27,7 +27,7 @@ namespace GOAP
     {
         ChainPtr chain = GOAP_NEW Chain( _source );
 
-        chain->addCallback( f );
+        chain->setCallback( f );
 
         return chain;
     }

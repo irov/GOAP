@@ -18,8 +18,10 @@ namespace GOAP
 
     typedef IntrusivePtr<class Task> TaskPtr;
     typedef IntrusivePtr<class Source> SourcePtr;
+    typedef IntrusivePtr<class Chain> ChainPtr;
 
-    typedef Vector<TaskPtr> VectorTask;
+    typedef Vector<TaskPtr> VectorTasks;
+    typedef Vector<ChainPtr> VectorChains;
     //////////////////////////////////////////////////////////////////////////
     class Chain
         : public Factorable
@@ -43,14 +45,19 @@ namespace GOAP
 
     public:
         template<class F>
-        void addCallback( F _f )
+        void setCallback( F _f )
         {
             ChainProviderPtr untilChainProvider = Helper::makeChainProvider( _f );
 
-            this->addCallbackProvider( untilChainProvider );
+            this->setCallbackProvider( untilChainProvider );
         }
 
-        void addCallbackProvider( const ChainProviderPtr & _cb );
+        void setCallbackProvider( const ChainProviderPtr & _cb );
+        const ChainProviderPtr & getCallbackProvider() const;
+
+    public:
+        void addFork( const ChainPtr & _fork );
+        bool removeFork( const ChainPtr & _fork );
 
     public:
         bool run();
@@ -80,9 +87,10 @@ namespace GOAP
 
         SourcePtr m_source;
 
-        VectorTask m_runningTasks;
+        VectorTasks m_runningTasks;
 
         ChainProviderPtr m_cb;
+        VectorChains m_forks;
 
         bool m_complete;
     };

@@ -29,16 +29,20 @@ namespace GOAP
 
         ChainPtr chain = GOAP_NEW Chain( m_fork );
 
+        chain->setCallback( [this, chain]( bool _skip )
+        { 
+            m_chain->removeFork( chain );
+        } );
+
         chain->run();
 
-        m_chain = chain;
+        m_chain->addFork( chain );
 
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
     void TaskFork::_onFinally()
     {
-        //m_chain = nullptr; FixMe???
         m_fork = nullptr;
     }
 }

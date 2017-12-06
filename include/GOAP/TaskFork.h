@@ -27,6 +27,5 @@ namespace GOAP
 
     protected:
         SourcePtr m_fork;
-        ChainPtr m_chain;
     };
 }

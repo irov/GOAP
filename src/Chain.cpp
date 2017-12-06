@@ -31,9 +31,33 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    void Chain::addCallbackProvider( const ChainProviderPtr & _cb )
+    void Chain::setCallbackProvider( const ChainProviderPtr & _cb )
     {
         m_cb = _cb;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    const ChainProviderPtr & Chain::getCallbackProvider() const
+    {
+        return m_cb;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Chain::addFork( const ChainPtr & _fork )
+    {
+        m_forks.push_back( _fork );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool Chain::removeFork( const ChainPtr & _fork )
+    {
+        VectorChains::iterator it_found = std::find( m_forks.begin(), m_forks.end(), _fork );
+
+        if( it_found == m_forks.end() )
+        {
+            return false;
+        }
+
+        m_forks.erase( it_found );
+
+        return true;
     }
     //////////////////////////////////////////////////////////////////////////
     bool Chain::run()
@@ -72,6 +96,21 @@ namespace GOAP
     {
         IntrusiveThisAcquire( this );
 
+        VectorChains copy_forks = m_forks;
+
+        for( VectorChains::const_iterator
+            it = copy_forks.begin(),
+            it_end = copy_forks.end();
+            it != it_end;
+            ++it )
+        {
+            const ChainPtr & fork = *it;
+
+            fork->cancel();
+        }
+
+        m_forks.clear();
+
         if( m_state != TASK_CHAIN_STATE_IDLE &&
             m_state != TASK_CHAIN_STATE_CANCEL &&
             m_state != TASK_CHAIN_STATE_FINALIZE )
@@ -105,6 +144,19 @@ namespace GOAP
     {
         IntrusiveThisAcquire( this );
 
+        VectorChains copy_forks = m_forks;
+
+        for( VectorChains::const_iterator
+            it = copy_forks.begin(),
+            it_end = copy_forks.end();
+            it != it_end;
+            ++it )
+        {
+            const ChainPtr & fork = *it;
+
+            fork->skip();
+        }
+
         if( m_state == TASK_CHAIN_STATE_RUN )
         {
             this->skipRunningTasks_();
@@ -125,7 +177,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Chain::completeTask( const TaskPtr & _task )
     {
-        VectorTask::iterator it_found = std::find( m_runningTasks.begin(), m_runningTasks.end(), _task );
+        VectorTasks::iterator it_found = std::find( m_runningTasks.begin(), m_runningTasks.end(), _task );
 
         if( it_found == m_runningTasks.end() )
         {
@@ -166,9 +218,9 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Chain::skipRunningTasks_()
     {
-        VectorTask tasks = m_runningTasks;
+        VectorTasks tasks = m_runningTasks;
 
-        for( VectorTask::const_iterator
+        for( VectorTasks::const_iterator
             it = tasks.begin(),
             it_end = tasks.end();
             it != it_end;
@@ -182,9 +234,9 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Chain::cancelRunningTasks_()
     {
-        VectorTask tasks = m_runningTasks;
+        VectorTasks tasks = m_runningTasks;
 
-        for( VectorTask::const_iterator
+        for( VectorTasks::const_iterator
             it = tasks.begin(),
             it_end = tasks.end();
             it != it_end;
