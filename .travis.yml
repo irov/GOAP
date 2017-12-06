@@ -33,6 +33,6 @@ script:
     # скрипт сборки и тестирования проекта:
     - mkdir build_cmake
     - cd build_cmake
-    - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU -DLIBMOVIE_EXAMPLES_BUILD:BOOL=FALSE -DLIBMOVIE_COCOS2DX_BUILD:BOOL=FALSE
+    - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU
     - cmake --build .
     - ctest --output-on-failure

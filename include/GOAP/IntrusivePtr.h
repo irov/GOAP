@@ -33,8 +33,8 @@ namespace GOAP
             {
             }
 
-            inline IntrusivePtr( std::nullptr_t )
-                : m_ptr( nullptr )
+            inline IntrusivePtr( std::nullptr_t _nullptr )
+                : m_ptr( _nullptr )
             {
             }
 
@@ -85,10 +85,10 @@ namespace GOAP
                 return *this;
             }
 
-            inline IntrusivePtr & operator = ( std::nullptr_t )
+            inline IntrusivePtr & operator = ( std::nullptr_t _nullptr )
             {
                 this->decref();
-                m_ptr = nullptr;
+                m_ptr = _nullptr;
 
                 return *this;
             }
@@ -239,35 +239,35 @@ namespace GOAP
         }
         //////////////////////////////////////////////////////////////////////////
         template<class T>
-        inline bool operator != ( const IntrusivePtr<T> & _left, std::nullptr_t )
+        inline bool operator != ( const IntrusivePtr<T> & _left, std::nullptr_t _nullptr )
         {
             const T * ptr = _left.get();
 
-            return ptr != nullptr;
+            return ptr != _nullptr;
         }
         //////////////////////////////////////////////////////////////////////////
         template<class T>
-        inline bool operator != ( std::nullptr_t, const IntrusivePtr<T> & _right )
+        inline bool operator != ( std::nullptr_t _nullptr, const IntrusivePtr<T> & _right )
         {
             const T * ptr = intrusive_get<T *>( _right );
 
-            return ptr != nullptr;
+            return ptr != _nullptr;
         }
         //////////////////////////////////////////////////////////////////////////
         template<class T>
-        inline bool operator == ( std::nullptr_t, const IntrusivePtr<T> & _right )
+        inline bool operator == ( std::nullptr_t _nullptr, const IntrusivePtr<T> & _right )
         {
             const T * ptr = intrusive_get<T *>( _right );
 
-            return ptr == nullptr;
+            return ptr == _nullptr;
         }
         //////////////////////////////////////////////////////////////////////////
         template<class T>
-        inline bool operator == ( const IntrusivePtr<T> & _left, std::nullptr_t )
+        inline bool operator == ( const IntrusivePtr<T> & _left, std::nullptr_t _nullptr )
         {
             const T * ptr = _left.get();
 
-            return ptr == nullptr;
+            return ptr == _nullptr;
         }
     }
 }
