@@ -16,6 +16,32 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
+    namespace Detail
+    {
+        class ChainProviderTaskFork
+            : public ChainProvider
+        {
+        public:
+            ChainProviderTaskFork( const ChainPtr & _chain, const ChainPtr & _fork )
+                : m_chain( _chain )
+                , m_fork( _fork )
+            {
+            }
+
+        protected:
+            void onChain( bool _skip ) override
+            {
+                GOAP_UNUSED( _skip );
+
+                m_chain->removeFork( m_fork );
+            }
+
+        protected:
+            ChainPtr m_chain;
+            ChainPtr m_fork;
+        };
+    }
+    //////////////////////////////////////////////////////////////////////////
     TaskFork::TaskFork( const SourcePtr & _fork )
         : m_fork( _fork )
     {
@@ -32,12 +58,7 @@ namespace GOAP
 
         ChainPtr chain = GOAP_NEW Chain( m_fork );
 
-        chain->setCallback( [this, chain]( bool _skip )
-        { 
-            GOAP_UNUSED( _skip );
-
-            m_chain->removeFork( chain );
-        } );
+        chain->setCallbackProvider( GOAP_NEW Detail::ChainProviderTaskFork( m_chain, chain ) );
 
         chain->run();
 
