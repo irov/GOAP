@@ -28,8 +28,6 @@ namespace GOAP
     public:
         void subtractValue( int32_t _value );
         void addValue( int32_t _value );
-        bool equalValue( int32_t _value ) const;
-        bool lessValue( int32_t _value ) const;
 
     public:
         const EventProviderPtr & addObserver( const EventProviderPtr & _event );

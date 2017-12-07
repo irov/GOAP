@@ -43,16 +43,6 @@ namespace GOAP
         m_event->call();
     }
     //////////////////////////////////////////////////////////////////////////
-    bool Semaphore::equalValue( int32_t _value ) const
-    {
-        return m_value == _value;
-    }
-    //////////////////////////////////////////////////////////////////////////
-    bool Semaphore::lessValue( int32_t _value ) const
-    {
-        return m_value < _value;
-    }
-    //////////////////////////////////////////////////////////////////////////
     const EventProviderPtr & Semaphore::addObserver( const EventProviderPtr & _event )
     {
         m_event->addObserver( _event );
