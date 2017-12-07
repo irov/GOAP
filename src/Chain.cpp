@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2017, Levchenko Yuriy <irov13@mail.ru>
+* Copyright (C) 2017, Yuriy Levchenko <irov13@mail.ru>
 *
 * This software may be modified and distributed under the terms
 * of the MIT license.  See the LICENSE file for details.
@@ -250,6 +250,21 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Chain::finalize_()
     {
+        VectorChains copy_forks = m_forks;
+
+        for( VectorChains::const_iterator
+            it = copy_forks.begin(),
+            it_end = copy_forks.end();
+            it != it_end;
+            ++it )
+        {
+            const ChainPtr & fork = *it;
+
+            fork->cancel();
+        }
+
+        m_forks.clear();
+
         m_source = nullptr;
         //m_runningTasks.clear();
 
