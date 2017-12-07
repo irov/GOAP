@@ -23,6 +23,8 @@ namespace GOAP
     void Semaphore::setValue( int32_t _value )
     {
         m_value = _value;
+
+        m_event->call();
     }
     //////////////////////////////////////////////////////////////////////////
     int32_t Semaphore::getValue() const
