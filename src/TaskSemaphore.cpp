@@ -49,21 +49,21 @@ namespace GOAP
 
         if( m_flags & FLAG_SEMAPHORE_TEST_EQUAL )
         {
-            if( m_test == value )
+            if( m_test != value )
             {
                 return true;
             }
         }
         else if( m_flags & FLAG_SEMAPHORE_TEST_LESS )
         {
-            if( m_test < value )
+            if( m_test > value )
             {
                 return true;
             }
         }
         else if( m_flags & FLAG_SEMAPHORE_TEST_GREATER )
         {
-            if( m_test > value )
+            if( m_test < value )
             {
                 return true;
             }
@@ -100,21 +100,21 @@ namespace GOAP
 
         if( m_flags & FLAG_SEMAPHORE_TEST_EQUAL )
         {
-            if( m_test == value )
+            if( m_test != value )
             {
                 return false;
             }
         }
         else if( m_flags & FLAG_SEMAPHORE_TEST_LESS )
         {
-            if( m_test < value )
+            if( m_test > value )
             {
                 return false;
             }
         }
         else if( m_flags & FLAG_SEMAPHORE_TEST_GREATER )
         {
-            if( m_test > value )
+            if( m_test < value )
             {
                 return false;
             }
