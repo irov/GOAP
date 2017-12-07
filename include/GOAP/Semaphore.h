@@ -18,7 +18,7 @@ namespace GOAP
         : public Factorable
     {
     public:
-        Semaphore( int32_t _value );
+        Semaphore( const EventPtr & _event, int32_t _value );
         ~Semaphore();
 
     public:

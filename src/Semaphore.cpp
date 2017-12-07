@@ -10,8 +10,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    Semaphore::Semaphore( int32_t _value )
-        : m_value( _value )
+    Semaphore::Semaphore( const EventPtr & _event, int32_t _value )
+        : m_event( _event )
+        , m_value( _value )
     {
     }
     //////////////////////////////////////////////////////////////////////////
