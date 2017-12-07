@@ -9,16 +9,10 @@
 
 #	include "GOAP/Task.h"
 #	include "GOAP/Semaphore.h"
+#   include "GOAP/SemaphoreFlags.h"
 
 namespace GOAP
 {
-    static const uint32_t TASK_SEMAPHORE_TEST_EQUAL = 0x00000001;
-    static const uint32_t TASK_SEMAPHORE_TEST_GREATER = 0x00000002;
-    static const uint32_t TASK_SEMAPHORE_TEST_LESS = 0x00000004;
-    static const uint32_t TASK_SEMAPHORE_APPLY_ASSIGN = 0x00000010;
-    static const uint32_t TASK_SEMAPHORE_APPLY_ADD = 0x00000020;
-    static const uint32_t TASK_SEMAPHORE_APPLY_SUBTRACT = 0x00000040;
-
     class TaskSemaphore
         : public Task
     {

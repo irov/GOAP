@@ -86,6 +86,7 @@ ${INCLUDE_DIR}/Semaphore.h
 ${INCLUDE_DIR}/Event.h
 ${INCLUDE_DIR}/EventProvider.h
 ${INCLUDE_DIR}/TaskSemaphore.h
+${INCLUDE_DIR}/SemaphoreFlags.h
 )
 
 IF( LIBGOAP_EXTERNAL_INCLUDE )

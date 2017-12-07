@@ -47,21 +47,21 @@ namespace GOAP
     {
         int32_t value = m_semaphore->getValue();
 
-        if( m_flags & TASK_SEMAPHORE_TEST_EQUAL )
+        if( m_flags & FLAG_SEMAPHORE_TEST_EQUAL )
         {
             if( m_test == value )
             {
                 return true;
             }
         }
-        else if( m_flags & TASK_SEMAPHORE_TEST_LESS )
+        else if( m_flags & FLAG_SEMAPHORE_TEST_LESS )
         {
             if( m_test < value )
             {
                 return true;
             }
         }
-        else if( m_flags & TASK_SEMAPHORE_TEST_GREATER )
+        else if( m_flags & FLAG_SEMAPHORE_TEST_GREATER )
         {
             if( m_test > value )
             {
@@ -98,21 +98,21 @@ namespace GOAP
     {
         int32_t value = m_semaphore->getValue();
 
-        if( m_flags & TASK_SEMAPHORE_TEST_EQUAL )
+        if( m_flags & FLAG_SEMAPHORE_TEST_EQUAL )
         {
             if( m_test == value )
             {
                 return false;
             }
         }
-        else if( m_flags & TASK_SEMAPHORE_TEST_LESS )
+        else if( m_flags & FLAG_SEMAPHORE_TEST_LESS )
         {
             if( m_test < value )
             {
                 return false;
             }
         }
-        else if( m_flags & TASK_SEMAPHORE_TEST_GREATER )
+        else if( m_flags & FLAG_SEMAPHORE_TEST_GREATER )
         {
             if( m_test > value )
             {
@@ -140,15 +140,15 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void TaskSemaphore::process()
     {
-        if( m_flags & TASK_SEMAPHORE_APPLY_ASSIGN )
+        if( m_flags & FLAG_SEMAPHORE_APPLY_ASSIGN )
         {
             m_semaphore->setValue( m_apply );
         }
-        else if( m_flags & TASK_SEMAPHORE_APPLY_ADD )
+        else if( m_flags & FLAG_SEMAPHORE_APPLY_ADD )
         {
             m_semaphore->addValue( m_apply );
         }
-        else if( m_flags & TASK_SEMAPHORE_APPLY_SUBTRACT )
+        else if( m_flags & FLAG_SEMAPHORE_APPLY_SUBTRACT )
         {
             m_semaphore->subtractValue( m_apply );
         }

@@ -16,6 +16,7 @@
 #	include "GOAP/IfProvider.h"
 #	include "GOAP/SwitchProvider.h"
 #	include "GOAP/GuardProvider.h"
+#   include "GOAP/SemaphoreFlags.h"
 
 namespace GOAP
 {
