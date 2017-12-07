@@ -54,16 +54,30 @@ namespace GOAP
                 return true;
             }
         }
+        else if( m_flags & FLAG_SEMAPHORE_TEST_GREATER )
+        {
+            if( m_test >= value )
+            {
+                return true;
+            }
+        }
         else if( m_flags & FLAG_SEMAPHORE_TEST_LESS )
         {
             if( m_test <= value )
             {
                 return true;
             }
-        }
-        else if( m_flags & FLAG_SEMAPHORE_TEST_GREATER )
+        }        
+        else if( m_flags & FLAG_SEMAPHORE_TEST_GREATEREQUAL )
         {
-            if( m_test >= value )
+            if( m_test > value )
+            {
+                return true;
+            }
+        }
+        else if( m_flags & FLAG_SEMAPHORE_TEST_LESSEQUAL )
+        {
+            if( m_test < value )
             {
                 return true;
             }
@@ -115,6 +129,20 @@ namespace GOAP
         else if( m_flags & FLAG_SEMAPHORE_TEST_GREATER )
         {
             if( m_test >= value )
+            {
+                return false;
+            }
+        }
+        else if( m_flags & FLAG_SEMAPHORE_TEST_LESSEQUAL )
+        {
+            if( m_test < value )
+            {
+                return false;
+            }
+        }
+        else if( m_flags & FLAG_SEMAPHORE_TEST_GREATEREQUAL )
+        {
+            if( m_test > value )
             {
                 return false;
             }

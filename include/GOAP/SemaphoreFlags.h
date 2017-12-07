@@ -9,10 +9,14 @@
 
 namespace GOAP
 {
-    static const uint32_t FLAG_SEMAPHORE_TEST_EQUAL = 0x00000001;
-    static const uint32_t FLAG_SEMAPHORE_TEST_GREATER = 0x00000002;
-    static const uint32_t FLAG_SEMAPHORE_TEST_LESS = 0x00000004;
-    static const uint32_t FLAG_SEMAPHORE_APPLY_ASSIGN = 0x00000010;
-    static const uint32_t FLAG_SEMAPHORE_APPLY_ADD = 0x00000020;
-    static const uint32_t FLAG_SEMAPHORE_APPLY_SUBTRACT = 0x00000040;
+    //////////////////////////////////////////////////////////////////////////
+    static const uint32_t FLAG_SEMAPHORE_TEST_EQUAL = 1 << 0;
+    static const uint32_t FLAG_SEMAPHORE_TEST_GREATER = 1 << 1;
+    static const uint32_t FLAG_SEMAPHORE_TEST_LESS = 1 << 2;
+    static const uint32_t FLAG_SEMAPHORE_TEST_GREATEREQUAL = 1 << 3;
+    static const uint32_t FLAG_SEMAPHORE_TEST_LESSEQUAL = 1 << 4;
+    //////////////////////////////////////////////////////////////////////////
+    static const uint32_t FLAG_SEMAPHORE_APPLY_ASSIGN = 1 << 10;
+    static const uint32_t FLAG_SEMAPHORE_APPLY_ADD = 1 << 11;
+    static const uint32_t FLAG_SEMAPHORE_APPLY_SUBTRACT = 1 << 12;
 }
