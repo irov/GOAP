@@ -8,7 +8,7 @@
 #	include "GOAP/Factorable.h"
 #	include "GOAP/Macros.h"
 
-#   include <malloc.h>
+#   include <stdlib.h>
 
 namespace GOAP
 {
