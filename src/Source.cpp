@@ -106,6 +106,11 @@ namespace GOAP
         this->addTask( GOAP_NEW TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_EQUAL, _test, 0 ) );
     }
     //////////////////////////////////////////////////////////////////////////
+    void Source::addSemaphoreNotEqual( const SemaphorePtr & _semaphore, int32_t _test )
+    {
+        this->addTask( GOAP_NEW TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_NOTEQUAL, _test, 0 ) );
+    }
+    //////////////////////////////////////////////////////////////////////////
     void Source::addSemaphoreGreater( const SemaphorePtr & _semaphore, int32_t _test )
     {
         this->addTask( GOAP_NEW TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_GREATER, _test, 0 ) );

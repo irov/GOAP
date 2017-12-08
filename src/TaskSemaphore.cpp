@@ -54,6 +54,13 @@ namespace GOAP
                 return true;
             }
         }
+        else if( m_flags & FLAG_SEMAPHORE_TEST_NOTEQUAL )
+        {
+            if( m_test == value )
+            {
+                return true;
+            }
+        }
         else if( m_flags & FLAG_SEMAPHORE_TEST_GREATER )
         {
             if( m_test >= value )
@@ -108,6 +115,16 @@ namespace GOAP
         m_observer = nullptr;
     }
     //////////////////////////////////////////////////////////////////////////
+    bool TaskSemaphore::_onSkipable() const
+    {
+        if( m_flags & FLAG_SEMAPHORE_MASK_TEST )
+        {
+            return false;
+        }
+
+        return true;
+    }
+    //////////////////////////////////////////////////////////////////////////
     bool TaskSemaphore::test()
     {
         int32_t value = m_semaphore->getValue();
@@ -119,6 +136,13 @@ namespace GOAP
                 return false;
             }
         }
+        else if( m_flags & FLAG_SEMAPHORE_TEST_NOTEQUAL )
+        {
+            if( m_test == value )
+            {
+                return false;
+            }
+        }        
         else if( m_flags & FLAG_SEMAPHORE_TEST_LESS )
         {
             if( m_test <= value )

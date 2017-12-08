@@ -142,6 +142,7 @@ namespace GOAP
         void addSemaphore( const SemaphorePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply );
 
         void addSemaphoreEqual( const SemaphorePtr & _semaphore, int32_t _test );
+        void addSemaphoreNotEqual( const SemaphorePtr & _semaphore, int32_t _test );
         void addSemaphoreGreater( const SemaphorePtr & _semaphore, int32_t _test );
         void addSemaphoreLess( const SemaphorePtr & _semaphore, int32_t _test );
         void addSemaphoreGreaterEqual( const SemaphorePtr & _semaphore, int32_t _test );

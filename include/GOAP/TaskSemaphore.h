@@ -25,6 +25,7 @@ namespace GOAP
         bool _onRun() override;
         void _onComplete() override;
         void _onFinally() override;
+        bool _onSkipable() const override;
 
     protected:
         bool test();
