@@ -101,6 +101,46 @@ namespace GOAP
         this->addTask( GOAP_NEW TaskSemaphore( _semaphore, _flags, _test, _apply ) );
     }
     //////////////////////////////////////////////////////////////////////////
+    void Source::addSemaphoreEqual( const SemaphorePtr & _semaphore, int32_t _test )
+    {
+        this->addTask( GOAP_NEW TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_EQUAL, _test, 0 ) );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Source::addSemaphoreGreater( const SemaphorePtr & _semaphore, int32_t _test )
+    {
+        this->addTask( GOAP_NEW TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_GREATER, _test, 0 ) );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Source::addSemaphoreLess( const SemaphorePtr & _semaphore, int32_t _test )
+    {
+        this->addTask( GOAP_NEW TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_LESS, _test, 0 ) );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Source::addSemaphoreGreaterEqual( const SemaphorePtr & _semaphore, int32_t _test )
+    {
+        this->addTask( GOAP_NEW TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_GREATEREQUAL, _test, 0 ) );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Source::addSemaphoreLessEqual( const SemaphorePtr & _semaphore, int32_t _test )
+    {
+        this->addTask( GOAP_NEW TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_LESSEQUAL, _test, 0 ) );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Source::addSemaphoreAssign( const SemaphorePtr & _semaphore, int32_t _apply )
+    {    
+        this->addTask( GOAP_NEW TaskSemaphore( _semaphore, FLAG_SEMAPHORE_APPLY_ASSIGN, 0, _apply ) );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Source::addSemaphoreAdd( const SemaphorePtr & _semaphore, int32_t _apply )
+    {
+        this->addTask( GOAP_NEW TaskSemaphore( _semaphore, FLAG_SEMAPHORE_APPLY_ADD, 0, _apply ) );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Source::addSemaphoreSubtract( const SemaphorePtr & _semaphore, int32_t _apply )
+    {
+        this->addTask( GOAP_NEW TaskSemaphore( _semaphore, FLAG_SEMAPHORE_APPLY_SUBTRACT, 0, _apply ) );
+    }
+    //////////////////////////////////////////////////////////////////////////
     SourcePtr Source::addRepeatProvider( const ScopeProviderPtr & _provider )
     {
         SourcePtr source_until = this->_provideSource();

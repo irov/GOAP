@@ -70,6 +70,11 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void TaskWhile::whileComplete_( bool _skip )
     {
+        if( m_providerScope == nullptr )
+        {
+            return;
+        }
+
         GOAP::SourcePtr sourceWhile = GOAP_NEW GOAP::Source();
 
         sourceWhile->setSkip( _skip );

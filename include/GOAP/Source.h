@@ -141,6 +141,26 @@ namespace GOAP
 
         void addSemaphore( const SemaphorePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply );
 
+        void addSemaphoreEqual( const SemaphorePtr & _semaphore, int32_t _test );
+        void addSemaphoreGreater( const SemaphorePtr & _semaphore, int32_t _test );
+        void addSemaphoreLess( const SemaphorePtr & _semaphore, int32_t _test );
+        void addSemaphoreGreaterEqual( const SemaphorePtr & _semaphore, int32_t _test );
+        void addSemaphoreLessEqual( const SemaphorePtr & _semaphore, int32_t _test );
+
+        void addSemaphoreAssign( const SemaphorePtr & _semaphore, int32_t _apply );
+        void addSemaphoreAdd( const SemaphorePtr & _semaphore, int32_t _apply );
+        void addSemaphoreSubtract( const SemaphorePtr & _semaphore, int32_t _apply );
+
+        static const uint32_t FLAG_SEMAPHORE_TEST_EQUAL = 1 << 0;
+        static const uint32_t FLAG_SEMAPHORE_TEST_GREATER = 1 << 1;
+        static const uint32_t FLAG_SEMAPHORE_TEST_LESS = 1 << 2;
+        static const uint32_t FLAG_SEMAPHORE_TEST_GREATEREQUAL = 1 << 3;
+        static const uint32_t FLAG_SEMAPHORE_TEST_LESSEQUAL = 1 << 4;
+        //////////////////////////////////////////////////////////////////////////
+        static const uint32_t FLAG_SEMAPHORE_APPLY_ASSIGN = 1 << 10;
+        static const uint32_t FLAG_SEMAPHORE_APPLY_ADD = 1 << 11;
+        static const uint32_t FLAG_SEMAPHORE_APPLY_SUBTRACT = 1 << 12;
+
     public:
         void addFunctionProvider( const FunctionProviderPtr & _provider );
         void addCallbackProvider( const CallbackProviderPtr & _provider );
