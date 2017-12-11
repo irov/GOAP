@@ -16,85 +16,85 @@
 
 void main()
 {
-	Scheduler * sch = new Scheduler;
+    Scheduler * sch = new Scheduler;
 
-	srand( (unsigned int)time( NULL ) );
+    srand( (unsigned int)time( NULL ) );
 
-	printf( "%f %f %f\n", fmod( 0.5, 1.0 ), fmod( 1.3, 1.0 ), fmod( 3.0, 1.0 ) );
-	
-	GOAP::SourcePtr source = GOAP_NEW GOAP::Source();
+    printf( "%f %f %f\n", fmod( 0.5, 1.0 ), fmod( 1.3, 1.0 ), fmod( 3.0, 1.0 ) );
 
-	source->addTask( GOAP_NEW TaskPrint( "begin" ) );
-	source->addTask( GOAP_NEW TaskDelay( 2000.f, sch ) );
+    GOAP::SourcePtr source = GOAP_NEW GOAP::Source();
 
-	const GOAP::VectorSources & source_parallel = source->addParallel( 2 );
+    source->addTask( GOAP_NEW TaskPrint( "begin" ) );
+    source->addTask( GOAP_NEW TaskDelay( 2000.f, sch ) );
 
-	source_parallel[0]->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
-	source_parallel[1]->addTask( GOAP_NEW TaskPrint( "process" ) );
-	
-	source->addTask( GOAP_NEW TaskPrint( "end" ) );
-	source->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
-	source->addTask( GOAP_NEW TaskPrint( "****ROLL*****" ) );
-	source->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
+    const GOAP::VectorSources & source_parallel = source->addParallel( 2 );
 
+    source_parallel[0]->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
+    source_parallel[1]->addTask( GOAP_NEW TaskPrint( "process" ) );
 
-	const GOAP::VectorSources & source_race = source->addRace( 3 );
-
-	source_race[0]->addTask( GOAP_NEW TaskRoll( 200.f, 1, 6, sch ) );
-	source_race[0]->addTask( GOAP_NEW TaskPrint( "---1---" ) );
-
-	source_race[1]->addTask( GOAP_NEW TaskRoll( 100.f, 2, 12, sch ) );
-	source_race[1]->addTask( GOAP_NEW TaskPrint( "---2---" ) );
-
-	source_race[2]->addTask( GOAP_NEW TaskRoll( 50.f, 4, 24, sch ) );
-	source_race[2]->addTask( GOAP_NEW TaskPrint( "---3---" ) );
-
-	source->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
-	source->addTask( GOAP_NEW TaskPrint( "****WIN*****" ) );
-	source->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
-
-	source->addCallback( [] ( GOAP::CallbackObserver * _observer, bool isSkip ) { printf( "HTTP!!!!!\n" ); Sleep( 100 ); _observer->onCallback( isSkip ); } );
-	
-	source->addFunction( [] (){ printf( "WOW!!\n" ); } );
-
-	source->addScope( [] ( const GOAP::SourcePtr & _scope ) -> bool { _scope->addFunction( [] () {printf( "SCOPE????? WOW!!!" ); } ); return true; } );
-
-	source->addFunction( [] (){ printf( "Oh\n" ); } );
+    source->addTask( GOAP_NEW TaskPrint( "end" ) );
+    source->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
+    source->addTask( GOAP_NEW TaskPrint( "****ROLL*****" ) );
+    source->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
 
 
-	GOAP::IfSource source_if = source->addIf( [] (){ return rand() % 2 ? true : false; } );
+    const GOAP::VectorSources & source_race = source->addRace( 3 );
 
-	source_if.source_true->addTask( GOAP_NEW TaskPrint( "---TRUE---" ) );
-	source_if.source_false->addTask( GOAP_NEW TaskPrint( "---FALSE---" ) );
+    source_race[0]->addTask( GOAP_NEW TaskRoll( 200.f, 1, 6, sch ) );
+    source_race[0]->addTask( GOAP_NEW TaskPrint( "---1---" ) );
 
-	const GOAP::VectorSources & source_switch = source->addSwitch(3, [](){ return rand() % 3; });
+    source_race[1]->addTask( GOAP_NEW TaskRoll( 100.f, 2, 12, sch ) );
+    source_race[1]->addTask( GOAP_NEW TaskPrint( "---2---" ) );
 
-	source_switch[0]->addTask( GOAP_NEW TaskPrint("---Switch 1---"));
-	source_switch[1]->addTask( GOAP_NEW TaskPrint("---Switch 2---"));
-	source_switch[2]->addTask( GOAP_NEW TaskPrint("---Switch 3---"));
+    source_race[2]->addTask( GOAP_NEW TaskRoll( 50.f, 4, 24, sch ) );
+    source_race[2]->addTask( GOAP_NEW TaskPrint( "---3---" ) );
 
-	GOAP::SourcePtr source_until = source->addRepeat( [sch] ( const GOAP::SourcePtr & _scope ) -> bool
-	{
-		_scope->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
-		_scope->addTask( GOAP_NEW TaskPrint( "REPEAT!!!!" ) );
+    source->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
+    source->addTask( GOAP_NEW TaskPrint( "****WIN*****" ) );
+    source->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
 
-		return true;
-	} );
+    source->addCallback( []( GOAP::CallbackObserver * _observer, bool isSkip ) { printf( "HTTP!!!!!\n" ); Sleep( 100 ); _observer->onCallback( isSkip ); } );
 
-	source_until->addTask( GOAP_NEW TaskDelay( 10000.f, sch ) );
+    source->addFunction( [](){ printf( "WOW!!\n" ); } );
 
-	GOAP::ChainPtr tc = GOAP_NEW GOAP::Chain( source );
+    source->addScope( []( const GOAP::SourcePtr & _scope ) -> bool { _scope->addFunction( []() {printf( "SCOPE????? WOW!!!" ); } ); return true; } );
 
-	tc->run();
+    source->addFunction( [](){ printf( "Oh\n" ); } );
 
-	while( tc->isComplete() == false )
-	{
-		sch->update(100.f);
 
-		Sleep( 10 );
-	}
+    GOAP::IfSource source_if = source->addIf( [](){ return rand() % 2 ? true : false; } );
 
-	printf( "FINALIZE\n" );
+    source_if.source_true->addTask( GOAP_NEW TaskPrint( "---TRUE---" ) );
+    source_if.source_false->addTask( GOAP_NEW TaskPrint( "---FALSE---" ) );
 
-	delete sch;
+    const GOAP::VectorSources & source_switch = source->addSwitch( 3, [](){ return rand() % 3; } );
+
+    source_switch[0]->addTask( GOAP_NEW TaskPrint( "---Switch 1---" ) );
+    source_switch[1]->addTask( GOAP_NEW TaskPrint( "---Switch 2---" ) );
+    source_switch[2]->addTask( GOAP_NEW TaskPrint( "---Switch 3---" ) );
+
+    GOAP::SourcePtr source_until = source->addRepeat( [sch]( const GOAP::SourcePtr & _scope ) -> bool
+    {
+        _scope->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
+        _scope->addTask( GOAP_NEW TaskPrint( "REPEAT!!!!" ) );
+
+        return true;
+    } );
+
+    source_until->addTask( GOAP_NEW TaskDelay( 10000.f, sch ) );
+
+    GOAP::ChainPtr tc = GOAP_NEW GOAP::Chain( source );
+
+    tc->run();
+
+    while( tc->isComplete() == false )
+    {
+        sch->update( 100.f );
+
+        Sleep( 10 );
+    }
+
+    printf( "FINALIZE\n" );
+
+    delete sch;
 }

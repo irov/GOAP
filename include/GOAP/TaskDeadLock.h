@@ -14,6 +14,8 @@ namespace GOAP
     class TaskDeadLock
         : public Task
     {
+        DECLARE_VISITABLE( Task );
+
     public:
         TaskDeadLock();
         ~TaskDeadLock() override;

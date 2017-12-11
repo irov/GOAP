@@ -16,14 +16,17 @@ namespace GOAP
     class TaskGuard
         : public Task
     {
+        DECLARE_VISITABLE( Task );
+
     public:
         TaskGuard( const GuardProviderPtr & _begin, const GuardProviderPtr & _end );
         ~TaskGuard() override;
 
     public:
         bool _onRun() override;
+        void _onCancel() override;
         void _onFinally() override;
-
+        
     public:
         bool _onSkipable() const override;
 

@@ -9,6 +9,7 @@
 
 #   include "GOAP/IntrusivePtr.h"
 #   include "GOAP/Factorable.h"
+#   include "GOAP/Visitor.h"
 
 namespace GOAP
 {
@@ -16,4 +17,5 @@ namespace GOAP
     using IntrusivePtr = Detail::IntrusivePtr<T>;
 
     using Factorable = Detail::Factorable;
+    using Visitor = Detail::Visitor;
 }

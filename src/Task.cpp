@@ -441,7 +441,7 @@ namespace GOAP
             return false;
         }
 
-        //this->cancelPrev_();
+        this->cancelPrev_();
 
         if( m_state == TASK_STATE_END )
         {

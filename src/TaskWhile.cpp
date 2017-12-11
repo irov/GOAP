@@ -13,6 +13,25 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
+    class TaskWhile::ChainProviderWhileEnd
+        : public ChainProvider
+    {
+    public:
+        ChainProviderWhileEnd( TaskWhile * _task )
+            : m_task( _task )
+        {
+        }
+
+    public:
+        void onChain( bool _skip ) override
+        {
+            m_task->whileComplete_( _skip );
+        }
+
+    protected:
+        TaskWhile * m_task;
+    };
+    //////////////////////////////////////////////////////////////////////////
     TaskWhile::TaskWhile( const ScopeProviderPtr & _providerScope )
         : m_providerScope( _providerScope )
     {
@@ -20,16 +39,6 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     TaskWhile::~TaskWhile()
     {
-    }
-    //////////////////////////////////////////////////////////////////////////
-    template<class F>
-    static ChainPtr __makeChain( const SourcePtr & _source, F f )
-    {
-        ChainPtr chain = GOAP_NEW Chain( _source );
-
-        chain->setCallback( f );
-
-        return chain;
     }
     //////////////////////////////////////////////////////////////////////////
     void TaskWhile::_onFinalize()
@@ -56,7 +65,9 @@ namespace GOAP
             return true;
         }
 
-        ChainPtr chainWhile = __makeChain( sourceWhile, [this]( bool _skip ){this->whileComplete_( _skip ); } );
+        ChainPtr chainWhile = GOAP_NEW Chain( sourceWhile );
+
+        chainWhile->setCallbackProvider( GOAP_NEW ChainProviderWhileEnd( this ) );
 
         m_chainWhile = chainWhile;
 
@@ -66,6 +77,16 @@ namespace GOAP
         }
 
         return false;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void TaskWhile::_onSkip()
+    {
+        m_providerScope = nullptr;
+
+        if( m_chainWhile != nullptr )
+        {
+            m_chainWhile->skip();
+        }
     }
     //////////////////////////////////////////////////////////////////////////
     void TaskWhile::whileComplete_( bool _skip )
@@ -86,7 +107,9 @@ namespace GOAP
             return;
         }
 
-        ChainPtr chainWhile = __makeChain( sourceWhile, [this]( bool _skip ){this->whileComplete_( _skip ); } );
+        ChainPtr chainWhile = GOAP_NEW Chain( sourceWhile );
+        
+        chainWhile->setCallbackProvider( GOAP_NEW ChainProviderWhileEnd( this ) );
 
         m_chainWhile = chainWhile;
 

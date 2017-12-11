@@ -23,6 +23,7 @@
 #	include "GOAP/TaskDeadLock.h"
 #   include "GOAP/TaskWhile.h"
 #   include "GOAP/TaskSemaphore.h"
+#   include "GOAP/TaskFor.h"
 
 #	include "TranscriptorBase.h"
 #	include "TranscriptorParallel.h"
@@ -197,9 +198,16 @@ namespace GOAP
         return source_code;
     }
     //////////////////////////////////////////////////////////////////////////
-    void Source::addWhileProvider( const ScopeProviderPtr & _scopeProvider )
+    void Source::addWhileProvider( const ScopeProviderPtr & _provider )
     {
-        TaskPtr task = GOAP_NEW TaskWhile( _scopeProvider );
+        TaskPtr task = GOAP_NEW TaskWhile( _provider );
+
+        this->addTask( task );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Source::addForProvider( const ForProviderPtr & _provider, uint32_t _count )
+    {
+        TaskPtr task = GOAP_NEW TaskFor( _provider, _count );
 
         this->addTask( task );
     }

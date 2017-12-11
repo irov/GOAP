@@ -28,10 +28,13 @@ namespace GOAP
         return false;
     }
     //////////////////////////////////////////////////////////////////////////
-    void TaskGuard::_onFinally()
+    void TaskGuard::_onCancel()
     {
         m_end->onGuard();
-
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void TaskGuard::_onFinally()
+    {
         m_begin = nullptr;
         m_end = nullptr;
     }

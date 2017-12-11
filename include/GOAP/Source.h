@@ -16,6 +16,8 @@
 #	include "GOAP/IfProvider.h"
 #	include "GOAP/SwitchProvider.h"
 #	include "GOAP/GuardProvider.h"
+#	include "GOAP/ForProvider.h"
+
 #   include "GOAP/SemaphoreFlags.h"
 
 namespace GOAP
@@ -123,9 +125,17 @@ namespace GOAP
         template<class F>
         void addWhile( F _f )
         {
-            ScopeProviderPtr provider_scope = Helper::makeScopeProvider<F>( _f );
+            ScopeProviderPtr provider = Helper::makeScopeProvider<F>( _f );
 
-            this->addWhileProvider( provider_scope );
+            this->addWhileProvider( provider );
+        }
+
+        template<class F>
+        void addFor( F _f, uint32_t _count )
+        {
+            ForProviderPtr provider = Helper::makeForProvider<F>( _f );
+
+            this->addForProvider( provider, _count );
         }
 
         template<class FB, class FE>
@@ -161,7 +171,8 @@ namespace GOAP
         SourcePtr addRepeatProvider( const ScopeProviderPtr & _provider );
         const VectorSources & addSwitchProvider( const SwitchProviderPtr & _provider, size_t _count );
         SourcePtr addGuardProvider( const GuardProviderPtr & _begin, const GuardProviderPtr & _end );
-        void addWhileProvider( const ScopeProviderPtr & _providerScope );
+        void addWhileProvider( const ScopeProviderPtr & _provider );
+        void addForProvider( const ForProviderPtr & _provider, uint32_t _count );
 
     public:
         TaskPtr parse( const ChainPtr & _chain, const TaskPtr & _task );

@@ -14,6 +14,8 @@ namespace GOAP
 	class TaskParallelNeck
 		: public Task
 	{
+        DECLARE_VISITABLE( Task );
+
 	public:
 		TaskParallelNeck();
 		~TaskParallelNeck() override;

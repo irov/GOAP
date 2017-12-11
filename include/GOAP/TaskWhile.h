@@ -19,6 +19,8 @@ namespace GOAP
 	class TaskWhile
 		: public Task
 	{
+        DECLARE_VISITABLE( Task );
+
 	public:
         explicit TaskWhile( const ScopeProviderPtr & _providerScope );
 		~TaskWhile() override;
@@ -28,6 +30,7 @@ namespace GOAP
 
 	public:
 		bool _onRun() override;
+        void _onSkip() override;
 
 	protected:
 		void whileComplete_( bool _skip );
@@ -36,5 +39,7 @@ namespace GOAP
 		ScopeProviderPtr m_providerScope;
 
 		ChainPtr m_chainWhile;
+
+        class ChainProviderWhileEnd;
 	};
 }

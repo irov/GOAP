@@ -14,6 +14,45 @@
 
 namespace GOAP
 {
+    class Alias::BeginGuardProvider
+        : public GuardProvider
+    {
+    public:
+        BeginGuardProvider( Alias * _alias )
+            : m_alias( _alias )
+        {
+        }
+
+    public:
+        void onGuard() override
+        {
+            IntrusiveThisAcquire( m_alias );
+        }
+
+    protected:
+        Alias * m_alias;
+    };
+    //////////////////////////////////////////////////////////////////////////
+    class Alias::EndGuardProvider
+        : public GuardProvider
+    {
+    public:
+        EndGuardProvider( Alias * _alias )
+            : m_alias( _alias )
+        {
+        }
+
+    public:
+        void onGuard() override
+        {
+            m_alias->_onAliasFinally();
+
+            IntrusiveThisRelease( m_alias );
+        }
+
+    protected:
+        Alias * m_alias;
+    };
     //////////////////////////////////////////////////////////////////////////
     Alias::Alias()
     {
@@ -30,7 +69,7 @@ namespace GOAP
         bool skiped = this->isSkip();
         source->setSkip( skiped );
 
-        SourcePtr guard_source = source->addGuard( [this](){ IntrusiveThisAcquire( this ); }, [this](){ this->_onAliasFinally(); IntrusiveThisRelease( this ); } );
+        SourcePtr guard_source = source->addGuardProvider( GOAP_NEW BeginGuardProvider( this ), GOAP_NEW EndGuardProvider( this ) );
 
         this->_onGenerate( guard_source );
 

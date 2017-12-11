@@ -18,6 +18,8 @@ namespace GOAP
 	class TaskRepeat
 		: public Task
 	{
+        DECLARE_VISITABLE( Task );
+
 	public:
 		TaskRepeat( const ScopeProviderPtr & _provider, const SourcePtr & _until );
 		~TaskRepeat() override;
@@ -40,5 +42,8 @@ namespace GOAP
 		ChainPtr m_chainUntil;
 
 		bool m_repeat;
+
+        class ChainProviderUntilEnd;
+        class ChainProviderRepeatEnd;
 	};
 }

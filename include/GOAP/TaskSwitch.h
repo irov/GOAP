@@ -22,6 +22,8 @@ namespace GOAP
 	class TaskSwitch
 		: public Task
 	{
+        DECLARE_VISITABLE( Task );
+
 	public:
 		TaskSwitch( const SwitchProviderPtr & _provider, const VectorSources & _sources );
 		~TaskSwitch() override;

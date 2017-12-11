@@ -17,6 +17,8 @@ namespace GOAP
     class TaskFunction
         : public Task
     {
+        DECLARE_VISITABLE( Task );
+
     public:
         explicit TaskFunction( const FunctionProviderPtr & _provider );
         ~TaskFunction() override;

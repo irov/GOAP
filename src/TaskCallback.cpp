@@ -33,6 +33,11 @@ namespace GOAP
         m_provider = nullptr;
     }
     //////////////////////////////////////////////////////////////////////////
+    bool TaskCallback::_onSkipable() const
+    {
+        return false;
+    }
+    //////////////////////////////////////////////////////////////////////////
     void TaskCallback::onCallback( bool _skip )
     {
         this->complete( true, _skip );

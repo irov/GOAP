@@ -15,8 +15,6 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    class CallbackObserver;
-    //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class Task> TaskPtr;
     typedef IntrusivePtr<class Source> SourcePtr;
     typedef IntrusivePtr<class Chain> ChainPtr;
@@ -74,7 +72,7 @@ namespace GOAP
         void processTask( const TaskPtr & _task, bool _skip );
 
     protected:
-        void complete( CallbackObserver * _callback, bool _skip );
+        void complete( bool _skip );
 
     protected:
         void skipRunningTasks_();
@@ -94,6 +92,8 @@ namespace GOAP
         VectorChains m_forks;
 
         bool m_complete;
+
+        class TaskChainEnd;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Chain> ChainPtr;

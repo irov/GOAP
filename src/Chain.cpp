@@ -10,15 +10,36 @@
 #	include "GOAP/Source.h"
 
 #	include "GOAP/ChainProvider.h"
-#	include "GOAP/CallbackProvider.h"
 
 #	include "GOAP/TaskDummy.h"
-#	include "GOAP/TaskCallback.h"
 
 #	include <algorithm>
 
 namespace GOAP
 {
+    //////////////////////////////////////////////////////////////////////////
+    class Chain::TaskChainEnd
+        : public Task
+    {
+    public:
+        explicit TaskChainEnd( Chain * _chain )
+            : m_chain( _chain )
+        {
+        }
+
+    public:
+        bool _onRun()
+        {
+            bool skip = this->isSkip();
+
+            m_chain->complete( skip );
+
+            return true;
+        }
+        
+    protected:
+        Chain * m_chain;
+    };
     //////////////////////////////////////////////////////////////////////////
     Chain::Chain( const SourcePtr & _source )
         : m_source( _source )
@@ -77,15 +98,15 @@ namespace GOAP
         task_first->setChain( this );
 
         TaskPtr task_last = m_source->parse( this, task_first );
-
-        CallbackProviderPtr provider = Helper::makeCallbackProvider( [this]( CallbackObserver * _callback, bool _skip ) { this->complete( _callback, _skip ); } );
-
-        TaskPtr task_cb = GOAP_NEW TaskCallback( provider );
+        
+        TaskPtr task_cb = GOAP_NEW TaskChainEnd( this );
         task_cb->setChain( this );
 
         task_last->addNext( task_cb );
 
-        this->processTask( task_first, false );
+        bool skip = m_source->isSkip();
+
+        this->processTask( task_first, skip );
 
         IntrusiveThisRelease( this );
 
@@ -199,10 +220,8 @@ namespace GOAP
         }
     }
     //////////////////////////////////////////////////////////////////////////
-    void Chain::complete( CallbackObserver * _callback, bool _skip )
+    void Chain::complete( bool _skip )
     {
-        _callback->onCallback( _skip );
-
         m_complete = true;
         this->setState_( TASK_CHAIN_STATE_COMPLETE );
 
@@ -266,6 +285,7 @@ namespace GOAP
         m_forks.clear();
 
         m_source = nullptr;
+        m_cb = nullptr;
         //m_runningTasks.clear();
 
         this->setState_( TASK_CHAIN_STATE_FINALIZE );

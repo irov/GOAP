@@ -41,6 +41,7 @@ ${SOURCE_DIR}/TaskRepeat.cpp
 ${SOURCE_DIR}/TaskScope.cpp
 ${SOURCE_DIR}/TaskSwitch.cpp
 ${SOURCE_DIR}/TaskWhile.cpp
+${SOURCE_DIR}/TaskFor.cpp
 ${SOURCE_DIR}/Transcriptor.h
 ${SOURCE_DIR}/TranscriptorBase.cpp
 ${SOURCE_DIR}/TranscriptorBase.h
@@ -68,6 +69,7 @@ ${INCLUDE_DIR}/IfProvider.h
 ${INCLUDE_DIR}/IntrusiveBase.h
 ${INCLUDE_DIR}/IntrusivePtr.h
 ${INCLUDE_DIR}/ScopeProvider.h
+${INCLUDE_DIR}/ForProvider.h
 ${INCLUDE_DIR}/Source.h
 ${INCLUDE_DIR}/SwitchProvider.h
 ${INCLUDE_DIR}/Task.h
@@ -82,11 +84,14 @@ ${INCLUDE_DIR}/TaskRepeat.h
 ${INCLUDE_DIR}/TaskScope.h
 ${INCLUDE_DIR}/TaskSwitch.h
 ${INCLUDE_DIR}/TaskWhile.h
+${INCLUDE_DIR}/TaskFor.h
 ${INCLUDE_DIR}/Semaphore.h
 ${INCLUDE_DIR}/Event.h
 ${INCLUDE_DIR}/EventProvider.h
 ${INCLUDE_DIR}/TaskSemaphore.h
 ${INCLUDE_DIR}/SemaphoreFlags.h
+${INCLUDE_DIR}/Visitor.h
+${INCLUDE_DIR}/Visitable.h
 )
 
 IF( LIBGOAP_EXTERNAL_INCLUDE )

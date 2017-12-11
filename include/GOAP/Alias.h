@@ -28,6 +28,10 @@ namespace GOAP
     protected:
         virtual void _onGenerate( const SourcePtr & _source ) = 0;
         virtual void _onAliasFinally();
+
+    protected:
+        class BeginGuardProvider;
+        class EndGuardProvider;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Alias> AliasPtr;

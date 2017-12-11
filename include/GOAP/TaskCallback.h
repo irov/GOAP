@@ -17,6 +17,8 @@ namespace GOAP
         : public Task
         , public CallbackObserver
     {
+        DECLARE_VISITABLE( Task );
+
     public:
         explicit TaskCallback( const CallbackProviderPtr & _provider );
         ~TaskCallback() override;
@@ -24,6 +26,7 @@ namespace GOAP
     public:
         bool _onRun() override;
         void _onFinally() override;
+        bool _onSkipable() const override;
 
     protected:
         void onCallback( bool _skip ) override;

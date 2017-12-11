@@ -10,6 +10,8 @@
 #   include "GOAP/Config.h"
 #   include "GOAP/Vector.h"
 
+#   include "GOAP/Visitable.h"
+
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
@@ -21,7 +23,10 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     class Task
         : public Factorable
+        , public Visitable
     {
+        DECLARE_VISITABLE_BASE();
+
     public:
         enum ETaskState
         {
