@@ -53,7 +53,7 @@ void main()
     source->addTask( GOAP_NEW TaskPrint( "****WIN*****" ) );
     source->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
 
-    source->addCallback( []( GOAP::CallbackObserver * _observer, bool isSkip ) { printf( "HTTP!!!!!\n" ); Sleep( 100 ); _observer->onCallback( isSkip ); } );
+    source->addCallback( []( const GOAP::CallbackObserverPtr & _observer, bool isSkip ) { printf( "HTTP!!!!!\n" ); Sleep( 100 ); _observer->onCallback( isSkip ); } );
 
     source->addFunction( [](){ printf( "WOW!!\n" ); } );
 

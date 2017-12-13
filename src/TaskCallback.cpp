@@ -10,6 +10,25 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
+    class TaskCallback::TaskCallbackObserver
+        : public CallbackObserver
+    {
+    public:
+        TaskCallbackObserver( TaskCallback * _task )
+            : m_task( _task )
+        {
+        }
+
+    protected:
+        void onCallback( bool _skip ) override
+        {
+            m_task->complete( true, _skip );
+        }
+
+    protected:
+        TaskCallback * m_task;
+    };
+    //////////////////////////////////////////////////////////////////////////
     TaskCallback::TaskCallback( const CallbackProviderPtr & _provider )
         : m_provider( _provider )
     {
@@ -23,7 +42,7 @@ namespace GOAP
     {
         bool skip = this->isSkip();
 
-        m_provider->onCallback( this, skip );
+        m_provider->onCallback( GOAP_NEW TaskCallbackObserver( this ), skip );
 
         return false;
     }
@@ -36,10 +55,5 @@ namespace GOAP
     bool TaskCallback::_onSkipable() const
     {
         return false;
-    }
-    //////////////////////////////////////////////////////////////////////////
-    void TaskCallback::onCallback( bool _skip )
-    {
-        this->complete( true, _skip );
     }
 }

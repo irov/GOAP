@@ -13,16 +13,19 @@ namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     class CallbackObserver
+        : public Factorable
     {
     public:
         virtual void onCallback( bool _skip ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
+    typedef IntrusivePtr<CallbackObserver> CallbackObserverPtr;
+    //////////////////////////////////////////////////////////////////////////
     class CallbackProvider
         : public Factorable
     {
     public:
-        virtual void onCallback( CallbackObserver * _callback, bool _skip ) = 0;
+        virtual void onCallback( const CallbackObserverPtr & _callback, bool _skip ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<CallbackProvider> CallbackProviderPtr;
@@ -38,7 +41,7 @@ namespace GOAP
         }
 
     public:
-        void onCallback( CallbackObserver * _callback, bool _skip ) override
+        void onCallback( const CallbackObserverPtr & _callback, bool _skip ) override
         {
             m_f( _callback, _skip );
         }
