@@ -20,7 +20,7 @@
 #	include "GOAP/TaskSwitch.h"
 #	include "GOAP/TaskFork.h"
 #	include "GOAP/TaskGuard.h"
-#	include "GOAP/TaskDeadLock.h"
+#	include "GOAP/TaskBlock.h"
 #   include "GOAP/TaskWhile.h"
 #   include "GOAP/TaskSemaphore.h"
 #   include "GOAP/TaskFor.h"
@@ -92,9 +92,9 @@ namespace GOAP
         return source;
     }
     //////////////////////////////////////////////////////////////////////////
-    void Source::addDeadLock()
+    void Source::addBlock()
     {
-        this->addTask( GOAP_NEW TaskDeadLock() );
+        this->addTask( GOAP_NEW TaskBlock() );
     }
     //////////////////////////////////////////////////////////////////////////
     void Source::addSemaphore( const SemaphorePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply )
@@ -210,6 +210,16 @@ namespace GOAP
         TaskPtr task = GOAP_NEW TaskFor( _provider, _count );
 
         this->addTask( task );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    const SourcePtr & Source::addEffectProvider( const GeneratorProviderPtr & _provider )
+    {
+        const VectorSources & race_source = this->addRace( 2 );
+
+        _provider->onGenerate( race_source[0] );
+        race_source[0]->addBlock();
+        
+        return race_source[1];
     }
     //////////////////////////////////////////////////////////////////////////
     void Source::addFunctionProvider( const FunctionProviderPtr & _provider )

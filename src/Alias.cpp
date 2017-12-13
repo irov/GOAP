@@ -71,7 +71,7 @@ namespace GOAP
 
         SourcePtr guard_source = source->addGuardProvider( GOAP_NEW BeginGuardProvider( this ), GOAP_NEW EndGuardProvider( this ) );
 
-        this->_onGenerate( guard_source );
+        this->_onAliasGenerate( guard_source );
 
         if( this->injectSource( source ) == false )
         {

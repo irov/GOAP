@@ -26,7 +26,7 @@ namespace GOAP
         void _onFinally() override final;
 
     protected:
-        virtual void _onGenerate( const SourcePtr & _source ) = 0;
+        virtual void _onAliasGenerate( const SourcePtr & _source ) = 0;
         virtual void _onAliasFinally();
 
     protected:

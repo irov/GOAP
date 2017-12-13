@@ -5,20 +5,25 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#	include "GOAP/TaskDeadLock.h"
+#	include "GOAP/TaskBlock.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskDeadLock::TaskDeadLock()
+    TaskBlock::TaskBlock()
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    TaskDeadLock::~TaskDeadLock()
+    TaskBlock::~TaskBlock()
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskDeadLock::_onRun()
+    bool TaskBlock::_onRun()
+    {
+        return false;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool TaskBlock::_onSkipable() const
     {
         return false;
     }

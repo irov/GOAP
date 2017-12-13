@@ -11,16 +11,17 @@
 
 namespace GOAP
 {
-    class TaskDeadLock
+    class TaskBlock
         : public Task
     {
         DECLARE_VISITABLE( Task );
 
     public:
-        TaskDeadLock();
-        ~TaskDeadLock() override;
+        TaskBlock();
+        ~TaskBlock() override;
 
     protected:
         bool _onRun() override;
+        bool _onSkipable() const override;
     };
 }

@@ -17,6 +17,7 @@
 #	include "GOAP/SwitchProvider.h"
 #	include "GOAP/GuardProvider.h"
 #	include "GOAP/ForProvider.h"
+#   include "GOAP/GeneratorProvider.h"
 
 #   include "GOAP/SemaphoreFlags.h"
 
@@ -56,7 +57,7 @@ namespace GOAP
         const VectorSources & addParallel( size_t _count );
         const VectorSources & addRace( size_t _count );
         SourcePtr addFork();
-        void addDeadLock();
+        void addBlock();
 
         template<class F>
         void addFunction( F _f )
@@ -149,6 +150,16 @@ namespace GOAP
             return source;
         }
 
+        template<class F>
+        const SourcePtr & addEffect( F _f )
+        {
+            GeneratorProviderPtr provider = Helper::makeGeneratorProvider( _f );
+
+            const SourcePtr & source = this->addEffectProvider( provider );
+
+            return source;
+        }
+
         void addSemaphore( const SemaphorePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply );
 
         void addSemaphoreEqual( const SemaphorePtr & _semaphore, int32_t _test );
@@ -173,6 +184,7 @@ namespace GOAP
         SourcePtr addGuardProvider( const GuardProviderPtr & _begin, const GuardProviderPtr & _end );
         void addWhileProvider( const ScopeProviderPtr & _provider );
         void addForProvider( const ForProviderPtr & _provider, uint32_t _count );
+        const SourcePtr & addEffectProvider( const GeneratorProviderPtr & _provider );
 
     public:
         TaskPtr parse( const ChainPtr & _chain, const TaskPtr & _task );

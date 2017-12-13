@@ -27,7 +27,7 @@ ${SOURCE_DIR}/Factorable.cpp
 ${SOURCE_DIR}/Source.cpp
 ${SOURCE_DIR}/Task.cpp
 ${SOURCE_DIR}/TaskCallback.cpp
-${SOURCE_DIR}/TaskDeadLock.cpp
+${SOURCE_DIR}/TaskBlock.cpp
 ${SOURCE_DIR}/TaskDummy.cpp
 ${SOURCE_DIR}/TaskFork.cpp
 ${SOURCE_DIR}/TaskFunction.cpp
@@ -74,7 +74,7 @@ ${INCLUDE_DIR}/Source.h
 ${INCLUDE_DIR}/SwitchProvider.h
 ${INCLUDE_DIR}/Task.h
 ${INCLUDE_DIR}/TaskCallback.h
-${INCLUDE_DIR}/TaskDeadLock.h
+${INCLUDE_DIR}/TaskBlock.h
 ${INCLUDE_DIR}/TaskDummy.h
 ${INCLUDE_DIR}/TaskFork.h
 ${INCLUDE_DIR}/TaskFunction.h
@@ -92,6 +92,7 @@ ${INCLUDE_DIR}/TaskSemaphore.h
 ${INCLUDE_DIR}/SemaphoreFlags.h
 ${INCLUDE_DIR}/Visitor.h
 ${INCLUDE_DIR}/Visitable.h
+${INCLUDE_DIR}/GeneratorProvider.h
 )
 
 IF( LIBGOAP_EXTERNAL_INCLUDE )
