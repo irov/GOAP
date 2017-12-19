@@ -7,6 +7,8 @@
 
 #   pragma once
 
+#   include <stdint.h>
+
 #   include "GOAP/IntrusivePtr.h"
 #   include "GOAP/Factorable.h"
 #   include "GOAP/Visitor.h"

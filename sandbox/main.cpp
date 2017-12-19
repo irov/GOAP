@@ -14,6 +14,9 @@
 #	include <Windows.h>
 #	include <time.h>
 
+#   include <string>
+#   include <typeinfo>
+
 void main()
 {
     Scheduler * sch = new Scheduler;
@@ -26,6 +29,17 @@ void main()
 
     source->addTask( GOAP_NEW TaskPrint( "begin" ) );
     source->addTask( GOAP_NEW TaskDelay( 2000.f, sch ) );
+
+    std::vector<int> v;
+    v.push_back( 1 );
+    v.push_back( 3 );
+    v.push_back( 5 );
+    v.push_back( 7 );
+
+    for( auto & zip : source->addParallelZip( v ) )
+    {
+        zip.source->addTask( GOAP_NEW TaskPrint( std::to_string( *zip.value ).c_str() ) );
+    }
 
     const GOAP::VectorSources & source_parallel = source->addParallel( 2 );
 

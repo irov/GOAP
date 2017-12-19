@@ -9,6 +9,10 @@
 
 #	include "GOAP/IntrusiveBase.h"
 
+#ifdef GOAP_DEBUG
+#   include <stdint.h>
+#endif
+
 #ifdef _DEBUG
 #   ifndef GOAP_NDEBUG
 #   define GOAP_DEBUG

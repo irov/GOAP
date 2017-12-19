@@ -54,14 +54,14 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Source::addTask( const TaskPtr & _task )
     {
-        TranscriptorBase * description = GOAP_NEW TranscriptorBase( _task );
+        TranscriptorBasePtr description = GOAP_NEW TranscriptorBase( _task );
 
         m_transcriptors.push_back( description );
     }
     //////////////////////////////////////////////////////////////////////////
     const VectorSources & Source::addParallel( size_t _count )
     {
-        TranscriptorParallel * description = GOAP_NEW TranscriptorParallel( _count );
+        TranscriptorParallelPtr description = GOAP_NEW TranscriptorParallel( _count );
 
         m_transcriptors.push_back( description );
 
@@ -72,7 +72,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     const VectorSources & Source::addRace( size_t _count )
     {
-        TranscriptorRace * description = GOAP_NEW TranscriptorRace( _count );
+        TranscriptorRacePtr description = GOAP_NEW TranscriptorRace( _count );
 
         m_transcriptors.push_back( description );
 

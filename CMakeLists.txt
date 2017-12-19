@@ -93,6 +93,7 @@ ${INCLUDE_DIR}/SemaphoreFlags.h
 ${INCLUDE_DIR}/Visitor.h
 ${INCLUDE_DIR}/Visitable.h
 ${INCLUDE_DIR}/GeneratorProvider.h
+${INCLUDE_DIR}/Zip.h
 )
 
 IF( LIBGOAP_EXTERNAL_INCLUDE )
