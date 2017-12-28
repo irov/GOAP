@@ -30,8 +30,20 @@ namespace GOAP
         void call();
 
     protected:
-        typedef Vector<EventProviderPtr> VectorEventProvider;
-        VectorEventProvider m_eventProviders;
+        struct ProviderDesc
+        {
+            EventProviderPtr provider;
+            bool dead;
+        };
+
+        typedef Vector<ProviderDesc> VectorProviders;
+        VectorProviders m_providers;
+        VectorProviders m_providersAdd;
+
+        uint32_t m_process;
+
+        class FEventFind;
+        class FEventDead;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Event> EventPtr;

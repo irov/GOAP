@@ -109,10 +109,13 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void TaskSemaphore::_onFinally()
     {
-        m_semaphore->removeObserver( m_observer );
+        if( m_observer != nullptr )
+        {
+            m_semaphore->removeObserver( m_observer );
+            m_observer = nullptr;
+        }
 
-        m_semaphore = nullptr;
-        m_observer = nullptr;
+        m_semaphore = nullptr;        
     }
     //////////////////////////////////////////////////////////////////////////
     bool TaskSemaphore::_onSkipable() const
@@ -176,7 +179,11 @@ namespace GOAP
             return false;
         }
 
-        m_observer = nullptr;
+        if( m_observer != nullptr )
+        {
+            m_semaphore->removeObserver( m_observer );
+            m_observer = nullptr;
+        }
 
         if( this->isSkip() == false )
         {
