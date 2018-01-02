@@ -11,6 +11,7 @@ set "SOLUTION_DIR=solutions\GOAP_msvc15_debug"
 @pushd %SOLUTION_DIR%
 %CMAKE_EXE% -G "Visual Studio 15 2017" "%CD%\..\.." -DCMAKE_CONFIGURATION_TYPES:STRING='Debug' -DCMAKE_BUILD_TYPE:STRING='Debug' -DLIBGOAP_SANDBOX:BOOL=TRUE
 @popd
+@popd
 
 @echo on
 @pause
