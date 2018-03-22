@@ -3,6 +3,7 @@
 #include "GOAP/Task.h"
 
 #include <map>
+#include <string>
 
 class TaskPrint
 	: public GOAP::Task
