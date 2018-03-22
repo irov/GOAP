@@ -44,7 +44,7 @@ int main()
     v.push_back( 5 );
     v.push_back( 7 );
 
-    for( auto & zip : source->addParallelZip( v ) )
+    for( auto zip : source->addParallelZip( v ) )
     {
         zip.source->addTask( GOAP_NEW TaskPrint( std::to_string( *zip.value ).c_str() ) );
     }
