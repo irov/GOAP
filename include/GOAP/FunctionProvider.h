@@ -26,7 +26,7 @@ namespace GOAP
         : public FunctionProvider
     {
     public:
-        FunctionProviderT( F _f )
+        explicit FunctionProviderT( F _f )
             : m_f( _f )
         {
         }

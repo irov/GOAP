@@ -28,7 +28,7 @@ namespace GOAP
         : public ForProvider
     {
     public:
-        ForProviderT( F _f )
+        explicit ForProviderT( F _f )
             : m_f( _f )
         {
         }

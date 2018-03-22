@@ -28,7 +28,7 @@ namespace GOAP
         : public ScopeProvider
     {
     public:
-        ScopeProviderT( F _f )
+        explicit ScopeProviderT( F _f )
             : m_f( _f )
         {
         }

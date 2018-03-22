@@ -16,7 +16,7 @@ namespace GOAP
     class Event::FEventFind
     {
     public:
-        FEventFind( const EventProviderPtr & _provider )
+        explicit FEventFind( const EventProviderPtr & _provider )
             : m_provider( _provider )
         {
         }

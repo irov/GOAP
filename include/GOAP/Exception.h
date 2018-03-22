@@ -16,7 +16,7 @@ namespace GOAP
         : public std::exception
     {
     public:
-        Exception( const char * _message );
+        explicit Exception( const char * _message );
         ~Exception() throw();
 
     public:

@@ -26,7 +26,7 @@ namespace GOAP
         : public IfProvider
     {
     public:
-        IfProviderT( F _f )
+        explicit IfProviderT( F _f )
             : m_f( _f )
         {
         }

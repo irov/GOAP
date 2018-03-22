@@ -28,7 +28,7 @@ namespace GOAP
         : public GeneratorProvider
     {
     public:
-        GeneratorProviderT( F _f )
+        explicit GeneratorProviderT( F _f )
             : m_f( _f )
         {
         }

@@ -17,7 +17,7 @@ namespace GOAP
         : public ChainProvider
     {
     public:
-        ChainProviderUntilEnd( TaskRepeat * _task )
+        explicit ChainProviderUntilEnd( TaskRepeat * _task )
             : m_task( _task )
         {
         }
@@ -36,7 +36,7 @@ namespace GOAP
         : public ChainProvider
     {
     public:
-        ChainProviderRepeatEnd( TaskRepeat * _task )
+        explicit ChainProviderRepeatEnd( TaskRepeat * _task )
             : m_task( _task )
         {
         }

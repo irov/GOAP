@@ -26,7 +26,7 @@ namespace GOAP
         : public ChainProvider
     {
     public:
-        ChainProviderT( F _f )
+        explicit ChainProviderT( F _f )
             : m_f( _f )
         {
         }

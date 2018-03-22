@@ -22,7 +22,7 @@ namespace GOAP
 		: public Transcriptor
 	{
 	public:
-		TranscriptorRace( size_t _count );
+        explicit TranscriptorRace( size_t _count );
         ~TranscriptorRace() override;
 
 	public:

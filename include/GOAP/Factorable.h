@@ -41,10 +41,12 @@ namespace GOAP
 
 #ifdef GOAP_DEBUG
         public:
+            //cppcheck-suppress functionConst
             void operator delete(void* _ptr);
+            //cppcheck-suppress functionConst
+            void operator delete(void* _ptr, const char * _file, int _line);
 
             void * operator new (std::size_t _size, const char * _file, int _line);
-            void operator delete(void* _ptr, const char * _file, int _line);
 #endif
 
         protected:

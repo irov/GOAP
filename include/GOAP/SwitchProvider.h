@@ -26,7 +26,7 @@ namespace GOAP
         : public SwitchProvider
     {
     public:
-        SwitchProviderT( F _f )
+        explicit SwitchProviderT( F _f )
             : m_f( _f )
         {
         }

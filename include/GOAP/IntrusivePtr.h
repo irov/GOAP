@@ -33,18 +33,19 @@ namespace GOAP
             {
             }
 
-            inline IntrusivePtr( std::nullptr_t _nullptr )
+            inline explicit IntrusivePtr( std::nullptr_t _nullptr )
                 : m_ptr( _nullptr )
             {
             }
 
-            inline IntrusivePtr( const element_type * _ptr )
+            inline explicit IntrusivePtr( const element_type * _ptr )
                 : m_ptr( const_cast<element_type *>(_ptr) )
             {
                 this->incref();
             }
 
             template<class U>
+            // cppcheck-suppress noExplicitConstructor
             inline IntrusivePtr( const U * _ptr )
                 : m_ptr( static_cast<element_type *>(const_cast<U *>(_ptr)) )
             {

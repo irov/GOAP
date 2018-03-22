@@ -19,7 +19,7 @@ namespace GOAP
         : public ChainProvider
     {
     public:
-        ChainProviderEnd( TaskFor * _task )
+        explicit ChainProviderEnd( TaskFor * _task )
             : m_task( _task )
         {
         }

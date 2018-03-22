@@ -18,7 +18,7 @@ namespace GOAP
         : public GuardProvider
     {
     public:
-        BeginGuardProvider( Alias * _alias )
+        explicit BeginGuardProvider( Alias * _alias )
             : m_alias( _alias )
         {
         }
@@ -37,7 +37,7 @@ namespace GOAP
         : public GuardProvider
     {
     public:
-        EndGuardProvider( Alias * _alias )
+        explicit EndGuardProvider( Alias * _alias )
             : m_alias( _alias )
         {
         }

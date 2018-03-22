@@ -28,7 +28,7 @@ namespace GOAP
         : public GuardProvider
     {
     public:
-        GuardProviderT( F _f )
+        explicit GuardProviderT( F _f )
             : m_f( _f )
         {
         }

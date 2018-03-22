@@ -15,7 +15,7 @@ namespace GOAP
         : public EventProvider
     {
     public:
-        EventProviderTaskSemaphore( TaskSemaphore * _task )
+        explicit EventProviderTaskSemaphore( TaskSemaphore * _task )
             : m_task( _task )
         { }
 

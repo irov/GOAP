@@ -35,7 +35,7 @@ namespace GOAP
         : public CallbackProvider
     {
     public:
-        CallbackProviderT( F _f )
+        explicit CallbackProviderT( F _f )
             : m_f( _f )
         {
         }

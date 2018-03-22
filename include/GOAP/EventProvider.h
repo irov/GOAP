@@ -26,7 +26,7 @@ namespace GOAP
         : public EventProvider
     {
     public:
-        EventProviderT( F _f )
+        explicit EventProviderT( F _f )
             : m_f( _f )
         {
         }

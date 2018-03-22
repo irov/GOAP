@@ -14,7 +14,7 @@ namespace GOAP
         : public CallbackObserver
     {
     public:
-        TaskCallbackObserver( TaskCallback * _task )
+        explicit TaskCallbackObserver( TaskCallback * _task )
             : m_task( _task )
         {
         }

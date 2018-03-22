@@ -17,7 +17,7 @@ namespace GOAP
         : public ChainProvider
     {
     public:
-        ChainProviderWhileEnd( TaskWhile * _task )
+        explicit ChainProviderWhileEnd( TaskWhile * _task )
             : m_task( _task )
         {
         }

@@ -39,7 +39,7 @@ namespace GOAP
         };
 
     public:
-        Chain( const SourcePtr & _source );
+        explicit Chain( const SourcePtr & _source );
         ~Chain();
 
     public:
@@ -82,9 +82,9 @@ namespace GOAP
         ETaskChainState getState_() const;
 
     public:
-        ETaskChainState m_state;
-
         SourcePtr m_source;
+
+        ETaskChainState m_state;
 
         VectorTasks m_runningTasks;
 
