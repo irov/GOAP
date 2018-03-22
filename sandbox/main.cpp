@@ -20,6 +20,7 @@
 #endif
 
 #include <time.h>
+#include <math.h>
 
 #include <string>
 #include <typeinfo>
