@@ -24,7 +24,7 @@
 #include <string>
 #include <typeinfo>
 
-void main()
+int main()
 {
     Scheduler * sch = new Scheduler;
 
@@ -118,4 +118,6 @@ void main()
     printf( "FINALIZE\n" );
 
     delete sch;
+
+    return 0;
 }
