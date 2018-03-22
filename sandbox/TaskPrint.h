@@ -1,8 +1,8 @@
-#	pragma once
+#pragma once
 
-#	include "GOAP/Task.h"
+#include "GOAP/Task.h"
 
-#	include <map>
+#include <map>
 
 class TaskPrint
 	: public GOAP::Task

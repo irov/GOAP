@@ -1,21 +1,28 @@
-#	include <stdlib.h>
+#include <stdlib.h>
 
-#	include "Scheduler.h"
+#include "Scheduler.h"
 
-#	include "GOAP/Task.h"
-#	include "GOAP/Chain.h"
-#	include "GOAP/Source.h"
-#	include "GOAP/ChainProvider.h"
+#include "GOAP/Task.h"
+#include "GOAP/Chain.h"
+#include "GOAP/Source.h"
+#include "GOAP/ChainProvider.h"
 
-#	include "TaskDelay.h"
-#	include "TaskPrint.h"
-#	include "TaskRoll.h"
+#include "TaskDelay.h"
+#include "TaskPrint.h"
+#include "TaskRoll.h"
 
-#	include <Windows.h>
-#	include <time.h>
+#ifdef _WIN32
+#   include <Windows.h>
+#   define GOAP_SLEEP(Time) (::Sleep(Time))
+#else
+#   include <unistd.h>
+#   define GOAP_SLEEP(Time) (::usleep(Time * 1000))
+#endif
 
-#   include <string>
-#   include <typeinfo>
+#include <time.h>
+
+#include <string>
+#include <typeinfo>
 
 void main()
 {
@@ -67,7 +74,7 @@ void main()
     source->addTask( GOAP_NEW TaskPrint( "****WIN*****" ) );
     source->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
 
-    source->addCallback( []( const GOAP::CallbackObserverPtr & _observer, bool isSkip ) { printf( "HTTP!!!!!\n" ); Sleep( 100 ); _observer->onCallback( isSkip ); } );
+    source->addCallback( []( const GOAP::CallbackObserverPtr & _observer, bool isSkip ) { printf( "HTTP!!!!!\n" ); GOAP_SLEEP( 100 ); _observer->onCallback( isSkip ); } );
 
     source->addFunction( [](){ printf( "WOW!!\n" ); } );
 
@@ -105,7 +112,7 @@ void main()
     {
         sch->update( 100.f );
 
-        Sleep( 10 );
+        GOAP_SLEEP( 10 );
     }
 
     printf( "FINALIZE\n" );

@@ -1,7 +1,7 @@
-#	pragma once
+#pragma once
 
-#	include <stdint.h>
-#	include <map>
+#include <stdint.h>
+#include <map>
 
 class SchedulerObserver
 {

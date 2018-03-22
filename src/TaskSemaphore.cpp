@@ -1,12 +1,12 @@
 /*
-* Copyright (C) 2017, Yuriy Levchenko <irov13@mail.ru>
+* Copyright (C) 2017-2018, Yuriy Levchenko <irov13@mail.ru>
 *
 * This software may be modified and distributed under the terms
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#	include "GOAP/TaskSemaphore.h"
-#   include "GOAP/EventProvider.h"
+#include "GOAP/TaskSemaphore.h"
+#include "GOAP/EventProvider.h"
 
 namespace GOAP
 {

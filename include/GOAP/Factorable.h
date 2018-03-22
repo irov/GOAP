@@ -1,13 +1,13 @@
 /*
-* Copyright (C) 2017, Yuriy Levchenko <irov13@mail.ru>
+* Copyright (C) 2017-2018, Yuriy Levchenko <irov13@mail.ru>
 *
 * This software may be modified and distributed under the terms
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#   pragma once
+#pragma once
 
-#	include "GOAP/IntrusiveBase.h"
+#include "GOAP/IntrusiveBase.h"
 
 #ifdef GOAP_DEBUG
 #   include <stdint.h>
@@ -15,17 +15,17 @@
 
 #ifdef _DEBUG
 #   ifndef GOAP_NDEBUG
-#   define GOAP_DEBUG
+#       define GOAP_DEBUG
 #   endif
 #endif
 
 #ifdef GOAP_DEBUG
 #   include <new>
-#define GOAP_NEW new(__FILE__, __LINE__)
-#define GOAP_DELETE delete(__FILE__, __LINE__)
+#   define GOAP_NEW new(__FILE__, __LINE__)
+#   define GOAP_DELETE delete(__FILE__, __LINE__)
 #else
-#define GOAP_NEW new
-#define GOAP_DELETE delete
+#   define GOAP_NEW new
+#   define GOAP_DELETE delete
 #endif
 
 namespace GOAP

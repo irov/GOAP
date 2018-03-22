@@ -1,33 +1,33 @@
 /*
-* Copyright (C) 2017, Yuriy Levchenko <irov13@mail.ru>
+* Copyright (C) 2017-2018, Yuriy Levchenko <irov13@mail.ru>
 *
 * This software may be modified and distributed under the terms
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#	include "GOAP/Source.h"
+#include "GOAP/Source.h"
 
-#	include "GOAP/Task.h"
-#	include "GOAP/Chain.h"
-#   include "GOAP/Config.h"
+#include "GOAP/Task.h"
+#include "GOAP/Chain.h"
+#include "GOAP/Config.h"
 
-#	include "GOAP/FunctionProvider.h"
-#	include "GOAP/TaskFunction.h"
-#	include "GOAP/TaskCallback.h"
-#	include "GOAP/TaskScope.h"
-#	include "GOAP/TaskIf.h"
-#	include "GOAP/TaskRepeat.h"
-#	include "GOAP/TaskSwitch.h"
-#	include "GOAP/TaskFork.h"
-#	include "GOAP/TaskGuard.h"
-#	include "GOAP/TaskBlock.h"
-#   include "GOAP/TaskWhile.h"
-#   include "GOAP/TaskSemaphore.h"
-#   include "GOAP/TaskFor.h"
+#include "GOAP/FunctionProvider.h"
+#include "GOAP/TaskFunction.h"
+#include "GOAP/TaskCallback.h"
+#include "GOAP/TaskScope.h"
+#include "GOAP/TaskIf.h"
+#include "GOAP/TaskRepeat.h"
+#include "GOAP/TaskSwitch.h"
+#include "GOAP/TaskFork.h"
+#include "GOAP/TaskGuard.h"
+#include "GOAP/TaskBlock.h"
+#include "GOAP/TaskWhile.h"
+#include "GOAP/TaskSemaphore.h"
+#include "GOAP/TaskFor.h"
 
-#	include "TranscriptorBase.h"
-#	include "TranscriptorParallel.h"
-#	include "TranscriptorRace.h"
+#include "TranscriptorBase.h"
+#include "TranscriptorParallel.h"
+#include "TranscriptorRace.h"
 
 
 namespace GOAP

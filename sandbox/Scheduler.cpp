@@ -1,6 +1,6 @@
-#	include "Scheduler.h"
+#include "Scheduler.h"
 
-#	include <algorithm>
+#include <algorithm>
 
 Scheduler::Scheduler()
 	: m_enumerator( 0 )

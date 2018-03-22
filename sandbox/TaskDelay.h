@@ -1,7 +1,7 @@
-#	pragma once
+#pragma once
 
-#	include "GOAP/Task.h"
-#	include "Scheduler.h"
+#include "GOAP/Task.h"
+#include "Scheduler.h"
 
 class TaskDelay
 	: public GOAP::Task

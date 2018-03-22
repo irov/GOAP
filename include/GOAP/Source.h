@@ -1,26 +1,26 @@
 /*
-* Copyright (C) 2017, Yuriy Levchenko <irov13@mail.ru>
+* Copyright (C) 2017-2018, Yuriy Levchenko <irov13@mail.ru>
 *
 * This software may be modified and distributed under the terms
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#	pragma once
+#pragma once
 
-#	include "GOAP/Config.h"
-#	include "GOAP/Vector.h"
-#	include "GOAP/Zip.h"
+#include "GOAP/Config.h"
+#include "GOAP/Vector.h"
+#include "GOAP/Zip.h"
 
-#	include "GOAP/FunctionProvider.h"
-#	include "GOAP/CallbackProvider.h"
-#	include "GOAP/ScopeProvider.h"
-#	include "GOAP/IfProvider.h"
-#	include "GOAP/SwitchProvider.h"
-#	include "GOAP/GuardProvider.h"
-#	include "GOAP/ForProvider.h"
-#   include "GOAP/GeneratorProvider.h"
+#include "GOAP/FunctionProvider.h"
+#include "GOAP/CallbackProvider.h"
+#include "GOAP/ScopeProvider.h"
+#include "GOAP/IfProvider.h"
+#include "GOAP/SwitchProvider.h"
+#include "GOAP/GuardProvider.h"
+#include "GOAP/ForProvider.h"
+#include "GOAP/GeneratorProvider.h"
 
-#   include "GOAP/SemaphoreFlags.h"
+#include "GOAP/SemaphoreFlags.h"
 
 namespace GOAP
 {
