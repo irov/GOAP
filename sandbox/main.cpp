@@ -22,6 +22,7 @@
 #include <time.h>
 #include <math.h>
 
+#include <array>
 #include <string>
 #include <typeinfo>
 
@@ -46,13 +47,15 @@ int main()
 
     for( auto zip : source->addParallelZip( v ) )
     {
-        zip.source->addTask( GOAP_NEW TaskPrint( std::to_string( *zip.value ).c_str() ) );
+		std::string msg = std::to_string( *zip.value );
+
+        zip.source->addTask( GOAP_NEW TaskPrint( msg ) );
     }
 
-    const GOAP::VectorSources & source_parallel = source->addParallel( 2 );
+	auto[parallel0, parallel1] = source->addParallel<2>();
 
-    source_parallel[0]->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
-    source_parallel[1]->addTask( GOAP_NEW TaskPrint( "process" ) );
+    parallel0->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
+    parallel1->addTask( GOAP_NEW TaskPrint( "process" ) );
 
     source->addTask( GOAP_NEW TaskPrint( "end" ) );
     source->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
@@ -60,16 +63,16 @@ int main()
     source->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
 
 
-    const GOAP::VectorSources & source_race = source->addRace( 3 );
+	auto[race0, race1, race2] = source->addRace<3>();
 
-    source_race[0]->addTask( GOAP_NEW TaskRoll( 200.f, 1, 6, sch ) );
-    source_race[0]->addTask( GOAP_NEW TaskPrint( "---1---" ) );
+    race0->addTask( GOAP_NEW TaskRoll( 200.f, 1, 6, sch ) );
+    race0->addTask( GOAP_NEW TaskPrint( "---1---" ) );
 
-    source_race[1]->addTask( GOAP_NEW TaskRoll( 100.f, 2, 12, sch ) );
-    source_race[1]->addTask( GOAP_NEW TaskPrint( "---2---" ) );
+    race1->addTask( GOAP_NEW TaskRoll( 100.f, 2, 12, sch ) );
+    race1->addTask( GOAP_NEW TaskPrint( "---2---" ) );
 
-    source_race[2]->addTask( GOAP_NEW TaskRoll( 50.f, 4, 24, sch ) );
-    source_race[2]->addTask( GOAP_NEW TaskPrint( "---3---" ) );
+    race2->addTask( GOAP_NEW TaskRoll( 50.f, 4, 24, sch ) );
+    race2->addTask( GOAP_NEW TaskPrint( "---3---" ) );
 
     source->addTask( GOAP_NEW TaskDelay( 1000.f, sch ) );
     source->addTask( GOAP_NEW TaskPrint( "****WIN*****" ) );

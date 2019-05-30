@@ -8,7 +8,6 @@
 #pragma once
 
 #include "GOAP/Config.h"
-
 #include "GOAP/Task.h"
 
 namespace GOAP

@@ -19,8 +19,9 @@
 #include "GOAP/GuardProvider.h"
 #include "GOAP/ForProvider.h"
 #include "GOAP/GeneratorProvider.h"
-
 #include "GOAP/SemaphoreFlags.h"
+#include "GOAP/TranscriptorParallelArray.h"
+#include "GOAP/TranscriptorRaceArray.h"
 
 namespace GOAP
 {
@@ -56,7 +57,47 @@ namespace GOAP
 
     public:
         const VectorSources & addParallel( size_t _count );
+
+		template<size_t Count>
+		const ArraySources<Count> & addParallel()
+		{
+			ArraySources<Count> sources;
+
+			for( SourcePtr & source : sources )
+			{
+				source = this->_provideSource();
+			}
+
+			TranscriptorParallelArrayPtr<Count> transcriptor = Helper::makeTranscriptorParallelArray( sources );
+
+			m_transcriptors.push_back( transcriptor );
+
+			const ArraySources<Count> & transcriptor_sources = transcriptor->getSources();
+
+			return transcriptor_sources;
+		}
+
         const VectorSources & addRace( size_t _count );
+
+		template<size_t Count>
+		const ArraySources<Count> & addRace()
+		{
+			ArraySources<Count> sources;
+
+			for( SourcePtr & source : sources )
+			{
+				source = this->_provideSource();
+			}
+
+			TranscriptorRaceArrayPtr<Count> transcriptor = Helper::makeTranscriptorRaceArray( sources );
+
+			m_transcriptors.push_back( transcriptor );
+
+			const ArraySources<Count> & transcriptor_sources = transcriptor->getSources();
+
+			return transcriptor_sources;
+		}
+
         SourcePtr addFork();
         void addBlock();
 
@@ -113,6 +154,16 @@ namespace GOAP
 
             return sources;
         }
+
+		template<size_t Count, class F>
+		const VectorSources & addSwitch( size_t _count, F _f )
+		{
+			SwitchProviderPtr provider = Helper::makeSwitchProvider( _f );
+
+			const VectorSources & sources = this->addSwitchProvider( provider, _count );
+
+			return sources;
+		}
 
         template<class F>
         SourcePtr addRepeat( F _f )
@@ -247,6 +298,9 @@ namespace GOAP
 
     protected:
         virtual SourcePtr _provideSource();
+
+	protected:
+		void makeSources_( VectorSources & _sources, uint32_t _count );
 
     protected:
         VectorTranscriptor m_transcriptors;

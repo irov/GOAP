@@ -11,17 +11,20 @@
 
 namespace GOAP
 {
-	class TaskRaceNeck
+	class TaskParallelNeck
 		: public Task
 	{
         DECLARE_VISITABLE( Task );
 
 	public:
-		TaskRaceNeck();
-		~TaskRaceNeck() override;
+		TaskParallelNeck();
+		~TaskParallelNeck() override;
 
 	protected:
 		bool _onCheckRun() const override;
 		bool _onCheckSkip() const override;
 	};
+	//////////////////////////////////////////////////////////////////////////
+	typedef IntrusivePtr<TaskParallelNeck> TaskParallelNeckPtr;
+	//////////////////////////////////////////////////////////////////////////
 }

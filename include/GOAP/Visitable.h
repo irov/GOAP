@@ -34,14 +34,15 @@ namespace GOAP
             return true;
         }
     };
-
+	//////////////////////////////////////////////////////////////////////////
 #define DECLARE_VISITABLE_BASE() \
 public:\
     void visit( Visitor * _visitor ) override { Visitable::s_concreteVisit(this, _visitor); }\
 protected:
-
+	//////////////////////////////////////////////////////////////////////////
 #define DECLARE_VISITABLE( Base ) \
 public:\
     void visit( Visitor * _visitor ) override { if( Visitable::s_concreteVisit(this, _visitor) == false ){ Base::visit(_visitor); } }\
 protected:
+	//////////////////////////////////////////////////////////////////////////
 }

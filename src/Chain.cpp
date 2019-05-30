@@ -115,18 +115,12 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Chain::cancel()
     {
-        IntrusiveThisAcquire( this );
+		Detail::IntrusiveThisAcquire( this );
 
         VectorChains copy_forks = m_forks;
 
-        for( VectorChains::const_iterator
-            it = copy_forks.begin(),
-            it_end = copy_forks.end();
-            it != it_end;
-            ++it )
+        for( const ChainPtr & fork : copy_forks )
         {
-            const ChainPtr & fork = *it;
-
             fork->cancel();
         }
 
@@ -163,18 +157,12 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Chain::skip()
     {
-        IntrusiveThisAcquire( this );
+		Detail::IntrusiveThisAcquire( this );
 
         VectorChains copy_forks = m_forks;
 
-        for( VectorChains::const_iterator
-            it = copy_forks.begin(),
-            it_end = copy_forks.end();
-            it != it_end;
-            ++it )
-        {
-            const ChainPtr & fork = *it;
-
+		for( const ChainPtr & fork : copy_forks )
+		{
             fork->skip();
         }
 
@@ -239,14 +227,8 @@ namespace GOAP
     {
         VectorTasks tasks = m_runningTasks;
 
-        for( VectorTasks::const_iterator
-            it = tasks.begin(),
-            it_end = tasks.end();
-            it != it_end;
-            ++it )
+        for( const TaskPtr & task : tasks )
         {
-            const TaskPtr & task = *it;
-
             task->skip();
         }
     }
@@ -255,14 +237,8 @@ namespace GOAP
     {
         VectorTasks tasks = m_runningTasks;
 
-        for( VectorTasks::const_iterator
-            it = tasks.begin(),
-            it_end = tasks.end();
-            it != it_end;
-            ++it )
+        for( const TaskPtr & task : tasks )
         {
-            const TaskPtr & task = *it;
-
             task->cancel( true );
         }
     }
@@ -271,15 +247,9 @@ namespace GOAP
     {
         VectorChains copy_forks = m_forks;
 
-        for( VectorChains::const_iterator
-            it = copy_forks.begin(),
-            it_end = copy_forks.end();
-            it != it_end;
-            ++it )
+		for( const ChainPtr & fork : copy_forks )
         {
-            const ChainPtr & fork = *it;
-
-            fork->cancel();
+			fork->cancel();
         }
 
         m_forks.clear();

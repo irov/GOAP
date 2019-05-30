@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "Transcriptor.h"
+#include "GOAP/Transcriptor.h"
 
 namespace GOAP
 {

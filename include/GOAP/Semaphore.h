@@ -19,7 +19,7 @@ namespace GOAP
     {
     public:
         Semaphore( const EventPtr & _event, int32_t _value );
-        ~Semaphore();
+        ~Semaphore() override;
 
     public:
         void setValue( int32_t _value );

@@ -23,7 +23,7 @@ namespace GOAP
             }
         };
     }
-
+	//////////////////////////////////////////////////////////////////////////
     template<class T>
     class ConcreteVisitor
     {

@@ -7,24 +7,14 @@
 
 #pragma once
 
-#include "GOAP/Task.h"
+#include "GOAP/Array.h"
 
 namespace GOAP
 {
-    class TaskBlock
-        : public Task
-    {
-        DECLARE_VISITABLE( Task );
-
-    public:
-        TaskBlock();
-        ~TaskBlock() override;
-
-    protected:
-        bool _onRun() override;
-        bool _onSkipable() const override;
-    };
 	//////////////////////////////////////////////////////////////////////////
-	typedef IntrusivePtr<TaskBlock> TaskBlockPtr;
+	typedef IntrusivePtr<class Source> SourcePtr;
+	//////////////////////////////////////////////////////////////////////////
+	template<size_t Count>
+	using ArraySources = Array<SourcePtr, Count>;
 	//////////////////////////////////////////////////////////////////////////
 }

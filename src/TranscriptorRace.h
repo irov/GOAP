@@ -9,7 +9,7 @@
 
 #include "GOAP/Vector.h"
 
-#include "Transcriptor.h"
+#include "GOAP/Transcriptor.h"
 
 namespace GOAP
 {
@@ -22,7 +22,7 @@ namespace GOAP
 		: public Transcriptor
 	{
 	public:
-        explicit TranscriptorRace( size_t _count );
+		explicit TranscriptorRace( const VectorSources & _sources );
         ~TranscriptorRace() override;
 
 	public:

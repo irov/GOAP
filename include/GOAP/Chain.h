@@ -40,7 +40,7 @@ namespace GOAP
 
     public:
         explicit Chain( const SourcePtr & _source );
-        ~Chain();
+        ~Chain() override;
 
     public:
         template<class F>

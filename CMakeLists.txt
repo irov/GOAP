@@ -8,7 +8,7 @@ OPTION(LIBGOAP_EXTERNAL_INCLUDE_PATH "LIBGOAP_EXTERNAL_INCLUDE_PATH" "")
 OPTION(LIBGOAP_BUILD_TEST "LIBGOAP_BUILD_TEST" ON)
 
 IF( NOT LIBGOAP_EXTERNAL_BUILD )
-    set (CMAKE_CXX_STANDARD 11)
+    set (CMAKE_CXX_STANDARD 17)
     
     SET( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib/${CMAKE_GENERATOR} )
     SET( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin/${CMAKE_GENERATOR} )      
@@ -33,15 +33,12 @@ set( GOAP_SOURCES
     ${SOURCE_DIR}/TaskGuard.cpp
     ${SOURCE_DIR}/TaskIf.cpp
     ${SOURCE_DIR}/TaskParallelNeck.cpp
-    ${SOURCE_DIR}/TaskParallelNeck.h
     ${SOURCE_DIR}/TaskRaceNeck.cpp
-    ${SOURCE_DIR}/TaskRaceNeck.h
     ${SOURCE_DIR}/TaskRepeat.cpp
     ${SOURCE_DIR}/TaskScope.cpp
     ${SOURCE_DIR}/TaskSwitch.cpp
     ${SOURCE_DIR}/TaskWhile.cpp
-    ${SOURCE_DIR}/TaskFor.cpp
-    ${SOURCE_DIR}/Transcriptor.h
+    ${SOURCE_DIR}/TaskFor.cpp    
     ${SOURCE_DIR}/TranscriptorBase.cpp
     ${SOURCE_DIR}/TranscriptorBase.h
     ${SOURCE_DIR}/TranscriptorParallel.cpp
@@ -55,6 +52,8 @@ set( GOAP_SOURCES
 
 set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/Alias.h
+    ${INCLUDE_DIR}/GOAP/Array.h
+    ${INCLUDE_DIR}/GOAP/ArraySources.h
     ${INCLUDE_DIR}/GOAP/CallbackProvider.h
     ${INCLUDE_DIR}/GOAP/Chain.h
     ${INCLUDE_DIR}/GOAP/ChainProvider.h
@@ -81,11 +80,16 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/TaskFunction.h
     ${INCLUDE_DIR}/GOAP/TaskGuard.h
     ${INCLUDE_DIR}/GOAP/TaskIf.h
+    ${INCLUDE_DIR}/GOAP/TaskParallelNeck.h
     ${INCLUDE_DIR}/GOAP/TaskRepeat.h
+    ${INCLUDE_DIR}/GOAP/TaskRaceNeck.h
     ${INCLUDE_DIR}/GOAP/TaskScope.h
     ${INCLUDE_DIR}/GOAP/TaskSwitch.h
     ${INCLUDE_DIR}/GOAP/TaskWhile.h
     ${INCLUDE_DIR}/GOAP/TaskFor.h
+    ${INCLUDE_DIR}/GOAP/Transcriptor.h
+    ${INCLUDE_DIR}/GOAP/TranscriptorParallelArray.h
+    ${INCLUDE_DIR}/GOAP/TranscriptorRaceArray.h
     ${INCLUDE_DIR}/GOAP/Semaphore.h
     ${INCLUDE_DIR}/GOAP/Event.h
     ${INCLUDE_DIR}/GOAP/EventProvider.h

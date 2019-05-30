@@ -72,14 +72,8 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Task::popNexts( VectorTasks & _clone )
     {
-        for( VectorTasks::const_iterator
-            it = m_nexts.begin(),
-            it_end = m_nexts.end();
-            it != it_end;
-            ++it )
+		for( const TaskPtr & next : m_nexts )
         {
-            const TaskPtr & next = *it;
-
             next->removePrev_( this );
         }
 
@@ -102,14 +96,8 @@ namespace GOAP
             return false;
         }
 
-        for( VectorTasks::const_iterator
-            it = nexts.begin(),
-            it_end = nexts.end();
-            it != it_end;
-            ++it )
+        for( const TaskPtr & next : nexts )
         {
-            const TaskPtr & next = *it;
-
             task->addNext( next );
         }
 
@@ -294,14 +282,8 @@ namespace GOAP
         {
             VectorTasks copy_nexts = m_nexts;
 
-            for( VectorTasks::const_iterator
-                it = copy_nexts.begin(),
-                it_end = copy_nexts.end();
-                it != it_end;
-                ++it )
+            for( const TaskPtr & task : copy_nexts )
             {
-                const TaskPtr & task = *it;
-
                 task->cancel( _withNexts );
             }
         }
@@ -320,14 +302,8 @@ namespace GOAP
 
         VectorTasks copy_nexts = m_nexts;
 
-        for( VectorTasks::const_iterator
-            it = copy_nexts.begin(),
-            it_end = copy_nexts.end();
-            it != it_end;
-            ++it )
+		for( const TaskPtr & next : copy_nexts )
         {
-            const TaskPtr & next = *it;
-
             if( next->prevSkip_( this ) == true )
             {
                 m_chain->processTask( next, true );
@@ -376,14 +352,8 @@ namespace GOAP
         {
             VectorTasks copy_nexts = m_nexts;
 
-            for( VectorTasks::const_iterator
-                it = copy_nexts.begin(),
-                it_end = copy_nexts.end();
-                it != it_end;
-                ++it )
+            for( const TaskPtr & next : copy_nexts )
             {
-                const TaskPtr & next = *it;
-
                 if( next->prevComplete_( this ) == true )
                 {
                     m_chain->processTask( next, false );
@@ -396,14 +366,8 @@ namespace GOAP
         {
             VectorTasks copy_nexts = m_nexts;
 
-            for( VectorTasks::const_iterator
-                it = copy_nexts.begin(),
-                it_end = copy_nexts.end();
-                it != it_end;
-                ++it )
+            for( const TaskPtr & next : copy_nexts )
             {
-                const TaskPtr & next = *it;
-
                 if( next->prevSkip_( this ) == true )
                 {
                     m_chain->processTask( next, true );
@@ -455,14 +419,8 @@ namespace GOAP
     {
         VectorTasks clone_prevs = m_prevs;
 
-        for( VectorTasks::const_iterator
-            it = clone_prevs.begin(),
-            it_end = clone_prevs.end();
-            it != it_end;
-            ++it )
+        for( const TaskPtr & prev : clone_prevs )
         {
-            const TaskPtr & prev = *it;
-
             switch( prev->m_state )
             {
             case TASK_STATE_IDLE:
@@ -485,14 +443,8 @@ namespace GOAP
     {
         VectorTasks clone_prevs = m_prevs;
 
-        for( VectorTasks::const_iterator
-            it = clone_prevs.begin(),
-            it_end = clone_prevs.end();
-            it != it_end;
-            ++it )
+        for( const TaskPtr & prev : clone_prevs )
         {
-            const TaskPtr & prev = *it;
-
             switch( prev->m_state )
             {
             case TASK_STATE_IDLE:

@@ -7,28 +7,17 @@
 
 #include "TranscriptorParallel.h"
 
-#include "TaskParallelNeck.h"
-
 #include "GOAP/Source.h"
-
 #include "GOAP/Task.h"
+#include "GOAP/TaskParallelNeck.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TranscriptorParallel::TranscriptorParallel( size_t _count )
-    {
-        m_sources.resize( _count );
-
-        for( VectorSources::iterator
-            it = m_sources.begin(),
-            it_end = m_sources.end();
-            it != it_end;
-            ++it )
-        {
-            *it = GOAP_NEW Source();
-        }
-    }
+	TranscriptorParallel::TranscriptorParallel( const VectorSources & _sources )
+		: m_sources( _sources )
+	{
+	}
     //////////////////////////////////////////////////////////////////////////
     TranscriptorParallel::~TranscriptorParallel()
     {
@@ -49,14 +38,8 @@ namespace GOAP
         TaskPtr task_parallel_neck = GOAP_NEW TaskParallelNeck();
         task_parallel_neck->setChain( _chain );
 
-        for( VectorSources::const_iterator
-            it = m_sources.begin(),
-            it_end = m_sources.end();
-            it != it_end;
-            ++it )
+        for( const SourcePtr & parallel_source : m_sources )
         {
-            const SourcePtr & parallel_source = *it;
-
             TaskPtr task = parallel_source->parse( _chain, _task );
 
             task->addNext( task_parallel_neck );

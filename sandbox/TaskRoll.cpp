@@ -44,5 +44,4 @@ void TaskRoll::onScheduleStop( uint32_t _id )
 {
 	m_id = 0;
 	m_scheduler = nullptr;
-	//this->complete();
 }

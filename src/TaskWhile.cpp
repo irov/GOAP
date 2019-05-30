@@ -55,7 +55,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskWhile::_onRun()
     {
-        GOAP::SourcePtr sourceWhile = GOAP_NEW GOAP::Source();
+        SourcePtr sourceWhile = GOAP_NEW Source();
 
         bool skip = this->isSkip();
         sourceWhile->setSkip( skip );
@@ -67,7 +67,9 @@ namespace GOAP
 
         ChainPtr chainWhile = GOAP_NEW Chain( sourceWhile );
 
-        chainWhile->setCallbackProvider( GOAP_NEW ChainProviderWhileEnd( this ) );
+		ChainProviderPtr chainProviderWhileEnd = GOAP_NEW ChainProviderWhileEnd( this );
+
+        chainWhile->setCallbackProvider( chainProviderWhileEnd );
 
         m_chainWhile = chainWhile;
 
@@ -96,7 +98,7 @@ namespace GOAP
             return;
         }
 
-        GOAP::SourcePtr sourceWhile = GOAP_NEW GOAP::Source();
+        SourcePtr sourceWhile = GOAP_NEW Source();
 
         sourceWhile->setSkip( _skip );
 
@@ -109,7 +111,9 @@ namespace GOAP
 
         ChainPtr chainWhile = GOAP_NEW Chain( sourceWhile );
         
-        chainWhile->setCallbackProvider( GOAP_NEW ChainProviderWhileEnd( this ) );
+		ChainProviderPtr chainProviderWhileEnd = GOAP_NEW ChainProviderWhileEnd( this );
+
+        chainWhile->setCallbackProvider( chainProviderWhileEnd );
 
         m_chainWhile = chainWhile;
 

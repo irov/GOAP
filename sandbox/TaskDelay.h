@@ -9,7 +9,7 @@ class TaskDelay
 {
 public:
 	TaskDelay( float _delay, Scheduler * _scheduler );
-	~TaskDelay();
+	~TaskDelay() override;
 	
 protected:
 	bool _onRun() override;

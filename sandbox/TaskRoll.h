@@ -10,7 +10,7 @@ class TaskRoll
 {
 public:
 	TaskRoll( float _delay, uint32_t _roll, uint32_t _max, Scheduler * _scheduler );
-	~TaskRoll();
+	~TaskRoll() override;
 
 protected:
 	bool _onRun() override;

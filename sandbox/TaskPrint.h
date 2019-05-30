@@ -10,7 +10,7 @@ class TaskPrint
 {
 public:
 	TaskPrint( const std::string & _message );
-	~TaskPrint();
+	~TaskPrint() override;
 
 protected:
 	bool _onRun() override;
