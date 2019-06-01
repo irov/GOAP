@@ -260,7 +260,7 @@ namespace GOAP
         this->addTask( task );
     }
     //////////////////////////////////////////////////////////////////////////
-    IfSource Source::addIfProvider( const IfProviderPtr & _provider )
+    ArraySources<2> Source::addIfProvider( const IfProviderPtr & _provider )
     {
         SourcePtr source_true = this->_provideSource();
         SourcePtr source_false = this->_provideSource();
@@ -269,14 +269,10 @@ namespace GOAP
 
         this->addTask( task );
 
-        IfSource desc;
-        desc.source_true = source_true;
-        desc.source_false = source_false;
-
-        return desc;
+        return ArraySources<2>{source_true, source_false};
     }
     //////////////////////////////////////////////////////////////////////////
-    IfSource Source::addUnlessProvider( const IfProviderPtr & _provider )
+    ArraySources<2> Source::addUnlessProvider( const IfProviderPtr & _provider )
     {
         SourcePtr source_true = this->_provideSource();
         SourcePtr source_false = this->_provideSource();
@@ -285,11 +281,7 @@ namespace GOAP
 
         this->addTask( task );
 
-        IfSource desc;
-        desc.source_true = source_false;
-        desc.source_false = source_true;
-
-        return desc;
+        return ArraySources<2>{source_false, source_true};
     }
     //////////////////////////////////////////////////////////////////////////
     TaskPtr Source::parse( const ChainPtr & _chain, const TaskPtr & _task )

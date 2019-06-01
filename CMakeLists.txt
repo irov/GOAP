@@ -115,8 +115,9 @@ if(LIBGOAP_INSTALL)
         DESTINATION .
         FILES_MATCHING PATTERN "*.hpp" PATTERN "*.h")
 
-    install(TARGETS ${PROJECT_NAME}            
-        ARCHIVE DESTINATION lib)
+    install(TARGETS ${PROJECT_NAME}
+            LIBRARY DESTINATION lib
+            ARCHIVE DESTINATION lib)
 endif()
 
 if( LIBGOAP_BUILD_TEST )

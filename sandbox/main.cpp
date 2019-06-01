@@ -87,10 +87,10 @@ int main()
     source->addFunction( [](){ printf( "Oh\n" ); } );
 
 
-    GOAP::IfSource source_if = source->addIf( [](){ return rand() % 2 ? true : false; } );
+    auto[source_true, source_false] = source->addIf( []() { return rand() % 2 ? true : false; } );
 
-    source_if.source_true->addTask( GOAP_NEW TaskPrint( "---TRUE---" ) );
-    source_if.source_false->addTask( GOAP_NEW TaskPrint( "---FALSE---" ) );
+    source_true->addTask( GOAP_NEW TaskPrint( "---TRUE---" ) );
+    source_false->addTask( GOAP_NEW TaskPrint( "---FALSE---" ) );
 
     const GOAP::VectorSources & source_switch = source->addSwitch( 3, [](){ return rand() % 3; } );
 

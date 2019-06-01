@@ -35,12 +35,6 @@ namespace GOAP
     typedef Vector<SourcePtr> VectorSources;
     typedef Vector<TranscriptorPtr> VectorTranscriptor;
     //////////////////////////////////////////////////////////////////////////
-    struct IfSource
-    {
-        SourcePtr source_true;
-        SourcePtr source_false;
-    };
-    //////////////////////////////////////////////////////////////////////////
     class Source
         : public Factorable
     {
@@ -126,21 +120,21 @@ namespace GOAP
         }
 
         template<class F>
-        IfSource addIf( F _f )
+        ArraySources<2> addIf( F _f )
         {
             IfProviderPtr provider = Helper::makeIfProvider( _f );
 
-            IfSource desc = this->addIfProvider( provider );
+            ArraySources<2> desc = this->addIfProvider( provider );
 
             return desc;
         }
 
         template<class F>
-        IfSource addUnless( F _f )
+        ArraySources<2> addUnless( F _f )
         {
             IfProviderPtr provider = Helper::makeIfProvider( _f );
 
-            IfSource desc = this->addUnlessProvider( provider );
+            ArraySources<2> desc = this->addUnlessProvider( provider );
 
             return desc;
         }
@@ -284,8 +278,8 @@ namespace GOAP
         void addFunctionProvider( const FunctionProviderPtr & _provider );
         void addCallbackProvider( const CallbackProviderPtr & _provider );
         void addScopeProvider( const ScopeProviderPtr & _provider );
-        IfSource addIfProvider( const IfProviderPtr & _provider );
-        IfSource addUnlessProvider( const IfProviderPtr & _provider );
+        ArraySources<2> addIfProvider( const IfProviderPtr & _provider );
+        ArraySources<2> addUnlessProvider( const IfProviderPtr & _provider );
         SourcePtr addRepeatProvider( const ScopeProviderPtr & _provider );
         const VectorSources & addSwitchProvider( const SwitchProviderPtr & _provider, size_t _count );
         SourcePtr addGuardProvider( const GuardProviderPtr & _begin, const GuardProviderPtr & _end );
