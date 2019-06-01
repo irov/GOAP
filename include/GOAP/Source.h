@@ -130,6 +130,26 @@ namespace GOAP
         }
 
         template<class F>
+        SourcePtr addIfSuccessful( F _f )
+        {
+            IfProviderPtr provider = Helper::makeIfProvider( _f );
+
+            ArraySources<2> desc = this->addIfProvider( provider );
+
+            return desc[0];
+        }
+
+        template<class F>
+        SourcePtr addIfFailure( F _f )
+        {
+            IfProviderPtr provider = Helper::makeIfProvider( _f );
+
+            ArraySources<2> desc = this->addIfProvider( provider );
+
+            return desc[1];
+        }
+
+        template<class F>
         ArraySources<2> addUnless( F _f )
         {
             IfProviderPtr provider = Helper::makeIfProvider( _f );
