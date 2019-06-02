@@ -88,8 +88,8 @@ namespace GOAP
 
             inline IntrusivePtr & operator = ( std::nullptr_t _nullptr )
             {
-                this->decref();
-                m_ptr = _nullptr;
+                IntrusivePtr swap_ptr;
+                swap_ptr.swap( *this );
 
                 return *this;
             }

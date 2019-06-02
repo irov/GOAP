@@ -50,7 +50,7 @@ namespace GOAP
         void addTask( const TaskPtr & _task );
 
     public:
-        const VectorSources & addParallel( size_t _count );
+        const VectorSources & addParallel( uint32_t _count );
 
 		template<size_t Count>
 		const ArraySources<Count> & addParallel()
@@ -71,7 +71,7 @@ namespace GOAP
 			return transcriptor_sources;
 		}
 
-        const VectorSources & addRace( size_t _count );
+        const VectorSources & addRace( uint32_t _count );
 
 		template<size_t Count>
 		const ArraySources<Count> & addRace()
@@ -301,7 +301,7 @@ namespace GOAP
         ArraySources<2> addIfProvider( const IfProviderPtr & _provider );
         ArraySources<2> addUnlessProvider( const IfProviderPtr & _provider );
         SourcePtr addRepeatProvider( const ScopeProviderPtr & _provider );
-        const VectorSources & addSwitchProvider( const SwitchProviderPtr & _provider, size_t _count );
+        const VectorSources & addSwitchProvider( const SwitchProviderPtr & _provider, uint32_t _count );
         SourcePtr addGuardProvider( const GuardProviderPtr & _begin, const GuardProviderPtr & _end );
         void addWhileProvider( const ScopeProviderPtr & _provider );
         void addForProvider( const ForProviderPtr & _provider, uint32_t _count );

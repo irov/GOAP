@@ -59,7 +59,7 @@ namespace GOAP
         m_transcriptors.push_back( description );
     }
     //////////////////////////////////////////////////////////////////////////
-    const VectorSources & Source::addParallel( size_t _count )
+    const VectorSources & Source::addParallel( uint32_t _count )
     {
 		VectorSources sources;
 		this->makeSources_( sources, _count );
@@ -73,7 +73,7 @@ namespace GOAP
         return transcriptor_sources;
     }
     //////////////////////////////////////////////////////////////////////////
-    const VectorSources & Source::addRace( size_t _count )
+    const VectorSources & Source::addRace( uint32_t _count )
     {
 		VectorSources sources;
 		this->makeSources_( sources, _count );
@@ -186,7 +186,7 @@ namespace GOAP
         return source_until;
     }
     //////////////////////////////////////////////////////////////////////////
-    const VectorSources & Source::addSwitchProvider( const SwitchProviderPtr & _provider, size_t _count )
+    const VectorSources & Source::addSwitchProvider( const SwitchProviderPtr & _provider, uint32_t _count )
     {
         VectorSources sources;
 		this->makeSources_( sources, _count );
