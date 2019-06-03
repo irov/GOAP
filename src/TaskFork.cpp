@@ -56,9 +56,9 @@ namespace GOAP
         bool skip = this->isSkip();
         m_fork->setSkip( skip );
 
-        ChainPtr chain = GOAP_NEW Chain( m_fork );
+        ChainPtr chain = new Chain( m_fork );
 
-		ChainProviderPtr chainProvider = GOAP_NEW Detail::ChainProviderTaskFork( m_chain, chain );
+		ChainProviderPtr chainProvider = new Detail::ChainProviderTaskFork( m_chain, chain );
 
         chain->setCallbackProvider( chainProvider );
 

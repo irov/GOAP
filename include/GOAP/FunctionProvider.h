@@ -46,7 +46,7 @@ namespace GOAP
         template<class F>
         FunctionProviderPtr makeFunctionProvider( F _f )
         {
-            FunctionProviderPtr provider = GOAP_NEW FunctionProviderT<F>( _f );
+            FunctionProviderPtr provider = new FunctionProviderT<F>( _f );
 
             return provider;
         }

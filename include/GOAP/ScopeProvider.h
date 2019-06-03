@@ -50,7 +50,7 @@ namespace GOAP
         template<class F>
         ScopeProviderPtr makeScopeProvider( F _f )
         {
-            ScopeProviderPtr provider = GOAP_NEW ScopeProviderT<F>( _f );
+            ScopeProviderPtr provider = new ScopeProviderT<F>( _f );
 
             return provider;
         }

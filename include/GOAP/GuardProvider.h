@@ -48,7 +48,7 @@ namespace GOAP
         template<class F>
         GuardProviderPtr makeGuardProvider( F _f )
         {
-            GuardProviderPtr provider = GOAP_NEW GuardProviderT<F>( _f );
+            GuardProviderPtr provider = new GuardProviderT<F>( _f );
 
             return provider;
         }

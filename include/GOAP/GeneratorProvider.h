@@ -48,7 +48,7 @@ namespace GOAP
         template<class F>
         GeneratorProviderPtr makeGeneratorProvider( F _f )
         {
-            GeneratorProviderPtr provider = GOAP_NEW GeneratorProviderT<F>( _f );
+            GeneratorProviderPtr provider = new GeneratorProviderT<F>( _f );
 
             return provider;
         }

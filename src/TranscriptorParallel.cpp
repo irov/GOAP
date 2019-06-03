@@ -35,7 +35,7 @@ namespace GOAP
             return _task;
         }
 
-        TaskPtr task_parallel_neck = GOAP_NEW TaskParallelNeck();
+        TaskPtr task_parallel_neck = new TaskParallelNeck();
         task_parallel_neck->setChain( _chain );
 
         for( const SourcePtr & parallel_source : m_sources )

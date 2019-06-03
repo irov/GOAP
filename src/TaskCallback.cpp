@@ -42,7 +42,7 @@ namespace GOAP
     {
         bool skip = this->isSkip();
 
-		CallbackObserverPtr callback = GOAP_NEW TaskCallbackObserver( this );
+		CallbackObserverPtr callback = new TaskCallbackObserver( this );
 
 		m_provider->onCallback( callback, skip );
 

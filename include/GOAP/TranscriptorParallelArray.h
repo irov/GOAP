@@ -37,7 +37,7 @@ namespace GOAP
 	public:
 		TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) override
 		{
-			TaskPtr task_parallel_neck = GOAP_NEW TaskParallelNeck();
+			TaskPtr task_parallel_neck = new TaskParallelNeck();
 			task_parallel_neck->setChain( _chain );
 
 			for( const SourcePtr & parallel_source : m_sources )
@@ -62,7 +62,7 @@ namespace GOAP
 		template<size_t Count>
 		TranscriptorParallelArrayPtr<Count> makeTranscriptorParallelArray( const ArraySources<Count> & _sources )
 		{
-			TranscriptorParallelArrayPtr<Count> transcriptor = GOAP_NEW TranscriptorParallelArray<Count>( _sources );
+			TranscriptorParallelArrayPtr<Count> transcriptor = new TranscriptorParallelArray<Count>( _sources );
 
 			return transcriptor;
 		}

@@ -97,7 +97,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskSemaphore::_onRun()
     {
-		EventProviderPtr event = GOAP_NEW EventProviderTaskSemaphore( this );
+		EventProviderPtr event = new EventProviderTaskSemaphore( this );
 
         m_observer = m_semaphore->addObserver( event );
         

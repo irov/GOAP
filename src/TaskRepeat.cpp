@@ -86,9 +86,9 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskRepeat::_onRun()
     {
-        ChainPtr chainUntil = GOAP_NEW Chain( m_sourceUntil );
+        ChainPtr chainUntil = new Chain( m_sourceUntil );
 
-		ChainProviderPtr chainProviderUntilEnd = GOAP_NEW ChainProviderUntilEnd( this );
+		ChainProviderPtr chainProviderUntilEnd = new ChainProviderUntilEnd( this );
 
         chainUntil->setCallbackProvider( chainProviderUntilEnd );
 
@@ -104,7 +104,7 @@ namespace GOAP
             return true;
         }
 
-        SourcePtr sourceRepeat = GOAP_NEW Source();
+        SourcePtr sourceRepeat = new Source();
 
         bool skip = this->isSkip();
         sourceRepeat->setSkip( skip );
@@ -114,9 +114,9 @@ namespace GOAP
             return true;
         }
 
-        ChainPtr chainRepeat = GOAP_NEW Chain( sourceRepeat );
+        ChainPtr chainRepeat = new Chain( sourceRepeat );
 
-		ChainProviderPtr chainProviderRepeatEnd = GOAP_NEW ChainProviderRepeatEnd( this );
+		ChainProviderPtr chainProviderRepeatEnd = new ChainProviderRepeatEnd( this );
 
         chainRepeat->setCallbackProvider( chainProviderRepeatEnd );
 
@@ -137,7 +137,7 @@ namespace GOAP
             return;
         }
 
-        SourcePtr sourceRepeat = GOAP_NEW Source();
+        SourcePtr sourceRepeat = new Source();
 
         sourceRepeat->setSkip( _skip );
 
@@ -148,9 +148,9 @@ namespace GOAP
             return;
         }
 
-        ChainPtr chainRepeat = GOAP_NEW Chain( sourceRepeat );
+        ChainPtr chainRepeat = new Chain( sourceRepeat );
 
-		ChainProviderPtr chainProviderRepeatEnd = GOAP_NEW ChainProviderRepeatEnd( this );
+		ChainProviderPtr chainProviderRepeatEnd = new ChainProviderRepeatEnd( this );
         
         chainRepeat->setCallbackProvider( chainProviderRepeatEnd );
 

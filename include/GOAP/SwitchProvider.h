@@ -48,7 +48,7 @@ namespace GOAP
         template<class F>
         SwitchProviderPtr makeSwitchProvider( F _f )
         {
-            SwitchProviderPtr provider = GOAP_NEW SwitchProviderT<F>( _f );
+            SwitchProviderPtr provider = new SwitchProviderT<F>( _f );
 
             return provider;
         }

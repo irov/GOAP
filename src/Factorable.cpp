@@ -6,9 +6,6 @@
 */
 
 #include "GOAP/Factorable.h"
-#include "GOAP/Macros.h"
-
-#include <stdlib.h>
 
 namespace GOAP
 {
@@ -22,33 +19,6 @@ namespace GOAP
         Factorable::~Factorable()
         {
         }
-#ifdef GOAP_DEBUG
-        //////////////////////////////////////////////////////////////////////////
-        void Factorable::operator delete(void* _ptr)
-        {
-            free( _ptr );
-        }
-        //////////////////////////////////////////////////////////////////////////
-        void * Factorable::operator new (std::size_t _size, const char * _file, int _line)
-        {
-            void * ptr = malloc( _size );
-
-            Factorable * t = reinterpret_cast<Factorable*>(ptr);
-
-            t->m_debugfile = _file;
-            t->m_debugline = _line;
-
-            return ptr;
-        }
-        //////////////////////////////////////////////////////////////////////////
-        void Factorable::operator delete(void* _ptr, const char * _file, int _line)
-        {
-            GOAP_UNUSED( _file );
-            GOAP_UNUSED( _line );
-
-            free( _ptr );
-        }
-#endif
         //////////////////////////////////////////////////////////////////////////
         void Factorable::destroy()
         {

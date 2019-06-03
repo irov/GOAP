@@ -65,13 +65,13 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////    
     bool Alias::_onRun()
     {
-        SourcePtr source = GOAP_NEW Source();
+        SourcePtr source = new Source();
 
         bool skiped = this->isSkip();
         source->setSkip( skiped );
 
-		GuardProviderPtr begin = GOAP_NEW BeginGuardProvider( this );
-		GuardProviderPtr end = GOAP_NEW EndGuardProvider( this );
+		GuardProviderPtr begin = new BeginGuardProvider( this );
+		GuardProviderPtr end = new EndGuardProvider( this );
 
         SourcePtr guard_source = source->addGuardProvider( begin, end );
 

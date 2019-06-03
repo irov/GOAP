@@ -94,12 +94,12 @@ namespace GOAP
 
         this->setState_( TASK_CHAIN_STATE_RUN );
 
-        TaskPtr task_first = GOAP_NEW TaskDummy();
+        TaskPtr task_first = new TaskDummy();
         task_first->setChain( this );
 
         TaskPtr task_last = m_source->parse( this, task_first );
         
-        TaskPtr task_cb = GOAP_NEW TaskChainEnd( this );
+        TaskPtr task_cb = new TaskChainEnd( this );
         task_cb->setChain( this );
 
         task_last->addNext( task_cb );

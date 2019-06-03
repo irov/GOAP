@@ -50,7 +50,7 @@ namespace GOAP
         template<class F>
         ForProviderPtr makeForProvider( F _f )
         {
-            ForProviderPtr provider = GOAP_NEW ForProviderT<F>( _f );
+            ForProviderPtr provider = new ForProviderT<F>( _f );
 
             return provider;
         }

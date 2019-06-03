@@ -25,7 +25,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskScope::_onRun()
     {
-        SourcePtr source = GOAP_NEW Source();
+        SourcePtr source = new Source();
 
         bool skip = this->isSkip();
         source->setSkip( skip );

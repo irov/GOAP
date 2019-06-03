@@ -48,7 +48,7 @@ namespace GOAP
         template<class F>
         EventProviderPtr makeEventProvider( F _f )
         {
-            EventProviderPtr provider = GOAP_NEW EventProviderT<F>( _f );
+            EventProviderPtr provider = new EventProviderT<F>( _f );
 
             return provider;
         }

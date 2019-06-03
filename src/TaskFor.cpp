@@ -103,7 +103,7 @@ namespace GOAP
             return true;
         }
 
-        SourcePtr source = GOAP_NEW Source();
+        SourcePtr source = new Source();
 
         source->setSkip( _skip );
 
@@ -112,9 +112,9 @@ namespace GOAP
             return true;
         }
 
-        ChainPtr chainIterator = GOAP_NEW Chain( source );
+        ChainPtr chainIterator = new Chain( source );
 
-		ChainProviderPtr chainProvider = GOAP_NEW ChainProviderEnd( this );
+		ChainProviderPtr chainProvider = new ChainProviderEnd( this );
 
         chainIterator->setCallbackProvider( chainProvider );
 
