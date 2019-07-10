@@ -20,26 +20,18 @@ namespace GOAP
         DECLARE_VISITABLE( Task );
 
 	public:
-        TaskFor( const ForProviderPtr & _provider, uint32_t _count );
+        TaskFor( const ForProviderPtr & _providerFor, uint32_t _iterator, uint32_t _count );
 		~TaskFor() override;
 
 	public:
         bool _onCheck() override;
 		bool _onRun() override;
-        void _onSkip() override;
         void _onFinally() override;
 
-    protected:
-        bool iterateComplete_( bool _skip );
-
 	protected:
-        ForProviderPtr m_provider;
-        uint32_t m_count;
+        ForProviderPtr m_providerFor;
         uint32_t m_iterator;
-
-        ChainPtr m_chainIterator;
-
-        class ChainProviderEnd;
+        uint32_t m_count;
 	};
 	//////////////////////////////////////////////////////////////////////////
 	typedef IntrusivePtr<TaskFor> TaskForPtr;

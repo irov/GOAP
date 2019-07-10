@@ -8,63 +8,64 @@
 #pragma once
 
 #include "GOAP/ArraySources.h"
+#include "GOAP/ViewSources.h"
 #include "GOAP/Transcriptor.h"
 #include "GOAP/TaskParallelNeck.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-	template<size_t Count>
-	class TranscriptorParallelArray
-		: public Transcriptor
-	{
-	public:
-		TranscriptorParallelArray( const ArraySources<Count> & _sources )
-			: m_sources( _sources )
-		{
-		}
+    namespace Detail
+    {
+        void generateParallelSource( const ViewSources & _sources, const ChainPtr & _chain, const TaskPtr & _task, const TaskPtr & _neck );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    template<size_t Count>
+    class TranscriptorParallelArray
+        : public Transcriptor
+    {
+    public:
+        TranscriptorParallelArray( const ArraySources<Count> & _sources )
+            : m_sources( _sources )
+        {
+        }
 
-		~TranscriptorParallelArray() override
-		{
-		}
+        ~TranscriptorParallelArray() override
+        {
+        }
 
-	public:
-		const ArraySources<Count> & getSources() const
-		{
-			return m_sources;
-		}
+    public:
+        const ArraySources<Count> & getSources() const
+        {
+            return m_sources;
+        }
 
-	public:
-		TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) override
-		{
-			TaskPtr task_parallel_neck = new TaskParallelNeck();
-			task_parallel_neck->setChain( _chain );
+    public:
+        TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) override
+        {
+            TaskPtr task_parallel_neck = new TaskParallelNeck();
+            task_parallel_neck->setChain( _chain );
 
-			for( const SourcePtr & parallel_source : m_sources )
-			{
-				TaskPtr task = parallel_source->parse( _chain, _task );
+            Detail::generateParallelSource( m_sources, _chain, _task, task_parallel_neck );
 
-				task->addNext( task_parallel_neck );
-			}
+            return task_parallel_neck;
+        }
 
-			return task_parallel_neck;
-		}
+    protected:
+        ArraySources<Count> m_sources;
+    };
+    //////////////////////////////////////////////////////////////////////////
+    template<size_t Count>
+    using TranscriptorParallelArrayPtr = IntrusivePtr<TranscriptorParallelArray<Count>>;
+    //////////////////////////////////////////////////////////////////////////
+    namespace Helper
+    {
+        template<size_t Count>
+        TranscriptorParallelArrayPtr<Count> makeTranscriptorParallelArray( const ArraySources<Count> & _sources )
+        {
+            TranscriptorParallelArrayPtr<Count> transcriptor = new TranscriptorParallelArray<Count>( _sources );
 
-	protected:
-		ArraySources<Count> m_sources;
-	};
-	//////////////////////////////////////////////////////////////////////////
-	template<size_t Count>
-	using TranscriptorParallelArrayPtr = IntrusivePtr<TranscriptorParallelArray<Count>>;
-	//////////////////////////////////////////////////////////////////////////
-	namespace Helper
-	{
-		template<size_t Count>
-		TranscriptorParallelArrayPtr<Count> makeTranscriptorParallelArray( const ArraySources<Count> & _sources )
-		{
-			TranscriptorParallelArrayPtr<Count> transcriptor = new TranscriptorParallelArray<Count>( _sources );
-
-			return transcriptor;
-		}
-	}
+            return transcriptor;
+        }
+    }
 }

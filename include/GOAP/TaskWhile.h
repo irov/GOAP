@@ -22,25 +22,15 @@ namespace GOAP
         DECLARE_VISITABLE( Task );
 
 	public:
-        explicit TaskWhile( const ScopeProviderPtr & _providerScope );
+        explicit TaskWhile( const ScopeProviderPtr & _providerWhile );
 		~TaskWhile() override;
 
 	public:
-		void _onFinalize() override;
-
-	public:
 		bool _onRun() override;
-        void _onSkip() override;
+        void _onFinalize() override;
 
 	protected:
-		void whileComplete_( bool _skip );
-
-	protected:
-		ScopeProviderPtr m_providerScope;
-
-		ChainPtr m_chainWhile;
-
-        class ChainProviderWhileEnd;
+		ScopeProviderPtr m_providerWhile;
 	};
 	//////////////////////////////////////////////////////////////////////////
 	typedef IntrusivePtr<TaskWhile> TaskWhilePtr;

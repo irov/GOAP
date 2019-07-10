@@ -15,32 +15,10 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    class TaskFor::ChainProviderEnd
-        : public ChainProvider
-    {
-    public:
-        explicit ChainProviderEnd( TaskFor * _task )
-            : m_task( _task )
-        {
-        }
-
-    public:
-        void onChain( bool _skip ) override
-        {
-            if( m_task->iterateComplete_( _skip ) == true )
-            {
-                m_task->complete( true, _skip );
-            }
-        }
-
-    protected:
-        TaskFor * m_task;
-    };
-    //////////////////////////////////////////////////////////////////////////
-    TaskFor::TaskFor( const ForProviderPtr & _provider, uint32_t _count )
-        : m_provider( _provider )
+    TaskFor::TaskFor( const ForProviderPtr & _providerFor, uint32_t _iterator, uint32_t _count )
+        : m_providerFor( _providerFor )
+        , m_iterator( _iterator )
         , m_count( _count )
-        , m_iterator( 0 )
     {
     }
     //////////////////////////////////////////////////////////////////////////
@@ -50,7 +28,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskFor::_onCheck()
     {
-        if( m_count == 0 )
+        if( m_iterator == m_count )
         {
             return false;
         }
@@ -60,71 +38,27 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskFor::_onRun()
     {
-        bool skip = this->isSkip();
+        SourcePtr source = new Source();
 
-        if( this->iterateComplete_( skip ) == true )
+        bool skip = this->isSkip();
+        source->setSkip( skip );
+
+        if( m_providerFor->onFor( source, m_iterator, m_count ) == false )
         {
             return true;
         }
+        
+        source->addForProvider( m_providerFor, m_iterator + 1, m_count );
+        
+        m_providerFor = nullptr;
 
-        return false;
-    }
-    //////////////////////////////////////////////////////////////////////////
-    void TaskFor::_onSkip()
-    {
-        if( m_chainIterator != nullptr )
-        {
-            m_chainIterator->skip();
-        }
+        this->injectSource( source );
+
+        return true;
     }
     //////////////////////////////////////////////////////////////////////////
     void TaskFor::_onFinally()
     {
-        if( m_chainIterator != nullptr )
-        {
-            m_chainIterator->cancel();
-            m_chainIterator = nullptr;
-        }
-
-        m_provider = nullptr;
-    }
-    //////////////////////////////////////////////////////////////////////////
-    bool TaskFor::iterateComplete_( bool _skip )
-    {
-        if( m_provider == nullptr )
-        {
-            return true;
-        }
-
-        uint32_t iterator = m_iterator++;
-
-        if( iterator == m_count )
-        {
-            return true;
-        }
-
-        SourcePtr source = new Source();
-
-        source->setSkip( _skip );
-
-        if( m_provider->onFor( source, iterator, m_count ) == false )
-        {
-            return true;
-        }
-
-        ChainPtr chainIterator = new Chain( source );
-
-		ChainProviderPtr chainProvider = new ChainProviderEnd( this );
-
-        chainIterator->setCallbackProvider( chainProvider );
-
-        m_chainIterator = chainIterator;
-
-        if( m_chainIterator->run() == false )
-        {
-            return true;
-        }
-
-        return false;
+        m_providerFor = nullptr;
     }
 }

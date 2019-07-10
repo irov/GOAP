@@ -222,9 +222,9 @@ namespace GOAP
         this->addTask( task );
     }
     //////////////////////////////////////////////////////////////////////////
-    void Source::addForProvider( const ForProviderPtr & _provider, uint32_t _count )
+    void Source::addForProvider( const ForProviderPtr & _provider, uint32_t _iterator, uint32_t _count )
     {
-        TaskPtr task = new TaskFor( _provider, _count );
+        TaskPtr task = new TaskFor( _provider, _iterator, _count );
 
         this->addTask( task );
     }

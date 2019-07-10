@@ -47,12 +47,12 @@ int main()
 
     for( auto zip : source->addParallelZip( v ) )
     {
-		std::string msg = std::to_string( *zip.value );
+        std::string msg = std::to_string( *zip.value );
 
         zip.source->addTask( new TaskPrint( msg ) );
     }
 
-	auto[parallel0, parallel1] = source->addParallel<2>();
+    auto [parallel0, parallel1] = source->addParallel<2>();
 
     parallel0->addTask( new TaskDelay( 1000.f, sch ) );
     parallel1->addTask( new TaskPrint( "process" ) );
@@ -63,7 +63,7 @@ int main()
     source->addTask( new TaskDelay( 1000.f, sch ) );
 
 
-	auto[race0, race1, race2] = source->addRace<3>();
+    auto [race0, race1, race2] = source->addRace<3>();
 
     race0->addTask( new TaskRoll( 200.f, 1, 6, sch ) );
     race0->addTask( new TaskPrint( "---1---" ) );
@@ -78,27 +78,75 @@ int main()
     source->addTask( new TaskPrint( "****WIN*****" ) );
     source->addTask( new TaskDelay( 1000.f, sch ) );
 
-    source->addCallback( []( const GOAP::CallbackObserverPtr & _observer, bool isSkip ) { printf( "HTTP!!!!!\n" ); GOAP_SLEEP( 100 ); _observer->onCallback( isSkip ); } );
+    source->addCallback( []( const GOAP::CallbackObserverPtr & _observer, bool isSkip )
+    {
+        printf( "HTTP!!!!!\n" ); 
+        
+        GOAP_SLEEP( 100 ); 
+        
+        _observer->onCallback( isSkip );
+    } );
 
-    source->addFunction( [](){ printf( "WOW!!\n" ); } );
+    source->addFunction( []()
+    {
+        printf( "WOW!!\n" );
+    } );
 
-    source->addScope( []( const GOAP::SourcePtr & _scope ) -> bool { _scope->addFunction( []() {printf( "SCOPE????? WOW!!!" ); } ); return true; } );
+    source->addScope( []( const GOAP::SourcePtr & _scope ) -> bool
+    {
+        _scope->addFunction( []()
+        {
+            printf( "SCOPE????? WOW!!!" );
+        } );
+        
+        return true;
+    } );
 
-    source->addFunction( [](){ printf( "Oh\n" ); } );
+    source->addFunction( []()
+    {
+        printf( "Oh\n" );
+    } );
 
-
-    auto[source_true, source_false] = source->addIf( []() { return rand() % 2 ? true : false; } );
+    auto [source_true, source_false] = source->addIf( []()
+    {
+        return rand() % 2 ? true : false;
+    } );
 
     source_true->addTask( new TaskPrint( "---TRUE---" ) );
     source_false->addTask( new TaskPrint( "---FALSE---" ) );
 
-    const GOAP::VectorSources & source_switch = source->addSwitch( 3, [](){ return rand() % 3; } );
+    const GOAP::VectorSources & source_switch = source->addSwitch( 3, []()
+    {
+        return rand() % 3;
+    } );
 
     source_switch[0]->addTask( new TaskPrint( "---Switch 1---" ) );
     source_switch[1]->addTask( new TaskPrint( "---Switch 2---" ) );
     source_switch[2]->addTask( new TaskPrint( "---Switch 3---" ) );
 
-    GOAP::SourcePtr source_until = source->addRepeat( [sch]( const GOAP::SourcePtr & _scope ) -> bool
+    source->addFor( 10, [sch]( const GOAP::SourcePtr & _scope, uint32_t _iterator, uint32_t _count )
+    {
+        _scope->addTask( new TaskDelay( 500.f, sch ) );
+        _scope->addTask( new TaskPrint( "For!!!!" ) );
+
+        return true;
+    } );
+
+    uint32_t count = 0;
+    source->addWhile( [sch, &count]( const GOAP::SourcePtr & _scope )
+    {
+        _scope->addTask( new TaskDelay( 1000.f, sch ) );
+        _scope->addTask( new TaskPrint( "While!!!!" ) );
+
+        if( ++count == 5 )
+        {
+            return false;
+        }
+
+        return true;
+    } );
+
+    GOAP::SourcePtr source_until = source->addRepeat( [sch]( const GOAP::SourcePtr & _scope )
     {
         _scope->addTask( new TaskDelay( 1000.f, sch ) );
         _scope->addTask( new TaskPrint( "REPEAT!!!!" ) );

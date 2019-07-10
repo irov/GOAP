@@ -33,7 +33,7 @@ namespace GOAP
 
 	protected:
 		void repeatComplete_( bool _skip );
-		void untilComplete_( bool _skip );		
+		void untilComplete_( bool _skip );
 
 	protected:
 		ScopeProviderPtr m_providerRepeat;

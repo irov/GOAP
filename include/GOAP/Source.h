@@ -52,45 +52,45 @@ namespace GOAP
     public:
         const VectorSources & addParallel( uint32_t _count );
 
-		template<size_t Count>
-		const ArraySources<Count> & addParallel()
-		{
-			ArraySources<Count> sources;
+        template<size_t Count>
+        const ArraySources<Count> & addParallel()
+        {
+            ArraySources<Count> sources;
 
-			for( SourcePtr & source : sources )
-			{
-				source = this->_provideSource();
-			}
+            for( SourcePtr & source : sources )
+            {
+                source = this->_provideSource();
+            }
 
-			TranscriptorParallelArrayPtr<Count> transcriptor = Helper::makeTranscriptorParallelArray( sources );
+            TranscriptorParallelArrayPtr<Count> transcriptor = Helper::makeTranscriptorParallelArray( sources );
 
-			m_transcriptors.push_back( transcriptor );
+            m_transcriptors.push_back( transcriptor );
 
-			const ArraySources<Count> & transcriptor_sources = transcriptor->getSources();
+            const ArraySources<Count> & transcriptor_sources = transcriptor->getSources();
 
-			return transcriptor_sources;
-		}
+            return transcriptor_sources;
+        }
 
         const VectorSources & addRace( uint32_t _count );
 
-		template<size_t Count>
-		const ArraySources<Count> & addRace()
-		{
-			ArraySources<Count> sources;
+        template<size_t Count>
+        const ArraySources<Count> & addRace()
+        {
+            ArraySources<Count> sources;
 
-			for( SourcePtr & source : sources )
-			{
-				source = this->_provideSource();
-			}
+            for( SourcePtr & source : sources )
+            {
+                source = this->_provideSource();
+            }
 
-			TranscriptorRaceArrayPtr<Count> transcriptor = Helper::makeTranscriptorRaceArray( sources );
+            TranscriptorRaceArrayPtr<Count> transcriptor = Helper::makeTranscriptorRaceArray( sources );
 
-			m_transcriptors.push_back( transcriptor );
+            m_transcriptors.push_back( transcriptor );
 
-			const ArraySources<Count> & transcriptor_sources = transcriptor->getSources();
+            const ArraySources<Count> & transcriptor_sources = transcriptor->getSources();
 
-			return transcriptor_sources;
-		}
+            return transcriptor_sources;
+        }
 
         SourcePtr addFork();
         void addBlock();
@@ -169,15 +169,15 @@ namespace GOAP
             return sources;
         }
 
-		template<size_t Count, class F>
-		const VectorSources & addSwitch( size_t _count, F _f )
-		{
-			SwitchProviderPtr provider = Helper::makeSwitchProvider( _f );
+        template<size_t Count, class F>
+        const VectorSources & addSwitch( size_t _count, F _f )
+        {
+            SwitchProviderPtr provider = Helper::makeSwitchProvider( _f );
 
-			const VectorSources & sources = this->addSwitchProvider( provider, (uint32_t)_count );
+            const VectorSources & sources = this->addSwitchProvider( provider, (uint32_t)_count );
 
-			return sources;
-		}
+            return sources;
+        }
 
         template<class F>
         SourcePtr addRepeat( F _f )
@@ -198,11 +198,11 @@ namespace GOAP
         }
 
         template<class F>
-        void addFor( F _f, uint32_t _count )
+        void addFor( uint32_t _count, F _f )
         {
             ForProviderPtr provider = Helper::makeForProvider<F>( _f );
 
-            this->addForProvider( provider, _count );
+            this->addForProvider( provider, 0, _count );
         }
 
         template<class FB, class FE>
@@ -304,7 +304,7 @@ namespace GOAP
         const VectorSources & addSwitchProvider( const SwitchProviderPtr & _provider, uint32_t _count );
         SourcePtr addGuardProvider( const GuardProviderPtr & _begin, const GuardProviderPtr & _end );
         void addWhileProvider( const ScopeProviderPtr & _provider );
-        void addForProvider( const ForProviderPtr & _provider, uint32_t _count );
+        void addForProvider( const ForProviderPtr & _provider, uint32_t _iterator, uint32_t _count );
         const SourcePtr & addEffectProvider( const GeneratorProviderPtr & _provider );
 
     public:
@@ -313,8 +313,8 @@ namespace GOAP
     protected:
         virtual SourcePtr _provideSource();
 
-	protected:
-		void makeSources_( VectorSources & _sources, uint32_t _count );
+    protected:
+        void makeSources_( VectorSources & _sources, uint32_t _count );
 
     protected:
         VectorTranscriptor m_transcriptors;

@@ -7,66 +7,65 @@
 
 #pragma once
 
-#include "GOAP/Array.h"
+#include "GOAP/ArraySources.h"
+#include "GOAP/ViewSources.h"
 #include "GOAP/Transcriptor.h"
 #include "GOAP/TaskRaceNeck.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-	typedef IntrusivePtr<class Source> SourcePtr;
+    namespace Detail
+    {
+        void generateRaceSource( const ViewSources & _sources, const ChainPtr & _chain, const TaskPtr & _task, const TaskPtr & _neck );
+    }
     //////////////////////////////////////////////////////////////////////////
-	template<size_t Count>
-	class TranscriptorRaceArray
-		: public Transcriptor
-	{
-	public:
-		TranscriptorRaceArray( const ArraySources<Count> & _sources )
-			: m_sources( _sources )
-		{
-		}
+    template<size_t Count>
+    class TranscriptorRaceArray
+        : public Transcriptor
+    {
+    public:
+        TranscriptorRaceArray( const ArraySources<Count> & _sources )
+            : m_sources( _sources )
+        {
+        }
 
-		~TranscriptorRaceArray() override
-		{
-		}
+        ~TranscriptorRaceArray() override
+        {
+        }
 
-	public:
-		const ArraySources<Count> & getSources() const
-		{
-			return m_sources;
-		}
+    public:
+        const ArraySources<Count> & getSources() const
+        {
+            return m_sources;
+        }
 
-	public:
-		TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) override
-		{
-			TaskPtr task_parallel_neck = new TaskRaceNeck();
-			task_parallel_neck->setChain( _chain );
+    public:
+        TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) override
+        {
+            TaskPtr task_parallel_neck = new TaskRaceNeck();
+            task_parallel_neck->setChain( _chain );
 
-			for( const SourcePtr & parallel_source : m_sources )
-			{
-				TaskPtr task = parallel_source->parse( _chain, _task );
+            Detail::generateRaceSource( m_sources, _chain, _task, task_parallel_neck );
 
-				task->addNext( task_parallel_neck );
-			}
+            return task_parallel_neck;
+        }
 
-			return task_parallel_neck;
-		}
-
-	protected:
-		ArraySources<Count> m_sources;
-	};
+    protected:
+        ArraySources<Count> m_sources;
+    };
     //////////////////////////////////////////////////////////////////////////
-	template<size_t Count>
+    template<size_t Count>
     using TranscriptorRaceArrayPtr = IntrusivePtr<TranscriptorRaceArray<Count>>;
     //////////////////////////////////////////////////////////////////////////
-	namespace Helper
-	{
-		template<size_t Count>
-		TranscriptorRaceArrayPtr<Count> makeTranscriptorRaceArray( const ArraySources<Count> & _sources )
-		{
-			TranscriptorRaceArrayPtr<Count> transcriptor = new TranscriptorRaceArray<Count>( _sources );
+    namespace Helper
+    {
+        template<size_t Count>
+        TranscriptorRaceArrayPtr<Count> makeTranscriptorRaceArray( const ArraySources<Count> & _sources )
+        {
+            TranscriptorRaceArrayPtr<Count> transcriptor = new TranscriptorRaceArray<Count>( _sources );
 
-			return transcriptor;
-		}
-	}
+            return transcriptor;
+        }
+    }
 }

@@ -46,6 +46,8 @@ set( GOAP_SOURCES
     ${SOURCE_DIR}/TranscriptorParallel.h
     ${SOURCE_DIR}/TranscriptorRace.cpp
     ${SOURCE_DIR}/TranscriptorRace.h
+    ${SOURCE_DIR}/TranscriptorParallelArray.cpp
+    ${SOURCE_DIR}/TranscriptorRaceArray.cpp
     ${SOURCE_DIR}/Semaphore.cpp
     ${SOURCE_DIR}/Event.cpp
     ${SOURCE_DIR}/TaskSemaphore.cpp
@@ -55,6 +57,7 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/Alias.h
     ${INCLUDE_DIR}/GOAP/Array.h
     ${INCLUDE_DIR}/GOAP/ArraySources.h
+    ${INCLUDE_DIR}/GOAP/ViewSources.h
     ${INCLUDE_DIR}/GOAP/CallbackProvider.h
     ${INCLUDE_DIR}/GOAP/Chain.h
     ${INCLUDE_DIR}/GOAP/ChainProvider.h

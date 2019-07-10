@@ -13,27 +13,8 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    class TaskWhile::ChainProviderWhileEnd
-        : public ChainProvider
-    {
-    public:
-        explicit ChainProviderWhileEnd( TaskWhile * _task )
-            : m_task( _task )
-        {
-        }
-
-    public:
-        void onChain( bool _skip ) override
-        {
-            m_task->whileComplete_( _skip );
-        }
-
-    protected:
-        TaskWhile * m_task;
-    };
-    //////////////////////////////////////////////////////////////////////////
-    TaskWhile::TaskWhile( const ScopeProviderPtr & _providerScope )
-        : m_providerScope( _providerScope )
+    TaskWhile::TaskWhile( const ScopeProviderPtr & _providerWhile )
+        : m_providerWhile( _providerWhile )
     {
     }
     //////////////////////////////////////////////////////////////////////////
@@ -43,85 +24,27 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void TaskWhile::_onFinalize()
     {
-        m_providerScope = nullptr;
-
-        if( m_chainWhile != nullptr )
-        {
-            ChainPtr chain = m_chainWhile;
-            m_chainWhile = nullptr;
-            chain->cancel();
-        }
+        m_providerWhile = nullptr;
     }
     //////////////////////////////////////////////////////////////////////////
     bool TaskWhile::_onRun()
     {
-        SourcePtr sourceWhile = new Source();
+        SourcePtr source = new Source();
 
         bool skip = this->isSkip();
-        sourceWhile->setSkip( skip );
+        source->setSkip( skip );
 
-        if( m_providerScope->onScope( sourceWhile ) == false )
+        if( m_providerWhile->onScope( source ) == false )
         {
             return true;
         }
 
-        ChainPtr chainWhile = new Chain( sourceWhile );
+        source->addWhileProvider( m_providerWhile );
 
-		ChainProviderPtr chainProviderWhileEnd = new ChainProviderWhileEnd( this );
+        m_providerWhile = nullptr;
 
-        chainWhile->setCallbackProvider( chainProviderWhileEnd );
+        this->injectSource( source );
 
-        m_chainWhile = chainWhile;
-
-        if( m_chainWhile->run() == false )
-        {
-            return true;
-        }
-
-        return false;
-    }
-    //////////////////////////////////////////////////////////////////////////
-    void TaskWhile::_onSkip()
-    {
-        m_providerScope = nullptr;
-
-        if( m_chainWhile != nullptr )
-        {
-            m_chainWhile->skip();
-        }
-    }
-    //////////////////////////////////////////////////////////////////////////
-    void TaskWhile::whileComplete_( bool _skip )
-    {
-        if( m_providerScope == nullptr )
-        {
-            return;
-        }
-
-        SourcePtr sourceWhile = new Source();
-
-        sourceWhile->setSkip( _skip );
-
-        if( m_providerScope->onScope( sourceWhile ) == false )
-        {
-            this->complete( true, _skip );
-
-            return;
-        }
-
-        ChainPtr chainWhile = new Chain( sourceWhile );
-        
-		ChainProviderPtr chainProviderWhileEnd = new ChainProviderWhileEnd( this );
-
-        chainWhile->setCallbackProvider( chainProviderWhileEnd );
-
-        m_chainWhile = chainWhile;
-
-        if( m_chainWhile->run() == false )
-        {
-            this->complete( true, _skip );
-
-            return;
-        }
+        return true;
     }
 }
