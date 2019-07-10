@@ -61,8 +61,8 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     const VectorSources & Source::addParallel( uint32_t _count )
     {
-		VectorSources sources;
-		this->makeSources_( sources, _count );
+        VectorSources sources;
+        this->makeSources_( sources, _count );
 
         TranscriptorParallelPtr transcriptor = new TranscriptorParallel( sources );
 
@@ -75,8 +75,8 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     const VectorSources & Source::addRace( uint32_t _count )
     {
-		VectorSources sources;
-		this->makeSources_( sources, _count );
+        VectorSources sources;
+        this->makeSources_( sources, _count );
 
         TranscriptorRacePtr transcriptor = new TranscriptorRace( sources );
 
@@ -100,77 +100,77 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Source::addBlock()
     {
-		TaskBlockPtr task_block = new TaskBlock();
+        TaskBlockPtr task_block = new TaskBlock();
 
         this->addTask( task_block );
     }
     //////////////////////////////////////////////////////////////////////////
     void Source::addSemaphore( const SemaphorePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply )
     {
-		TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, _flags, _test, _apply );
+        TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, _flags, _test, _apply );
 
         this->addTask( task_semaphore );
     }
     //////////////////////////////////////////////////////////////////////////
     void Source::addSemaphoreEqual( const SemaphorePtr & _semaphore, int32_t _test )
     {
-		TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_EQUAL, _test, 0 );
+        TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_EQUAL, _test, 0 );
 
         this->addTask( task_semaphore );
     }
     //////////////////////////////////////////////////////////////////////////
     void Source::addSemaphoreNotEqual( const SemaphorePtr & _semaphore, int32_t _test )
     {
-		TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_NOTEQUAL, _test, 0 );
+        TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_NOTEQUAL, _test, 0 );
 
         this->addTask( task_semaphore );
     }
     //////////////////////////////////////////////////////////////////////////
     void Source::addSemaphoreGreater( const SemaphorePtr & _semaphore, int32_t _test )
     {
-		TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_GREATER, _test, 0 );
+        TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_GREATER, _test, 0 );
 
         this->addTask( task_semaphore );
     }
     //////////////////////////////////////////////////////////////////////////
     void Source::addSemaphoreLess( const SemaphorePtr & _semaphore, int32_t _test )
     {
-		TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_LESS, _test, 0 );
+        TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_LESS, _test, 0 );
 
         this->addTask( task_semaphore );
     }
     //////////////////////////////////////////////////////////////////////////
     void Source::addSemaphoreGreaterEqual( const SemaphorePtr & _semaphore, int32_t _test )
     {
-		TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_GREATEREQUAL, _test, 0 );
+        TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_GREATEREQUAL, _test, 0 );
 
         this->addTask( task_semaphore );
     }
     //////////////////////////////////////////////////////////////////////////
     void Source::addSemaphoreLessEqual( const SemaphorePtr & _semaphore, int32_t _test )
     {
-		TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_LESSEQUAL, _test, 0 );
+        TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, FLAG_SEMAPHORE_TEST_LESSEQUAL, _test, 0 );
 
         this->addTask( task_semaphore );
     }
     //////////////////////////////////////////////////////////////////////////
     void Source::addSemaphoreAssign( const SemaphorePtr & _semaphore, int32_t _apply )
-    {    
-		TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, FLAG_SEMAPHORE_APPLY_ASSIGN, 0, _apply );
+    {
+        TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, FLAG_SEMAPHORE_APPLY_ASSIGN, 0, _apply );
 
         this->addTask( task_semaphore );
     }
     //////////////////////////////////////////////////////////////////////////
     void Source::addSemaphoreAdd( const SemaphorePtr & _semaphore, int32_t _apply )
     {
-		TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, FLAG_SEMAPHORE_APPLY_ADD, 0, _apply );
+        TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, FLAG_SEMAPHORE_APPLY_ADD, 0, _apply );
 
         this->addTask( task_semaphore );
     }
     //////////////////////////////////////////////////////////////////////////
     void Source::addSemaphoreSubtract( const SemaphorePtr & _semaphore, int32_t _apply )
     {
-		TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, FLAG_SEMAPHORE_APPLY_SUBTRACT, 0, _apply );
+        TaskSemaphorePtr task_semaphore = new TaskSemaphore( _semaphore, FLAG_SEMAPHORE_APPLY_SUBTRACT, 0, _apply );
 
         this->addTask( task_semaphore );
     }
@@ -189,7 +189,7 @@ namespace GOAP
     const VectorSources & Source::addSwitchProvider( const SwitchProviderPtr & _provider, uint32_t _count )
     {
         VectorSources sources;
-		this->makeSources_( sources, _count );
+        this->makeSources_( sources, _count );
 
         TaskSwitchPtr task = new TaskSwitch( _provider, sources );
 
@@ -235,7 +235,7 @@ namespace GOAP
 
         _provider->onGenerate( race_source[0] );
         race_source[0]->addBlock();
-        
+
         return race_source[1];
     }
     //////////////////////////////////////////////////////////////////////////
@@ -288,8 +288,8 @@ namespace GOAP
     {
         TaskPtr current_task = _task;
 
-		for( const TranscriptorPtr & description : m_transcriptors )
-		{
+        for( const TranscriptorPtr & description : m_transcriptors )
+        {
             TaskPtr last_task = description->generate( _chain, current_task );
 
             current_task = last_task;
@@ -302,14 +302,14 @@ namespace GOAP
     {
         return new Source();
     }
-	//////////////////////////////////////////////////////////////////////////
-	void Source::makeSources_( VectorSources & _sources, uint32_t _count )
-	{
-		_sources.resize( _count );
+    //////////////////////////////////////////////////////////////////////////
+    void Source::makeSources_( VectorSources & _sources, uint32_t _count )
+    {
+        _sources.resize( _count );
 
-		for( SourcePtr & source : _sources )
-		{
-			source = this->_provideSource();
-		}
-	}
+        for( SourcePtr & source : _sources )
+        {
+            source = this->_provideSource();
+        }
+    }
 }

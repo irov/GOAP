@@ -58,7 +58,7 @@ namespace GOAP
 
         ChainPtr chain = new Chain( m_fork );
 
-		ChainProviderPtr chainProvider = new Detail::ChainProviderTaskFork( m_chain, chain );
+        ChainProviderPtr chainProvider = new Detail::ChainProviderTaskFork( m_chain, chain );
 
         chain->setCallbackProvider( chainProvider );
 

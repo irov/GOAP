@@ -12,27 +12,27 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-	typedef IntrusivePtr<class ScopeProvider> ScopeProviderPtr;
-	typedef IntrusivePtr<class Source> SourcePtr;
-	typedef IntrusivePtr<class Chain> ChainPtr;
+    typedef IntrusivePtr<class ScopeProvider> ScopeProviderPtr;
+    typedef IntrusivePtr<class Source> SourcePtr;
+    typedef IntrusivePtr<class Chain> ChainPtr;
     //////////////////////////////////////////////////////////////////////////
-	class TaskWhile
-		: public Task
-	{
+    class TaskWhile
+        : public Task
+    {
         DECLARE_VISITABLE( Task );
 
-	public:
+    public:
         explicit TaskWhile( const ScopeProviderPtr & _providerWhile );
-		~TaskWhile() override;
+        ~TaskWhile() override;
 
-	public:
-		bool _onRun() override;
+    public:
+        bool _onRun() override;
         void _onFinalize() override;
 
-	protected:
-		ScopeProviderPtr m_providerWhile;
-	};
-	//////////////////////////////////////////////////////////////////////////
-	typedef IntrusivePtr<TaskWhile> TaskWhilePtr;
-	//////////////////////////////////////////////////////////////////////////
+    protected:
+        ScopeProviderPtr m_providerWhile;
+    };
+    //////////////////////////////////////////////////////////////////////////
+    typedef IntrusivePtr<TaskWhile> TaskWhilePtr;
+    //////////////////////////////////////////////////////////////////////////
 }

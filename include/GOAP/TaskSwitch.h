@@ -13,33 +13,33 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-	typedef IntrusivePtr<class Source> SourcePtr;
-	typedef IntrusivePtr<class SwitchProvider> SwitchProviderPtr;
+    typedef IntrusivePtr<class Source> SourcePtr;
+    typedef IntrusivePtr<class SwitchProvider> SwitchProviderPtr;
     //////////////////////////////////////////////////////////////////////////
-	typedef Vector<SourcePtr> VectorSources;
+    typedef Vector<SourcePtr> VectorSources;
     //////////////////////////////////////////////////////////////////////////
-	class TaskSwitch
-		: public Task
-	{
+    class TaskSwitch
+        : public Task
+    {
         DECLARE_VISITABLE( Task );
 
-	public:
-		TaskSwitch( const SwitchProviderPtr & _provider, const VectorSources & _sources );
-		~TaskSwitch() override;
+    public:
+        TaskSwitch( const SwitchProviderPtr & _provider, const VectorSources & _sources );
+        ~TaskSwitch() override;
 
-	public:
-		const VectorSources & getSources() const;
+    public:
+        const VectorSources & getSources() const;
 
-	public:
-		bool _onRun() override;
+    public:
+        bool _onRun() override;
         void _onFinally() override;
 
-	protected:
-		SwitchProviderPtr m_provider;
+    protected:
+        SwitchProviderPtr m_provider;
 
-		VectorSources m_sources;
-	};
+        VectorSources m_sources;
+    };
     //////////////////////////////////////////////////////////////////////////
-	typedef IntrusivePtr<TaskSwitch> TaskSwitchPtr;
+    typedef IntrusivePtr<TaskSwitch> TaskSwitchPtr;
     //////////////////////////////////////////////////////////////////////////
 }

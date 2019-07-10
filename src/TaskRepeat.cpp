@@ -88,7 +88,7 @@ namespace GOAP
     {
         ChainPtr chainUntil = new Chain( m_sourceUntil );
 
-		ChainProviderPtr chainProviderUntilEnd = new ChainProviderUntilEnd( this );
+        ChainProviderPtr chainProviderUntilEnd = new ChainProviderUntilEnd( this );
 
         chainUntil->setCallbackProvider( chainProviderUntilEnd );
 
@@ -116,7 +116,7 @@ namespace GOAP
 
         ChainPtr chainRepeat = new Chain( sourceRepeat );
 
-		ChainProviderPtr chainProviderRepeatEnd = new ChainProviderRepeatEnd( this );
+        ChainProviderPtr chainProviderRepeatEnd = new ChainProviderRepeatEnd( this );
 
         chainRepeat->setCallbackProvider( chainProviderRepeatEnd );
 
@@ -150,8 +150,8 @@ namespace GOAP
 
         ChainPtr chainRepeat = new Chain( sourceRepeat );
 
-		ChainProviderPtr chainProviderRepeatEnd = new ChainProviderRepeatEnd( this );
-        
+        ChainProviderPtr chainProviderRepeatEnd = new ChainProviderRepeatEnd( this );
+
         chainRepeat->setCallbackProvider( chainProviderRepeatEnd );
 
         m_chainRepeat = chainRepeat;

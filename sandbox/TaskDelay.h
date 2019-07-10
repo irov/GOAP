@@ -4,24 +4,24 @@
 #include "Scheduler.h"
 
 class TaskDelay
-	: public GOAP::Task
-	, public SchedulerObserver
+    : public GOAP::Task
+    , public SchedulerObserver
 {
 public:
-	TaskDelay( float _delay, Scheduler * _scheduler );
-	~TaskDelay() override;
-	
-protected:
-	bool _onRun() override;
-	void _onSkip() override;
+    TaskDelay( float _delay, Scheduler * _scheduler );
+    ~TaskDelay() override;
 
 protected:
-	void onScheduleComplete( uint32_t _id ) override;
-	void onScheduleStop( uint32_t _id ) override;
+    bool _onRun() override;
+    void _onSkip() override;
 
 protected:
-	float m_delay;
+    void onScheduleComplete( uint32_t _id ) override;
+    void onScheduleStop( uint32_t _id ) override;
 
-	Scheduler * m_scheduler;
-	uint32_t m_id;
+protected:
+    float m_delay;
+
+    Scheduler * m_scheduler;
+    uint32_t m_id;
 };

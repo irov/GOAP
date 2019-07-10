@@ -49,7 +49,7 @@ namespace GOAP
     void TaskSwitch::_onFinally()
     {
         m_provider = nullptr;
-        
+
         m_sources.clear();
     }
 }

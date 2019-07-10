@@ -14,26 +14,26 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-	typedef IntrusivePtr<class Source> SourcePtr;
+    typedef IntrusivePtr<class Source> SourcePtr;
     //////////////////////////////////////////////////////////////////////////
-	typedef Vector<SourcePtr> VectorSources;
+    typedef Vector<SourcePtr> VectorSources;
     //////////////////////////////////////////////////////////////////////////
-	class TranscriptorParallel
-		: public Transcriptor
-	{
-	public:
-		explicit TranscriptorParallel( const VectorSources & _sources );
+    class TranscriptorParallel
+        : public Transcriptor
+    {
+    public:
+        explicit TranscriptorParallel( const VectorSources & _sources );
         ~TranscriptorParallel() override;
 
-	public:
-		const VectorSources & getSources() const;
+    public:
+        const VectorSources & getSources() const;
 
-	public:
-		TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) override;
+    public:
+        TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) override;
 
-	protected:
-		VectorSources m_sources;
-	};
+    protected:
+        VectorSources m_sources;
+    };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TranscriptorParallel> TranscriptorParallelPtr;
     //////////////////////////////////////////////////////////////////////////

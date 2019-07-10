@@ -14,7 +14,7 @@
 
 namespace GOAP
 {
-	//////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
     class Alias::BeginGuardProvider
         : public GuardProvider
     {
@@ -70,8 +70,8 @@ namespace GOAP
         bool skiped = this->isSkip();
         source->setSkip( skiped );
 
-		GuardProviderPtr begin = new BeginGuardProvider( this );
-		GuardProviderPtr end = new EndGuardProvider( this );
+        GuardProviderPtr begin = new BeginGuardProvider( this );
+        GuardProviderPtr end = new EndGuardProvider( this );
 
         SourcePtr guard_source = source->addGuardProvider( begin, end );
 

@@ -36,7 +36,7 @@ namespace GOAP
 
             return true;
         }
-        
+
     protected:
         Chain * m_chain;
     };
@@ -98,7 +98,7 @@ namespace GOAP
         task_first->setChain( this );
 
         TaskPtr task_last = m_source->parse( this, task_first );
-        
+
         TaskPtr task_cb = new TaskChainEnd( this );
         task_cb->setChain( this );
 
@@ -115,7 +115,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Chain::cancel()
     {
-		Detail::IntrusiveThisAcquire( this );
+        Detail::IntrusiveThisAcquire( this );
 
         VectorChains copy_forks = m_forks;
 
@@ -157,12 +157,12 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Chain::skip()
     {
-		Detail::IntrusiveThisAcquire( this );
+        Detail::IntrusiveThisAcquire( this );
 
         VectorChains copy_forks = m_forks;
 
-		for( const ChainPtr & fork : copy_forks )
-		{
+        for( const ChainPtr & fork : copy_forks )
+        {
             fork->skip();
         }
 
@@ -247,9 +247,9 @@ namespace GOAP
     {
         VectorChains copy_forks = m_forks;
 
-		for( const ChainPtr & fork : copy_forks )
+        for( const ChainPtr & fork : copy_forks )
         {
-			fork->cancel();
+            fork->cancel();
         }
 
         m_forks.clear();

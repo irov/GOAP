@@ -12,16 +12,16 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-	typedef IntrusivePtr<class Task> TaskPtr;
-	typedef IntrusivePtr<class Chain> ChainPtr;
+    typedef IntrusivePtr<class Task> TaskPtr;
+    typedef IntrusivePtr<class Chain> ChainPtr;
     //////////////////////////////////////////////////////////////////////////
-	class Transcriptor
-		: public Factorable
-	{
-	public:
-		virtual TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) = 0;
-	};
+    class Transcriptor
+        : public Factorable
+    {
+    public:
+        virtual TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) = 0;
+    };
     //////////////////////////////////////////////////////////////////////////
-	typedef IntrusivePtr<Transcriptor> TranscriptorPtr;
+    typedef IntrusivePtr<Transcriptor> TranscriptorPtr;
     //////////////////////////////////////////////////////////////////////////
 }

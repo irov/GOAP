@@ -12,9 +12,9 @@ TaskPrint::~TaskPrint()
 //////////////////////////////////////////////////////////////////////////
 bool TaskPrint::_onRun()
 {
-	printf( "%s\n"
-		, m_message.c_str()
-		);
+    printf( "%s\n"
+        , m_message.c_str()
+    );
 
-	return true;
+    return true;
 }

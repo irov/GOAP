@@ -14,7 +14,7 @@
 namespace GOAP
 {
     class TaskCallback
-        : public Task        
+        : public Task
     {
         DECLARE_VISITABLE( Task );
 
@@ -26,13 +26,13 @@ namespace GOAP
         bool _onRun() override;
         void _onFinally() override;
         bool _onSkipable() const override;
-        
+
     protected:
         CallbackProviderPtr m_provider;
 
         class TaskCallbackObserver;
     };
-	//////////////////////////////////////////////////////////////////////////
-	typedef IntrusivePtr<TaskCallback> TaskCallbackPtr;
-	//////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
+    typedef IntrusivePtr<TaskCallback> TaskCallbackPtr;
+    //////////////////////////////////////////////////////////////////////////
 }

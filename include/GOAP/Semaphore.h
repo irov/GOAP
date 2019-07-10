@@ -24,7 +24,7 @@ namespace GOAP
     public:
         void setValue( int32_t _value );
         int32_t getValue() const;
-        
+
     public:
         void subtractValue( int32_t _value );
         void addValue( int32_t _value );

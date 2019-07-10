@@ -14,10 +14,10 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-	TranscriptorParallel::TranscriptorParallel( const VectorSources & _sources )
-		: m_sources( _sources )
-	{
-	}
+    TranscriptorParallel::TranscriptorParallel( const VectorSources & _sources )
+        : m_sources( _sources )
+    {
+    }
     //////////////////////////////////////////////////////////////////////////
     TranscriptorParallel::~TranscriptorParallel()
     {

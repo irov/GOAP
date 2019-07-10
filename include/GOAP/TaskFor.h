@@ -12,28 +12,28 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-	typedef IntrusivePtr<class ForProvider> ForProviderPtr;
+    typedef IntrusivePtr<class ForProvider> ForProviderPtr;
     //////////////////////////////////////////////////////////////////////////
-	class TaskFor
-		: public Task
-	{
+    class TaskFor
+        : public Task
+    {
         DECLARE_VISITABLE( Task );
 
-	public:
+    public:
         TaskFor( const ForProviderPtr & _providerFor, uint32_t _iterator, uint32_t _count );
-		~TaskFor() override;
+        ~TaskFor() override;
 
-	public:
+    public:
         bool _onCheck() override;
-		bool _onRun() override;
+        bool _onRun() override;
         void _onFinally() override;
 
-	protected:
+    protected:
         ForProviderPtr m_providerFor;
         uint32_t m_iterator;
         uint32_t m_count;
-	};
-	//////////////////////////////////////////////////////////////////////////
-	typedef IntrusivePtr<TaskFor> TaskForPtr;
-	//////////////////////////////////////////////////////////////////////////
+    };
+    //////////////////////////////////////////////////////////////////////////
+    typedef IntrusivePtr<TaskFor> TaskForPtr;
+    //////////////////////////////////////////////////////////////////////////
 }

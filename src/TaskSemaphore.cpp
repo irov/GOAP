@@ -17,7 +17,8 @@ namespace GOAP
     public:
         explicit EventProviderTaskSemaphore( TaskSemaphore * _task )
             : m_task( _task )
-        { }
+        {
+        }
 
     protected:
         bool onEvent() override
@@ -74,7 +75,7 @@ namespace GOAP
             {
                 return true;
             }
-        }        
+        }
         else if( m_flags & FLAG_SEMAPHORE_TEST_GREATEREQUAL )
         {
             if( m_test > value )
@@ -97,10 +98,10 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskSemaphore::_onRun()
     {
-		EventProviderPtr event = new EventProviderTaskSemaphore( this );
+        EventProviderPtr event = new EventProviderTaskSemaphore( this );
 
         m_observer = m_semaphore->addObserver( event );
-        
+
         return false;
     }
     //////////////////////////////////////////////////////////////////////////
@@ -117,7 +118,7 @@ namespace GOAP
             m_observer = nullptr;
         }
 
-        m_semaphore = nullptr;        
+        m_semaphore = nullptr;
     }
     //////////////////////////////////////////////////////////////////////////
     bool TaskSemaphore::_onSkipable() const
@@ -147,7 +148,7 @@ namespace GOAP
             {
                 return false;
             }
-        }        
+        }
         else if( m_flags & FLAG_SEMAPHORE_TEST_LESS )
         {
             if( m_test <= value )

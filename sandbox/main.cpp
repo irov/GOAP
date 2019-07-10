@@ -80,10 +80,10 @@ int main()
 
     source->addCallback( []( const GOAP::CallbackObserverPtr & _observer, bool isSkip )
     {
-        printf( "HTTP!!!!!\n" ); 
-        
-        GOAP_SLEEP( 100 ); 
-        
+        printf( "HTTP!!!!!\n" );
+
+        GOAP_SLEEP( 100 );
+
         _observer->onCallback( isSkip );
     } );
 
@@ -98,7 +98,7 @@ int main()
         {
             printf( "SCOPE????? WOW!!!" );
         } );
-        
+
         return true;
     } );
 

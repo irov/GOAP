@@ -12,29 +12,29 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-	typedef IntrusivePtr<class Source> SourcePtr;
-	typedef IntrusivePtr<class IfProvider> IfProviderPtr;
+    typedef IntrusivePtr<class Source> SourcePtr;
+    typedef IntrusivePtr<class IfProvider> IfProviderPtr;
     //////////////////////////////////////////////////////////////////////////
-	class TaskIf
-		: public Task
-	{
+    class TaskIf
+        : public Task
+    {
         DECLARE_VISITABLE( Task );
 
-	public:
-		TaskIf( const IfProviderPtr & _provider, const SourcePtr & _sourceTrue, const SourcePtr & _sourceFalse );
-		~TaskIf() override;
+    public:
+        TaskIf( const IfProviderPtr & _provider, const SourcePtr & _sourceTrue, const SourcePtr & _sourceFalse );
+        ~TaskIf() override;
 
-	public:
-		bool _onRun() override;
+    public:
+        bool _onRun() override;
         void _onFinally() override;
 
-	protected:
-		IfProviderPtr m_provider;
+    protected:
+        IfProviderPtr m_provider;
 
-		SourcePtr m_sourceTrue;
-		SourcePtr m_sourceFalse;
-	};
-	//////////////////////////////////////////////////////////////////////////
-	typedef IntrusivePtr<TaskIf> TaskIfPtr;
-	//////////////////////////////////////////////////////////////////////////
+        SourcePtr m_sourceTrue;
+        SourcePtr m_sourceFalse;
+    };
+    //////////////////////////////////////////////////////////////////////////
+    typedef IntrusivePtr<TaskIf> TaskIfPtr;
+    //////////////////////////////////////////////////////////////////////////
 }

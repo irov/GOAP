@@ -6,15 +6,15 @@
 #include <string>
 
 class TaskPrint
-	: public GOAP::Task
+    : public GOAP::Task
 {
 public:
-	TaskPrint( const std::string & _message );
-	~TaskPrint() override;
+    TaskPrint( const std::string & _message );
+    ~TaskPrint() override;
 
 protected:
-	bool _onRun() override;
+    bool _onRun() override;
 
 protected:
-	std::string m_message;
+    std::string m_message;
 };

@@ -47,9 +47,9 @@ namespace GOAP
         {
             return true;
         }
-        
+
         source->addForProvider( m_providerFor, m_iterator + 1, m_count );
-        
+
         m_providerFor = nullptr;
 
         this->injectSource( source );

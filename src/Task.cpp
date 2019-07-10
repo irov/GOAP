@@ -72,7 +72,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Task::popNexts( VectorTasks & _clone )
     {
-		for( const TaskPtr & next : m_nexts )
+        for( const TaskPtr & next : m_nexts )
         {
             next->removePrev_( this );
         }
@@ -302,7 +302,7 @@ namespace GOAP
 
         VectorTasks copy_nexts = m_nexts;
 
-		for( const TaskPtr & next : copy_nexts )
+        for( const TaskPtr & next : copy_nexts )
         {
             if( next->prevSkip_( this ) == true )
             {
@@ -464,7 +464,7 @@ namespace GOAP
         }
     }
     //////////////////////////////////////////////////////////////////////////
-    bool Task::prevComplete_( Task *_task )
+    bool Task::prevComplete_( Task * _task )
     {
         if( m_state != TASK_STATE_IDLE )
         {

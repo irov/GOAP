@@ -115,7 +115,7 @@ namespace GOAP
         void skipPrev_();
         void cancelPrev_();
 
-        bool prevComplete_( Task *_task );
+        bool prevComplete_( Task * _task );
 
         void addPrev_( Task * _task );
         void removePrev_( Task * _task );

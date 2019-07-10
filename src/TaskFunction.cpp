@@ -24,7 +24,7 @@ namespace GOAP
     bool TaskFunction::_onRun()
     {
         m_provider->onFunction();
-        
+
         return true;
     }
     //////////////////////////////////////////////////////////////////////////

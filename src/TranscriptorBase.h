@@ -12,19 +12,19 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-	class TranscriptorBase
-		: public Transcriptor
-	{
-	public:
-		explicit TranscriptorBase( const TaskPtr & _task );
+    class TranscriptorBase
+        : public Transcriptor
+    {
+    public:
+        explicit TranscriptorBase( const TaskPtr & _task );
         ~TranscriptorBase() override;
 
-	public:
-		TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) override;
+    public:
+        TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) override;
 
-	protected:
-		TaskPtr m_task;
-	};
+    protected:
+        TaskPtr m_task;
+    };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TranscriptorBase> TranscriptorBasePtr;
     //////////////////////////////////////////////////////////////////////////
