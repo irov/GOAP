@@ -164,7 +164,7 @@ namespace GOAP
         {
             SwitchProviderPtr provider = Helper::makeSwitchProvider( _f );
 
-            const VectorSources & sources = this->addSwitchProvider( provider, _count );
+            const VectorSources & sources = this->addSwitchProvider( provider, (uint32_t)_count );
 
             return sources;
         }
@@ -174,7 +174,7 @@ namespace GOAP
 		{
 			SwitchProviderPtr provider = Helper::makeSwitchProvider( _f );
 
-			const VectorSources & sources = this->addSwitchProvider( provider, _count );
+			const VectorSources & sources = this->addSwitchProvider( provider, (uint32_t)_count );
 
 			return sources;
 		}
@@ -244,7 +244,7 @@ namespace GOAP
         Zip<VectorSources::const_iterator, typename C::iterator> addParallelZip( C & _c )
         {
             typename C::size_type zip_size = _c.size();
-            const VectorSources & parallel_sources = this->addParallel( zip_size );
+            const VectorSources & parallel_sources = this->addParallel( (uint32_t)zip_size );
 
             return Zip<VectorSources::const_iterator, typename C::iterator>( parallel_sources.begin(), parallel_sources.end(), _c.begin(), _c.end() );
         }
@@ -253,7 +253,7 @@ namespace GOAP
         Zip<VectorSources::const_iterator, typename C::const_iterator> addParallelZip( const C & _c )
         {
             typename C::size_type zip_size = _c.size();
-            const VectorSources & parallel_sources = this->addParallel( zip_size );
+            const VectorSources & parallel_sources = this->addParallel( (uint32_t)zip_size );
 
             return Zip<VectorSources::const_iterator, typename C::const_iterator>( parallel_sources.begin(), parallel_sources.end(), _c.begin(), _c.end() );
         }
@@ -262,7 +262,7 @@ namespace GOAP
         Zip<VectorSources::const_iterator, typename C::iterator> addRaceZip( C & _c )
         {
             typename C::size_type zip_size = _c.size();
-            const VectorSources & parallel_sources = this->addRace( zip_size );
+            const VectorSources & parallel_sources = this->addRace( (uint32_t)zip_size );
 
             return Zip<VectorSources::const_iterator, typename C::iterator>( parallel_sources.begin(), parallel_sources.end(), _c.begin(), _c.end() );
         }
@@ -271,7 +271,7 @@ namespace GOAP
         Zip<VectorSources::const_iterator, typename C::const_iterator> addRaceZip( const C & _c )
         {
             typename C::size_type zip_size = _c.size();
-            const VectorSources & parallel_sources = this->addRace( zip_size );
+            const VectorSources & parallel_sources = this->addRace( (uint32_t)zip_size );
 
             return Zip<VectorSources::const_iterator, typename C::const_iterator>( parallel_sources.begin(), parallel_sources.end(), _c.begin(), _c.end() );
         }
@@ -280,7 +280,7 @@ namespace GOAP
         Zip<VectorSources::const_iterator, typename C::iterator> addSwitchZip( C & _c, F _f )
         {
             typename C::size_type zip_size = _c.size();
-            const VectorSources & parallel_sources = this->addSwitch( zip_size, _f );
+            const VectorSources & parallel_sources = this->addSwitch( (uint32_t)zip_size, _f );
 
             return Zip<VectorSources::const_iterator, typename C::iterator>( parallel_sources.begin(), parallel_sources.end(), _c.begin(), _c.end() );
         }
@@ -289,7 +289,7 @@ namespace GOAP
         Zip<VectorSources::const_iterator, typename C::const_iterator> addSwitchZip( const C & _c, F _f )
         {
             typename C::size_type zip_size = _c.size();
-            const VectorSources & parallel_sources = this->addSwitch( zip_size, _f );
+            const VectorSources & parallel_sources = this->addSwitch( (uint32_t)zip_size, _f );
 
             return Zip<VectorSources::const_iterator, typename C::const_iterator>( parallel_sources.begin(), parallel_sources.end(), _c.begin(), _c.end() );
         }
