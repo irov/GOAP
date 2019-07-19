@@ -3,8 +3,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.2)
 PROJECT(GOAP)
 
 OPTION(LIBGOAP_EXTERNAL_BUILD "LIBGOAP_EXTERNAL_BUILD" OFF)
-OPTION(LIBGOAP_EXTERNAL_INCLUDE "LIBGOAP_EXTERNAL_INCLUDE" OFF)
-OPTION(LIBGOAP_EXTERNAL_INCLUDE_PATH "LIBGOAP_EXTERNAL_INCLUDE_PATH" "")
+OPTION(LIBGOAP_EXTERNAL_CONFIG_INCLUDE "LIBGOAP_EXTERNAL_CONFIG_INCLUDE" OFF)
+OPTION(LIBGOAP_EXTERNAL_CONFIG_INCLUDE_PATH "LIBGOAP_EXTERNAL_CONFIG_INCLUDE_PATH" "")
 OPTION(LIBGOAP_INSTALL "LIBGOAP_INSTALL" OFF )
 OPTION(LIBGOAP_BUILD_TEST "LIBGOAP_BUILD_TEST" ON)
 
@@ -22,8 +22,8 @@ SET(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set( GOAP_SOURCES
     ${SOURCE_DIR}/Alias.cpp
     ${SOURCE_DIR}/Chain.cpp
-    ${SOURCE_DIR}/Exception.cpp
     ${SOURCE_DIR}/Factorable.cpp
+    ${SOURCE_DIR}/Exception.cpp
     ${SOURCE_DIR}/Source.cpp
     ${SOURCE_DIR}/Task.cpp
     ${SOURCE_DIR}/TaskCallback.cpp
@@ -48,21 +48,18 @@ set( GOAP_SOURCES
     ${SOURCE_DIR}/TranscriptorRace.h
     ${SOURCE_DIR}/TranscriptorParallelArray.cpp
     ${SOURCE_DIR}/TranscriptorRaceArray.cpp
-    ${SOURCE_DIR}/Semaphore.cpp
+    ${SOURCE_DIR}/Semaphore.cpp    
     ${SOURCE_DIR}/Event.cpp
     ${SOURCE_DIR}/TaskSemaphore.cpp
 )
 
 set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/Alias.h
-    ${INCLUDE_DIR}/GOAP/Array.h
     ${INCLUDE_DIR}/GOAP/ArraySources.h
     ${INCLUDE_DIR}/GOAP/ViewSources.h
     ${INCLUDE_DIR}/GOAP/CallbackProvider.h
     ${INCLUDE_DIR}/GOAP/Chain.h
     ${INCLUDE_DIR}/GOAP/ChainProvider.h
-    ${INCLUDE_DIR}/GOAP/Config.h
-    ${INCLUDE_DIR}/GOAP/Vector.h
     ${INCLUDE_DIR}/GOAP/Macros.h
     ${INCLUDE_DIR}/GOAP/Exception.h
     ${INCLUDE_DIR}/GOAP/Factorable.h
@@ -70,8 +67,6 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/GOAP.h
     ${INCLUDE_DIR}/GOAP/GuardProvider.h
     ${INCLUDE_DIR}/GOAP/IfProvider.h
-    ${INCLUDE_DIR}/GOAP/IntrusiveBase.h
-    ${INCLUDE_DIR}/GOAP/IntrusivePtr.h
     ${INCLUDE_DIR}/GOAP/ScopeProvider.h
     ${INCLUDE_DIR}/GOAP/ForProvider.h
     ${INCLUDE_DIR}/GOAP/Source.h
@@ -105,8 +100,18 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/Zip.h
 )
 
-IF(LIBGOAP_EXTERNAL_INCLUDE)
-    include_directories(${PROJECT_NAME} ${LIBGOAP_EXTERNAL_INCLUDE_PATH})
+IF(LIBGOAP_EXTERNAL_CONFIG_INCLUDE)
+    MESSAGE("LIBGOAP_EXTERNAL_CONFIG_INCLUDE = ${LIBGOAP_EXTERNAL_CONFIG_INCLUDE_PATH}")
+    include_directories(${PROJECT_NAME} ${LIBGOAP_EXTERNAL_CONFIG_INCLUDE_PATH})
+ELSE()
+    set( GOAP_HEADERS ${GOAP_HEADERS}
+        ${INCLUDE_DIR}/Config/GOAP/Array.h
+        ${INCLUDE_DIR}/Config/GOAP/Vector.h
+        ${INCLUDE_DIR}/Config/GOAP/IntrusivePtrBase.h
+        ${INCLUDE_DIR}/Config/GOAP/IntrusivePtr.h
+    )
+    
+    include_directories(${PROJECT_NAME} ${INCLUDE_DIR}/Config)
 ENDIF()
 
 include_directories(${PROJECT_NAME} ${INCLUDE_DIR})

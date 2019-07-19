@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2017-2018, Yuriy Levchenko <irov13@mail.ru>
+* Copyright (C) 2017-2019, Yuriy Levchenko <irov13@mail.ru>
 *
 * This software may be modified and distributed under the terms
 * of the MIT license.  See the LICENSE file for details.
@@ -7,9 +7,11 @@
 
 #pragma once
 
-#include "GOAP/Config.h"
+#include "GOAP/Factorable.h"
+#include "GOAP/IntrusivePtr.h"
 #include "GOAP/Vector.h"
 #include "GOAP/Zip.h"
+#include "GOAP/Task.h"
 
 #include "GOAP/FunctionProvider.h"
 #include "GOAP/CallbackProvider.h"
@@ -48,6 +50,14 @@ namespace GOAP
 
     public:
         void addTask( const TaskPtr & _task );
+
+        template<class T, class ... Args>
+        void addTask( Args && ... _args )
+        {
+            TaskPtr task = Helper::makeTask<T>( _args ... );
+
+            this->addTask( task );
+        }
 
     public:
         const VectorSources & addParallel( uint32_t _count );
@@ -323,5 +333,13 @@ namespace GOAP
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Source> SourcePtr;
+    //////////////////////////////////////////////////////////////////////////
+    namespace Helper
+    {
+        inline SourcePtr makeSource()
+        {
+            return SourcePtr::from( new Source() );
+        }
+    }
     //////////////////////////////////////////////////////////////////////////
 }

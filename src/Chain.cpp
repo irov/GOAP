@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2017-2018, Yuriy Levchenko <irov13@mail.ru>
+* Copyright (C) 2017-2019, Yuriy Levchenko <irov13@mail.ru>
 *
 * This software may be modified and distributed under the terms
 * of the MIT license.  See the LICENSE file for details.
@@ -90,17 +90,17 @@ namespace GOAP
             return false;
         }
 
-        IntrusiveThisAcquire( this );
+        this->incref();
 
         this->setState_( TASK_CHAIN_STATE_RUN );
 
-        TaskPtr task_first = new TaskDummy();
-        task_first->setChain( this );
+        TaskPtr task_first( new TaskDummy() );
+        task_first->setChain( ChainPtr::from( this ) );
 
-        TaskPtr task_last = m_source->parse( this, task_first );
+        TaskPtr task_last = m_source->parse( ChainPtr::from( this ), task_first );
 
-        TaskPtr task_cb = new TaskChainEnd( this );
-        task_cb->setChain( this );
+        TaskPtr task_cb( new TaskChainEnd( this ) );
+        task_cb->setChain( ChainPtr::from( this ) );
 
         task_last->addNext( task_cb );
 
@@ -108,14 +108,14 @@ namespace GOAP
 
         this->processTask( task_first, skip );
 
-        IntrusiveThisRelease( this );
+        this->decref();
 
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
     void Chain::cancel()
     {
-        Detail::IntrusiveThisAcquire( this );
+        //Detail::IntrusiveThisAcquire( this );
 
         VectorChains copy_forks = m_forks;
 
@@ -152,12 +152,12 @@ namespace GOAP
             this->finalize_();
         }
 
-        IntrusiveThisRelease( this );
+        //IntrusiveThisRelease( this );
     }
     //////////////////////////////////////////////////////////////////////////
     void Chain::skip()
     {
-        Detail::IntrusiveThisAcquire( this );
+        //Detail::IntrusiveThisAcquire( this );
 
         VectorChains copy_forks = m_forks;
 
@@ -171,7 +171,7 @@ namespace GOAP
             this->skipRunningTasks_();
         }
 
-        IntrusiveThisRelease( this );
+        //IntrusiveThisRelease( this );
     }
     //////////////////////////////////////////////////////////////////////////
     bool Chain::isComplete() const

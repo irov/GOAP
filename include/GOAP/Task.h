@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2017-2018, Yuriy Levchenko <irov13@mail.ru>
+* Copyright (C) 2017-2019, Yuriy Levchenko <irov13@mail.ru>
 *
 * This software may be modified and distributed under the terms
 * of the MIT license.  See the LICENSE file for details.
@@ -7,9 +7,9 @@
 
 #pragma once
 
-#include "GOAP/Config.h"
 #include "GOAP/Vector.h"
-
+#include "GOAP/Factorable.h"
+#include "GOAP/IntrusivePtr.h"
 #include "GOAP/Visitable.h"
 
 namespace GOAP
@@ -111,17 +111,17 @@ namespace GOAP
     protected:
         void taskSkip_();
 
-        bool prevSkip_( Task * _task );
+        bool prevSkip_( const TaskPtr & _task );
         void skipPrev_();
         void cancelPrev_();
 
-        bool prevComplete_( Task * _task );
+        bool prevComplete_( const TaskPtr & _task );
 
-        void addPrev_( Task * _task );
-        void removePrev_( Task * _task );
-        void removeNext_( Task * _task );
-        void unlink_( Task * _task );
-        bool hasPrev_( const Task * _task ) const;
+        void addPrev_( const TaskPtr & _task );
+        void removePrev_( const TaskPtr & _task );
+        void removeNext_( const TaskPtr & _task );
+        void unlink_( const TaskPtr & _task );
+        bool hasPrev_( const TaskPtr & _task ) const;
         void finalize_();
 
     protected:
@@ -140,4 +140,12 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Task> TaskPtr;
     //////////////////////////////////////////////////////////////////////////
+    namespace Helper
+    {
+        template<class T, class ... Args>
+        TaskPtr makeTask( Args && ... _args )
+        {
+            return TaskPtr::from( new T( _args ... ) );
+        }
+    }
 }

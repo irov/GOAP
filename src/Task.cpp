@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2017-2018, Yuriy Levchenko <irov13@mail.ru>
+* Copyright (C) 2017-2019, Yuriy Levchenko <irov13@mail.ru>
 *
 * This software may be modified and distributed under the terms
 * of the MIT license.  See the LICENSE file for details.
@@ -57,7 +57,7 @@ namespace GOAP
     void Task::addNext( const TaskPtr & _task )
     {
         m_nexts.push_back( _task );
-        _task->addPrev_( this );
+        _task->addPrev_( TaskPtr::from( this ) );
     }
     //////////////////////////////////////////////////////////////////////////
     VectorTasks & Task::getNexts()
@@ -74,7 +74,7 @@ namespace GOAP
     {
         for( const TaskPtr & next : m_nexts )
         {
-            next->removePrev_( this );
+            next->removePrev_( TaskPtr::from( this ) );
         }
 
         _clone.swap( m_nexts );
@@ -89,7 +89,7 @@ namespace GOAP
 
         const ChainPtr & chain = this->getChain();
 
-        TaskPtr task = _source->parse( chain, this );
+        TaskPtr task = _source->parse( chain, TaskPtr::from( this ) );
 
         if( task == nullptr )
         {
@@ -118,7 +118,7 @@ namespace GOAP
 
         this->setState( TASK_STATE_RUN );
 
-        m_chain->runTask( this );
+        m_chain->runTask( TaskPtr::from( this ) );
 
         if( this->onInitialize() == false )
         {
@@ -209,7 +209,7 @@ namespace GOAP
                     return false;
                 }
 
-                m_chain->runTask( this );
+                m_chain->runTask( TaskPtr::from( this ) );
 
                 if( this->onFastSkip() == false )
                 {
@@ -275,7 +275,7 @@ namespace GOAP
             this->onCancel();
             this->onFinally();
 
-            m_chain->completeTask( this );
+            m_chain->completeTask( TaskPtr::from( this ) );
         }
 
         if( _withNexts == true )
@@ -298,13 +298,13 @@ namespace GOAP
             return;
         }
 
-        m_chain->completeTask( this );
+        m_chain->completeTask( TaskPtr::from( this ) );
 
         VectorTasks copy_nexts = m_nexts;
 
         for( const TaskPtr & next : copy_nexts )
         {
-            if( next->prevSkip_( this ) == true )
+            if( next->prevSkip_( TaskPtr::from( this ) ) == true )
             {
                 m_chain->processTask( next, true );
             }
@@ -354,7 +354,7 @@ namespace GOAP
 
             for( const TaskPtr & next : copy_nexts )
             {
-                if( next->prevComplete_( this ) == true )
+                if( next->prevComplete_( TaskPtr::from( this ) ) == true )
                 {
                     m_chain->processTask( next, false );
                 }
@@ -368,7 +368,7 @@ namespace GOAP
 
             for( const TaskPtr & next : copy_nexts )
             {
-                if( next->prevSkip_( this ) == true )
+                if( next->prevSkip_( TaskPtr::from( this ) ) == true )
                 {
                     m_chain->processTask( next, true );
                 }
@@ -381,10 +381,10 @@ namespace GOAP
 
         this->finalize_();
 
-        chain->completeTask( this );
+        chain->completeTask( TaskPtr::from( this ) );
     }
     //////////////////////////////////////////////////////////////////////////
-    bool Task::prevSkip_( Task * _task )
+    bool Task::prevSkip_( const TaskPtr & _task )
     {
         if( m_state == TASK_STATE_END )
         {
@@ -451,12 +451,12 @@ namespace GOAP
                 {
                     prev->cancelPrev_();
                     prev->cancel();
-                    this->unlink_( prev.get() );
+                    this->unlink_( prev );
                 }break;
             case  TASK_STATE_RUN:
                 {
                     prev->cancel();
-                    this->unlink_( prev.get() );
+                    this->unlink_( prev );
                 }break;
             default:
                 break;
@@ -464,7 +464,7 @@ namespace GOAP
         }
     }
     //////////////////////////////////////////////////////////////////////////
-    bool Task::prevComplete_( Task * _task )
+    bool Task::prevComplete_( const TaskPtr & _task )
     {
         if( m_state != TASK_STATE_IDLE )
         {
@@ -662,19 +662,19 @@ namespace GOAP
         return result;
     }
     //////////////////////////////////////////////////////////////////////////
-    void Task::addPrev_( Task * _task )
+    void Task::addPrev_( const TaskPtr & _task )
     {
         m_prevs.push_back( _task );
     }
     //////////////////////////////////////////////////////////////////////////
-    void Task::removePrev_( Task * _task )
+    void Task::removePrev_( const TaskPtr & _task )
     {
         VectorTasks::iterator it_erase = std::find( m_prevs.begin(), m_prevs.end(), _task );
 
         m_prevs.erase( it_erase );
     }
     //////////////////////////////////////////////////////////////////////////
-    void Task::removeNext_( Task * _task )
+    void Task::removeNext_( const TaskPtr & _task )
     {
         VectorTasks::iterator it_erase = std::find( m_nexts.begin(), m_nexts.end(), _task );
 
@@ -686,13 +686,13 @@ namespace GOAP
         m_nexts.erase( it_erase );
     }
     //////////////////////////////////////////////////////////////////////////
-    void Task::unlink_( Task * _task )
+    void Task::unlink_( const TaskPtr & _task )
     {
         this->removePrev_( _task );
-        _task->removeNext_( this );
+        _task->removeNext_( TaskPtr::from( this ) );
     }
     //////////////////////////////////////////////////////////////////////////
-    bool Task::hasPrev_( const Task * _task ) const
+    bool Task::hasPrev_( const TaskPtr & _task ) const
     {
         VectorTasks::const_iterator it_found = std::find( m_prevs.begin(), m_prevs.end(), _task );
 

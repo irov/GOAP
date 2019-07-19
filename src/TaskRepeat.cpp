@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2017-2018, Yuriy Levchenko <irov13@mail.ru>
+* Copyright (C) 2017-2019, Yuriy Levchenko <irov13@mail.ru>
 *
 * This software may be modified and distributed under the terms
 * of the MIT license.  See the LICENSE file for details.
@@ -86,11 +86,9 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskRepeat::_onRun()
     {
-        ChainPtr chainUntil = new Chain( m_sourceUntil );
+        ChainPtr chainUntil = Helper::makeChain( m_sourceUntil );
 
-        ChainProviderPtr chainProviderUntilEnd = new ChainProviderUntilEnd( this );
-
-        chainUntil->setCallbackProvider( chainProviderUntilEnd );
+        chainUntil->setCallbackProvider( ChainProviderPtr::from( new ChainProviderUntilEnd( this ) ) );
 
         m_chainUntil = chainUntil;
 
@@ -104,7 +102,7 @@ namespace GOAP
             return true;
         }
 
-        SourcePtr sourceRepeat = new Source();
+        SourcePtr sourceRepeat = Helper::makeSource();
 
         bool skip = this->isSkip();
         sourceRepeat->setSkip( skip );
@@ -114,11 +112,9 @@ namespace GOAP
             return true;
         }
 
-        ChainPtr chainRepeat = new Chain( sourceRepeat );
+        ChainPtr chainRepeat = Helper::makeChain( sourceRepeat );
 
-        ChainProviderPtr chainProviderRepeatEnd = new ChainProviderRepeatEnd( this );
-
-        chainRepeat->setCallbackProvider( chainProviderRepeatEnd );
+        chainRepeat->setCallbackProvider( ChainProviderPtr::from( new ChainProviderRepeatEnd( this ) ) );
 
         m_chainRepeat = chainRepeat;
 
@@ -137,7 +133,7 @@ namespace GOAP
             return;
         }
 
-        SourcePtr sourceRepeat = new Source();
+        SourcePtr sourceRepeat = Helper::makeSource();
 
         sourceRepeat->setSkip( _skip );
 
@@ -148,11 +144,9 @@ namespace GOAP
             return;
         }
 
-        ChainPtr chainRepeat = new Chain( sourceRepeat );
-
-        ChainProviderPtr chainProviderRepeatEnd = new ChainProviderRepeatEnd( this );
-
-        chainRepeat->setCallbackProvider( chainProviderRepeatEnd );
+        ChainPtr chainRepeat = Helper::makeChain( sourceRepeat );
+        
+        chainRepeat->setCallbackProvider( ChainProviderPtr::from( new ChainProviderRepeatEnd( this ) ) );
 
         m_chainRepeat = chainRepeat;
 

@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2017-2018, Yuriy Levchenko <irov13@mail.ru>
+* Copyright (C) 2017-2019, Yuriy Levchenko <irov13@mail.ru>
 *
 * This software may be modified and distributed under the terms
 * of the MIT license.  See the LICENSE file for details.
@@ -27,7 +27,7 @@ namespace GOAP
     public:
         void onGuard() override
         {
-            IntrusiveThisAcquire( m_alias );
+            m_alias->incref();
         }
 
     protected:
@@ -48,7 +48,7 @@ namespace GOAP
         {
             m_alias->_onAliasFinally();
 
-            IntrusiveThisRelease( m_alias );
+            m_alias->decref();
         }
 
     protected:
@@ -65,13 +65,13 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////    
     bool Alias::_onRun()
     {
-        SourcePtr source = new Source();
+        SourcePtr source = Helper::makeSource();
 
         bool skiped = this->isSkip();
         source->setSkip( skiped );
 
-        GuardProviderPtr begin = new BeginGuardProvider( this );
-        GuardProviderPtr end = new EndGuardProvider( this );
+        GuardProviderPtr begin( new BeginGuardProvider( this ) );
+        GuardProviderPtr end( new EndGuardProvider( this ) );
 
         SourcePtr guard_source = source->addGuardProvider( begin, end );
 

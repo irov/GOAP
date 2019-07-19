@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2017-2018, Yuriy Levchenko <irov13@mail.ru>
+* Copyright (C) 2017-2019, Yuriy Levchenko <irov13@mail.ru>
 *
 * This software may be modified and distributed under the terms
 * of the MIT license.  See the LICENSE file for details.
@@ -43,7 +43,7 @@ namespace GOAP
     public:
         TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) override
         {
-            TaskPtr task_parallel_neck = new TaskParallelNeck();
+            TaskPtr task_parallel_neck = Helper::makeTask<TaskParallelNeck>();
             task_parallel_neck->setChain( _chain );
 
             Detail::generateParallelSource( m_sources, _chain, _task, task_parallel_neck );
@@ -63,9 +63,8 @@ namespace GOAP
         template<size_t Count>
         TranscriptorParallelArrayPtr<Count> makeTranscriptorParallelArray( const ArraySources<Count> & _sources )
         {
-            TranscriptorParallelArrayPtr<Count> transcriptor = new TranscriptorParallelArray<Count>( _sources );
-
-            return transcriptor;
+            return TranscriptorParallelArrayPtr<Count>::from( new TranscriptorParallelArray<Count>( _sources ) );
         }
     }
+    //////////////////////////////////////////////////////////////////////////
 }

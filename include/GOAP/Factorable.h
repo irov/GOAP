@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2017-2018, Yuriy Levchenko <irov13@mail.ru>
+* Copyright (C) 2017-2019, Yuriy Levchenko <irov13@mail.ru>
 *
 * This software may be modified and distributed under the terms
 * of the MIT license.  See the LICENSE file for details.
@@ -7,22 +7,26 @@
 
 #pragma once
 
-#include "GOAP/Macros.h"
-#include "GOAP/IntrusiveBase.h"
+#include "GOAP/IntrusivePtrBase.h"
 
 namespace GOAP
 {
-    namespace Detail
+    class Factorable
+        : public IntrusivePtrBase
     {
-        class Factorable
-            : public IntrusiveBase
-        {
-        public:
-            Factorable();
-            virtual ~Factorable();
+    public:
+        Factorable();
+        virtual ~Factorable();
 
-        protected:
-            void destroy() override;
-        };
-    }
+    public:
+        uint32_t incref() override;
+        void decref() override;
+        uint32_t getrefcount() const;
+
+    protected:
+        virtual void destroy();
+
+    protected:
+        uint32_t m_reference;
+    };
 }

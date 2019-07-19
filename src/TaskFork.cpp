@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2017-2018, Yuriy Levchenko <irov13@mail.ru>
+* Copyright (C) 2017-2019, Yuriy Levchenko <irov13@mail.ru>
 *
 * This software may be modified and distributed under the terms
 * of the MIT license.  See the LICENSE file for details.
@@ -56,11 +56,9 @@ namespace GOAP
         bool skip = this->isSkip();
         m_fork->setSkip( skip );
 
-        ChainPtr chain = new Chain( m_fork );
+        ChainPtr chain = Helper::makeChain( m_fork );
 
-        ChainProviderPtr chainProvider = new Detail::ChainProviderTaskFork( m_chain, chain );
-
-        chain->setCallbackProvider( chainProvider );
+        chain->setCallbackProvider( ChainProviderPtr::from( new Detail::ChainProviderTaskFork( m_chain, chain ) ) );
 
         chain->run();
 

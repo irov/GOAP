@@ -34,10 +34,10 @@ int main()
 
     printf( "%f %f %f\n", fmod( 0.5, 1.0 ), fmod( 1.3, 1.0 ), fmod( 3.0, 1.0 ) );
 
-    GOAP::SourcePtr source = new GOAP::Source();
-
-    source->addTask( new TaskPrint( "begin" ) );
-    source->addTask( new TaskDelay( 2000.f, sch ) );
+    GOAP::SourcePtr source( new GOAP::Source() );
+    
+    source->addTask<TaskPrint>( "begin" );
+    source->addTask<TaskDelay>( 2000.f, sch );
 
     std::vector<int> v;
     v.push_back( 1 );
@@ -49,34 +49,34 @@ int main()
     {
         std::string msg = std::to_string( *zip.value );
 
-        zip.source->addTask( new TaskPrint( msg ) );
+        zip.source->addTask<TaskPrint>( msg );
     }
 
     auto [parallel0, parallel1] = source->addParallel<2>();
 
-    parallel0->addTask( new TaskDelay( 1000.f, sch ) );
-    parallel1->addTask( new TaskPrint( "process" ) );
+    parallel0->addTask<TaskDelay>( 1000.f, sch );
+    parallel1->addTask<TaskPrint>( "process" );
 
-    source->addTask( new TaskPrint( "end" ) );
-    source->addTask( new TaskDelay( 1000.f, sch ) );
-    source->addTask( new TaskPrint( "****ROLL*****" ) );
-    source->addTask( new TaskDelay( 1000.f, sch ) );
+    source->addTask<TaskPrint>( "end" );
+    source->addTask<TaskDelay>( 1000.f, sch );
+    source->addTask<TaskPrint>( "****ROLL*****" );
+    source->addTask<TaskDelay>( 1000.f, sch );
 
 
     auto [race0, race1, race2] = source->addRace<3>();
 
-    race0->addTask( new TaskRoll( 200.f, 1, 6, sch ) );
-    race0->addTask( new TaskPrint( "---1---" ) );
+    race0->addTask<TaskRoll>( 200.f, 1, 6, sch );
+    race0->addTask<TaskPrint>( "---1---" );
 
-    race1->addTask( new TaskRoll( 100.f, 2, 12, sch ) );
-    race1->addTask( new TaskPrint( "---2---" ) );
+    race1->addTask<TaskRoll>( 100.f, 2, 12, sch );
+    race1->addTask<TaskPrint>( "---2---" );
 
-    race2->addTask( new TaskRoll( 50.f, 4, 24, sch ) );
-    race2->addTask( new TaskPrint( "---3---" ) );
+    race2->addTask<TaskRoll>( 50.f, 4, 24, sch );
+    race2->addTask<TaskPrint>( "---3---" );
 
-    source->addTask( new TaskDelay( 1000.f, sch ) );
-    source->addTask( new TaskPrint( "****WIN*****" ) );
-    source->addTask( new TaskDelay( 1000.f, sch ) );
+    source->addTask<TaskDelay>( 1000.f, sch );
+    source->addTask<TaskPrint>( "****WIN*****" );
+    source->addTask<TaskDelay>( 1000.f, sch );
 
     source->addCallback( []( const GOAP::CallbackObserverPtr & _observer, bool isSkip )
     {
@@ -112,22 +112,22 @@ int main()
         return rand() % 2 ? true : false;
     } );
 
-    source_true->addTask( new TaskPrint( "---TRUE---" ) );
-    source_false->addTask( new TaskPrint( "---FALSE---" ) );
+    source_true->addTask<TaskPrint>( "---TRUE---" );
+    source_false->addTask<TaskPrint>( "---FALSE---" );
 
     const GOAP::VectorSources & source_switch = source->addSwitch( 3, []()
     {
         return rand() % 3;
     } );
 
-    source_switch[0]->addTask( new TaskPrint( "---Switch 1---" ) );
-    source_switch[1]->addTask( new TaskPrint( "---Switch 2---" ) );
-    source_switch[2]->addTask( new TaskPrint( "---Switch 3---" ) );
+    source_switch[0]->addTask<TaskPrint>( "---Switch 1---" );
+    source_switch[1]->addTask<TaskPrint>( "---Switch 2---" );
+    source_switch[2]->addTask<TaskPrint>( "---Switch 3---" );
 
     source->addFor( 10, [sch]( const GOAP::SourcePtr & _scope, uint32_t _iterator, uint32_t _count )
     {
-        _scope->addTask( new TaskDelay( 500.f, sch ) );
-        _scope->addTask( new TaskPrint( "For!!!!" ) );
+        _scope->addTask<TaskDelay>( 500.f, sch );
+        _scope->addTask<TaskPrint>( "For!!!!" );
 
         return true;
     } );
@@ -135,8 +135,8 @@ int main()
     uint32_t count = 0;
     source->addWhile( [sch, &count]( const GOAP::SourcePtr & _scope )
     {
-        _scope->addTask( new TaskDelay( 1000.f, sch ) );
-        _scope->addTask( new TaskPrint( "While!!!!" ) );
+        _scope->addTask<TaskDelay>( 1000.f, sch );
+        _scope->addTask<TaskPrint>( "While!!!!" );
 
         if( ++count == 5 )
         {
@@ -148,15 +148,15 @@ int main()
 
     GOAP::SourcePtr source_until = source->addRepeat( [sch]( const GOAP::SourcePtr & _scope )
     {
-        _scope->addTask( new TaskDelay( 1000.f, sch ) );
-        _scope->addTask( new TaskPrint( "REPEAT!!!!" ) );
+        _scope->addTask<TaskDelay>( 1000.f, sch );
+        _scope->addTask<TaskPrint>( "REPEAT!!!!" );
 
         return true;
     } );
 
-    source_until->addTask( new TaskDelay( 10000.f, sch ) );
+    source_until->addTask<TaskDelay>( 10000.f, sch );
 
-    GOAP::ChainPtr tc = new GOAP::Chain( source );
+    GOAP::ChainPtr tc = GOAP::Helper::makeChain( source );
 
     tc->run();
 
