@@ -10,6 +10,7 @@
 #include "GOAP/Factorable.h"
 #include "GOAP/IntrusivePtr.h"
 #include "GOAP/Event.h"
+#include "GOAP/EventProvider.h"
 
 namespace GOAP
 {
