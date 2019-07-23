@@ -14,6 +14,7 @@
 #include "GOAP/Task.h"
 
 #include "GOAP/FunctionProvider.h"
+#include "GOAP/FunctionContextProvider.h"
 #include "GOAP/CallbackProvider.h"
 #include "GOAP/ScopeProvider.h"
 #include "GOAP/IfProvider.h"
@@ -111,6 +112,14 @@ namespace GOAP
             FunctionProviderPtr provider = Helper::makeFunctionProvider( _f );
 
             this->addFunctionProvider( provider );
+        }
+
+        template<class F>
+        void addFunctionContext( F _f )
+        {
+            FunctionContextProviderPtr provider = Helper::makeFunctionContextProvider( _f );
+
+            this->addFunctionContextProvider( provider );
         }
 
         template<class F>
@@ -306,6 +315,7 @@ namespace GOAP
 
     public:
         void addFunctionProvider( const FunctionProviderPtr & _provider );
+        void addFunctionContextProvider( const FunctionContextProviderPtr & _provider );
         void addCallbackProvider( const CallbackProviderPtr & _provider );
         void addScopeProvider( const ScopeProviderPtr & _provider );
         ArraySources<2> addIfProvider( const IfProviderPtr & _provider );

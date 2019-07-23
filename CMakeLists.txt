@@ -31,6 +31,7 @@ set( GOAP_SOURCES
     ${SOURCE_DIR}/TaskDummy.cpp
     ${SOURCE_DIR}/TaskFork.cpp
     ${SOURCE_DIR}/TaskFunction.cpp
+    ${SOURCE_DIR}/TaskFunctionContext.cpp
     ${SOURCE_DIR}/TaskGuard.cpp
     ${SOURCE_DIR}/TaskIf.cpp
     ${SOURCE_DIR}/TaskParallelNeck.cpp
@@ -57,6 +58,7 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/Alias.h
     ${INCLUDE_DIR}/GOAP/ArraySources.h
     ${INCLUDE_DIR}/GOAP/ViewSources.h
+    ${INCLUDE_DIR}/GOAP/CallbackObserver.h
     ${INCLUDE_DIR}/GOAP/CallbackProvider.h
     ${INCLUDE_DIR}/GOAP/Chain.h
     ${INCLUDE_DIR}/GOAP/ChainProvider.h
@@ -64,6 +66,7 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/Exception.h
     ${INCLUDE_DIR}/GOAP/Factorable.h
     ${INCLUDE_DIR}/GOAP/FunctionProvider.h
+    ${INCLUDE_DIR}/GOAP/FunctionContextProvider.h
     ${INCLUDE_DIR}/GOAP/GOAP.h
     ${INCLUDE_DIR}/GOAP/GuardProvider.h
     ${INCLUDE_DIR}/GOAP/IfProvider.h
@@ -77,6 +80,7 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/TaskDummy.h
     ${INCLUDE_DIR}/GOAP/TaskFork.h
     ${INCLUDE_DIR}/GOAP/TaskFunction.h
+    ${INCLUDE_DIR}/GOAP/TaskFunctionContext.h
     ${INCLUDE_DIR}/GOAP/TaskGuard.h
     ${INCLUDE_DIR}/GOAP/TaskIf.h
     ${INCLUDE_DIR}/GOAP/TaskParallelNeck.h

@@ -11,27 +11,6 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    class TaskSemaphore::EventProviderTaskSemaphore
-        : public EventProvider
-    {
-    public:
-        explicit EventProviderTaskSemaphore( TaskSemaphore * _task )
-            : m_task( _task )
-        {
-        }
-
-    protected:
-        bool onEvent() override
-        {
-            bool result = m_task->test();
-
-            return result;
-        }
-
-    protected:
-        TaskSemaphore * m_task;
-    };
-    //////////////////////////////////////////////////////////////////////////
     TaskSemaphore::TaskSemaphore( const SemaphorePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply )
         : m_semaphore( _semaphore )
         , m_flags( _flags )
@@ -98,9 +77,12 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskSemaphore::_onRun()
     {
-        EventProviderPtr event( new EventProviderTaskSemaphore( this ) );
+        m_observer = m_semaphore->addObserver( [this]()
+        {
+            bool result = this->test();
 
-        m_observer = m_semaphore->addObserver( event );
+            return result;
+        } );
 
         return false;
     }
@@ -114,7 +96,7 @@ namespace GOAP
     {
         if( m_observer != nullptr )
         {
-            m_semaphore->removeObserver( m_observer );
+            m_semaphore->removeObserverProvider( m_observer );
             m_observer = nullptr;
         }
 
@@ -184,7 +166,7 @@ namespace GOAP
 
         if( m_observer != nullptr )
         {
-            m_semaphore->removeObserver( m_observer );
+            m_semaphore->removeObserverProvider( m_observer );
             m_observer = nullptr;
         }
 

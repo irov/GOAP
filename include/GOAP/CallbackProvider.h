@@ -7,26 +7,16 @@
 
 #pragma once
 
-#include "GOAP/Factorable.h"
-#include "GOAP/IntrusivePtr.h"
+#include "GOAP/CallbackObserver.h"
 
 namespace GOAP
-{
-    //////////////////////////////////////////////////////////////////////////
-    class CallbackObserver
-        : public Factorable
-    {
-    public:
-        virtual void onCallback( bool _skip ) = 0;
-    };
-    //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<CallbackObserver> CallbackObserverPtr;
+{ 
     //////////////////////////////////////////////////////////////////////////
     class CallbackProvider
         : public Factorable
     {
     public:
-        virtual void onCallback( const CallbackObserverPtr & _callback, bool _skip ) = 0;
+        virtual void onCallbackProvider( const CallbackObserverPtr & _callback, bool _skip ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<CallbackProvider> CallbackProviderPtr;
@@ -42,7 +32,7 @@ namespace GOAP
         }
 
     public:
-        void onCallback( const CallbackObserverPtr & _callback, bool _skip ) override
+        void onCallbackProvider( const CallbackObserverPtr & _callback, bool _skip ) override
         {
             m_f( _callback, _skip );
         }

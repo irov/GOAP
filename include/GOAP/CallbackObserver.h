@@ -13,31 +13,29 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    class EventProvider
+    class CallbackObserver
         : public Factorable
     {
     public:
-        virtual bool onEvent() = 0;
+        virtual void onCallback( bool _skip ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<EventProvider> EventProviderPtr;
+    typedef IntrusivePtr<CallbackObserver> CallbackObserverPtr;
     //////////////////////////////////////////////////////////////////////////
     template<class F>
-    class EventProviderT
-        : public EventProvider
+    class CallbackObserverT
+        : public CallbackObserver
     {
     public:
-        explicit EventProviderT( F _f )
+        explicit CallbackObserverT( F _f )
             : m_f( _f )
         {
         }
 
     public:
-        bool onEvent() override
+        void onCallback( bool _skip ) override
         {
-            bool result = m_f();
-
-            return result;
+            m_f( _skip );
         }
 
     protected:
@@ -47,9 +45,10 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        EventProviderPtr makeEventProvider( F _f )
+        CallbackObserverPtr makeCallbackObserver( F _f )
         {
-            return EventProviderPtr::from( new EventProviderT<F>( _f ) );
+            return CallbackObserverPtr::from( new CallbackObserverT<F>( _f ) );
         }
     }
+    //////////////////////////////////////////////////////////////////////////
 }

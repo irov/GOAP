@@ -13,31 +13,29 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    class EventProvider
+    class FunctionContextProvider
         : public Factorable
     {
     public:
-        virtual bool onEvent() = 0;
+        virtual void onFunctionContext( bool _isSkip ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<EventProvider> EventProviderPtr;
+    typedef IntrusivePtr<FunctionContextProvider> FunctionContextProviderPtr;
     //////////////////////////////////////////////////////////////////////////
     template<class F>
-    class EventProviderT
-        : public EventProvider
+    class FunctionContextProviderT
+        : public FunctionContextProvider
     {
     public:
-        explicit EventProviderT( F _f )
+        explicit FunctionContextProviderT( F _f )
             : m_f( _f )
         {
         }
 
     public:
-        bool onEvent() override
+        void onFunctionContext( bool _isSkip ) override
         {
-            bool result = m_f();
-
-            return result;
+            m_f( _isSkip );
         }
 
     protected:
@@ -47,9 +45,10 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        EventProviderPtr makeEventProvider( F _f )
+        FunctionContextProviderPtr makeFunctionContextProvider( F _f )
         {
-            return EventProviderPtr::from( new EventProviderT<F>( _f ) );
+            return FunctionContextProviderPtr::from( new FunctionContextProviderT<F>( _f ) );
         }
     }
+    //////////////////////////////////////////////////////////////////////////
 }

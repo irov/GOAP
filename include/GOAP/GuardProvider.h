@@ -48,10 +48,8 @@ namespace GOAP
     {
         template<class F>
         GuardProviderPtr makeGuardProvider( F _f )
-        {
-            GuardProviderPtr provider = new GuardProviderT<F>( _f );
-
-            return provider;
+        {            
+            return GuardProviderPtr::from( new GuardProviderT<F>( _f ) );
         }
     }
 }

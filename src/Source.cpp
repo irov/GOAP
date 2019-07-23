@@ -10,8 +10,8 @@
 #include "GOAP/Task.h"
 #include "GOAP/Chain.h"
 
-#include "GOAP/FunctionProvider.h"
 #include "GOAP/TaskFunction.h"
+#include "GOAP/TaskFunctionContext.h"
 #include "GOAP/TaskCallback.h"
 #include "GOAP/TaskScope.h"
 #include "GOAP/TaskIf.h"
@@ -241,6 +241,13 @@ namespace GOAP
     void Source::addFunctionProvider( const FunctionProviderPtr & _provider )
     {
         TaskPtr task( new TaskFunction( _provider ) );
+
+        this->addTask( task );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Source::addFunctionContextProvider( const FunctionContextProviderPtr & _provider )
+    {
+        TaskPtr task( new TaskFunctionContext( _provider ) );
 
         this->addTask( task );
     }

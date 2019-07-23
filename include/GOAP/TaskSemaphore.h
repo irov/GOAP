@@ -40,8 +40,6 @@ namespace GOAP
         int32_t m_apply;
 
         EventProviderPtr m_observer;
-
-        class EventProviderTaskSemaphore;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TaskSemaphore> TaskSemaphorePtr;

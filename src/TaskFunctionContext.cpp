@@ -5,41 +5,33 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/TaskCallback.h"
+#include "GOAP/TaskFunctionContext.h"
+
+#include "GOAP/FunctionContextProvider.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskCallback::TaskCallback( const CallbackProviderPtr & _provider )
+    TaskFunctionContext::TaskFunctionContext( const FunctionContextProviderPtr & _provider )
         : m_provider( _provider )
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    TaskCallback::~TaskCallback()
+    TaskFunctionContext::~TaskFunctionContext()
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskCallback::_onRun()
+    bool TaskFunctionContext::_onRun()
     {
         bool skip = this->isSkip();
 
-        CallbackObserverPtr callback = Helper::makeCallbackObserver( [this]( bool _skip )
-        {
-            this->complete( true, _skip );
-        } );
+        m_provider->onFunctionContext( skip );
 
-        m_provider->onCallbackProvider( callback, skip );
-
-        return false;
+        return true;
     }
     //////////////////////////////////////////////////////////////////////////
-    void TaskCallback::_onFinally()
+    void TaskFunctionContext::_onFinally()
     {
         m_provider = nullptr;
-    }
-    //////////////////////////////////////////////////////////////////////////
-    bool TaskCallback::_onSkipable() const
-    {
-        return false;
     }
 }

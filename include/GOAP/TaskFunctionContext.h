@@ -9,28 +9,28 @@
 
 #include "GOAP/Task.h"
 
-#include "GOAP/CallbackProvider.h"
-
 namespace GOAP
 {
-    class TaskCallback
+    //////////////////////////////////////////////////////////////////////////
+    typedef IntrusivePtr<class FunctionContextProvider> FunctionContextProviderPtr;
+    //////////////////////////////////////////////////////////////////////////
+    class TaskFunctionContext
         : public Task
     {
         DECLARE_VISITABLE( Task );
 
     public:
-        explicit TaskCallback( const CallbackProviderPtr & _provider );
-        ~TaskCallback() override;
+        explicit TaskFunctionContext( const FunctionContextProviderPtr & _provider );
+        ~TaskFunctionContext() override;
 
     public:
         bool _onRun() override;
         void _onFinally() override;
-        bool _onSkipable() const override;
 
     protected:
-        CallbackProviderPtr m_provider;
+        FunctionContextProviderPtr m_provider;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<TaskCallback> TaskCallbackPtr;
+    typedef IntrusivePtr<TaskFunctionContext> TaskFunctionContextPtr;
     //////////////////////////////////////////////////////////////////////////
 }

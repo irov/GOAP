@@ -30,8 +30,18 @@ namespace GOAP
         void addValue( int32_t _value );
 
     public:
-        const EventProviderPtr & addObserver( const EventProviderPtr & _event );
-        void removeObserver( const EventProviderPtr & _event );
+        const EventProviderPtr & addObserverProvider( const EventProviderPtr & _event );
+        void removeObserverProvider( const EventProviderPtr & _event );
+
+    public:
+        template<class F>
+        const EventProviderPtr & addObserver( F _f )
+        {
+            EventProviderPtr provider = Helper::makeEventProvider( _f );
+
+            return this->addObserverProvider( provider );
+        }
+
 
     protected:
         EventPtr m_event;

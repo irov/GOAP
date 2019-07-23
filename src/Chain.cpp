@@ -18,29 +18,6 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    class Chain::TaskChainEnd
-        : public Task
-    {
-    public:
-        explicit TaskChainEnd( Chain * _chain )
-            : m_chain( _chain )
-        {
-        }
-
-    public:
-        bool _onRun()
-        {
-            bool skip = this->isSkip();
-
-            m_chain->complete( skip );
-
-            return true;
-        }
-
-    protected:
-        Chain * m_chain;
-    };
-    //////////////////////////////////////////////////////////////////////////
     Chain::Chain( const SourcePtr & _source )
         : m_source( _source )
         , m_state( TASK_CHAIN_STATE_IDLE )
@@ -94,15 +71,15 @@ namespace GOAP
 
         this->setState_( TASK_CHAIN_STATE_RUN );
 
+        m_source->addFunctionContext( [this]( bool _isSkip )
+        {
+            this->complete( _isSkip );
+        } );
+
         TaskPtr task_first( new TaskDummy() );
         task_first->setChain( ChainPtr::from( this ) );
 
-        TaskPtr task_last = m_source->parse( ChainPtr::from( this ), task_first );
-
-        TaskPtr task_cb( new TaskChainEnd( this ) );
-        task_cb->setChain( ChainPtr::from( this ) );
-
-        task_last->addNext( task_cb );
+        m_source->parse( ChainPtr::from( this ), task_first );
 
         bool skip = m_source->isSkip();
 
@@ -115,7 +92,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Chain::cancel()
     {
-        //Detail::IntrusiveThisAcquire( this );
+        this->incref();
 
         VectorChains copy_forks = m_forks;
 
@@ -152,12 +129,12 @@ namespace GOAP
             this->finalize_();
         }
 
-        //IntrusiveThisRelease( this );
+        this->decref();
     }
     //////////////////////////////////////////////////////////////////////////
     void Chain::skip()
     {
-        //Detail::IntrusiveThisAcquire( this );
+        this->incref();
 
         VectorChains copy_forks = m_forks;
 
@@ -171,7 +148,7 @@ namespace GOAP
             this->skipRunningTasks_();
         }
 
-        //IntrusiveThisRelease( this );
+        this->decref();
     }
     //////////////////////////////////////////////////////////////////////////
     bool Chain::isComplete() const

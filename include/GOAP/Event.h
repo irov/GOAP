@@ -42,9 +42,6 @@ namespace GOAP
         VectorProviders m_providersAdd;
 
         uint32_t m_process;
-
-        class FEventFind;
-        class FEventDead;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Event> EventPtr;

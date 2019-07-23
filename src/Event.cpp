@@ -13,33 +13,6 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    class Event::FEventFind
-    {
-    public:
-        explicit FEventFind( const EventProviderPtr & _provider )
-            : m_provider( _provider )
-        {
-        }
-
-    public:
-        bool operator () ( const Event::ProviderDesc & _desc ) const
-        {
-            return _desc.provider == m_provider;
-        }
-
-    protected:
-        const EventProviderPtr & m_provider;
-    };
-    //////////////////////////////////////////////////////////////////////////
-    class Event::FEventDead
-    {
-    public:
-        bool operator () ( const Event::ProviderDesc & _desc ) const
-        {
-            return _desc.dead;
-        }
-    };
-    //////////////////////////////////////////////////////////////////////////
     Event::Event()
         : m_process( 0 )
     {
@@ -67,7 +40,10 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool Event::removeObserver( const EventProviderPtr & _eventProvider )
     {
-        VectorProviders::iterator it_found_add = std::find_if( m_providersAdd.begin(), m_providersAdd.end(), FEventFind( _eventProvider ) );
+        VectorProviders::iterator it_found_add = std::find_if( m_providersAdd.begin(), m_providersAdd.end(), [&_eventProvider]( const Event::ProviderDesc & _desc )
+        {
+            return _desc.provider == _eventProvider;
+        } );
 
         if( it_found_add != m_providersAdd.end() )
         {
@@ -76,7 +52,10 @@ namespace GOAP
             return true;
         }
 
-        VectorProviders::iterator it_found = std::find_if( m_providers.begin(), m_providers.end(), FEventFind( _eventProvider ) );
+        VectorProviders::iterator it_found = std::find_if( m_providers.begin(), m_providers.end(), [&_eventProvider]( const Event::ProviderDesc & _desc )
+        {
+            return _desc.provider == _eventProvider;
+        } );
 
         if( it_found == m_providers.end() )
         {
@@ -89,8 +68,10 @@ namespace GOAP
         }
         else
         {
-            it_found->provider = nullptr;
-            it_found->dead = true;
+            ProviderDesc & desc = *it_found;
+
+            desc.provider = nullptr;
+            desc.dead = true;
         }
 
         return true;
@@ -100,14 +81,8 @@ namespace GOAP
     {
         ++m_process;
 
-        for( VectorProviders::const_iterator
-            it = m_providers.begin(),
-            it_end = m_providers.end();
-            it != it_end;
-            ++it )
+        for( const ProviderDesc & desc : m_providers )
         {
-            const ProviderDesc & desc = *it;
-
             if( desc.dead == true )
             {
                 continue;
@@ -134,7 +109,11 @@ namespace GOAP
 
         if( m_process == 0 )
         {
-            VectorProviders::iterator it_erase = std::remove_if( m_providers.begin(), m_providers.end(), FEventDead() );
+            VectorProviders::iterator it_erase = std::remove_if( m_providers.begin(), m_providers.end(), []( const Event::ProviderDesc & _desc )
+            {
+                return _desc.dead;
+            } );
+
             m_providers.erase( it_erase, m_providers.end() );
 
             m_providers.insert( m_providers.end(), m_providersAdd.begin(), m_providersAdd.end() );

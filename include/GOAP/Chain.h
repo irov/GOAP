@@ -92,8 +92,6 @@ namespace GOAP
         VectorChains m_forks;
 
         bool m_complete;
-
-        class TaskChainEnd;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Chain> ChainPtr;
