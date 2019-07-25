@@ -21,7 +21,7 @@ namespace GOAP
     public:
         uint32_t incref() override;
         void decref() override;
-        uint32_t getrefcount() const;
+        uint32_t getrefcount() const override;
 
     protected:
         virtual void destroy();
