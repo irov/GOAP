@@ -14,7 +14,7 @@ namespace GOAP
     class TaskBlock
         : public Task
     {
-        DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( Task );
 
     public:
         TaskBlock();

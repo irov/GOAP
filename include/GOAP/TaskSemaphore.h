@@ -16,7 +16,7 @@ namespace GOAP
     class TaskSemaphore
         : public Task
     {
-        DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( Task );
 
     public:
         TaskSemaphore( const SemaphorePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply );

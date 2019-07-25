@@ -16,7 +16,7 @@ namespace GOAP
     class TaskCallback
         : public Task
     {
-        DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( Task );
 
     public:
         explicit TaskCallback( const CallbackProviderPtr & _provider );

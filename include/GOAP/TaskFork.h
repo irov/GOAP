@@ -17,7 +17,7 @@ namespace GOAP
     class TaskFork
         : public Task
     {
-        DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( Task );
 
     public:
         explicit TaskFork( const SourcePtr & _fork );

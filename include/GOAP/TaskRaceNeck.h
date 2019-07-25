@@ -14,7 +14,7 @@ namespace GOAP
     class TaskRaceNeck
         : public Task
     {
-        DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( Task );
 
     public:
         TaskRaceNeck();

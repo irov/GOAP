@@ -25,7 +25,7 @@ namespace GOAP
         : public Factorable
         , public Visitable
     {
-        DECLARE_VISITABLE_BASE();
+        GOAP_DECLARE_VISITABLE_BASE();
 
     public:
         enum ETaskState

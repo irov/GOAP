@@ -17,7 +17,7 @@ namespace GOAP
     class TaskGuard
         : public Task
     {
-        DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( Task );
 
     public:
         TaskGuard( const GuardProviderPtr & _begin, const GuardProviderPtr & _end );

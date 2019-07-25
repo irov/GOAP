@@ -19,7 +19,7 @@ namespace GOAP
     class TaskWhile
         : public Task
     {
-        DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( Task );
 
     public:
         explicit TaskWhile( const ScopeProviderPtr & _providerWhile );

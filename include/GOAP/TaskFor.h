@@ -17,7 +17,7 @@ namespace GOAP
     class TaskFor
         : public Task
     {
-        DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( Task );
 
     public:
         TaskFor( const ForProviderPtr & _providerFor, uint32_t _iterator, uint32_t _count );

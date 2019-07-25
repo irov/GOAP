@@ -17,7 +17,7 @@ namespace GOAP
     class TaskScope
         : public Task
     {
-        DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( Task );
 
     public:
         explicit TaskScope( const ScopeProviderPtr & _provider );

@@ -17,7 +17,7 @@ namespace GOAP
     class TaskFunctionContext
         : public Task
     {
-        DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( Task );
 
     public:
         explicit TaskFunctionContext( const FunctionContextProviderPtr & _provider );
