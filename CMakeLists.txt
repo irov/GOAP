@@ -38,6 +38,7 @@ set( GOAP_SOURCES
     ${SOURCE_DIR}/TaskRaceNeck.cpp
     ${SOURCE_DIR}/TaskRepeat.cpp
     ${SOURCE_DIR}/TaskScope.cpp
+    ${SOURCE_DIR}/TaskSource.cpp
     ${SOURCE_DIR}/TaskSwitch.cpp
     ${SOURCE_DIR}/TaskWhile.cpp
     ${SOURCE_DIR}/TaskFor.cpp    
@@ -87,6 +88,7 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/TaskRepeat.h
     ${INCLUDE_DIR}/GOAP/TaskRaceNeck.h
     ${INCLUDE_DIR}/GOAP/TaskScope.h
+    ${INCLUDE_DIR}/GOAP/TaskSource.h
     ${INCLUDE_DIR}/GOAP/TaskSwitch.h
     ${INCLUDE_DIR}/GOAP/TaskWhile.h
     ${INCLUDE_DIR}/GOAP/TaskFor.h

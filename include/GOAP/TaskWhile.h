@@ -14,7 +14,6 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class ScopeProvider> ScopeProviderPtr;
     typedef IntrusivePtr<class Source> SourcePtr;
-    typedef IntrusivePtr<class Chain> ChainPtr;
     //////////////////////////////////////////////////////////////////////////
     class TaskWhile
         : public Task

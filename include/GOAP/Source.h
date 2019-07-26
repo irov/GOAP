@@ -106,6 +106,8 @@ namespace GOAP
         SourcePtr addFork();
         void addBlock();
 
+        void addSource( const SourcePtr & _source );
+
         template<class F>
         void addFunction( F _f )
         {

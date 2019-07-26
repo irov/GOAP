@@ -14,6 +14,7 @@
 #include "GOAP/TaskFunctionContext.h"
 #include "GOAP/TaskCallback.h"
 #include "GOAP/TaskScope.h"
+#include "GOAP/TaskSource.h"
 #include "GOAP/TaskIf.h"
 #include "GOAP/TaskRepeat.h"
 #include "GOAP/TaskSwitch.h"
@@ -102,6 +103,13 @@ namespace GOAP
         TaskBlockPtr task_block( new TaskBlock() );
 
         this->addTask( task_block );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Source::addSource( const SourcePtr & _source )
+    {
+        TaskSourcePtr task_source( new TaskSource( _source ) );
+
+        this->addTask( task_source );
     }
     //////////////////////////////////////////////////////////////////////////
     void Source::addSemaphore( const SemaphorePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply )

@@ -22,11 +22,6 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    void TaskWhile::_onFinalize()
-    {
-        m_providerWhile = nullptr;
-    }
-    //////////////////////////////////////////////////////////////////////////
     bool TaskWhile::_onRun()
     {
         SourcePtr source = Helper::makeSource();
@@ -46,5 +41,10 @@ namespace GOAP
         this->injectSource( source );
 
         return true;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void TaskWhile::_onFinalize()
+    {
+        m_providerWhile = nullptr;
     }
 }
