@@ -43,6 +43,11 @@ namespace GOAP
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
+    bool TaskWhile::_onFastSkip()
+    {
+        return true;
+    }
+    //////////////////////////////////////////////////////////////////////////
     void TaskWhile::_onFinalize()
     {
         m_providerWhile = nullptr;
