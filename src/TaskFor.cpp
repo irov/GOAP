@@ -7,7 +7,6 @@
 
 #include "GOAP/TaskFor.h"
 #include "GOAP/Source.h"
-#include "GOAP/Chain.h"
 #include "GOAP/ForProvider.h"
 
 #include "GOAP/Exception.h"

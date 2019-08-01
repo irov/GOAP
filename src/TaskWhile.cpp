@@ -7,8 +7,6 @@
 
 #include "GOAP/TaskWhile.h"
 #include "GOAP/Source.h"
-#include "GOAP/Chain.h"
-#include "GOAP/ChainProvider.h"
 
 namespace GOAP
 {

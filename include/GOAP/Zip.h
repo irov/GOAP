@@ -14,21 +14,19 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class Source> SourcePtr;
     //////////////////////////////////////////////////////////////////////////
-    template<class Source, class Iterator>
+    template<class Source, class T>
     class ZipPair
     {
     public:
-        ZipPair( const SourcePtr & _source, Iterator _value, uint32_t _index )
+        ZipPair( const SourcePtr & _source, const T & _value )
             : source( _source )
             , value( _value )
-            , index( _index )
         {
         }
 
     public:
         const SourcePtr & source;
-        Iterator value;
-        int32_t index;
+        const T & value;
     };
     //////////////////////////////////////////////////////////////////////////
     template<class L, class R>
@@ -100,9 +98,9 @@ namespace GOAP
             }
 
         public:
-            ZipPair<typename L::value_type, R> operator * () const
+            ZipPair<typename L::value_type, typename R::value_type> operator * () const
             {
-                return ZipPair<typename L::value_type, R>( *this->first, this->second, this->index );
+                return ZipPair<typename L::value_type, typename R::value_type>( *this->first, *this->second );
             }
 
         protected:

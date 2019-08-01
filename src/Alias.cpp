@@ -8,7 +8,6 @@
 #include "GOAP/Alias.h"
 
 #include "GOAP/Source.h"
-#include "GOAP/Chain.h"
 
 #include "GOAP/Exception.h"
 
