@@ -46,11 +46,9 @@ namespace GOAP
         m_event->call();
     }
     //////////////////////////////////////////////////////////////////////////
-    const EventProviderPtr & Semaphore::addObserverProvider( const EventProviderPtr & _event )
+    void Semaphore::addObserverProvider( const EventProviderPtr & _event )
     {
         m_event->addObserver( _event );
-
-        return _event;
     }
     //////////////////////////////////////////////////////////////////////////
     void Semaphore::removeObserverProvider( const EventProviderPtr & _event )
