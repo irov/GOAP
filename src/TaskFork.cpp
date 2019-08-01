@@ -32,9 +32,10 @@ namespace GOAP
 
         ChainPtr chain = Helper::makeChain( m_fork );
 
-        chain->setCallback( [this, &chain]( bool _skip )
+        chain->setCallback( [this, &chain]( bool _skip, bool _cancel )
         {
             GOAP_UNUSED( _skip );
+            GOAP_UNUSED( _cancel );
 
             m_chain->removeFork( chain );
         } );

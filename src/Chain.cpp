@@ -121,12 +121,19 @@ namespace GOAP
             //}
         }
 
+        ChainProviderPtr cb = std::move( m_cb );
+
         if( m_state != TASK_CHAIN_STATE_CANCEL &&
             m_state != TASK_CHAIN_STATE_FINALIZE )
         {
             this->setState_( TASK_CHAIN_STATE_CANCEL );
 
             this->finalize_();
+        }
+
+        if( cb != nullptr )
+        {
+            cb->onChain( m_state == TASK_CHAIN_STATE_SKIP, true );
         }
 
         this->decref();
@@ -190,13 +197,13 @@ namespace GOAP
         m_complete = true;
         this->setState_( TASK_CHAIN_STATE_COMPLETE );
 
-        ChainProviderPtr cb = m_cb;
+        ChainProviderPtr cb = std::move( m_cb );
 
         this->finalize_();
 
         if( cb != nullptr )
         {
-            cb->onChain( _skip );
+            cb->onChain( _skip, false );
         }
     }
     //////////////////////////////////////////////////////////////////////////

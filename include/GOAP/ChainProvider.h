@@ -17,7 +17,7 @@ namespace GOAP
         : public Factorable
     {
     public:
-        virtual void onChain( bool _skip ) = 0;
+        virtual void onChain( bool _skip, bool _cancel ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<ChainProvider> ChainProviderPtr;
@@ -33,9 +33,9 @@ namespace GOAP
         }
 
     public:
-        void onChain( bool _skip ) override
+        void onChain( bool _skip, bool _cancel ) override
         {
-            m_f( _skip );
+            m_f( _skip, _cancel );
         }
 
     protected:
