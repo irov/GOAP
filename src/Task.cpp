@@ -34,6 +34,11 @@ namespace GOAP
         return m_chain;
     }
     //////////////////////////////////////////////////////////////////////////
+    void Task::throwError()
+    {
+        m_state = TASK_STATE_ERROR;
+    }
+    //////////////////////////////////////////////////////////////////////////
     bool Task::isIdle() const
     {
         return m_state == TASK_STATE_IDLE;
@@ -52,6 +57,11 @@ namespace GOAP
     bool Task::isSkip() const
     {
         return m_skip;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool Task::isError() const
+    {
+        return m_state == TASK_STATE_END;
     }
     //////////////////////////////////////////////////////////////////////////
     void Task::addNext( const TaskPtr & _task )

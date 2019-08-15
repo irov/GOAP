@@ -64,6 +64,9 @@ namespace GOAP
         }
 
     public:
+        ArraySources<2> tryTask( const TaskPtr & _task );
+
+    public:
         const VectorSources & addParallel( uint32_t _count );
 
         template<size_t Count>

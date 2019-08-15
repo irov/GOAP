@@ -66,6 +66,23 @@ namespace GOAP
         m_transcriptors.push_back( description );
     }
     //////////////////////////////////////////////////////////////////////////
+    ArraySources<2> Source::tryTask( const TaskPtr & _task )
+    {
+        this->addTask( _task );
+
+        ArraySources<2> desc = this->addIf( [&_task]()
+        {
+            if( _task->isError() == true )
+            {
+                return false;
+            }
+
+            return true;
+        } );
+
+        return desc;
+    }
+    //////////////////////////////////////////////////////////////////////////
     const VectorSources & Source::addParallel( uint32_t _count )
     {
         VectorSources sources;

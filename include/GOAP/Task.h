@@ -37,6 +37,7 @@ namespace GOAP
             TASK_STATE_STOP,
             TASK_STATE_CANCEL,
             TASK_STATE_COMPLETE,
+            TASK_STATE_ERROR,
             TASK_STATE_END
         };
 
@@ -49,10 +50,14 @@ namespace GOAP
         const ChainPtr & getChain() const;
 
     public:
+        void throwError();
+
+    public:
         bool isIdle() const;
         bool isRunning() const;
         bool isEnd() const;
         bool isSkip() const;
+        bool isError() const;
 
     public:
         void addNext( const TaskPtr & _task );
