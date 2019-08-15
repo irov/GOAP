@@ -29,10 +29,7 @@ namespace GOAP
         bool skip = this->isSkip();
         source->setSkip( skip );
 
-        if( m_providerWhile->onScope( source ) == false )
-        {
-            return true;
-        }
+        m_providerWhile->onScope( source );
 
         source->addWhileProvider( m_providerWhile );
 

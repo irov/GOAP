@@ -30,10 +30,7 @@ namespace GOAP
         bool skip = this->isSkip();
         source->setSkip( skip );
 
-        if( m_provider->onScope( source ) == false )
-        {
-            return true;
-        }
+        m_provider->onScope( source );
 
         if( this->injectSource( source ) == false )
         {

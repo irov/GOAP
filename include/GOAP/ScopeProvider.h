@@ -19,7 +19,7 @@ namespace GOAP
         : public Factorable
     {
     public:
-        virtual bool onScope( const SourcePtr & _source ) = 0;
+        virtual void onScope( const SourcePtr & _source ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<ScopeProvider> ScopeProviderPtr;
@@ -35,11 +35,9 @@ namespace GOAP
         }
 
     public:
-        bool onScope( const SourcePtr & _source ) override
+        void onScope( const SourcePtr & _source ) override
         {
-            bool successful = m_f( _source );
-
-            return successful;
+            m_f( _source );
         }
 
     protected:
