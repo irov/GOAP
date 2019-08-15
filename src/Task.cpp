@@ -84,6 +84,11 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool Task::injectSource( const SourcePtr & _source )
     {
+        if( _source->empty() == true )
+        {
+            return true;
+        }
+
         VectorTasks nexts;
         this->popNexts( nexts );
 

@@ -8,6 +8,8 @@
 #include "GOAP/TaskRepeat.h"
 #include "GOAP/Source.h"
 
+#include "GOAP/Exception.h"
+
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
@@ -33,7 +35,10 @@ namespace GOAP
         source_while->addWhileProvider( m_providerRepeat );
         source_until->addSource( m_sourceUntil );
 
-        this->injectSource( source );
+        if( this->injectSource( source ) == false )
+        {
+            Helper::throw_exception( "TaskRepeat invalid inject source" );
+        }
 
         m_providerRepeat = nullptr;
         m_sourceUntil = nullptr;

@@ -50,6 +50,9 @@ namespace GOAP
         bool isSkip() const;
 
     public:
+        bool empty() const;
+
+    public:
         void addTask( const TaskPtr & _task );
 
         template<class T, class ... Args>

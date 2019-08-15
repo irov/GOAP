@@ -51,7 +51,10 @@ namespace GOAP
 
         m_providerFor = nullptr;
 
-        this->injectSource( source );
+        if( this->injectSource( source ) == false )
+        {
+            Helper::throw_exception( "TaskFor invalid inject source" );
+        }
 
         return true;
     }

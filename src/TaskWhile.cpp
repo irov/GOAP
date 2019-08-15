@@ -8,6 +8,8 @@
 #include "GOAP/TaskWhile.h"
 #include "GOAP/Source.h"
 
+#include "GOAP/Exception.h"
+
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
@@ -36,7 +38,10 @@ namespace GOAP
 
         m_providerWhile = nullptr;
 
-        this->injectSource( source );
+        if( this->injectSource( source ) == false )
+        {
+            Helper::throw_exception( "TaskWhile invalid inject source" );
+        }
 
         return true;
     }

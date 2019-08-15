@@ -26,7 +26,11 @@ namespace GOAP
     {
         if( m_source != nullptr )
         {
-            this->injectSource( m_source );
+            if( this->injectSource( m_source ) == false )
+            {
+                Helper::throw_exception( "TaskSource invalid inject source" );
+            }
+
             m_source = nullptr;
         }
 

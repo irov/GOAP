@@ -52,6 +52,13 @@ namespace GOAP
         return m_skip;
     }
     //////////////////////////////////////////////////////////////////////////
+    bool Source::empty() const
+    {
+        bool result = m_transcriptors.empty();
+
+        return result;
+    }
+    //////////////////////////////////////////////////////////////////////////
     void Source::addTask( const TaskPtr & _task )
     {
         TranscriptorBasePtr description( new TranscriptorBase( _task ) );
