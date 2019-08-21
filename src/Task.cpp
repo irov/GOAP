@@ -119,6 +119,25 @@ namespace GOAP
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
+    bool Task::forkSource( const SourcePtr & _source )
+    {
+        if( _source->empty() == true )
+        {
+            return true;
+        }
+
+        const ChainPtr & chain = this->getChain();
+
+        TaskPtr task = _source->parse( chain, TaskPtr::from( this ) );
+
+        if( task == nullptr )
+        {
+            return false;
+        }
+
+        return true;
+    }
+    //////////////////////////////////////////////////////////////////////////
     bool Task::run( bool _checkSkipedFalse )
     {
         if( m_state != TASK_STATE_IDLE )

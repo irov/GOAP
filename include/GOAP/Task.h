@@ -65,6 +65,7 @@ namespace GOAP
         const VectorTasks & getNexts() const;
         void popNexts( VectorTasks & _clone );
         bool injectSource( const SourcePtr & _source );
+        bool forkSource( const SourcePtr & _source );
 
     public:
         bool run( bool _checkSkipedFalse = false );

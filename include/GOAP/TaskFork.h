@@ -20,7 +20,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( Task );
 
     public:
-        explicit TaskFork( const SourcePtr & _fork );
+        explicit TaskFork( const SourcePtr & _source );
         ~TaskFork() override;
 
     public:
@@ -28,7 +28,7 @@ namespace GOAP
         void _onFinally() override;
 
     protected:
-        SourcePtr m_fork;
+        SourcePtr m_source;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TaskFork> TaskForkPtr;

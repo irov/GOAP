@@ -6,18 +6,15 @@
 */
 
 #include "GOAP/TaskFork.h"
-
-#include "GOAP/Macros.h"
-
 #include "GOAP/Source.h"
-#include "GOAP/Chain.h"
-#include "GOAP/ChainProvider.h"
+
+#include "GOAP/Exception.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskFork::TaskFork( const SourcePtr & _fork )
-        : m_fork( _fork )
+    TaskFork::TaskFork( const SourcePtr & _source )
+        : m_source( _source )
     {
     }
     //////////////////////////////////////////////////////////////////////////
@@ -28,27 +25,20 @@ namespace GOAP
     bool TaskFork::_onRun()
     {
         bool skip = this->isSkip();
-        m_fork->setSkip( skip );
+        m_source->setSkip( skip );
 
-        ChainPtr chain = Helper::makeChain( m_fork );
-
-        chain->setCallback( [this, &chain]( bool _skip, bool _cancel )
+        if( this->forkSource( m_source ) == false )
         {
-            GOAP_UNUSED( _skip );
-            GOAP_UNUSED( _cancel );
+            Helper::throw_exception( "TaskFork invalid inject source" );
+        }
 
-            m_chain->removeFork( chain );
-        } );
-
-        chain->run();
-
-        m_chain->addFork( chain );
+        m_source = nullptr;
 
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
     void TaskFork::_onFinally()
     {
-        m_fork = nullptr;
+        m_source = nullptr;
     }
 }

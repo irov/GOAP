@@ -37,6 +37,8 @@ namespace GOAP
             Helper::throw_exception( "TaskScope invalid inject source" );
         }
 
+        m_provider = nullptr;
+
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
