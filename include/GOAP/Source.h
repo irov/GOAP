@@ -23,6 +23,7 @@
 #include "GOAP/ForProvider.h"
 #include "GOAP/GeneratorProvider.h"
 #include "GOAP/SemaphoreFlags.h"
+#include "GOAP/WhileProvider.h"
 #include "GOAP/TranscriptorParallelArray.h"
 #include "GOAP/TranscriptorRaceArray.h"
 
@@ -209,7 +210,7 @@ namespace GOAP
         template<class F>
         SourcePtr addRepeat( F _f )
         {
-            ScopeProviderPtr provider = Helper::makeScopeProvider<F>( _f );
+            WhileProviderPtr provider = Helper::makeWhileProvider<F>( _f );
 
             SourcePtr source = this->addRepeatProvider( provider );
 
@@ -219,7 +220,7 @@ namespace GOAP
         template<class F>
         void addWhile( F _f )
         {
-            ScopeProviderPtr provider = Helper::makeScopeProvider<F>( _f );
+            WhileProviderPtr provider = Helper::makeWhileProvider<F>( _f );
 
             this->addWhileProvider( provider );
         }
@@ -328,10 +329,10 @@ namespace GOAP
         void addScopeProvider( const ScopeProviderPtr & _provider );
         ArraySources<2> addIfProvider( const IfProviderPtr & _provider );
         ArraySources<2> addUnlessProvider( const IfProviderPtr & _provider );
-        SourcePtr addRepeatProvider( const ScopeProviderPtr & _provider );
+        SourcePtr addRepeatProvider( const WhileProviderPtr & _provider );
         const VectorSources & addSwitchProvider( const SwitchProviderPtr & _provider, uint32_t _count );
         SourcePtr addGuardProvider( const GuardProviderPtr & _begin, const GuardProviderPtr & _end );
-        void addWhileProvider( const ScopeProviderPtr & _provider );
+        void addWhileProvider( const WhileProviderPtr & _provider );
         void addForProvider( const ForProviderPtr & _provider, uint32_t _iterator, uint32_t _count );
         const SourcePtr & addEffectProvider( const GeneratorProviderPtr & _provider );
 

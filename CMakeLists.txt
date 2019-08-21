@@ -60,7 +60,7 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/ArraySources.h
     ${INCLUDE_DIR}/GOAP/ViewSources.h
     ${INCLUDE_DIR}/GOAP/CallbackObserver.h
-    ${INCLUDE_DIR}/GOAP/CallbackProvider.h
+    ${INCLUDE_DIR}/GOAP/CallbackProvider.h    
     ${INCLUDE_DIR}/GOAP/Chain.h
     ${INCLUDE_DIR}/GOAP/ChainProvider.h
     ${INCLUDE_DIR}/GOAP/Macros.h
@@ -103,6 +103,7 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/Visitor.h
     ${INCLUDE_DIR}/GOAP/Visitable.h
     ${INCLUDE_DIR}/GOAP/GeneratorProvider.h
+    ${INCLUDE_DIR}/GOAP/WhileProvider.h
     ${INCLUDE_DIR}/GOAP/Zip.h
 )
 

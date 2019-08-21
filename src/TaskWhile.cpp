@@ -13,8 +13,8 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskWhile::TaskWhile( const ScopeProviderPtr & _providerWhile )
-        : m_providerWhile( _providerWhile )
+    TaskWhile::TaskWhile( const WhileProviderPtr & _provider )
+        : m_provider( _provider )
     {
     }
     //////////////////////////////////////////////////////////////////////////
@@ -29,16 +29,19 @@ namespace GOAP
         bool skip = this->isSkip();
         source->setSkip( skip );
 
-        m_providerWhile->onScope( source );
+        bool injecting = m_provider->onWhile( source );
 
-        source->addWhileProvider( m_providerWhile );
-
-        m_providerWhile = nullptr;
-
-        if( this->injectSource( source ) == false )
+        if( injecting == true )
         {
-            Helper::throw_exception( "TaskWhile invalid inject source" );
+            source->addWhileProvider( m_provider );            
+
+            if( this->injectSource( source ) == false )
+            {
+                Helper::throw_exception( "TaskWhile invalid inject source" );
+            }
         }
+
+        m_provider = nullptr;
 
         return true;
     }
@@ -50,6 +53,6 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void TaskWhile::_onFinalize()
     {
-        m_providerWhile = nullptr;
+        m_provider = nullptr;
     }
 }

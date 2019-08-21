@@ -206,7 +206,7 @@ namespace GOAP
         this->addTask( task_semaphore );
     }
     //////////////////////////////////////////////////////////////////////////
-    SourcePtr Source::addRepeatProvider( const ScopeProviderPtr & _provider )
+    SourcePtr Source::addRepeatProvider( const WhileProviderPtr & _provider )
     {
         SourcePtr source_until = this->_provideSource();
 
@@ -246,7 +246,7 @@ namespace GOAP
         return source_code;
     }
     //////////////////////////////////////////////////////////////////////////
-    void Source::addWhileProvider( const ScopeProviderPtr & _provider )
+    void Source::addWhileProvider( const WhileProviderPtr & _provider )
     {
         TaskPtr task( new TaskWhile( _provider ) );
 
