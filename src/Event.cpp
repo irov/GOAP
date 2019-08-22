@@ -79,6 +79,8 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Event::call()
     {
+        this->incref();
+
         ++m_process;
 
         for( const ProviderDesc & desc : m_providers )
@@ -90,7 +92,7 @@ namespace GOAP
 
             const EventProviderPtr & provider = desc.provider;
 
-            bool remove = desc.provider->onEvent();
+            bool remove = provider->onEvent();
 
             if( remove == false )
             {
@@ -109,15 +111,17 @@ namespace GOAP
 
         if( m_process == 0 )
         {
+            m_providers.insert( m_providers.end(), m_providersAdd.begin(), m_providersAdd.end() );
+            m_providersAdd.clear();
+
             VectorProviders::iterator it_erase = std::remove_if( m_providers.begin(), m_providers.end(), []( const Event::ProviderDesc & _desc )
             {
                 return _desc.dead;
             } );
 
             m_providers.erase( it_erase, m_providers.end() );
-
-            m_providers.insert( m_providers.end(), m_providersAdd.begin(), m_providersAdd.end() );
-            m_providersAdd.clear();
         }
+
+        this->decref();
     }
 }
