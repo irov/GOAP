@@ -88,8 +88,6 @@ namespace GOAP
         }
 
         _clone.swap( m_nexts );
-
-        m_nexts.clear();
     }
     //////////////////////////////////////////////////////////////////////////
     bool Task::injectSource( const SourcePtr & _source )
@@ -334,7 +332,7 @@ namespace GOAP
 
         m_chain->completeTask( TaskPtr::from( this ) );
 
-        VectorTasks copy_nexts = m_nexts;
+        VectorTasks copy_nexts = std::move( m_nexts );
 
         for( const TaskPtr & next : copy_nexts )
         {
@@ -343,8 +341,6 @@ namespace GOAP
                 m_chain->processTask( next, true );
             }
         }
-
-        m_nexts.clear();
     }
     //////////////////////////////////////////////////////////////////////////
     void Task::complete( bool _running, bool _skiped )
@@ -384,7 +380,7 @@ namespace GOAP
 
         if( m_skip == false )
         {
-            VectorTasks copy_nexts = m_nexts;
+            VectorTasks copy_nexts = std::move( m_nexts );
 
             for( const TaskPtr & next : copy_nexts )
             {
@@ -393,12 +389,10 @@ namespace GOAP
                     m_chain->processTask( next, false );
                 }
             }
-
-            m_nexts.clear();
         }
         else
         {
-            VectorTasks copy_nexts = m_nexts;
+            VectorTasks copy_nexts = std::move( m_nexts );
 
             for( const TaskPtr & next : copy_nexts )
             {
@@ -407,8 +401,6 @@ namespace GOAP
                     m_chain->processTask( next, true );
                 }
             }
-
-            m_nexts.clear();
         }
 
         ChainPtr chain = m_chain;

@@ -125,6 +125,7 @@ ELSE()
         ${INCLUDE_DIR}/Config/GOAP/Vector.h
         ${INCLUDE_DIR}/Config/GOAP/IntrusivePtrBase.h
         ${INCLUDE_DIR}/Config/GOAP/IntrusivePtr.h
+        ${INCLUDE_DIR}/Config/GOAP/Mixin.h
     )
     
     include_directories(${PROJECT_NAME} ${INCLUDE_DIR}/Config)

@@ -7,12 +7,12 @@
 
 #pragma once
 
-#include "GOAP/IntrusivePtrBase.h"
+#include "GOAP/Mixin.h"
 
 namespace GOAP
 {
     class Factorable
-        : public IntrusivePtrBase
+        : public Mixin
     {
     public:
         Factorable();

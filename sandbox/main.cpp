@@ -28,7 +28,7 @@
 
 int main()
 {
-    Scheduler * sch = new Scheduler;
+    SchedulerPtr sch = SchedulerPtr::from( new Scheduler );
 
     srand( (unsigned int)time( NULL ) );
 
@@ -168,8 +168,6 @@ int main()
     }
 
     printf( "FINALIZE\n" );
-
-    delete sch;
 
     return 0;
 }

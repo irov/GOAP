@@ -11,32 +11,36 @@ Scheduler::~Scheduler()
 {
 }
 
-uint32_t Scheduler::schedule( float _delay, bool _loop, SchedulerObserver * _observer )
+uint32_t Scheduler::schedule( float _delay, bool _loop, const SchedulerObserverPtr & _observer )
 {
     uint32_t id = ++m_enumerator;
 
     Description desc;
+    desc.id = id;
     desc.delay = _delay;
     desc.time = 0.f;
     desc.observer = _observer;
     desc.loop = _loop;
     desc.dead = false;
 
-    m_schedulers[id] = desc;
+    m_schedulers.emplace_back( desc );
 
     return id;
 }
 
 void Scheduler::stop( uint32_t _id )
 {
-    TMapSchedulers::iterator it_found = m_schedulers.find( _id );
+    VectorSchedulers::iterator it_found = std::find_if( m_schedulers.begin(), m_schedulers.end(), [_id]( const Description & _desc )
+    {
+        return _desc.id == _id;
+    } );
 
     if( it_found == m_schedulers.end() )
     {
         return;
     }
 
-    Description & desc = it_found->second;
+    Description & desc = *it_found;
 
     desc.dead = true;
 
@@ -46,14 +50,8 @@ void Scheduler::stop( uint32_t _id )
 
 void Scheduler::update( float _time )
 {
-    for( TMapSchedulers::iterator
-        it = m_schedulers.begin(),
-        it_end = m_schedulers.end();
-        it != it_end;
-        ++it )
+    for( Description & desc : m_schedulers )
     {
-        Description & desc = it->second;
-
         if( desc.dead == true )
         {
             continue;
@@ -72,7 +70,7 @@ void Scheduler::update( float _time )
 
                 desc.time -= desc.delay;
 
-                uint32_t id = it->first;
+                uint32_t id = desc.id;
 
                 desc.observer->onScheduleComplete( id );
             }
@@ -83,17 +81,17 @@ void Scheduler::update( float _time )
             {
                 desc.dead = true;
 
-                uint32_t id = it->first;
+                uint32_t id = desc.id;
 
                 desc.observer->onScheduleComplete( id );
             }
         }
     }
 
-    TMapSchedulers::iterator it_erase = m_schedulers.begin();
-    while( (it_erase = std::find_if( it_erase, m_schedulers.end(), []( const TMapSchedulers::value_type & _event )
+    VectorSchedulers::iterator it_erase = std::remove_if( m_schedulers.begin(), m_schedulers.end(), []( const Description & _event )
     {
-        return _event.second.dead;
-    } )) != m_schedulers.end() )
-        m_schedulers.erase( it_erase++ );
+        return _event.dead;
+    } );
+
+    m_schedulers.erase( it_erase, m_schedulers.end() );
 }

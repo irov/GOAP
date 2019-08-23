@@ -22,7 +22,7 @@ namespace GOAP
         : public Transcriptor
     {
     public:
-        explicit TranscriptorParallel( const VectorSources & _sources );
+        explicit TranscriptorParallel( VectorSources && _sources );
         ~TranscriptorParallel() override;
 
     public:

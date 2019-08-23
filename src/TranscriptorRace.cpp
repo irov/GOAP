@@ -14,8 +14,8 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TranscriptorRace::TranscriptorRace( const VectorSources & _sources )
-        : m_sources( _sources )
+    TranscriptorRace::TranscriptorRace( VectorSources && _sources )
+        : m_sources( std::forward<VectorSources &&>( _sources ) )
     {
     }
     //////////////////////////////////////////////////////////////////////////

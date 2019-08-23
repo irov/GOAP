@@ -3,7 +3,42 @@
 #include <stdlib.h>
 
 //////////////////////////////////////////////////////////////////////////
-TaskRoll::TaskRoll( float _delay, uint32_t _roll, uint32_t _max, Scheduler * _scheduler )
+class TaskRoll::MySchedulerObserver
+    : public SchedulerObserver
+{
+public:
+    MySchedulerObserver( TaskRoll * _task, uint32_t _roll, uint32_t _max )
+        : m_task( _task )
+        , m_roll( _roll )
+        , m_max( _max )
+    {
+    }
+
+protected:
+    void onScheduleComplete( uint32_t _id ) override
+    {
+        uint32_t roll = rand() % m_max;
+
+        if( roll != m_roll )
+        {
+            return;
+        }
+
+        m_task->complete();
+    }
+
+    void onScheduleStop( uint32_t _id ) override
+    {
+    }
+
+protected:
+    TaskRoll * m_task;
+
+    uint32_t m_roll;
+    uint32_t m_max;
+};
+//////////////////////////////////////////////////////////////////////////
+TaskRoll::TaskRoll( float _delay, uint32_t _roll, uint32_t _max, const SchedulerPtr & _scheduler )
     : m_delay( _delay )
     , m_roll( _roll )
     , m_max( _max )
@@ -18,7 +53,11 @@ TaskRoll::~TaskRoll()
 //////////////////////////////////////////////////////////////////////////
 bool TaskRoll::_onRun()
 {
-    m_id = m_scheduler->schedule( m_delay, true, this );
+    typedef GOAP::IntrusivePtr<MySchedulerObserver> MySchedulerObserverPtr;
+
+    MySchedulerObserverPtr observer( new MySchedulerObserver( this, m_roll, m_max ) );
+
+    m_id = m_scheduler->schedule( m_delay, true, observer );
 
     return false;
 }
@@ -26,22 +65,4 @@ bool TaskRoll::_onRun()
 void TaskRoll::_onSkip()
 {
     m_scheduler->stop( m_id );
-}
-//////////////////////////////////////////////////////////////////////////
-void TaskRoll::onScheduleComplete( uint32_t _id )
-{
-    uint32_t roll = rand() % m_max;
-
-    if( roll != m_roll )
-    {
-        return;
-    }
-
-    this->complete();
-}
-//////////////////////////////////////////////////////////////////////////
-void TaskRoll::onScheduleStop( uint32_t _id )
-{
-    m_id = 0;
-    m_scheduler = nullptr;
 }

@@ -88,7 +88,7 @@ namespace GOAP
         VectorSources sources;
         this->makeSources_( sources, _count );
 
-        TranscriptorParallelPtr transcriptor( new TranscriptorParallel( sources ) );
+        TranscriptorParallelPtr transcriptor( new TranscriptorParallel( std::move( sources ) ) );
 
         m_transcriptors.push_back( transcriptor );
 
@@ -102,7 +102,7 @@ namespace GOAP
         VectorSources sources;
         this->makeSources_( sources, _count );
 
-        TranscriptorRacePtr transcriptor( new TranscriptorRace( sources ) );
+        TranscriptorRacePtr transcriptor( new TranscriptorRace( std::move( sources ) ) );
 
         m_transcriptors.push_back( transcriptor );
 
@@ -222,7 +222,7 @@ namespace GOAP
         VectorSources sources;
         this->makeSources_( sources, _count );
 
-        TaskSwitchPtr task( new TaskSwitch( _provider, sources ) );
+        TaskSwitchPtr task( new TaskSwitch( _provider, std::move( sources ) ) );
 
         this->addTask( task );
 
@@ -331,6 +331,8 @@ namespace GOAP
 
             current_task = last_task;
         }
+
+        m_transcriptors.clear();
 
         return current_task;
     }

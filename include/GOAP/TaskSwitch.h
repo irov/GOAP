@@ -24,7 +24,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( Task );
 
     public:
-        TaskSwitch( const SwitchProviderPtr & _provider, const VectorSources & _sources );
+        TaskSwitch( const SwitchProviderPtr & _provider, VectorSources && _sources );
         ~TaskSwitch() override;
 
     public:

@@ -39,25 +39,6 @@ namespace GOAP
         return m_cb;
     }
     //////////////////////////////////////////////////////////////////////////
-    void Chain::addFork( const ChainPtr & _fork )
-    {
-        m_forks.push_back( _fork );
-    }
-    //////////////////////////////////////////////////////////////////////////
-    bool Chain::removeFork( const ChainPtr & _fork )
-    {
-        VectorChains::iterator it_found = std::find( m_forks.begin(), m_forks.end(), _fork );
-
-        if( it_found == m_forks.end() )
-        {
-            return false;
-        }
-
-        m_forks.erase( it_found );
-
-        return true;
-    }
-    //////////////////////////////////////////////////////////////////////////
     bool Chain::run()
     {
         ETaskChainState state = this->getState_();
@@ -93,15 +74,6 @@ namespace GOAP
     void Chain::cancel()
     {
         this->incref();
-
-        VectorChains copy_forks = m_forks;
-
-        for( const ChainPtr & fork : copy_forks )
-        {
-            fork->cancel();
-        }
-
-        m_forks.clear();
 
         if( m_state != TASK_CHAIN_STATE_IDLE &&
             m_state != TASK_CHAIN_STATE_CANCEL &&
@@ -142,13 +114,6 @@ namespace GOAP
     void Chain::skip()
     {
         this->incref();
-
-        VectorChains copy_forks = m_forks;
-
-        for( const ChainPtr & fork : copy_forks )
-        {
-            fork->skip();
-        }
 
         if( m_state == TASK_CHAIN_STATE_RUN )
         {
@@ -229,18 +194,8 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Chain::finalize_()
     {
-        VectorChains copy_forks = m_forks;
-
-        for( const ChainPtr & fork : copy_forks )
-        {
-            fork->cancel();
-        }
-
-        m_forks.clear();
-
         m_source = nullptr;
         m_cb = nullptr;
-        //m_runningTasks.clear();
 
         this->setState_( TASK_CHAIN_STATE_FINALIZE );
     }

@@ -20,7 +20,6 @@ namespace GOAP
     typedef IntrusivePtr<class Chain> ChainPtr;
     //////////////////////////////////////////////////////////////////////////
     typedef Vector<TaskPtr> VectorTasks;
-    typedef Vector<ChainPtr> VectorChains;
     //////////////////////////////////////////////////////////////////////////
     class Chain
         : public Factorable
@@ -55,10 +54,6 @@ namespace GOAP
         const ChainProviderPtr & getCallbackProvider() const;
 
     public:
-        void addFork( const ChainPtr & _fork );
-        bool removeFork( const ChainPtr & _fork );
-
-    public:
         bool run();
         void skip();
         void cancel();
@@ -89,7 +84,6 @@ namespace GOAP
         VectorTasks m_runningTasks;
 
         ChainProviderPtr m_cb;
-        VectorChains m_forks;
 
         bool m_complete;
     };
