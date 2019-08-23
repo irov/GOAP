@@ -6,6 +6,7 @@
 */
 
 #include "GOAP/Factorable.h"
+#include "GOAP/Config.h"
 
 namespace GOAP
 {
@@ -30,7 +31,7 @@ namespace GOAP
     {
         if( --m_reference == 0 )
         {
-            this->destroy();
+            delete this;
         }
     }
     //////////////////////////////////////////////////////////////////////////
@@ -39,8 +40,27 @@ namespace GOAP
         return m_reference;
     }
     //////////////////////////////////////////////////////////////////////////
-    void Factorable::destroy()
+    void * Factorable::operator new (size_t _size)
     {
-        delete this;
+        return GOAP_MALLOC( _size );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Factorable::operator delete (void * _ptr, size_t _size)
+    {
+        GOAP_UNUSED( _size );
+
+        GOAP_FREE( _ptr, _size );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void * Factorable::operator new []( size_t _size )
+    {
+        return GOAP_MALLOC( _size );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Factorable::operator delete []( void * _ptr, size_t _size )
+    {
+        GOAP_UNUSED( _size );
+
+        GOAP_FREE( _ptr, _size );
     }
 }

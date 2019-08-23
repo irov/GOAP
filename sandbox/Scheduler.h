@@ -1,6 +1,7 @@
 #pragma once
 
-#include <stdint.h>
+#include "GOAP/Config.h"
+
 #include <map>
 
 class SchedulerObserver

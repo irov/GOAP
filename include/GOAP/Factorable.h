@@ -23,8 +23,11 @@ namespace GOAP
         void decref() override;
         uint32_t getrefcount() const override;
 
-    protected:
-        virtual void destroy();
+    public:
+        void * operator new (size_t _size);
+        void operator delete (void * _ptr, size_t _size);
+        void * operator new[]( size_t _size );
+        void operator delete[]( void * _ptr, size_t _size );
 
     protected:
         uint32_t m_reference;

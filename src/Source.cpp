@@ -70,7 +70,7 @@ namespace GOAP
     {
         this->addTask( _task );
 
-        ArraySources<2> desc = this->addIf( [&_task]()
+        ArraySources<2> desc = this->addIf( [_task]()
         {
             if( _task->isError() == true )
             {
