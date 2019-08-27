@@ -64,6 +64,16 @@ namespace GOAP
             this->addTask( task );
         }
 
+        template<class T, class ... Args>
+        IntrusivePtr<T> emplaceTask( Args && ... _args )
+        {
+            IntrusivePtr<T> task = Helper::makeTask<T>( std::forward<Args &&>( _args ) ... );
+
+            this->addTask( task );
+
+            return task;
+        }
+
     public:
         ArraySources<2> tryTask( const TaskPtr & _task );
 
@@ -80,7 +90,7 @@ namespace GOAP
                 source = this->_provideSource();
             }
 
-            TranscriptorParallelArrayPtr<Count> transcriptor = Helper::makeTranscriptorParallelArray( sources );
+            TranscriptorParallelArrayPtr<Count> transcriptor = Helper::makeTranscriptorParallelArray( std::move( sources ) );
 
             m_transcriptors.push_back( transcriptor );
 
@@ -101,7 +111,7 @@ namespace GOAP
                 source = this->_provideSource();
             }
 
-            TranscriptorRaceArrayPtr<Count> transcriptor = Helper::makeTranscriptorRaceArray( sources );
+            TranscriptorRaceArrayPtr<Count> transcriptor = Helper::makeTranscriptorRaceArray( std::move( sources ) );
 
             m_transcriptors.push_back( transcriptor );
 

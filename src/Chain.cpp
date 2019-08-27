@@ -130,7 +130,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Chain::runTask( const TaskPtr & _task )
     {
-        m_runningTasks.push_back( _task );
+        m_runningTasks.emplace_back( _task );
     }
     //////////////////////////////////////////////////////////////////////////
     void Chain::completeTask( const TaskPtr & _task )

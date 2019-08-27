@@ -25,8 +25,8 @@ namespace GOAP
         : public Transcriptor
     {
     public:
-        TranscriptorParallelArray( const ArraySources<Count> & _sources )
-            : m_sources( _sources )
+        TranscriptorParallelArray( ArraySources<Count> && _sources )
+            : m_sources( std::forward<ArraySources<Count> &&>( _sources ) )
         {
         }
 
@@ -61,9 +61,9 @@ namespace GOAP
     namespace Helper
     {
         template<size_t Count>
-        TranscriptorParallelArrayPtr<Count> makeTranscriptorParallelArray( const ArraySources<Count> & _sources )
+        TranscriptorParallelArrayPtr<Count> makeTranscriptorParallelArray( ArraySources<Count> && _sources )
         {
-            return TranscriptorParallelArrayPtr<Count>::from( new TranscriptorParallelArray<Count>( _sources ) );
+            return TranscriptorParallelArrayPtr<Count>::from( new TranscriptorParallelArray<Count>( std::move( _sources ) ) );
         }
     }
     //////////////////////////////////////////////////////////////////////////

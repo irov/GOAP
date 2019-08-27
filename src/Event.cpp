@@ -30,11 +30,11 @@ namespace GOAP
 
         if( m_process == 0 )
         {
-            m_providers.push_back( desc );
+            m_providers.emplace_back( desc );
         }
         else
         {
-            m_providersAdd.push_back( desc );
+            m_providersAdd.emplace_back( desc );
         }
     }
     //////////////////////////////////////////////////////////////////////////

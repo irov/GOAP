@@ -25,8 +25,8 @@ namespace GOAP
         : public Transcriptor
     {
     public:
-        TranscriptorRaceArray( const ArraySources<Count> & _sources )
-            : m_sources( _sources )
+        TranscriptorRaceArray( ArraySources<Count> && _sources )
+            : m_sources( std::forward<ArraySources<Count> &&>( _sources ) )
         {
         }
 
@@ -61,9 +61,9 @@ namespace GOAP
     namespace Helper
     {
         template<size_t Count>
-        TranscriptorRaceArrayPtr<Count> makeTranscriptorRaceArray( const ArraySources<Count> & _sources )
+        TranscriptorRaceArrayPtr<Count> makeTranscriptorRaceArray( ArraySources<Count> && _sources )
         {
-            return TranscriptorRaceArrayPtr<Count>::from( new TranscriptorRaceArray<Count>( _sources ) );
+            return TranscriptorRaceArrayPtr<Count>::from( new TranscriptorRaceArray<Count>( std::move( _sources ) ) );
         }
     }
     //////////////////////////////////////////////////////////////////////////

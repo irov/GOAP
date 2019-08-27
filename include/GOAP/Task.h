@@ -149,9 +149,9 @@ namespace GOAP
     namespace Helper
     {
         template<class T, class ... Args>
-        TaskPtr makeTask( Args && ... _args )
+        IntrusivePtr<T> makeTask( Args && ... _args )
         {
-            return TaskPtr::from( new T( _args ... ) );
+            return IntrusivePtr<T>::from( new T( std::forward<Args &&>( _args ) ... ) );
         }
     }
 }

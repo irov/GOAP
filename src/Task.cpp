@@ -66,7 +66,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Task::addNext( const TaskPtr & _task )
     {
-        m_nexts.push_back( _task );
+        m_nexts.emplace_back( _task );
         _task->addPrev_( TaskPtr::from( this ) );
     }
     //////////////////////////////////////////////////////////////////////////
@@ -690,7 +690,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Task::addPrev_( const TaskPtr & _task )
     {
-        m_prevs.push_back( _task );
+        m_prevs.emplace_back( _task );
     }
     //////////////////////////////////////////////////////////////////////////
     void Task::removePrev_( const TaskPtr & _task )
