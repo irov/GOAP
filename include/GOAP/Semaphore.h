@@ -52,4 +52,11 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Semaphore> SemaphorePtr;
     //////////////////////////////////////////////////////////////////////////
+    namespace Helper
+    {
+        inline SemaphorePtr makeSemaphore( const EventPtr & _event, int32_t _value )
+        {
+            return SemaphorePtr::from( new Semaphore( _event, _value ) );
+        }
+    }
 }

@@ -46,4 +46,11 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Event> EventPtr;
     //////////////////////////////////////////////////////////////////////////
+    namespace Helper
+    {
+        inline EventPtr makeEvent()
+        {
+            return EventPtr::from( new Event() );
+        }
+    }
 }
