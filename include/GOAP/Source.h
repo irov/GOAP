@@ -15,7 +15,6 @@
 
 #include "GOAP/FunctionProvider.h"
 #include "GOAP/FunctionContextProvider.h"
-#include "GOAP/MethodProvider.h"
 #include "GOAP/CallbackProvider.h"
 #include "GOAP/ScopeProvider.h"
 #include "GOAP/IfProvider.h"
@@ -137,7 +136,7 @@ namespace GOAP
         template<class C, class M, class ... Args>
         void addFunction( C * _self, M _method, Args && ... _args )
         {
-            FunctionProviderPtr provider = Helper::makeMethodProvider( _self, _method, _args ... );
+            FunctionProviderPtr provider = Helper::makeFunctionProvider( [&, _self, _method, _args ...](){ (_self->*_method)(_args ...); } );
 
             this->addFunctionProvider( provider );
         }
@@ -150,6 +149,14 @@ namespace GOAP
             this->addFunctionContextProvider( provider );
         }
 
+        template<class C, class M, class ... Args>
+        void addFunctionContext( C * _self, M _method, Args && ... _args )
+        {
+            FunctionContextProviderPtr provider = Helper::makeFunctionContextProvider( [&, _self, _method, _args ...]( bool _skip ){ (_self->*_method)(_skip, _args ...); } );
+
+            this->addFunctionContextProvider( provider );
+        }
+
         template<class F>
         void addCallback( F _f )
         {
@@ -158,10 +165,26 @@ namespace GOAP
             this->addCallbackProvider( provider );
         }
 
+        template<class C, class M, class ... Args>
+        void addCallback( C * _self, M _method, Args && ... _args )
+        {
+            CallbackProviderPtr provider = Helper::makeCallbackProvider( [&, _self, _method, _args ...]( const CallbackObserverPtr & _callback, bool _skip ){ (_self->*_method)(_callback, _skip, _args ...); } );
+
+            this->addCallbackProvider( provider );
+        }
+
         template<class F>
         void addScope( F _f )
         {
             ScopeProviderPtr provider = Helper::makeScopeProvider( _f );
+
+            this->addScopeProvider( provider );
+        }
+
+        template<class C, class M, class ... Args>
+        void addScope( C * _self, M _method, Args && ... _args )
+        {
+            ScopeProviderPtr provider = Helper::makeScopeProvider( [&, _self, _method, _args ...]( const SourcePtr & _source ){ (_self->*_method)(_source, _args ...); } );
 
             this->addScopeProvider( provider );
         }

@@ -77,7 +77,6 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/Factorable.h
     ${INCLUDE_DIR}/GOAP/FunctionProvider.h
     ${INCLUDE_DIR}/GOAP/FunctionContextProvider.h
-    ${INCLUDE_DIR}/GOAP/MethodProvider.h
     ${INCLUDE_DIR}/GOAP/GOAP.h
     ${INCLUDE_DIR}/GOAP/GuardProvider.h
     ${INCLUDE_DIR}/GOAP/IfProvider.h
