@@ -15,6 +15,7 @@
 
 #include "GOAP/FunctionProvider.h"
 #include "GOAP/FunctionContextProvider.h"
+#include "GOAP/MethodProvider.h"
 #include "GOAP/CallbackProvider.h"
 #include "GOAP/ScopeProvider.h"
 #include "GOAP/IfProvider.h"
@@ -129,6 +130,14 @@ namespace GOAP
         void addFunction( F _f )
         {
             FunctionProviderPtr provider = Helper::makeFunctionProvider( _f );
+
+            this->addFunctionProvider( provider );
+        }
+
+        template<class C, class M, class ... Args>
+        void addFunction( C * _self, M _method, Args && ... _args )
+        {
+            FunctionProviderPtr provider = Helper::makeMethodProvider( _self, _method, _args ... );
 
             this->addFunctionProvider( provider );
         }

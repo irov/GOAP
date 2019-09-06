@@ -45,7 +45,6 @@ namespace GOAP
             return provider;
         }
 
-
     protected:
         EventPtr m_event;
         int32_t m_value;

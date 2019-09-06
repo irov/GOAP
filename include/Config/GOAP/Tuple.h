@@ -7,8 +7,10 @@
 
 #pragma once
 
-#include "GOAP/Chain.h"
-#include "GOAP/Source.h"
-#include "GOAP/Task.h"
-#include "GOAP/Alias.h"
-#include "GOAP/Semaphore.h"
+#include <tuple>
+
+namespace GOAP
+{
+    template<class ... Args>
+    using Tuple = std::tuple<Args...>;
+}

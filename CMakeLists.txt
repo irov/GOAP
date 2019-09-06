@@ -77,6 +77,7 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/Factorable.h
     ${INCLUDE_DIR}/GOAP/FunctionProvider.h
     ${INCLUDE_DIR}/GOAP/FunctionContextProvider.h
+    ${INCLUDE_DIR}/GOAP/MethodProvider.h
     ${INCLUDE_DIR}/GOAP/GOAP.h
     ${INCLUDE_DIR}/GOAP/GuardProvider.h
     ${INCLUDE_DIR}/GOAP/IfProvider.h
@@ -122,6 +123,7 @@ ELSE()
     set( GOAP_HEADERS ${GOAP_HEADERS}
         ${INCLUDE_DIR}/Config/GOAP/Config.h
         ${INCLUDE_DIR}/Config/GOAP/Array.h
+        ${INCLUDE_DIR}/Config/GOAP/Tuple.h
         ${INCLUDE_DIR}/Config/GOAP/Vector.h
         ${INCLUDE_DIR}/Config/GOAP/IntrusivePtrBase.h
         ${INCLUDE_DIR}/Config/GOAP/IntrusivePtr.h
