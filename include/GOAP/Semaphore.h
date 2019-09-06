@@ -36,7 +36,7 @@ namespace GOAP
 
     public:
         template<class F>
-        EventProviderPtr addObserver( F _f )
+        EventProviderPtr addProvider( F _f )
         {
             EventProviderPtr provider = Helper::makeEventProvider( _f );
 

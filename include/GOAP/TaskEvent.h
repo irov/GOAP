@@ -8,40 +8,29 @@
 #pragma once
 
 #include "GOAP/Task.h"
-#include "GOAP/Semaphore.h"
-#include "GOAP/SemaphoreFlags.h"
+#include "GOAP/Event.h"
 
 namespace GOAP
 {
-    class TaskSemaphore
+    class TaskEvent
         : public Task
     {
         GOAP_DECLARE_VISITABLE( Task );
 
     public:
-        TaskSemaphore( const SemaphorePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply );
-        ~TaskSemaphore() override;
+        TaskEvent( const EventPtr & _event );
+        ~TaskEvent() override;
 
     public:
-        bool _onCheck() override;
         bool _onRun() override;
-        void _onComplete() override;
         void _onFinally() override;
         bool _onSkipable() const override;
 
     protected:
-        bool test();
-        void process();
-
-    protected:
-        SemaphorePtr m_semaphore;
-        uint32_t m_flags;
-        int32_t m_test;
-        int32_t m_apply;
-
+        EventPtr m_event;
         EventProviderPtr m_provider;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<TaskSemaphore> TaskSemaphorePtr;
+    typedef IntrusivePtr<TaskEvent> TaskEventPtr;
     //////////////////////////////////////////////////////////////////////////
 }

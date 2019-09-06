@@ -77,7 +77,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskSemaphore::_onRun()
     {
-        m_observer = m_semaphore->addObserver( [this]()
+        m_provider = m_semaphore->addProvider( [this]()
         {
             bool result = this->test();
 
@@ -94,10 +94,10 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void TaskSemaphore::_onFinally()
     {
-        if( m_observer != nullptr )
+        if( m_provider != nullptr )
         {
-            m_semaphore->removeObserverProvider( m_observer );
-            m_observer = nullptr;
+            m_semaphore->removeObserverProvider( m_provider );
+            m_provider = nullptr;
         }
 
         m_semaphore = nullptr;
@@ -164,10 +164,10 @@ namespace GOAP
             return false;
         }
 
-        if( m_observer != nullptr )
+        if( m_provider != nullptr )
         {
-            m_semaphore->removeObserverProvider( m_observer );
-            m_observer = nullptr;
+            m_semaphore->removeObserverProvider( m_provider );
+            m_provider = nullptr;
         }
 
         if( this->isSkip() == false )

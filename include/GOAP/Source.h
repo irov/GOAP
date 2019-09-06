@@ -34,6 +34,7 @@ namespace GOAP
     typedef IntrusivePtr<class Chain> ChainPtr;
     typedef IntrusivePtr<class Source> SourcePtr;
     typedef IntrusivePtr<class Transcriptor> TranscriptorPtr;
+    typedef IntrusivePtr<class Event> EventPtr;
     typedef IntrusivePtr<class Semaphore> SemaphorePtr;
     //////////////////////////////////////////////////////////////////////////
     typedef Vector<SourcePtr> VectorSources;
@@ -295,6 +296,8 @@ namespace GOAP
 
             return source;
         }
+
+        void addEvent( const EventPtr & _event );
 
         void addSemaphore( const SemaphorePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply );
 

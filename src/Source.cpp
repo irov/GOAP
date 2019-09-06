@@ -23,6 +23,7 @@
 #include "GOAP/TaskBlock.h"
 #include "GOAP/TaskWhile.h"
 #include "GOAP/TaskSemaphore.h"
+#include "GOAP/TaskEvent.h"
 #include "GOAP/TaskFor.h"
 
 #include "TranscriptorBase.h"
@@ -122,6 +123,11 @@ namespace GOAP
     void Source::addSource( const SourcePtr & _source )
     {
         this->addTask<TaskSource>( _source );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Source::addEvent( const EventPtr & _event )
+    {
+        this->addTask<TaskEvent>( _event );
     }
     //////////////////////////////////////////////////////////////////////////
     void Source::addSemaphore( const SemaphorePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply )

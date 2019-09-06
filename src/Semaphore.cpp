@@ -48,12 +48,12 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Semaphore::addObserverProvider( const EventProviderPtr & _event )
     {
-        m_event->addObserver( _event );
+        m_event->addProvider( _event );
     }
     //////////////////////////////////////////////////////////////////////////
     void Semaphore::removeObserverProvider( const EventProviderPtr & _event )
     {
-        m_event->removeObserver( _event );
+        m_event->removeProvider( _event );
     }
     //////////////////////////////////////////////////////////////////////////
 }

@@ -24,8 +24,8 @@ namespace GOAP
         ~Event();
 
     public:
-        void addObserver( const EventProviderPtr & _eventProvider );
-        bool removeObserver( const EventProviderPtr & _eventProvider );
+        void addProvider( const EventProviderPtr & _eventProvider );
+        bool removeProvider( const EventProviderPtr & _eventProvider );
 
     public:
         void call();

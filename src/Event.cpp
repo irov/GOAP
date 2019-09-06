@@ -22,7 +22,7 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    void Event::addObserver( const EventProviderPtr & _eventProvider )
+    void Event::addProvider( const EventProviderPtr & _eventProvider )
     {
         ProviderDesc desc;
         desc.provider = _eventProvider;
@@ -38,7 +38,7 @@ namespace GOAP
         }
     }
     //////////////////////////////////////////////////////////////////////////
-    bool Event::removeObserver( const EventProviderPtr & _eventProvider )
+    bool Event::removeProvider( const EventProviderPtr & _eventProvider )
     {
         VectorProviders::iterator it_found_add = std::find_if( m_providersAdd.begin(), m_providersAdd.end(), [&_eventProvider]( const Event::ProviderDesc & _desc )
         {
@@ -104,7 +104,7 @@ namespace GOAP
                 continue;
             }
 
-            this->removeObserver( provider );
+            this->removeProvider( provider );
         }
 
         --m_process;
