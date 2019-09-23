@@ -200,10 +200,30 @@ namespace GOAP
             return desc;
         }
 
+        template<class C, class M, class ... Args>
+        ArraySources<2> addIf( C * _self, M _method, Args && ... _args )
+        {
+            IfProviderPtr provider = Helper::makeIfProvider( [&, _self, _method, _args ...](){ return (_self->*_method)(_args ...); } );
+
+            ArraySources<2> desc = this->addIfProvider( provider );
+
+            return desc;
+        }
+
         template<class F>
         SourcePtr addIfSuccessful( F _f )
         {
             IfProviderPtr provider = Helper::makeIfProvider( _f );
+
+            ArraySources<2> desc = this->addIfProvider( provider );
+
+            return desc[0];
+        }
+
+        template<class C, class M, class ... Args>
+        SourcePtr addIfSuccessful( C * _self, M _method, Args && ... _args )
+        {
+            IfProviderPtr provider = Helper::makeIfProvider( [&, _self, _method, _args ...](){ return (_self->*_method)(_args ...); } );
 
             ArraySources<2> desc = this->addIfProvider( provider );
 
@@ -220,10 +240,30 @@ namespace GOAP
             return desc[1];
         }
 
+        template<class C, class M, class ... Args>
+        SourcePtr addIfFailure( C * _self, M _method, Args && ... _args )
+        {
+            IfProviderPtr provider = Helper::makeIfProvider( [&, _self, _method, _args ...](){ return (_self->*_method)(_args ...); } );
+
+            ArraySources<2> desc = this->addIfProvider( provider );
+
+            return desc[1];
+        }
+
         template<class F>
         ArraySources<2> addUnless( F _f )
         {
             IfProviderPtr provider = Helper::makeIfProvider( _f );
+
+            ArraySources<2> desc = this->addUnlessProvider( provider );
+
+            return desc;
+        }
+
+        template<class C, class M, class ... Args>
+        ArraySources<2> addUnless( C * _self, M _method, Args && ... _args )
+        {
+            IfProviderPtr provider = Helper::makeIfProvider( [&, _self, _method, _args ...](){ return (_self->*_method)(_args ...); } );
 
             ArraySources<2> desc = this->addUnlessProvider( provider );
 
@@ -253,7 +293,17 @@ namespace GOAP
         template<class F>
         SourcePtr addRepeat( F _f )
         {
-            WhileProviderPtr provider = Helper::makeWhileProvider<F>( _f );
+            WhileProviderPtr provider = Helper::makeWhileProvider( _f );
+
+            SourcePtr source = this->addRepeatProvider( provider );
+
+            return source;
+        }
+
+        template<class C, class M, class ... Args>
+        SourcePtr addRepeat( C * _self, M _method, Args && ... _args )
+        {
+            WhileProviderPtr provider = Helper::makeWhileProvider( [&, _self, _method, _args ...]( const SourcePtr & _source ){ return (_self->*_method)(_source, _args ...); } );
 
             SourcePtr source = this->addRepeatProvider( provider );
 
@@ -268,10 +318,26 @@ namespace GOAP
             this->addWhileProvider( provider );
         }
 
+        template<class C, class M, class ... Args>
+        void addWhile( C * _self, M _method, Args && ... _args )
+        {
+            WhileProviderPtr provider = Helper::makeWhileProvider( [&, _self, _method, _args ...]( const SourcePtr & _source ){ return (_self->*_method)(_source, _args ...); } );
+
+            this->addWhileProvider( provider );
+        }
+
         template<class F>
         void addFor( uint32_t _count, F _f )
         {
-            ForProviderPtr provider = Helper::makeForProvider<F>( _f );
+            ForProviderPtr provider = Helper::makeForProvider( _f );
+
+            this->addForProvider( provider, 0, _count );
+        }
+
+        template<class C, class M, class ... Args>
+        void addFor( uint32_t _count, C * _self, M _method, Args && ... _args )
+        {
+            ForProviderPtr provider = Helper::makeForProvider( [&, _self, _method, _args ...]( const SourcePtr & _source, uint32_t _iterator, uint32_t _count ){ return (_self->*_method)(_source, _iterator, _count, _args ...); } );
 
             this->addForProvider( provider, 0, _count );
         }
@@ -291,6 +357,16 @@ namespace GOAP
         const SourcePtr & addEffect( F _f )
         {
             GeneratorProviderPtr provider = Helper::makeGeneratorProvider( _f );
+
+            const SourcePtr & source = this->addEffectProvider( provider );
+
+            return source;
+        }
+
+        template<class C, class M, class ... Args>
+        const SourcePtr & addEffect( C * _self, M _method, Args && ... _args )
+        {
+            GeneratorProviderPtr provider = Helper::makeGeneratorProvider( [&, _self, _method, _args ...]( const SourcePtr & _source ){ (_self->*_method)(_source, _args ...); } );
 
             const SourcePtr & source = this->addEffectProvider( provider );
 
