@@ -271,21 +271,21 @@ namespace GOAP
         }
 
         template<class F>
-        const VectorSources & addSwitch( size_t _count, F _f )
+        const VectorSources & addSwitch( uint32_t _count, F _f )
         {
             SwitchProviderPtr provider = Helper::makeSwitchProvider( _f );
 
-            const VectorSources & sources = this->addSwitchProvider( provider, (uint32_t)_count );
+            const VectorSources & sources = this->addSwitchProvider( provider, _count );
 
             return sources;
         }
 
         template<size_t Count, class F>
-        const VectorSources & addSwitch( size_t _count, F _f )
+        const VectorSources & addSwitch( uint32_t _count, F _f )
         {
             SwitchProviderPtr provider = Helper::makeSwitchProvider( _f );
 
-            const VectorSources & sources = this->addSwitchProvider( provider, (uint32_t)_count );
+            const VectorSources & sources = this->addSwitchProvider( provider, _count );
 
             return sources;
         }
