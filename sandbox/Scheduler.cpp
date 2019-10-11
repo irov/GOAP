@@ -23,13 +23,26 @@ uint32_t Scheduler::schedule( float _delay, bool _loop, const SchedulerObserverP
     desc.loop = _loop;
     desc.dead = false;
 
-    m_schedulers.emplace_back( desc );
+    m_schedulersAdd.emplace_back( desc );
 
     return id;
 }
 
 void Scheduler::stop( uint32_t _id )
 {
+    VectorSchedulers::iterator it_add_found = std::find_if( m_schedulersAdd.begin(), m_schedulersAdd.end(), [_id]( const Description & _desc )
+    {
+        return _desc.id == _id;
+    } );
+
+    if( it_add_found != m_schedulersAdd.end() )
+    {
+        *it_add_found = m_schedulersAdd.back();
+        m_schedulersAdd.pop_back();
+
+        return;
+    }
+
     VectorSchedulers::iterator it_found = std::find_if( m_schedulers.begin(), m_schedulers.end(), [_id]( const Description & _desc )
     {
         return _desc.id == _id;
@@ -50,6 +63,9 @@ void Scheduler::stop( uint32_t _id )
 
 void Scheduler::update( float _time )
 {
+    m_schedulers.insert( m_schedulers.end(), m_schedulersAdd.begin(), m_schedulersAdd.end() );
+    m_schedulersAdd.clear();
+
     for( Description & desc : m_schedulers )
     {
         if( desc.dead == true )

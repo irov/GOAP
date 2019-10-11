@@ -1,9 +1,27 @@
 #include "TaskPrint.h"
 
+#include <stdio.h>
+#include <stdarg.h>
+
 //////////////////////////////////////////////////////////////////////////
-TaskPrint::TaskPrint( const std::string & _message )
-    : m_message( _message )
+TaskPrint::TaskPrint( const char * _format, ... )
 {
+    va_list args;
+    va_start( args, _format );
+
+    int size = vsprintf( m_message, _format, args );
+    
+    va_end( args );
+
+    if( size > 0 )
+    {
+        m_message[size + 0] = '\n';
+        m_message[size + 1] = '\0';
+    }
+    else
+    {
+        m_message[0] = '\0';
+    }
 }
 //////////////////////////////////////////////////////////////////////////
 TaskPrint::~TaskPrint()
@@ -12,9 +30,7 @@ TaskPrint::~TaskPrint()
 //////////////////////////////////////////////////////////////////////////
 bool TaskPrint::_onRun()
 {
-    printf( "%s\n"
-        , m_message.c_str()
-    );
+    printf( m_message );
 
     return true;
 }

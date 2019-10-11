@@ -45,6 +45,7 @@ protected:
     };
 
     typedef GOAP::Vector<Description> VectorSchedulers;
+    VectorSchedulers m_schedulersAdd;
     VectorSchedulers m_schedulers;
 };
 

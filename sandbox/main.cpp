@@ -47,9 +47,7 @@ int main()
 
     for( auto && [source, value] : source->addParallelZip( v ) )
     {
-        std::string msg = std::to_string( value );
-
-        source->addTask<TaskPrint>( msg );
+        source->addTask<TaskPrint>( "zip [%d]", value );
     }
 
     auto [parallel0, parallel1] = source->addParallel<2>();
@@ -146,6 +144,25 @@ int main()
         return true;
     } );
 
+    GOAP::TimerPtr timer = GOAP::Helper::makeTimer();
+
+    source->addGenerator( timer, []( uint32_t _iterator )
+    {
+        if( _iterator == 10 )
+        {
+            return -1.f;
+        }
+
+        return 100.f;
+    }, [sch]( const GOAP::SourcePtr & _source, uint32_t _iterator, float _delay )
+    {
+        _source->addTask<TaskPrint>( "Gen [%d] time (%f) go!", _iterator, _delay );
+        _source->addTask<TaskDelay>( 1000.f, sch );
+        _source->addTask<TaskPrint>( "Gen [%d] time (%f) end!", _iterator, _delay );
+    } );
+
+    source->addTask<TaskPrint>( "Generator [COMPLETE]" );
+
     GOAP::SourcePtr source_until = source->addRepeat( [sch]( const GOAP::SourcePtr & _scope )
     {
         _scope->addTask<TaskDelay>( 1000.f, sch );
@@ -162,6 +179,7 @@ int main()
 
     while( tc->isComplete() == false )
     {
+        timer->update( 100.f );
         sch->update( 100.f );
 
         GOAP_SLEEP( 10 );

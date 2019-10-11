@@ -12,6 +12,7 @@
 #include "GOAP/Vector.h"
 #include "GOAP/Zip.h"
 #include "GOAP/Task.h"
+#include "GOAP/Timer.h"
 
 #include "GOAP/FunctionProvider.h"
 #include "GOAP/FunctionContextProvider.h"
@@ -290,6 +291,14 @@ namespace GOAP
             return sources;
         }
 
+        template<class FD, class FE>
+        void addGenerator( const TimerPtr & _timer, FD _fdelay, FE _fevent )
+        {
+            GeneratorProviderPtr provider = Helper::makeGeneratorProvider( _fdelay, _fevent );
+
+            this->addGeneratorProvider( _timer, provider );
+        }
+
         template<class F>
         SourcePtr addRepeat( F _f )
         {
@@ -352,27 +361,7 @@ namespace GOAP
 
             return source;
         }
-
-        template<class F>
-        const SourcePtr & addEffect( F _f )
-        {
-            GeneratorProviderPtr provider = Helper::makeGeneratorProvider( _f );
-
-            const SourcePtr & source = this->addEffectProvider( provider );
-
-            return source;
-        }
-
-        template<class C, class M, class ... Args>
-        const SourcePtr & addEffect( C * _self, M _method, Args && ... _args )
-        {
-            GeneratorProviderPtr provider = Helper::makeGeneratorProvider( [&, _self, _method, _args ...]( const SourcePtr & _source ){ (_self->*_method)(_source, _args ...); } );
-
-            const SourcePtr & source = this->addEffectProvider( provider );
-
-            return source;
-        }
-
+        
         void addEvent( const EventPtr & _event );
 
         void addSemaphore( const SemaphorePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply );
@@ -455,7 +444,7 @@ namespace GOAP
         SourcePtr addGuardProvider( const GuardProviderPtr & _begin, const GuardProviderPtr & _end );
         void addWhileProvider( const WhileProviderPtr & _provider );
         void addForProvider( const ForProviderPtr & _provider, uint32_t _iterator, uint32_t _count );
-        const SourcePtr & addEffectProvider( const GeneratorProviderPtr & _provider );
+        void addGeneratorProvider( const TimerPtr & _timer, const GeneratorProviderPtr & _provider );
 
     public:
         TaskPtr parse( const ChainPtr & _chain, const TaskPtr & _task );

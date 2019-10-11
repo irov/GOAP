@@ -19,39 +19,47 @@ namespace GOAP
         : public Factorable
     {
     public:
-        virtual void onGenerate( const SourcePtr & _source ) = 0;
+        virtual float onDelay( uint32_t _index ) = 0;
+        virtual void onEvent( const SourcePtr & _source, uint32_t _index, float _time ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<GeneratorProvider> GeneratorProviderPtr;
     //////////////////////////////////////////////////////////////////////////
-    template<class F>
+    template<class FD, class FE>
     class GeneratorProviderT
         : public GeneratorProvider
     {
     public:
-        explicit GeneratorProviderT( F _f )
-            : m_f( _f )
+        explicit GeneratorProviderT( FD _fdelay, FE _fevent )
+            : m_fdelay( _fdelay )
+            , m_fevent( _fevent )
         {
         }
 
     public:
-        void onGenerate( const SourcePtr & _source ) override
+        float onDelay( uint32_t _index ) override
         {
-            m_f( _source );
+            float t = m_fdelay( _index );
+
+            return t;
+        }
+
+        void onEvent( const SourcePtr & _source, uint32_t _index, float _time ) override
+        {
+            m_fevent( _source, _index, _time );
         }
 
     protected:
-        F m_f;
+        FD m_fdelay;
+        FE m_fevent;
     };
     //////////////////////////////////////////////////////////////////////////
     namespace Helper
     {
-        template<class F>
-        GeneratorProviderPtr makeGeneratorProvider( F _f )
+        template<class FD, class FE>
+        GeneratorProviderPtr makeGeneratorProvider( FD _fdelay, FE _fevent )
         {
-            GeneratorProviderPtr provider = new GeneratorProviderT<F>( _f );
-
-            return provider;
+            return GeneratorProviderPtr::from( new GeneratorProviderT<FD, FE>( _fdelay, _fevent ) );;
         }
     }
 }

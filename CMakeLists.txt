@@ -41,6 +41,7 @@ set( GOAP_SOURCES
     ${SOURCE_DIR}/TaskFork.cpp
     ${SOURCE_DIR}/TaskFunction.cpp
     ${SOURCE_DIR}/TaskFunctionContext.cpp
+    ${SOURCE_DIR}/TaskGenerator.cpp
     ${SOURCE_DIR}/TaskGuard.cpp
     ${SOURCE_DIR}/TaskIf.cpp
     ${SOURCE_DIR}/TaskParallelNeck.cpp
@@ -63,6 +64,7 @@ set( GOAP_SOURCES
     ${SOURCE_DIR}/Semaphore.cpp    
     ${SOURCE_DIR}/Event.cpp
     ${SOURCE_DIR}/TaskSemaphore.cpp
+    ${SOURCE_DIR}/Timer.cpp
 )
 
 set( GOAP_HEADERS
@@ -80,6 +82,8 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/FunctionContextProvider.h
     ${INCLUDE_DIR}/GOAP/GOAP.h
     ${INCLUDE_DIR}/GOAP/GuardProvider.h
+    ${INCLUDE_DIR}/GOAP/Timer.h
+	${INCLUDE_DIR}/GOAP/TimerProvider.h
     ${INCLUDE_DIR}/GOAP/IfProvider.h
     ${INCLUDE_DIR}/GOAP/ScopeProvider.h
     ${INCLUDE_DIR}/GOAP/ForProvider.h
@@ -92,6 +96,7 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/TaskFork.h
     ${INCLUDE_DIR}/GOAP/TaskFunction.h
     ${INCLUDE_DIR}/GOAP/TaskFunctionContext.h
+    ${INCLUDE_DIR}/GOAP/TaskGenerator.h
     ${INCLUDE_DIR}/GOAP/TaskGuard.h
     ${INCLUDE_DIR}/GOAP/TaskIf.h
     ${INCLUDE_DIR}/GOAP/TaskParallelNeck.h

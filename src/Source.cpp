@@ -20,6 +20,7 @@
 #include "GOAP/TaskSwitch.h"
 #include "GOAP/TaskFork.h"
 #include "GOAP/TaskGuard.h"
+#include "GOAP/TaskGenerator.h"
 #include "GOAP/TaskBlock.h"
 #include "GOAP/TaskWhile.h"
 #include "GOAP/TaskSemaphore.h"
@@ -224,14 +225,9 @@ namespace GOAP
         this->addTask<TaskFor>( _provider, _iterator, _count );
     }
     //////////////////////////////////////////////////////////////////////////
-    const SourcePtr & Source::addEffectProvider( const GeneratorProviderPtr & _provider )
+    void Source::addGeneratorProvider( const TimerPtr & _timer, const GeneratorProviderPtr & _provider )
     {
-        const VectorSources & race_source = this->addRace( 2 );
-
-        _provider->onGenerate( race_source[0] );
-        race_source[0]->addBlock();
-
-        return race_source[1];
+        this->addTask<TaskGenerator>( _timer, _provider );
     }
     //////////////////////////////////////////////////////////////////////////
     void Source::addFunctionProvider( const FunctionProviderPtr & _provider )
