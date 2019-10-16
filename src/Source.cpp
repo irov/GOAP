@@ -22,6 +22,7 @@
 #include "GOAP/TaskGuard.h"
 #include "GOAP/TaskGenerator.h"
 #include "GOAP/TaskBlock.h"
+#include "GOAP/TaskNoSkip.h"
 #include "GOAP/TaskWhile.h"
 #include "GOAP/TaskSemaphore.h"
 #include "GOAP/TaskEvent.h"
@@ -121,6 +122,11 @@ namespace GOAP
         this->addTask<TaskBlock>();
     }
     //////////////////////////////////////////////////////////////////////////
+    void Source::addNoSkip()
+    {
+        this->addTask<TaskNoSkip>();
+    }
+    //////////////////////////////////////////////////////////////////////////
     void Source::addSource( const SourcePtr & _source )
     {
         this->addTask<TaskSource>( _source );
@@ -204,13 +210,9 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     SourcePtr Source::addGuardProvider( const GuardProviderPtr & _begin, const GuardProviderPtr & _end )
     {
-        const VectorSources & race_source = this->addRace( 2 );
-
-        const SourcePtr & source_guard = race_source[0];
+        auto && [source_guard, source_code] = this->addRace<2>();
 
         source_guard->addTask<TaskGuard>( _begin, _end );
-
-        const SourcePtr & source_code = race_source[1];
 
         return source_code;
     }
@@ -225,9 +227,9 @@ namespace GOAP
         this->addTask<TaskFor>( _provider, _iterator, _count );
     }
     //////////////////////////////////////////////////////////////////////////
-    void Source::addGeneratorProvider( const TimerPtr & _timer, const GeneratorProviderPtr & _provider )
+    void Source::addGeneratorProvider( float _time, uint32_t _iterator, const TimerPtr & _timer, const GeneratorProviderPtr & _provider )
     {
-        this->addTask<TaskGenerator>( _timer, _provider );
+        this->addTask<TaskGenerator>( _time, _iterator, _timer, _provider );
     }
     //////////////////////////////////////////////////////////////////////////
     void Source::addFunctionProvider( const FunctionProviderPtr & _provider )

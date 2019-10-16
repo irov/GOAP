@@ -22,18 +22,19 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( Task );
 
     public:
-        TaskGenerator( const TimerPtr & _timer, const GeneratorProviderPtr & _provider );
+        TaskGenerator( float _time, uint32_t _iterator, const TimerPtr & _timer, const GeneratorProviderPtr & _provider );
         ~TaskGenerator() override;
 
     public:
         bool _onRun() override;
         bool _onFastSkip() override;
+        void _onCancel() override;
         void _onFinalize() override;
 
     protected:
         void onTime( float _time );
 
-    protected:        
+    protected:
         TimerPtr m_timer;
         GeneratorProviderPtr m_provider;
 

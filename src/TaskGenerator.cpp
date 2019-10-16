@@ -15,11 +15,11 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskGenerator::TaskGenerator( const TimerPtr & _timer, const GeneratorProviderPtr & _provider )
-        : m_timer( _timer )
+    TaskGenerator::TaskGenerator( float _time, uint32_t _iterator, const TimerPtr & _timer, const GeneratorProviderPtr & _provider )
+        : m_time( _time )
+        , m_iterator( _iterator )
+        , m_timer( _timer )
         , m_provider( _provider )
-        , m_iterator( 0 )
-        , m_time( 0.f )
     {
     }
     //////////////////////////////////////////////////////////////////////////
@@ -42,50 +42,57 @@ namespace GOAP
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
+    void TaskGenerator::_onCancel()
+    {
+        m_provider = nullptr;
+    }
+    //////////////////////////////////////////////////////////////////////////
     void TaskGenerator::_onFinalize()
     {
         m_provider = nullptr;
 
         m_timer->removeTimerProvider( m_timerProvider );
         m_timerProvider = nullptr;
-        m_timer = nullptr;        
+        m_timer = nullptr;
     }
     //////////////////////////////////////////////////////////////////////////
     void TaskGenerator::onTime( float _time )
     {
         m_time += _time;
 
-        for( ;; )
+        float delay = m_provider->onDelay( m_iterator );
+
+        if( delay <= 0.f )
         {
-            float delay = m_provider->onDelay( m_iterator );
+            this->complete();
 
-            if( delay <= 0.f )
-            {
-                this->complete();
-
-                break;
-            }            
-
-            if( m_time < delay )
-            {
-                break;
-            }
-             
-            SourcePtr source = Helper::makeSource();
-
-            bool skip = this->isSkip();
-            source->setSkip( skip );
-
-            m_provider->onEvent( source, m_iterator, delay );
-
-            if( this->forkSource( source ) == false )
-            {
-                Helper::throw_exception( "TaskFork invalid inject source" );
-            }
-
-            m_time -= delay;
-
-            ++m_iterator;
+            return;
         }
+
+        if( m_time < delay )
+        {
+            return;
+        }
+
+        m_time -= delay;
+
+        uint32_t new_iterator = m_iterator + 1;
+
+        bool skip = this->isSkip();
+
+        SourcePtr source = Helper::makeSource();
+        source->setSkip( skip );
+
+        auto && [source_generator, source_fork] = source->addParallel<2>();
+
+        source_generator->addGeneratorProvider( m_time, new_iterator, m_timer, m_provider );
+
+        SourcePtr source_event = source_fork->addFork();
+
+        m_provider->onEvent( source_event, m_iterator, delay );
+
+        this->injectSource( source );
+
+        this->complete();
     }
 }

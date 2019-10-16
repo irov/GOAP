@@ -124,6 +124,7 @@ namespace GOAP
 
         SourcePtr addFork();
         void addBlock();
+        void addNoSkip();
 
         void addSource( const SourcePtr & _source );
 
@@ -296,7 +297,7 @@ namespace GOAP
         {
             GeneratorProviderPtr provider = Helper::makeGeneratorProvider( _fdelay, _fevent );
 
-            this->addGeneratorProvider( _timer, provider );
+            this->addGeneratorProvider( 0.f, 0, _timer, provider );
         }
 
         template<class F>
@@ -444,7 +445,7 @@ namespace GOAP
         SourcePtr addGuardProvider( const GuardProviderPtr & _begin, const GuardProviderPtr & _end );
         void addWhileProvider( const WhileProviderPtr & _provider );
         void addForProvider( const ForProviderPtr & _provider, uint32_t _iterator, uint32_t _count );
-        void addGeneratorProvider( const TimerPtr & _timer, const GeneratorProviderPtr & _provider );
+        void addGeneratorProvider( float _time, uint32_t _iterator, const TimerPtr & _timer, const GeneratorProviderPtr & _provider );
 
     public:
         TaskPtr parse( const ChainPtr & _chain, const TaskPtr & _task );

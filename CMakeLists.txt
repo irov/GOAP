@@ -37,6 +37,7 @@ set( GOAP_SOURCES
     ${SOURCE_DIR}/Task.cpp
     ${SOURCE_DIR}/TaskCallback.cpp
     ${SOURCE_DIR}/TaskBlock.cpp
+    ${SOURCE_DIR}/TaskNoSkip.cpp
     ${SOURCE_DIR}/TaskDummy.cpp
     ${SOURCE_DIR}/TaskFork.cpp
     ${SOURCE_DIR}/TaskFunction.cpp
@@ -92,6 +93,7 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/Task.h
     ${INCLUDE_DIR}/GOAP/TaskCallback.h
     ${INCLUDE_DIR}/GOAP/TaskBlock.h
+    ${INCLUDE_DIR}/GOAP/TaskNoSkip.h
     ${INCLUDE_DIR}/GOAP/TaskDummy.h
     ${INCLUDE_DIR}/GOAP/TaskFork.h
     ${INCLUDE_DIR}/GOAP/TaskFunction.h
