@@ -382,57 +382,57 @@ namespace GOAP
 
     public:
         template<class C>
-        Zip<VectorSources::const_iterator, typename C::iterator> addParallelZip( C & _c )
+        Zip<SourcePtr, VectorSources::const_iterator, typename C::iterator> addParallelZip( C & _c )
         {
             typename C::size_type zip_size = _c.size();
             const VectorSources & parallel_sources = this->addParallel( (uint32_t)zip_size );
 
-            return Zip<VectorSources::const_iterator, typename C::iterator>( parallel_sources.begin(), parallel_sources.end(), _c.begin(), _c.end() );
+            return Helper::makeZip<SourcePtr>( parallel_sources.begin(), parallel_sources.end(), _c.begin(), _c.end() );
         }
 
         template<class C>
-        Zip<VectorSources::const_iterator, typename C::const_iterator> addParallelZip( const C & _c )
+        Zip<SourcePtr, VectorSources::const_iterator, typename C::const_iterator> addParallelZip( const C & _c )
         {
             typename C::size_type zip_size = _c.size();
             const VectorSources & parallel_sources = this->addParallel( (uint32_t)zip_size );
 
-            return Zip<VectorSources::const_iterator, typename C::const_iterator>( parallel_sources.begin(), parallel_sources.end(), _c.begin(), _c.end() );
+            return Helper::makeZip<SourcePtr>( parallel_sources.begin(), parallel_sources.end(), _c.begin(), _c.end() );
         }
 
         template<class C>
-        Zip<VectorSources::const_iterator, typename C::iterator> addRaceZip( C & _c )
+        Zip<SourcePtr, VectorSources::const_iterator, typename C::iterator> addRaceZip( C & _c )
         {
             typename C::size_type zip_size = _c.size();
             const VectorSources & parallel_sources = this->addRace( (uint32_t)zip_size );
 
-            return Zip<VectorSources::const_iterator, typename C::iterator>( parallel_sources.begin(), parallel_sources.end(), _c.begin(), _c.end() );
+            return Helper::makeZip<SourcePtr>( parallel_sources.begin(), parallel_sources.end(), _c.begin(), _c.end() );
         }
 
         template<class C>
-        Zip<VectorSources::const_iterator, typename C::const_iterator> addRaceZip( const C & _c )
+        Zip<SourcePtr, VectorSources::const_iterator, typename C::const_iterator> addRaceZip( const C & _c )
         {
             typename C::size_type zip_size = _c.size();
             const VectorSources & parallel_sources = this->addRace( (uint32_t)zip_size );
 
-            return Zip<VectorSources::const_iterator, typename C::const_iterator>( parallel_sources.begin(), parallel_sources.end(), _c.begin(), _c.end() );
+            return Helper::makeZip<SourcePtr>( parallel_sources.begin(), parallel_sources.end(), _c.begin(), _c.end() );
         }
 
         template<class C, class F>
-        Zip<VectorSources::const_iterator, typename C::iterator> addSwitchZip( C & _c, F _f )
+        Zip<SourcePtr, VectorSources::const_iterator, typename C::iterator> addSwitchZip( C & _c, F _f )
         {
             typename C::size_type zip_size = _c.size();
             const VectorSources & parallel_sources = this->addSwitch( (uint32_t)zip_size, _f );
 
-            return Zip<VectorSources::const_iterator, typename C::iterator>( parallel_sources.begin(), parallel_sources.end(), _c.begin(), _c.end() );
+            return Helper::makeZip<SourcePtr>( parallel_sources.begin(), parallel_sources.end(), _c.begin(), _c.end() );
         }
 
         template<class C, class F>
-        Zip<VectorSources::const_iterator, typename C::const_iterator> addSwitchZip( const C & _c, F _f )
+        Zip<SourcePtr, VectorSources::const_iterator, typename C::const_iterator> addSwitchZip( const C & _c, F _f )
         {
             typename C::size_type zip_size = _c.size();
             const VectorSources & parallel_sources = this->addSwitch( (uint32_t)zip_size, _f );
 
-            return Zip<VectorSources::const_iterator, typename C::const_iterator>( parallel_sources.begin(), parallel_sources.end(), _c.begin(), _c.end() );
+            return Helper::makeZip<SourcePtr>( parallel_sources.begin(), parallel_sources.end(), _c.begin(), _c.end() );
         }
 
     public:

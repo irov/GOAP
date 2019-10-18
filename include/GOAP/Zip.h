@@ -9,27 +9,12 @@
 
 #include "GOAP/IntrusivePtr.h"
 
+#include <tuple>
+
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Source> SourcePtr;
-    //////////////////////////////////////////////////////////////////////////
-    template<class Source, class T>
-    class ZipPair
-    {
-    public:
-        ZipPair( const SourcePtr & _source, const T & _value )
-            : source( _source )
-            , value( _value )
-        {
-        }
-
-    public:
-        const SourcePtr & source;
-        const T & value;
-    };
-    //////////////////////////////////////////////////////////////////////////
-    template<class L, class R>
+    template<class S, class L, class R>
     class Zip
     {
     public:
@@ -98,9 +83,9 @@ namespace GOAP
             }
 
         public:
-            ZipPair<typename L::value_type, typename R::value_type> operator * () const
+            std::tuple<S, typename R::value_type> operator * () const
             {
-                return ZipPair<typename L::value_type, typename R::value_type>( *this->first, *this->second );
+                return std::forward_as_tuple( *this->first, *this->second );
             }
 
         protected:
@@ -129,10 +114,10 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     namespace Helper
     {
-        template<class L, class R>
-        Zip<L, R> makeZip( L _lbegin, L _lend, R _rbegin, R _rend )
+        template<class S, class L, class R>
+        Zip<S, L, R> makeZip( L _lbegin, L _lend, R _rbegin, R _rend )
         {
-            return Zip<L, R>( _lbegin, _lend, _rbegin, _rend );
+            return Zip<S, L, R>( _lbegin, _lend, _rbegin, _rend );
         }
     }
 }
