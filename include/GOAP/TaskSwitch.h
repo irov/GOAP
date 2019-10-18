@@ -31,7 +31,7 @@ namespace GOAP
         const VectorSources & getSources() const;
 
     public:
-        bool _onRun() override;
+        bool _onRun( NodeInterface * _task ) override;
         void _onFinally() override;
 
     protected:

@@ -13,11 +13,13 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     namespace Detail
     {
-        void generateRaceSource( const ViewSources & _sources, const ChainPtr & _chain, const TaskPtr & _task, const TaskPtr & _neck )
+        void generateRaceSource( const ViewSources & _sources, const ChainPtr & _chain, const NodePtr & _task, const NodePtr & _neck )
         {
-            for( const SourcePtr & parallel_source : _sources )
+            for( const SourcePtr & source : _sources )
             {
-                TaskPtr new_task = parallel_source->parse( _chain, _task );
+                const SourceProviderInterfacePtr & provider = source->getSourceProvider();
+
+                NodePtr new_task = provider->parse( _chain, _task );
 
                 new_task->addNext( _neck );
             }

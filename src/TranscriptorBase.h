@@ -7,23 +7,23 @@
 
 #pragma once
 
-#include "GOAP/Transcriptor.h"
+#include "GOAP/TranscriptorInterface.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     class TranscriptorBase
-        : public Transcriptor
+        : public TranscriptorInterface
     {
     public:
-        explicit TranscriptorBase( const TaskPtr & _task );
+        explicit TranscriptorBase( const NodePtr & _task );
         ~TranscriptorBase() override;
 
     public:
-        TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) override;
+        NodePtr generate( const ChainPtr & _chain, const NodePtr & _task ) override;
 
     protected:
-        TaskPtr m_task;
+        NodePtr m_task;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TranscriptorBase> TranscriptorBasePtr;

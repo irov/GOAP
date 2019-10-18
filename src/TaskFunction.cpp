@@ -21,8 +21,10 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskFunction::_onRun()
+    bool TaskFunction::_onRun( NodeInterface * _task )
     {
+        (void)_task;
+
         m_provider->onFunction();
 
         return true;

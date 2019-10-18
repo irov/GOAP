@@ -18,13 +18,17 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskRaceNeck::_onCheckRun() const
+    bool TaskRaceNeck::_onCheckRun( const NodeInterface * _task ) const
     {
+        (void)_task;
+
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskRaceNeck::_onCheckSkip() const
+    bool TaskRaceNeck::_onCheckSkip( const NodeInterface * _task ) const
     {
+        (void)_task;
+
         return true;
     }
 }

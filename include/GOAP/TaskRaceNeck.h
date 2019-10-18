@@ -21,8 +21,8 @@ namespace GOAP
         ~TaskRaceNeck() override;
 
     protected:
-        bool _onCheckRun() const override;
-        bool _onCheckSkip() const override;
+        bool _onCheckRun( const NodeInterface * _task ) const override;
+        bool _onCheckSkip( const NodeInterface * _task ) const override;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TaskRaceNeck> TaskRaceNeckPtr;

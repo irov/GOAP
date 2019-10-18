@@ -13,16 +13,27 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Task> TaskPtr;
+    typedef IntrusivePtr<class Node> NodePtr;
+    typedef IntrusivePtr<class TranscriptorInterface> TranscriptorInterfacePtr;
     typedef IntrusivePtr<class Chain> ChainPtr;
     //////////////////////////////////////////////////////////////////////////
-    class Transcriptor
+    class SourceProviderInterface
         : public Factorable
     {
     public:
-        virtual TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) = 0;
+        virtual void setSkip( bool _skip ) = 0;
+        virtual bool isSkip() const = 0;
+
+    public:
+        virtual bool empty() const = 0;
+
+    public:
+        virtual void addTranscriptor( const TranscriptorInterfacePtr & _transcriptor ) = 0;
+
+    public:
+        virtual NodePtr parse( const ChainPtr & _chain, const NodePtr & _task ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<Transcriptor> TranscriptorPtr;
+    typedef IntrusivePtr<SourceProviderInterface> SourceProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
 }

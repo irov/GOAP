@@ -1,11 +1,13 @@
 #include "TaskDelay.h"
 
+#include "GOAP/Node.h"
+
 //////////////////////////////////////////////////////////////////////////
 class TaskDelay::MySchedulerObserver
     : public SchedulerObserver
 {
 public:
-    MySchedulerObserver( TaskDelay * _task )
+    MySchedulerObserver( GOAP::NodeInterface * _task )
         : m_task( _task )
     {
     }
@@ -21,7 +23,7 @@ protected:
     }
 
 protected:
-    TaskDelay * m_task;
+    GOAP::NodeInterfacePtr m_task;
 };
 //////////////////////////////////////////////////////////////////////////
 TaskDelay::TaskDelay( float _delay, const SchedulerPtr & _scheduler )
@@ -35,11 +37,11 @@ TaskDelay::~TaskDelay()
 {
 }
 //////////////////////////////////////////////////////////////////////////
-bool TaskDelay::_onRun()
+bool TaskDelay::_onRun( GOAP::NodeInterface * _task )
 {
     typedef GOAP::IntrusivePtr<MySchedulerObserver> MySchedulerObserverPtr;
 
-    MySchedulerObserverPtr observer( new MySchedulerObserver( this ) );
+    MySchedulerObserverPtr observer( new MySchedulerObserver( _task ) );
 
     m_id = m_scheduler->schedule( m_delay, false, observer );
 

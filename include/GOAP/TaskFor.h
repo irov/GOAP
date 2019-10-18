@@ -25,7 +25,7 @@ namespace GOAP
 
     public:
         bool _onCheck() override;
-        bool _onRun() override;
+        bool _onRun( NodeInterface * _task ) override;
         void _onFinally() override;
 
     protected:

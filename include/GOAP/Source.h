@@ -7,11 +7,12 @@
 
 #pragma once
 
-#include "GOAP/Factorable.h"
-#include "GOAP/IntrusivePtr.h"
+#include "GOAP/SourceInterface.h"
+#include "GOAP/SourceProviderInterface.h"
+
 #include "GOAP/Vector.h"
 #include "GOAP/Zip.h"
-#include "GOAP/Task.h"
+#include "GOAP/Node.h"
 #include "GOAP/Timer.h"
 
 #include "GOAP/FunctionProvider.h"
@@ -31,37 +32,36 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Task> TaskPtr;
     typedef IntrusivePtr<class Chain> ChainPtr;
     typedef IntrusivePtr<class Source> SourcePtr;
-    typedef IntrusivePtr<class Transcriptor> TranscriptorPtr;
+    typedef IntrusivePtr<class TranscriptorInterface> TranscriptorInterfacePtr;
     typedef IntrusivePtr<class Event> EventPtr;
     typedef IntrusivePtr<class Semaphore> SemaphorePtr;
     //////////////////////////////////////////////////////////////////////////
     typedef Vector<SourcePtr> VectorSources;
-    typedef Vector<TranscriptorPtr> VectorTranscriptor;
     //////////////////////////////////////////////////////////////////////////
     class Source
-        : public Factorable
+        : public SourceInterface
     {
     public:
-        Source();
+        Source( const SourceProviderInterfacePtr & _provider );
         ~Source() override;
 
     public:
-        void setSkip( bool _skip );
-        bool isSkip() const;
+        const SourceProviderInterfacePtr & getSourceProvider() const override;
 
     public:
-        bool empty() const;
+        SourcePtr makeSource();
+        NodePtr makeNode( const TaskInterfacePtr & _provider );
+        void addTask( const NodePtr & _task );
 
     public:
-        void addTask( const TaskPtr & _task );
-
         template<class T, class ... Args>
         void addTask( Args && ... _args )
         {
-            TaskPtr task = Helper::makeTask<T>( _args ... );
+            TaskInterfacePtr provider = Helper::makeTask<T>( std::forward<Args &&>( _args ) ... );
+
+            NodePtr task = this->makeNode( provider );
 
             this->addTask( task );
         }
@@ -69,15 +69,17 @@ namespace GOAP
         template<class T, class ... Args>
         IntrusivePtr<T> emplaceTask( Args && ... _args )
         {
-            IntrusivePtr<T> task = Helper::makeTask<T>( std::forward<Args &&>( _args ) ... );
+            IntrusivePtr<T> provider = Helper::makeTask<T>( std::forward<Args &&>( _args ) ... );
+
+            NodePtr task = this->makeNode( provider );
 
             this->addTask( task );
 
-            return task;
+            return provider;
         }
 
     public:
-        ArraySources<2> tryTask( const TaskPtr & _task );
+        ArraySources<2> tryTask( const NodePtr & _task );
 
     public:
         const VectorSources & addParallel( uint32_t _count );
@@ -89,12 +91,12 @@ namespace GOAP
 
             for( SourcePtr & source : sources )
             {
-                source = this->_provideSource();
+                source = this->makeSource();
             }
 
             TranscriptorParallelArrayPtr<Count> transcriptor = Helper::makeTranscriptorParallelArray( std::move( sources ) );
 
-            m_transcriptors.push_back( transcriptor );
+            m_provider->addTranscriptor( transcriptor );
 
             const ArraySources<Count> & transcriptor_sources = transcriptor->getSources();
 
@@ -110,12 +112,12 @@ namespace GOAP
 
             for( SourcePtr & source : sources )
             {
-                source = this->_provideSource();
+                source = Helper::makeSource();
             }
 
             TranscriptorRaceArrayPtr<Count> transcriptor = Helper::makeTranscriptorRaceArray( std::move( sources ) );
 
-            m_transcriptors.push_back( transcriptor );
+            m_provider->addTranscriptor( transcriptor );
 
             const ArraySources<Count> & transcriptor_sources = transcriptor->getSources();
 
@@ -447,29 +449,17 @@ namespace GOAP
         void addForProvider( const ForProviderPtr & _provider, uint32_t _iterator, uint32_t _count );
         void addGeneratorProvider( float _time, uint32_t _iterator, const TimerPtr & _timer, const GeneratorProviderPtr & _provider );
 
-    public:
-        TaskPtr parse( const ChainPtr & _chain, const TaskPtr & _task );
-
-    protected:
-        virtual SourcePtr _provideSource();
-
     protected:
         void makeSources_( VectorSources & _sources, uint32_t _count );
 
     protected:
-        VectorTranscriptor m_transcriptors;
-
-        bool m_skip;
+        SourceProviderInterfacePtr m_provider;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Source> SourcePtr;
     //////////////////////////////////////////////////////////////////////////
     namespace Helper
     {
-        inline SourcePtr makeSource()
-        {
-            return SourcePtr::from( new Source() );
-        }
+        SourcePtr makeSource();
     }
-    //////////////////////////////////////////////////////////////////////////
 }

@@ -17,7 +17,7 @@ namespace GOAP
     typedef IntrusivePtr<class GeneratorProvider> GeneratorProviderPtr;    
     //////////////////////////////////////////////////////////////////////////
     class TaskGenerator
-        : public Task        
+        : public Task
     {
         GOAP_DECLARE_VISITABLE( Task );
 
@@ -26,13 +26,13 @@ namespace GOAP
         ~TaskGenerator() override;
 
     public:
-        bool _onRun() override;
+        bool _onRun( NodeInterface * _task ) override;
         bool _onFastSkip() override;
         void _onCancel() override;
         void _onFinalize() override;
 
     protected:
-        void onTime( float _time );
+        void onTime( NodeInterface * _task, float _time );
 
     protected:
         TimerPtr m_timer;

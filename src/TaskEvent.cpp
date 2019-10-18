@@ -8,6 +8,8 @@
 #include "GOAP/TaskEvent.h"
 #include "GOAP/EventProvider.h"
 
+#include "GOAP/Node.h"
+
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
@@ -20,11 +22,11 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskEvent::_onRun()
+    bool TaskEvent::_onRun( NodeInterface * _task )
     {
-        EventProviderPtr provider = Helper::makeEventProvider( [this]()
+        EventProviderPtr provider = Helper::makeEventProvider( [_task]()
         {
-            this->complete();
+            _task->complete();
 
             return true;
         } );

@@ -1,5 +1,7 @@
 #include "TaskRoll.h"
 
+#include "GOAP/Node.h"
+
 #include <stdlib.h>
 
 //////////////////////////////////////////////////////////////////////////
@@ -7,7 +9,7 @@ class TaskRoll::MySchedulerObserver
     : public SchedulerObserver
 {
 public:
-    MySchedulerObserver( TaskRoll * _task, uint32_t _roll, uint32_t _max )
+    MySchedulerObserver( GOAP::NodeInterface * _task, uint32_t _roll, uint32_t _max )
         : m_task( _task )
         , m_roll( _roll )
         , m_max( _max )
@@ -32,7 +34,7 @@ protected:
     }
 
 protected:
-    TaskRoll * m_task;
+    GOAP::NodeInterfacePtr m_task;
 
     uint32_t m_roll;
     uint32_t m_max;
@@ -51,11 +53,11 @@ TaskRoll::~TaskRoll()
 {
 }
 //////////////////////////////////////////////////////////////////////////
-bool TaskRoll::_onRun()
+bool TaskRoll::_onRun( GOAP::NodeInterface * _task )
 {
     typedef GOAP::IntrusivePtr<MySchedulerObserver> MySchedulerObserverPtr;
 
-    MySchedulerObserverPtr observer( new MySchedulerObserver( this, m_roll, m_max ) );
+    MySchedulerObserverPtr observer( new MySchedulerObserver( _task, m_roll, m_max ) );
 
     m_id = m_scheduler->schedule( m_delay, true, observer );
 

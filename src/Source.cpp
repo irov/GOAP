@@ -6,8 +6,9 @@
 */
 
 #include "GOAP/Source.h"
+#include "GOAP/SourceProvider.h"
 
-#include "GOAP/Task.h"
+#include "GOAP/Node.h"
 #include "GOAP/Chain.h"
 
 #include "GOAP/TaskFunction.h"
@@ -36,8 +37,8 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    Source::Source()
-        : m_skip( false )
+    Source::Source( const SourceProviderInterfacePtr & _provider )
+        : m_provider( _provider )
     {
     }
     //////////////////////////////////////////////////////////////////////////
@@ -45,29 +46,65 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    void Source::setSkip( bool _skip )
+    const SourceProviderInterfacePtr & Source::getSourceProvider() const
     {
-        m_skip = _skip;
+        return m_provider;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool Source::isSkip() const
+    SourcePtr Source::makeSource()
     {
-        return m_skip;
-    }
-    //////////////////////////////////////////////////////////////////////////
-    bool Source::empty() const
-    {
-        bool result = m_transcriptors.empty();
+        SourcePtr source = Helper::makeSource();
 
-        return result;
+        const SourceProviderInterfacePtr & provider = source->getSourceProvider();
+
+        const SourceProviderInterfacePtr & current = this->getSourceProvider();
+        bool skip = current->isSkip();
+        provider->setSkip( skip );
+
+        return source;
     }
     //////////////////////////////////////////////////////////////////////////
-    void Source::addTask( const TaskPtr & _task )
-    {        
-        m_transcriptors.emplace_back( new TranscriptorBase( _task ) );
+    NodePtr Source::makeNode( const TaskInterfacePtr & _task )
+    {
+        NodePtr task( new Node( _task ) );
+
+        return task;
     }
     //////////////////////////////////////////////////////////////////////////
-    ArraySources<2> Source::tryTask( const TaskPtr & _task )
+    void Source::addTask( const NodePtr & _task )
+    {
+        m_provider->addTranscriptor( Helper::makeTranscriptor<TranscriptorBase>( _task ) );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    const VectorSources & Source::addParallel( uint32_t _count )
+    {
+        VectorSources sources;
+        this->makeSources_( sources, _count );
+
+        TranscriptorParallelPtr transcriptor = Helper::makeTranscriptor<TranscriptorParallel>( std::move( sources ) );
+        
+        m_provider->addTranscriptor( transcriptor );
+
+        const VectorSources & transcriptor_sources = transcriptor->getSources();
+
+        return transcriptor_sources;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    const VectorSources & Source::addRace( uint32_t _count )
+    {
+        VectorSources sources;
+        this->makeSources_( sources, _count );
+
+        TranscriptorRacePtr transcriptor = Helper::makeTranscriptor<TranscriptorRace>( std::move( sources ) );
+
+        m_provider->addTranscriptor( transcriptor );
+
+        const VectorSources & transcriptor_sources = transcriptor->getSources();
+
+        return transcriptor_sources;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    ArraySources<2> Source::tryTask( const NodePtr & _task )
     {
         this->addTask( _task );
 
@@ -84,33 +121,9 @@ namespace GOAP
         return desc;
     }
     //////////////////////////////////////////////////////////////////////////
-    const VectorSources & Source::addParallel( uint32_t _count )
-    {
-        VectorSources sources;
-        this->makeSources_( sources, _count );
-
-        TranscriptorParallelPtr transcriptor = m_transcriptors.emplace_back( new TranscriptorParallel( std::move( sources ) ) );
-
-        const VectorSources & transcriptor_sources = transcriptor->getSources();
-
-        return transcriptor_sources;
-    }
-    //////////////////////////////////////////////////////////////////////////
-    const VectorSources & Source::addRace( uint32_t _count )
-    {
-        VectorSources sources;
-        this->makeSources_( sources, _count );
-
-        TranscriptorRacePtr transcriptor = m_transcriptors.emplace_back( new TranscriptorRace( std::move( sources ) ) );
-
-        const VectorSources & transcriptor_sources = transcriptor->getSources();
-
-        return transcriptor_sources;
-    }
-    //////////////////////////////////////////////////////////////////////////
     SourcePtr Source::addFork()
     {
-        SourcePtr source = this->_provideSource();
+        SourcePtr source = this->makeSource();
 
         this->addTask<TaskFork>( source );
 
@@ -189,7 +202,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     SourcePtr Source::addRepeatProvider( const WhileProviderPtr & _provider )
     {
-        SourcePtr source_until = this->_provideSource();
+        SourcePtr source_until = this->makeSource();
 
         this->addTask<TaskRepeat>( _provider, source_until );
 
@@ -254,8 +267,8 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     ArraySources<2> Source::addIfProvider( const IfProviderPtr & _provider )
     {
-        SourcePtr source_true = this->_provideSource();
-        SourcePtr source_false = this->_provideSource();
+        SourcePtr source_true = this->makeSource();
+        SourcePtr source_false = this->makeSource();
 
         this->addTask<TaskIf>( _provider, source_true, source_false );
 
@@ -264,33 +277,12 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     ArraySources<2> Source::addUnlessProvider( const IfProviderPtr & _provider )
     {
-        SourcePtr source_true = this->_provideSource();
-        SourcePtr source_false = this->_provideSource();
-                
+        SourcePtr source_true = this->makeSource();
+        SourcePtr source_false = this->makeSource();
+
         this->addTask<TaskIf>( _provider, source_true, source_false );
 
         return ArraySources<2>{source_false, source_true};
-    }
-    //////////////////////////////////////////////////////////////////////////
-    TaskPtr Source::parse( const ChainPtr & _chain, const TaskPtr & _task )
-    {
-        TaskPtr current_task = _task;
-
-        for( const TranscriptorPtr & description : m_transcriptors )
-        {
-            TaskPtr last_task = description->generate( _chain, current_task );
-
-            current_task = last_task;
-        }
-
-        m_transcriptors.clear();
-
-        return current_task;
-    }
-    //////////////////////////////////////////////////////////////////////////
-    SourcePtr Source::_provideSource()
-    {
-        return Helper::makeSource();
     }
     //////////////////////////////////////////////////////////////////////////
     void Source::makeSources_( VectorSources & _sources, uint32_t _count )
@@ -299,7 +291,17 @@ namespace GOAP
 
         for( SourcePtr & source : _sources )
         {
-            source = this->_provideSource();
+            source = this->makeSource();
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////
+    namespace Helper
+    {
+        SourcePtr makeSource()
+        {
+            SourceProviderPtr provider = Helper::makeSourceProvider();
+
+            return SourcePtr::from( new Source( provider ) );
         }
     }
 }

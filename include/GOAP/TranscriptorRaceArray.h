@@ -9,7 +9,7 @@
 
 #include "GOAP/ArraySources.h"
 #include "GOAP/ViewSources.h"
-#include "GOAP/Transcriptor.h"
+#include "GOAP/TranscriptorInterface.h"
 #include "GOAP/TaskRaceNeck.h"
 
 namespace GOAP
@@ -17,12 +17,12 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     namespace Detail
     {
-        void generateRaceSource( const ViewSources & _sources, const ChainPtr & _chain, const TaskPtr & _task, const TaskPtr & _neck );
+        void generateRaceSource( const ViewSources & _sources, const ChainPtr & _chain, const NodePtr & _task, const NodePtr & _neck );
     }
     //////////////////////////////////////////////////////////////////////////
     template<size_t Count>
     class TranscriptorRaceArray
-        : public Transcriptor
+        : public TranscriptorInterface
     {
     public:
         TranscriptorRaceArray( ArraySources<Count> && _sources )
@@ -41,9 +41,19 @@ namespace GOAP
         }
 
     public:
-        TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) override
+        NodePtr generate( const ChainPtr & _chain, const NodePtr & _task ) override
         {
-            TaskPtr task_parallel_neck = Helper::makeTask<TaskRaceNeck>();
+            if( m_sources.empty() == true )
+            {
+                return _task;
+            }
+
+            const SourceInterfacePtr & source = _chain->getSource();
+
+            TaskInterfacePtr provider_parallel_neck = Helper::makeTask<TaskRaceNeck>();
+
+            NodePtr task_parallel_neck = source->makeNode( provider_parallel_neck );
+
             task_parallel_neck->setChain( _chain );
 
             Detail::generateRaceSource( m_sources, _chain, _task, task_parallel_neck );
@@ -52,6 +62,7 @@ namespace GOAP
         }
 
     protected:
+        SourcePtr m_source;
         ArraySources<Count> m_sources;
     };
     //////////////////////////////////////////////////////////////////////////

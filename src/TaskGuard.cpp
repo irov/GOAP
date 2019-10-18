@@ -21,8 +21,10 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskGuard::_onRun()
+    bool TaskGuard::_onRun( NodeInterface * _task )
     {
+        (void)_task;
+
         m_begin->onGuard();
 
         return false;

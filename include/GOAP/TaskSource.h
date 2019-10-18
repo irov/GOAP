@@ -12,23 +12,23 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Source> SourcePtr;
+    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class TaskSource
         : public Task
     {
-        GOAP_DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        explicit TaskSource( const SourcePtr & _source );
+        explicit TaskSource( const SourceInterfacePtr & _source );
         ~TaskSource() override;
 
     public:
-        bool _onRun() override;
+        bool _onRun( NodeInterface * _task ) override;
         void _onFinally() override;
 
     protected:
-        SourcePtr m_source;
+        SourceInterfacePtr m_source;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TaskSource> TaskSourcePtr;

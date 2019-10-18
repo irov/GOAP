@@ -18,7 +18,7 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskNoSkip::_onRun()
+    bool TaskNoSkip::_onRun( NodeInterface * _task )
     {
         return true;
     }

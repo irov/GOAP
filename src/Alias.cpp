@@ -22,12 +22,9 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////    
-    bool Alias::_onRun()
+    bool Alias::_onRun( NodeInterface * _task )
     {
         SourcePtr source = Helper::makeSource();
-
-        bool skiped = this->isSkip();
-        source->setSkip( skiped );
 
         SourcePtr guard_source = source->addGuard( [this]()
         {
@@ -42,7 +39,9 @@ namespace GOAP
 
         this->_onAliasGenerate( guard_source );
 
-        if( this->injectSource( source ) == false )
+        const SourceProviderInterfacePtr & provider = source->getSourceProvider();
+
+        if( _task->injectSource( provider ) == false )
         {
             Helper::throw_exception( "Alias invalid inject source" );
         }

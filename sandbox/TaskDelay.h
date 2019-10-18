@@ -4,14 +4,14 @@
 #include "Scheduler.h"
 
 class TaskDelay
-    : public GOAP::Task    
+    : public GOAP::Task
 {
 public:
     TaskDelay( float _delay, const SchedulerPtr & _scheduler );
     ~TaskDelay() override;
 
 protected:
-    bool _onRun() override;
+    bool _onRun( GOAP::NodeInterface * _task ) override;
     void _onSkip() override;
 
 protected:

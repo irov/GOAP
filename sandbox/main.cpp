@@ -2,7 +2,7 @@
 
 #include "Scheduler.h"
 
-#include "GOAP/Task.h"
+#include "GOAP/Node.h"
 #include "GOAP/Chain.h"
 #include "GOAP/Source.h"
 #include "GOAP/ChainProvider.h"
@@ -34,7 +34,7 @@ int main()
 
     printf( "%f %f %f\n", fmod( 0.5, 1.0 ), fmod( 1.3, 1.0 ), fmod( 3.0, 1.0 ) );
 
-    GOAP::SourcePtr source( new GOAP::Source() );
+    GOAP::SourcePtr source = GOAP::Helper::makeSource();
     
     source->addTask<TaskPrint>( "begin" );
     source->addTask<TaskDelay>( 2000.f, sch );

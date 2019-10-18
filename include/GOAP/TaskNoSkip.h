@@ -21,7 +21,7 @@ namespace GOAP
         ~TaskNoSkip() override;
 
     protected:
-        bool _onRun() override;
+        bool _onRun( NodeInterface * _task ) override;
         bool _onSkipable() const override;
     };
     //////////////////////////////////////////////////////////////////////////

@@ -9,6 +9,6 @@
 
 #include "GOAP/Chain.h"
 #include "GOAP/Source.h"
-#include "GOAP/Task.h"
+#include "GOAP/Node.h"
 #include "GOAP/Alias.h"
 #include "GOAP/Semaphore.h"

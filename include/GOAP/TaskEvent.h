@@ -15,14 +15,14 @@ namespace GOAP
     class TaskEvent
         : public Task
     {
-        GOAP_DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
         TaskEvent( const EventPtr & _event );
         ~TaskEvent() override;
 
     public:
-        bool _onRun() override;
+        bool _onRun( NodeInterface * _task ) override;
         void _onFinally() override;
         bool _onSkipable() const override;
 

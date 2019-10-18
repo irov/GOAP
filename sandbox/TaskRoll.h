@@ -12,7 +12,7 @@ public:
     ~TaskRoll() override;
 
 protected:
-    bool _onRun() override;
+    bool _onRun( GOAP::NodeInterface * _task ) override;
     void _onSkip() override;
 
 protected:

@@ -17,14 +17,14 @@ namespace GOAP
     class TaskFunctionContext
         : public Task
     {
-        GOAP_DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
         explicit TaskFunctionContext( const FunctionContextProviderPtr & _provider );
         ~TaskFunctionContext() override;
 
     public:
-        bool _onRun() override;
+        bool _onRun( NodeInterface * _task ) override;
         void _onFinally() override;
 
     protected:

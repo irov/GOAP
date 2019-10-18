@@ -8,6 +8,8 @@
 #include "GOAP/TaskSemaphore.h"
 #include "GOAP/EventProvider.h"
 
+#include "GOAP/Node.h"
+
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
@@ -75,11 +77,11 @@ namespace GOAP
         return false;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskSemaphore::_onRun()
+    bool TaskSemaphore::_onRun( NodeInterface * _task )
     {
-        m_provider = m_semaphore->addProvider( [this]()
+        m_provider = m_semaphore->addProvider( [this, _task]()
         {
-            bool result = this->test();
+            bool result = this->test( _task );
 
             return result;
         } );
@@ -113,7 +115,7 @@ namespace GOAP
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskSemaphore::test()
+    bool TaskSemaphore::test( NodeInterface * _task )
     {
         int32_t value = m_semaphore->getValue();
 
@@ -170,13 +172,13 @@ namespace GOAP
             m_provider = nullptr;
         }
 
-        if( this->isSkip() == false )
+        if( _task->isSkip() == false )
         {
-            this->complete();
+            _task->complete();
         }
         else
         {
-            this->skip();
+            _task->skip();
         }
 
         return true;

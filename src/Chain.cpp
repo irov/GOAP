@@ -6,19 +6,20 @@
 */
 
 #include "GOAP/Chain.h"
-#include "GOAP/Task.h"
+#include "GOAP/Node.h"
 #include "GOAP/Source.h"
 
 #include "GOAP/ChainProvider.h"
 
 #include "GOAP/TaskDummy.h"
+#include "GOAP/TaskFunctionContext.h"
 
 #include <algorithm>
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    Chain::Chain( const SourcePtr & _source )
+    Chain::Chain( const SourceInterfacePtr & _source )
         : m_source( _source )
         , m_state( TASK_CHAIN_STATE_IDLE )
         , m_complete( false )
@@ -39,6 +40,11 @@ namespace GOAP
         return m_cb;
     }
     //////////////////////////////////////////////////////////////////////////
+    const SourceInterfacePtr & Chain::getSource() const
+    {
+        return m_source;
+    }
+    //////////////////////////////////////////////////////////////////////////
     bool Chain::run()
     {
         ETaskChainState state = this->getState_();
@@ -52,19 +58,30 @@ namespace GOAP
 
         this->setState_( TASK_CHAIN_STATE_RUN );
 
-        m_source->addFunctionContext( [this]( bool _isSkip )
+        FunctionContextProviderPtr context = Helper::makeFunctionContextProvider( [this]( bool _isSkip )
         {
             this->complete( _isSkip );
         } );
 
-        TaskPtr task_first( new TaskDummy() );
+        TaskInterfacePtr provider_context = Helper::makeTask<TaskFunctionContext>( context );
+
+        NodePtr task = m_source->makeNode( provider_context );
+
+        m_source->addTask( task );
+
+        TaskInterfacePtr provider_dummy = Helper::makeTask<TaskDummy>();
+
+        NodePtr task_first = m_source->makeNode( provider_dummy );
+
         task_first->setChain( ChainPtr::from( this ) );
 
-        m_source->parse( ChainPtr::from( this ), task_first );
+        const SourceProviderInterfacePtr & source_provider = m_source->getSourceProvider();
 
-        bool skip = m_source->isSkip();
+        source_provider->parse( ChainPtr::from( this ), task_first );
 
-        this->processTask( task_first, skip );
+        bool skip = source_provider->isSkip();
+
+        this->processNode( task_first, skip );
 
         this->decref();
 
@@ -81,8 +98,8 @@ namespace GOAP
         {
             if( m_state == TASK_CHAIN_STATE_RUN )
             {
-                this->skipRunningTasks_();
-                this->cancelRunningTasks_();
+                this->skipRunningNodes_();
+                this->cancelRunningNodes_();
             }
 
             //if( m_state != TASK_CHAIN_STATE_COMPLETE &&
@@ -117,7 +134,7 @@ namespace GOAP
 
         if( m_state == TASK_CHAIN_STATE_RUN )
         {
-            this->skipRunningTasks_();
+            this->skipRunningNodes_();
         }
 
         this->decref();
@@ -128,24 +145,24 @@ namespace GOAP
         return m_complete;
     }
     //////////////////////////////////////////////////////////////////////////
-    void Chain::runTask( const TaskPtr & _task )
+    void Chain::runNode( const NodePtr & _task )
     {
-        m_runningTasks.emplace_back( _task );
+        m_runningNodes.emplace_back( _task );
     }
     //////////////////////////////////////////////////////////////////////////
-    void Chain::completeTask( const TaskPtr & _task )
+    void Chain::completeNode( const NodePtr & _task )
     {
-        VectorTasks::iterator it_found = std::find( m_runningTasks.begin(), m_runningTasks.end(), _task );
+        VectorNodes::iterator it_found = std::find( m_runningNodes.begin(), m_runningNodes.end(), _task );
 
-        if( it_found == m_runningTasks.end() )
+        if( it_found == m_runningNodes.end() )
         {
             return;
         }
 
-        m_runningTasks.erase( it_found );
+        m_runningNodes.erase( it_found );
     }
     //////////////////////////////////////////////////////////////////////////
-    void Chain::processTask( const TaskPtr & _task, bool _skip )
+    void Chain::processNode( const NodePtr & _task, bool _skip )
     {
         if( _skip == true )
         {
@@ -172,21 +189,21 @@ namespace GOAP
         }
     }
     //////////////////////////////////////////////////////////////////////////
-    void Chain::skipRunningTasks_()
+    void Chain::skipRunningNodes_()
     {
-        VectorTasks tasks = m_runningTasks;
+        VectorNodes tasks = m_runningNodes;
 
-        for( const TaskPtr & task : tasks )
+        for( const NodePtr & task : tasks )
         {
             task->skip();
         }
     }
     //////////////////////////////////////////////////////////////////////////
-    void Chain::cancelRunningTasks_()
+    void Chain::cancelRunningNodes_()
     {
-        VectorTasks tasks = m_runningTasks;
+        VectorNodes tasks = m_runningNodes;
 
-        for( const TaskPtr & task : tasks )
+        for( const NodePtr & task : tasks )
         {
             task->cancel( true );
         }

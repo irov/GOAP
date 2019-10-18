@@ -7,6 +7,8 @@
 
 #include "GOAP/TaskParallelNeck.h"
 
+#include "GOAP/Node.h"
+
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
@@ -18,23 +20,17 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskParallelNeck::_onCheckRun() const
+    bool TaskParallelNeck::_onCheckRun( const NodeInterface * _task ) const
     {
-        if( m_prevs.empty() == true )
-        {
-            return true;
-        }
+        bool result = _task->isEmptyPrevs();
 
-        return false;
+        return result;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskParallelNeck::_onCheckSkip() const
+    bool TaskParallelNeck::_onCheckSkip( const NodeInterface * _task ) const
     {
-        if( m_prevs.empty() == true )
-        {
-            return true;
-        }
+        bool result = _task->isEmptyPrevs();
 
-        return false;
+        return result;
     }
 }

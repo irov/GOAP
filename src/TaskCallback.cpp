@@ -6,6 +6,7 @@
 */
 
 #include "GOAP/TaskCallback.h"
+#include "GOAP/Node.h"
 
 namespace GOAP
 {
@@ -19,13 +20,13 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskCallback::_onRun()
+    bool TaskCallback::_onRun( NodeInterface * _task )
     {
-        bool skip = this->isSkip();
+        bool skip = _task->isSkip();
 
-        CallbackObserverPtr callback = Helper::makeCallbackObserver( [this]( bool _skip )
+        CallbackObserverPtr callback = Helper::makeCallbackObserver( [_task]( bool _skip )
         {
-            this->complete( true, _skip );
+            _task->complete( true, _skip );
         } );
 
         m_provider->onCallbackProvider( callback, skip );

@@ -34,6 +34,8 @@ set( GOAP_SOURCES
     ${SOURCE_DIR}/Factorable.cpp
     ${SOURCE_DIR}/Exception.cpp
     ${SOURCE_DIR}/Source.cpp
+    ${SOURCE_DIR}/SourceProvider.cpp
+    ${SOURCE_DIR}/Node.cpp
     ${SOURCE_DIR}/Task.cpp
     ${SOURCE_DIR}/TaskCallback.cpp
     ${SOURCE_DIR}/TaskBlock.cpp
@@ -75,6 +77,7 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/CallbackObserver.h
     ${INCLUDE_DIR}/GOAP/CallbackProvider.h    
     ${INCLUDE_DIR}/GOAP/Chain.h
+    ${INCLUDE_DIR}/GOAP/ChainInterface.h
     ${INCLUDE_DIR}/GOAP/ChainProvider.h
     ${INCLUDE_DIR}/GOAP/Macros.h
     ${INCLUDE_DIR}/GOAP/Exception.h
@@ -89,7 +92,13 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/ScopeProvider.h
     ${INCLUDE_DIR}/GOAP/ForProvider.h
     ${INCLUDE_DIR}/GOAP/Source.h
+    ${INCLUDE_DIR}/GOAP/SourceInterface.h
+    ${INCLUDE_DIR}/GOAP/SourceProviderInterface.h
+    ${INCLUDE_DIR}/GOAP/SourceProvider.h
     ${INCLUDE_DIR}/GOAP/SwitchProvider.h
+    ${INCLUDE_DIR}/GOAP/Node.h
+    ${INCLUDE_DIR}/GOAP/NodeInterface.h
+    ${INCLUDE_DIR}/GOAP/TaskInterface.h
     ${INCLUDE_DIR}/GOAP/Task.h
     ${INCLUDE_DIR}/GOAP/TaskCallback.h
     ${INCLUDE_DIR}/GOAP/TaskBlock.h
@@ -110,7 +119,7 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/TaskSwitch.h
     ${INCLUDE_DIR}/GOAP/TaskWhile.h
     ${INCLUDE_DIR}/GOAP/TaskFor.h
-    ${INCLUDE_DIR}/GOAP/Transcriptor.h
+    ${INCLUDE_DIR}/GOAP/TranscriptorInterface.h
     ${INCLUDE_DIR}/GOAP/TranscriptorParallelArray.h
     ${INCLUDE_DIR}/GOAP/TranscriptorRaceArray.h
     ${INCLUDE_DIR}/GOAP/Semaphore.h

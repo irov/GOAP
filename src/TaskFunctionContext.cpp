@@ -9,6 +9,8 @@
 
 #include "GOAP/FunctionContextProvider.h"
 
+#include "GOAP/Node.h"
+
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
@@ -21,9 +23,9 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskFunctionContext::_onRun()
+    bool TaskFunctionContext::_onRun( NodeInterface * _task )
     {
-        bool skip = this->isSkip();
+        bool skip = _task->isSkip();
 
         m_provider->onFunctionContext( skip );
 

@@ -1,5 +1,7 @@
 #include "TaskPrint.h"
 
+#include "GOAP/Node.h"
+
 #include <stdio.h>
 #include <stdarg.h>
 
@@ -28,8 +30,10 @@ TaskPrint::~TaskPrint()
 {
 }
 //////////////////////////////////////////////////////////////////////////
-bool TaskPrint::_onRun()
+bool TaskPrint::_onRun( GOAP::NodeInterface * _task )
 {
+    (void)_task;
+
     printf( m_message );
 
     return true;

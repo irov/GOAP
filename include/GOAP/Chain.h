@@ -7,22 +7,16 @@
 
 #pragma once
 
-#include "GOAP/Factorable.h"
-#include "GOAP/IntrusivePtr.h"
+#include "GOAP/ChainInterface.h"
 #include "GOAP/Vector.h"
-#include "GOAP/ChainProvider.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Task> TaskPtr;
-    typedef IntrusivePtr<class Source> SourcePtr;
-    typedef IntrusivePtr<class Chain> ChainPtr;
-    //////////////////////////////////////////////////////////////////////////
-    typedef Vector<TaskPtr> VectorTasks;
+    typedef IntrusivePtr<class Node> NodePtr;
     //////////////////////////////////////////////////////////////////////////
     class Chain
-        : public Factorable
+        : public ChainInterface
     {
     public:
         enum ETaskChainState
@@ -38,7 +32,7 @@ namespace GOAP
         };
 
     public:
-        explicit Chain( const SourcePtr & _source );
+        explicit Chain( const SourceInterfacePtr & _source );
         ~Chain() override;
 
     public:
@@ -50,49 +44,55 @@ namespace GOAP
             this->setCallbackProvider( untilChainProvider );
         }
 
-        void setCallbackProvider( const ChainProviderPtr & _cb );
-        const ChainProviderPtr & getCallbackProvider() const;
+        void setCallbackProvider( const ChainProviderPtr & _cb ) override;
+        const ChainProviderPtr & getCallbackProvider() const override;
 
     public:
-        bool run();
-        void skip();
-        void cancel();
+        const SourceInterfacePtr & getSource() const override;
 
     public:
-        bool isComplete() const;
+        bool run() override;
+        void skip() override;
+        void cancel() override;
 
     public:
-        void runTask( const TaskPtr & _task );
-        void completeTask( const TaskPtr & _task );
-        void processTask( const TaskPtr & _task, bool _skip );
+        bool isComplete() const override;
+
+    protected:
+        void runNode( const NodePtr & _task );
+        void completeNode( const NodePtr & _task );
+        void processNode( const NodePtr & _task, bool _skip );
 
     protected:
         void complete( bool _skip );
 
     protected:
-        void skipRunningTasks_();
-        void cancelRunningTasks_();
+        void skipRunningNodes_();
+        void cancelRunningNodes_();
         void finalize_();
         void setState_( ETaskChainState _state );
         ETaskChainState getState_() const;
 
-    public:
-        SourcePtr m_source;
+    protected:
+        SourceInterfacePtr m_source;
 
         ETaskChainState m_state;
 
-        VectorTasks m_runningTasks;
+        typedef Vector<NodePtr> VectorNodes;
+        VectorNodes m_runningNodes;
 
         ChainProviderPtr m_cb;
 
         bool m_complete;
+
+        friend Node;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Chain> ChainPtr;
     //////////////////////////////////////////////////////////////////////////
     namespace Helper
     {
-        inline ChainPtr makeChain( const SourcePtr & _source )
+        inline ChainPtr makeChain( const SourceInterfacePtr & _source )
         {
             return ChainPtr::from( new Chain( _source ) );
         }

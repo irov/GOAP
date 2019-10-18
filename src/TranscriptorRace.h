@@ -9,7 +9,7 @@
 
 #include "GOAP/Vector.h"
 
-#include "GOAP/Transcriptor.h"
+#include "GOAP/TranscriptorInterface.h"
 
 namespace GOAP
 {
@@ -19,7 +19,7 @@ namespace GOAP
     typedef Vector<SourcePtr> VectorSources;
     //////////////////////////////////////////////////////////////////////////
     class TranscriptorRace
-        : public Transcriptor
+        : public TranscriptorInterface
     {
     public:
         explicit TranscriptorRace( VectorSources && _sources );
@@ -29,7 +29,7 @@ namespace GOAP
         const VectorSources & getSources() const;
 
     public:
-        TaskPtr generate( const ChainPtr & _chain, const TaskPtr & _task ) override;
+        NodePtr generate( const ChainPtr & _chain, const NodePtr & _task ) override;
 
     protected:
         VectorSources m_sources;

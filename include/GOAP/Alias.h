@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "GOAP/Task.h"
+#include "GOAP/Node.h"
 
 namespace GOAP
 {
@@ -15,14 +15,14 @@ namespace GOAP
     typedef IntrusivePtr<class Source> SourcePtr;
     //////////////////////////////////////////////////////////////////////////
     class Alias
-        : public Task
+        : public TaskInterface
     {
     public:
         Alias();
         ~Alias() override;
 
     protected:
-        bool _onRun() override final;
+        bool _onRun( NodeInterface * _task ) override final;
         void _onFinally() override final;
 
     protected:

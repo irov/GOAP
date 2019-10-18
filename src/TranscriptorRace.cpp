@@ -8,7 +8,7 @@
 #include "TranscriptorRace.h"
 
 #include "GOAP/Source.h"
-#include "GOAP/Task.h"
+#include "GOAP/Node.h"
 #include "GOAP/TaskRaceNeck.h"
 
 namespace GOAP
@@ -28,19 +28,25 @@ namespace GOAP
         return m_sources;
     }
     //////////////////////////////////////////////////////////////////////////
-    TaskPtr TranscriptorRace::generate( const ChainPtr & _chain, const TaskPtr & _task )
+    NodePtr TranscriptorRace::generate( const ChainPtr & _chain, const NodePtr & _task )
     {
         if( m_sources.empty() == true )
         {
             return _task;
         }
 
-        TaskPtr task_parallel_neck( new TaskRaceNeck() );
+        const SourceInterfacePtr & source = _chain->getSource();
+
+        TaskInterfacePtr provider_parallel_neck = Helper::makeTask<TaskRaceNeck>();
+
+        NodePtr task_parallel_neck = source->makeNode( provider_parallel_neck );
         task_parallel_neck->setChain( _chain );
 
-        for( const SourcePtr & parallel_source : m_sources )
+        for( const SourcePtr & race_source : m_sources )
         {
-            TaskPtr task = parallel_source->parse( _chain, _task );
+            const SourceProviderInterfacePtr & race_provider = race_source->getSourceProvider();
+
+            NodePtr task = race_provider->parse( _chain, _task );
 
             task->addNext( task_parallel_neck );
         }
