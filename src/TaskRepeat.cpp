@@ -7,14 +7,15 @@
 
 #include "GOAP/TaskRepeat.h"
 #include "GOAP/Source.h"
+#include "GOAP/NodeInterface.h"
 
 #include "GOAP/Exception.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskRepeat::TaskRepeat( const WhileProviderPtr & _providerRepeat, const SourcePtr & _until )
-        : m_providerRepeat( _providerRepeat )
+    TaskRepeat::TaskRepeat( const WhileProviderPtr & _provider, const SourceInterfacePtr & _until )
+        : m_provider( _provider )
         , m_sourceUntil( _until )
     {
     }
@@ -29,7 +30,7 @@ namespace GOAP
 
         auto [source_while, source_until] = source->addRace<2>();
 
-        source_while->addWhileProvider( m_providerRepeat );
+        source_while->addWhileProvider( m_provider );
         source_until->addSource( m_sourceUntil );
 
         const SourceProviderInterfacePtr & provider = source->getSourceProvider();
@@ -39,7 +40,7 @@ namespace GOAP
             Helper::throw_exception( "TaskRepeat invalid inject source" );
         }
 
-        m_providerRepeat = nullptr;
+        m_provider = nullptr;
         m_sourceUntil = nullptr;
 
         return true;
@@ -47,7 +48,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void TaskRepeat::_onFinalize()
     {
-        m_providerRepeat = nullptr;
+        m_provider = nullptr;
         m_sourceUntil = nullptr;
     }
 }

@@ -13,14 +13,14 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Source> SourcePtr;
+    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class GeneratorProvider
         : public Factorable
     {
     public:
         virtual float onDelay( uint32_t _index ) = 0;
-        virtual void onEvent( const SourcePtr & _source, uint32_t _index, float _time ) = 0;
+        virtual void onEvent( const SourceInterfacePtr & _source, uint32_t _index, float _time ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<GeneratorProvider> GeneratorProviderPtr;
@@ -44,7 +44,7 @@ namespace GOAP
             return t;
         }
 
-        void onEvent( const SourcePtr & _source, uint32_t _index, float _time ) override
+        void onEvent( const SourceInterfacePtr & _source, uint32_t _index, float _time ) override
         {
             m_fevent( _source, _index, _time );
         }

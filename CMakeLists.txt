@@ -34,6 +34,7 @@ set( GOAP_SOURCES
     ${SOURCE_DIR}/Factorable.cpp
     ${SOURCE_DIR}/Exception.cpp
     ${SOURCE_DIR}/Source.cpp
+    ${SOURCE_DIR}/SourceBase.cpp
     ${SOURCE_DIR}/SourceProvider.cpp
     ${SOURCE_DIR}/Node.cpp
     ${SOURCE_DIR}/Task.cpp
@@ -92,6 +93,8 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/ScopeProvider.h
     ${INCLUDE_DIR}/GOAP/ForProvider.h
     ${INCLUDE_DIR}/GOAP/Source.h
+    ${INCLUDE_DIR}/GOAP/SourceBase.h
+    ${INCLUDE_DIR}/GOAP/SourceProxy.h
     ${INCLUDE_DIR}/GOAP/SourceInterface.h
     ${INCLUDE_DIR}/GOAP/SourceProviderInterface.h
     ${INCLUDE_DIR}/GOAP/SourceProvider.h

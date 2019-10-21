@@ -42,7 +42,7 @@ namespace GOAP
         NodePtr task_parallel_neck = source->makeNode( provider_parallel_neck );
         task_parallel_neck->setChain( _chain );
 
-        for( const SourcePtr & race_source : m_sources )
+        for( const SourceInterfacePtr & race_source : m_sources )
         {
             const SourceProviderInterfacePtr & race_provider = race_source->getSourceProvider();
 

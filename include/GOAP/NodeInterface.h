@@ -15,13 +15,13 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class NodeInterface> NodeInterfacePtr;
     typedef IntrusivePtr<class SourceProviderInterface> SourceProviderInterfacePtr;
-    typedef IntrusivePtr<class Source> SourcePtr;
+    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class NodeInterface
         : public Factorable
     {
     public:
-        virtual SourcePtr makeSource() = 0;
+        virtual SourceInterfacePtr makeSource() = 0;
 
     public:
         virtual void throwError() = 0;

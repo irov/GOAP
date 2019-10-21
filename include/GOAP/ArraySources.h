@@ -13,9 +13,27 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Source> SourcePtr;
+    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     template<size_t Count>
-    using ArraySources = Array<SourcePtr, Count>;
+    using ArraySources = Array<SourceInterfacePtr, Count>;
+    //////////////////////////////////////////////////////////////////////////
+    template<class Type, size_t Count>
+    using ArrayTypeSources = Array<IntrusivePtr<Type>, Count>;
+    //////////////////////////////////////////////////////////////////////////
+    namespace Helper
+    {
+        template <class T, size_t N, size_t... Is>
+        ArrayTypeSources<T, N> ArraySourcesCast( const ArraySources<N> & arr, std::index_sequence<Is...> )
+        {
+            return ArrayTypeSources<T, N>{IntrusivePtr<T>{arr[Is]}...};
+        }
+
+        template <class T, size_t N>
+        ArrayTypeSources<T, N> ArraySourcesCast( const ArraySources<N> & arr )
+        {
+            return ArraySourcesCast<T>( arr, std::make_index_sequence<N>{} );
+        }
+    }
     //////////////////////////////////////////////////////////////////////////
 }

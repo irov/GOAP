@@ -18,7 +18,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     namespace Detail
     {
-        void generateParallelSource( const ViewSources & _sources, const ChainPtr & _chain, const NodePtr & _task, const NodePtr & _neck );
+        void generateParallelSource( const ViewSources<SourceInterface> & _sources, const ChainPtr & _chain, const NodePtr & _task, const NodePtr & _neck );
     }
     //////////////////////////////////////////////////////////////////////////
     template<size_t Count>
@@ -69,7 +69,7 @@ namespace GOAP
         template<size_t Count>
         TranscriptorParallelArrayPtr<Count> makeTranscriptorParallelArray( ArraySources<Count> && _sources )
         {
-            return TranscriptorParallelArrayPtr<Count>::from( new TranscriptorParallelArray<Count>( std::move( _sources ) ) );
+            return TranscriptorParallelArrayPtr<Count>::from( new TranscriptorParallelArray<Count>( std::forward<ArraySources<Count> &&>( _sources ) ) );
         }
     }
     //////////////////////////////////////////////////////////////////////////

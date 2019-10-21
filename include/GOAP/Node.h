@@ -15,7 +15,7 @@ namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class Node> NodePtr;
-    typedef IntrusivePtr<class Source> SourcePtr;
+    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     typedef IntrusivePtr<class Chain> ChainPtr;
     //////////////////////////////////////////////////////////////////////////
     class Node
@@ -44,7 +44,7 @@ namespace GOAP
         const ChainPtr & getChain() const;
 
     public:
-        SourcePtr makeSource() override;
+        SourceInterfacePtr makeSource() override;
 
     public:
         void throwError() override;

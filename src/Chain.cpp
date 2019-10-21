@@ -67,7 +67,7 @@ namespace GOAP
 
         NodePtr task = m_source->makeNode( provider_context );
 
-        m_source->addTask( task );
+        m_source->addNode( task );
 
         TaskInterfacePtr provider_dummy = Helper::makeTask<TaskDummy>();
 

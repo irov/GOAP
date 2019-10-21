@@ -113,7 +113,7 @@ int main()
     source_true->addTask<TaskPrint>( "---TRUE---" );
     source_false->addTask<TaskPrint>( "---FALSE---" );
 
-    const GOAP::VectorSources & source_switch = source->addSwitch( 3, []()
+    const GOAP::ViewSources<GOAP::Source> & source_switch = source->addSwitch( 3, []()
     {
         return rand() % 3;
     } );

@@ -7,12 +7,11 @@
 
 #pragma once
 
-#include "GOAP/Node.h"
+#include "GOAP/TaskInterface.h"
+#include "GOAP/SourceInterface.h"
 
 namespace GOAP
 {
-    //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Source> SourcePtr;
     //////////////////////////////////////////////////////////////////////////
     class Alias
         : public TaskInterface
@@ -26,7 +25,7 @@ namespace GOAP
         void _onFinally() override final;
 
     protected:
-        virtual void _onAliasGenerate( const SourcePtr & _source ) = 0;
+        virtual void _onAliasGenerate( const SourceInterfacePtr & _source ) = 0;
         virtual void _onAliasFinally();
     };
     //////////////////////////////////////////////////////////////////////////

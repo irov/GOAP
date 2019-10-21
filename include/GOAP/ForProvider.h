@@ -13,13 +13,13 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Source> SourcePtr;
+    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class ForProvider
         : public Factorable
     {
     public:
-        virtual bool onFor( const SourcePtr & _source, uint32_t _iterator, uint32_t _count ) = 0;
+        virtual bool onFor( const SourceInterfacePtr & _source, uint32_t _iterator, uint32_t _count ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<ForProvider> ForProviderPtr;
@@ -35,7 +35,7 @@ namespace GOAP
         }
 
     public:
-        bool onFor( const SourcePtr & _source, uint32_t _iterator, uint32_t _count ) override
+        bool onFor( const SourceInterfacePtr & _source, uint32_t _iterator, uint32_t _count ) override
         {
             bool successful = m_f( _source, _iterator, _count );
 

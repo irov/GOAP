@@ -84,7 +84,7 @@ namespace GOAP
 
         source_generator->addGeneratorProvider( m_time, new_iterator, m_timer, m_provider );
 
-        SourcePtr source_event = source_fork->addFork();
+        SourceInterfacePtr source_event = source_fork->addFork();
 
         m_provider->onEvent( source_event, m_iterator, delay );
 

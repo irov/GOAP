@@ -6,9 +6,7 @@
 */
 
 #include "GOAP/Alias.h"
-
 #include "GOAP/Source.h"
-
 #include "GOAP/Exception.h"
 
 namespace GOAP
@@ -24,9 +22,9 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////    
     bool Alias::_onRun( NodeInterface * _task )
     {
-        SourcePtr source = Helper::makeSource();
+        SourcePtr source = _task->makeSource();
 
-        SourcePtr guard_source = source->addGuard( [this]()
+        SourceInterfacePtr guard_source = source->addGuard( [this]()
         {
             this->incref();
         }

@@ -12,7 +12,7 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Source> SourcePtr;
+    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class TaskFork
         : public Task
@@ -20,7 +20,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        explicit TaskFork( const SourcePtr & _source );
+        explicit TaskFork( const SourceInterfacePtr & _source );
         ~TaskFork() override;
 
     public:
@@ -28,7 +28,7 @@ namespace GOAP
         void _onFinally() override;
 
     protected:
-        SourcePtr m_source;
+        SourceInterfacePtr m_source;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TaskFork> TaskForkPtr;

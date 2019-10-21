@@ -30,7 +30,7 @@ namespace GOAP
 
         if( injecting == true )
         {
-            source->addWhileProvider( m_provider );            
+            source->addWhileProvider( m_provider );
 
             const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 

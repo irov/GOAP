@@ -6,14 +6,16 @@
 */
 
 #include "GOAP/TaskIf.h"
-#include "GOAP/Source.h"
+#include "GOAP/SourceInterface.h"
+#include "GOAP/SourceProviderInterface.h"
+#include "GOAP/NodeInterface.h"
 #include "GOAP/IfProvider.h"
 #include "GOAP/Exception.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskIf::TaskIf( const IfProviderPtr & _provider, const SourcePtr & _sourceTrue, const SourcePtr & _sourceFalse )
+    TaskIf::TaskIf( const IfProviderPtr & _provider, const SourceInterfacePtr & _sourceTrue, const SourceInterfacePtr & _sourceFalse )
         : m_provider( _provider )
         , m_sourceTrue( _sourceTrue )
         , m_sourceFalse( _sourceFalse )
@@ -28,7 +30,7 @@ namespace GOAP
     {
         bool result = m_provider->onIf();
 
-        const SourcePtr & result_source = (result == true) ? m_sourceTrue : m_sourceFalse;
+        const SourceInterfacePtr & result_source = (result == true) ? m_sourceTrue : m_sourceFalse;
 
         bool skip = _task->isSkip();
 

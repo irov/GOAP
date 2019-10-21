@@ -33,7 +33,7 @@ namespace GOAP
     {
         uint32_t id = m_provider->onSwitch();
 
-        const SourcePtr & source = m_sources[id];
+        const SourceInterfacePtr & source = m_sources[id];
 
         const SourceProviderInterfacePtr & provider = source->getSourceProvider();
         

@@ -43,7 +43,7 @@ namespace GOAP
 
         task_parallel_neck->setChain( _chain );
 
-        for( const SourcePtr & parallel_source : m_sources )
+        for( const SourceInterfacePtr & parallel_source : m_sources )
         {
             const SourceProviderInterfacePtr & parallel_provider = parallel_source->getSourceProvider();
 

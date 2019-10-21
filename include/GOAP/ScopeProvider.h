@@ -13,13 +13,13 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Source> SourcePtr;
+    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class ScopeProvider
         : public Factorable
     {
     public:
-        virtual void onScope( const SourcePtr & _source ) = 0;
+        virtual void onScope( const SourceInterfacePtr & _source ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<ScopeProvider> ScopeProviderPtr;
@@ -35,7 +35,7 @@ namespace GOAP
         }
 
     public:
-        void onScope( const SourcePtr & _source ) override
+        void onScope( const SourceInterfacePtr & _source ) override
         {
             m_f( _source );
         }

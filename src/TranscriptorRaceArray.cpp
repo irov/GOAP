@@ -6,16 +6,18 @@
 */
 
 #include "GOAP/TranscriptorRaceArray.h"
-#include "GOAP/Source.h"
+#include "GOAP/SourceInterface.h"
+#include "GOAP/SourceProviderInterface.h"
+#include "GOAP/Node.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     namespace Detail
     {
-        void generateRaceSource( const ViewSources & _sources, const ChainPtr & _chain, const NodePtr & _task, const NodePtr & _neck )
+        void generateRaceSource( const ViewSources<SourceInterface> & _sources, const ChainPtr & _chain, const NodePtr & _task, const NodePtr & _neck )
         {
-            for( const SourcePtr & source : _sources )
+            for( const SourceInterfacePtr & source : _sources )
             {
                 const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 

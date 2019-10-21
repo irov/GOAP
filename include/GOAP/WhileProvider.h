@@ -13,13 +13,13 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Source> SourcePtr;
+    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class WhileProvider
         : public Factorable
     {
     public:
-        virtual bool onWhile( const SourcePtr & _source ) = 0;
+        virtual bool onWhile( const SourceInterfacePtr & _source ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<WhileProvider> WhileProviderPtr;
@@ -35,7 +35,7 @@ namespace GOAP
         }
 
     public:
-        bool onWhile( const SourcePtr & _source ) override
+        bool onWhile( const SourceInterfacePtr & _source ) override
         {
             bool successful = m_f( _source );
 

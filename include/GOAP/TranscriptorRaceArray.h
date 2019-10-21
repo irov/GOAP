@@ -17,7 +17,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     namespace Detail
     {
-        void generateRaceSource( const ViewSources & _sources, const ChainPtr & _chain, const NodePtr & _task, const NodePtr & _neck );
+        void generateRaceSource( const ViewSources<SourceInterface> & _sources, const ChainPtr & _chain, const NodePtr & _task, const NodePtr & _neck );
     }
     //////////////////////////////////////////////////////////////////////////
     template<size_t Count>
@@ -62,7 +62,6 @@ namespace GOAP
         }
 
     protected:
-        SourcePtr m_source;
         ArraySources<Count> m_sources;
     };
     //////////////////////////////////////////////////////////////////////////
@@ -74,7 +73,7 @@ namespace GOAP
         template<size_t Count>
         TranscriptorRaceArrayPtr<Count> makeTranscriptorRaceArray( ArraySources<Count> && _sources )
         {
-            return TranscriptorRaceArrayPtr<Count>::from( new TranscriptorRaceArray<Count>( std::move( _sources ) ) );
+            return TranscriptorRaceArrayPtr<Count>::from( new TranscriptorRaceArray<Count>( std::forward<ArraySources<Count> &&>( _sources ) ) );
         }
     }
     //////////////////////////////////////////////////////////////////////////

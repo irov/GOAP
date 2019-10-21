@@ -35,9 +35,11 @@ namespace GOAP
         return m_chain;
     }
     //////////////////////////////////////////////////////////////////////////
-    SourcePtr Node::makeSource()
+    SourceInterfacePtr Node::makeSource()
     {
-        SourcePtr source = Helper::makeSource();
+        const SourceInterfacePtr & chain_source = m_chain->getSource();
+
+        SourceInterfacePtr source = chain_source->makeSource();
 
         const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 

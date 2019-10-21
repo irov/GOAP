@@ -13,15 +13,15 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Source> SourcePtr;
+    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     typedef IntrusivePtr<class SwitchProvider> SwitchProviderPtr;
     //////////////////////////////////////////////////////////////////////////
-    typedef Vector<SourcePtr> VectorSources;
+    typedef Vector<SourceInterfacePtr> VectorSources;
     //////////////////////////////////////////////////////////////////////////
     class TaskSwitch
         : public Task
     {
-        GOAP_DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( Task );        
 
     public:
         TaskSwitch( const SwitchProviderPtr & _provider, VectorSources && _sources );

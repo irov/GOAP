@@ -6,14 +6,16 @@
 */
 
 #include "GOAP/TaskFork.h"
-#include "GOAP/Source.h"
+
+#include "GOAP/NodeInterface.h"
+#include "GOAP/SourceInterface.h"
 
 #include "GOAP/Exception.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskFork::TaskFork( const SourcePtr & _source )
+    TaskFork::TaskFork( const SourceInterfacePtr & _source )
         : m_source( _source )
     {
     }

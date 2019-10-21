@@ -14,9 +14,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Source> SourcePtr;
+    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
-    typedef Vector<SourcePtr> VectorSources;
+    typedef Vector<SourceInterfacePtr> VectorSources;
     //////////////////////////////////////////////////////////////////////////
     class TranscriptorParallel
         : public TranscriptorInterface

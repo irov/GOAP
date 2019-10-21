@@ -8,13 +8,16 @@
 #pragma once
 
 #include "GOAP/ArraySources.h"
+#include "GOAP/SourceInterface.h"
+#include "GOAP/Vector.h"
 
 namespace GOAP
 {
+    template<class Type>
     class ViewSources
     {
     public:
-        ViewSources( const SourcePtr * _begin, const SourcePtr * _end )
+        ViewSources( const SourceInterfacePtr * _begin, const SourceInterfacePtr * _end )
             : m_begin( _begin )
             , m_end( _end )
         {
@@ -22,6 +25,11 @@ namespace GOAP
 
         template<size_t Count>
         ViewSources( const ArraySources<Count> & _sources )
+            : ViewSources( _sources.data(), _sources.data() + _sources.size() )
+        {
+        }
+
+        ViewSources( const Vector<SourceInterfacePtr> & _sources )
             : ViewSources( _sources.data(), _sources.data() + _sources.size() )
         {
         }
@@ -38,18 +46,87 @@ namespace GOAP
         }
 
     public:
-        const SourcePtr * begin() const
+        class iterator
         {
-            return m_begin;
+        public:
+            explicit iterator( const SourceInterfacePtr * _source )
+                : m_source( _source )
+            {
+            }
+
+        public:
+            iterator( const iterator & _it )
+                : m_source( _it.m_source )
+            {
+            }
+
+        public:
+            iterator & operator = ( const iterator & _it )
+            {
+                this->m_source = m_source;
+
+                return *this;
+            }
+
+        public:
+            iterator & operator ++ ()
+            {
+                ++this->m_source;
+
+                return *this;
+            }
+
+            iterator operator++ ( int )
+            {
+                iterator result( *this );
+                ++(*this);
+                return result;
+            }
+
+            bool operator == ( const iterator & _it ) const
+            {
+                return this->m_source == _it.m_source;
+            }
+
+            bool operator != ( const iterator & _it ) const
+            {
+                return !this->operator == ( _it );
+            }
+
+        public:
+            IntrusivePtr<Type> operator * () const
+            {
+                return intrusive_static_cast<IntrusivePtr<Type>>(*m_source);
+            }
+
+            IntrusivePtr<Type> operator -> () const
+            {
+                return intrusive_static_cast<IntrusivePtr<Type>>(*m_source);
+            }
+
+        protected:
+            const SourceInterfacePtr * m_source;
+        };
+
+    public:
+        iterator begin() const
+        {
+            return iterator( m_begin );
         }
 
-        const SourcePtr * end() const
+        iterator end() const
         {
-            return m_end;
+            return iterator( m_end );
         }
 
-    protected:
-        const SourcePtr * m_begin;
-        const SourcePtr * m_end;
+    public:
+        IntrusivePtr<Type> operator [] ( size_t _index ) const
+        {
+            return *(m_begin + _index);
+        }
+
+    public:
+        const SourceInterfacePtr * m_begin;
+        const SourceInterfacePtr * m_end;
     };
 }
