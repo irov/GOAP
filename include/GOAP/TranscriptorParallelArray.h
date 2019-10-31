@@ -11,6 +11,7 @@
 #include "GOAP/ViewSources.h"
 #include "GOAP/TranscriptorInterface.h"
 #include "GOAP/TaskParallelNeck.h"
+#include "GOAP/Node.h"
 #include "GOAP/Chain.h"
 
 namespace GOAP

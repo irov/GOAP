@@ -57,8 +57,8 @@ namespace GOAP
         virtual SourceInterfacePtr _makeSource() = 0;
 
     public:
-        NodePtr makeNode( const TaskInterfacePtr & _provider );
-        void addNode( const NodePtr & _task );        
+        NodePtr makeNode( const TaskInterfacePtr & _provider ) override;
+        void addNode( const NodePtr & _task ) override;
 
     public:
         template<class T, class ... Args>
