@@ -216,6 +216,7 @@ namespace GOAP
         void addWhileProvider( const WhileProviderPtr & _provider );
         void addForProvider( const ForProviderPtr & _provider, uint32_t _iterator, uint32_t _count );
         void addGeneratorProvider( float _time, uint32_t _iterator, const TimerPtr & _timer, const GeneratorProviderPtr & _provider );
+        void addTriggerProvider( const EventPtr & _event, const IfProviderPtr & _provider );
         ArraySources<2> addIfProvider( const IfProviderPtr & _provider );
 
     public:

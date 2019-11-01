@@ -115,7 +115,7 @@ namespace GOAP
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskSemaphore::test( NodeInterface * _task )
+    bool TaskSemaphore::test( NodeInterface * _node )
     {
         int32_t value = m_semaphore->getValue();
 
@@ -172,13 +172,13 @@ namespace GOAP
             m_provider = nullptr;
         }
 
-        if( _task->isSkip() == false )
+        if( _node->isSkip() == false )
         {
-            _task->complete();
+            _node->complete();
         }
         else
         {
-            _task->skip();
+            _node->skip();
         }
 
         return true;

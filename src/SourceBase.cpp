@@ -28,6 +28,7 @@
 #include "GOAP/TaskSemaphore.h"
 #include "GOAP/TaskEvent.h"
 #include "GOAP/TaskFor.h"
+#include "GOAP/TaskTrigger.h"
 
 #include "TranscriptorBase.h"
 #include "TranscriptorParallel.h"
@@ -159,6 +160,11 @@ namespace GOAP
     void SourceBase::addGeneratorProvider( float _time, uint32_t _iterator, const TimerPtr & _timer, const GeneratorProviderPtr & _provider )
     {
         this->addTask<TaskGenerator>( _time, _iterator, _timer, _provider );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void SourceBase::addTriggerProvider( const EventPtr & _event, const IfProviderPtr & _provider )
+    {
+        this->addTask<TaskTrigger>( _event, _provider );
     }
     //////////////////////////////////////////////////////////////////////////
     ArraySources<2> SourceBase::addIfProvider( const IfProviderPtr & _provider )

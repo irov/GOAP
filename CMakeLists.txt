@@ -56,7 +56,8 @@ set( GOAP_SOURCES
     ${SOURCE_DIR}/TaskEvent.cpp
     ${SOURCE_DIR}/TaskSwitch.cpp
     ${SOURCE_DIR}/TaskWhile.cpp
-    ${SOURCE_DIR}/TaskFor.cpp    
+    ${SOURCE_DIR}/TaskFor.cpp
+    ${SOURCE_DIR}/TaskTrigger.cpp
     ${SOURCE_DIR}/TranscriptorBase.cpp
     ${SOURCE_DIR}/TranscriptorBase.h
     ${SOURCE_DIR}/TranscriptorParallel.cpp
@@ -122,6 +123,7 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/TaskSwitch.h
     ${INCLUDE_DIR}/GOAP/TaskWhile.h
     ${INCLUDE_DIR}/GOAP/TaskFor.h
+    ${INCLUDE_DIR}/GOAP/TaskTrigger.h
     ${INCLUDE_DIR}/GOAP/TranscriptorInterface.h
     ${INCLUDE_DIR}/GOAP/TranscriptorParallelArray.h
     ${INCLUDE_DIR}/GOAP/TranscriptorRaceArray.h

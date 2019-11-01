@@ -105,6 +105,14 @@ namespace GOAP
         }
 
         template<class F>
+        void addTrigger( const EventPtr & _event, F _f )
+        {
+            IfProviderPtr provider = Helper::makeIfProvider( _f );
+
+            this->addTriggerProvider( _event, provider );
+        }
+
+        template<class F>
         ArrayTypeSources<Type, 2> addIf( F _f )
         {
             IfProviderPtr provider = Helper::makeIfProvider( _f );

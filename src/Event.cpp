@@ -90,7 +90,7 @@ namespace GOAP
                 continue;
             }
 
-            const EventProviderPtr & provider = desc.provider;
+            EventProviderPtr provider = desc.provider;
 
             bool remove = provider->onEvent();
 
