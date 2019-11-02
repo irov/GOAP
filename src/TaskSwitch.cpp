@@ -29,7 +29,7 @@ namespace GOAP
         return m_sources;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskSwitch::_onRun( NodeInterface * _task )
+    bool TaskSwitch::_onRun( NodeInterface * _node )
     {
         uint32_t id = m_provider->onSwitch();
 
@@ -37,10 +37,10 @@ namespace GOAP
 
         const SourceProviderInterfacePtr & provider = source->getSourceProvider();
         
-        bool skip = _task->isSkip();
+        bool skip = _node->isSkip();
         provider->setSkip( skip );
 
-        if( _task->injectSource( provider ) == false )
+        if( _node->injectSource( provider ) == false )
         {
             Helper::throw_exception( "TaskSwitch invalid inject source" );
         }

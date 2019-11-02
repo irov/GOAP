@@ -23,9 +23,9 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskFunctionContext::_onRun( NodeInterface * _task )
+    bool TaskFunctionContext::_onRun( NodeInterface * _node )
     {
-        bool skip = _task->isSkip();
+        bool skip = _node->isSkip();
 
         m_provider->onFunctionContext( skip );
 

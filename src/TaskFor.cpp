@@ -35,9 +35,9 @@ namespace GOAP
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskFor::_onRun( NodeInterface * _task )
+    bool TaskFor::_onRun( NodeInterface * _node )
     {
-        SourcePtr source = _task->makeSource();
+        SourcePtr source = _node->makeSource();
 
         if( m_providerFor->onFor( source, m_iterator, m_count ) == false )
         {
@@ -50,7 +50,7 @@ namespace GOAP
 
         const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 
-        if( _task->injectSource( provider ) == false )
+        if( _node->injectSource( provider ) == false )
         {
             Helper::throw_exception( "TaskFor invalid inject source" );
         }

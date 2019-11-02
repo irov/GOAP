@@ -21,7 +21,7 @@ namespace GOAP
         ~Alias() override;
 
     protected:
-        bool _onRun( NodeInterface * _task ) override final;
+        bool _onRun( NodeInterface * _node ) override final;
         void _onFinally() override final;
 
     protected:

@@ -25,7 +25,7 @@ namespace GOAP
     protected:
         bool _onValidate() const override;
         bool _onCheck() override;
-        bool _onRun( NodeInterface * _task ) override;
+        bool _onRun( NodeInterface * _node ) override;
         bool _onSkipable() const override;
         void _onSkipNoSkiped() override;
         bool _onSkipBlock() override;
@@ -34,8 +34,8 @@ namespace GOAP
         void _onSkip() override;
         void _onCancel() override;
         void _onFinally() override;
-        bool _onCheckRun( const NodeInterface * _task ) const override;
-        bool _onCheckSkip( const NodeInterface * _task ) const override;
+        bool _onCheckRun( const NodeInterface * _node ) const override;
+        bool _onCheckSkip( const NodeInterface * _node ) const override;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Task> TaskPtr;

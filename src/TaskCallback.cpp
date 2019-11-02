@@ -20,13 +20,13 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskCallback::_onRun( NodeInterface * _task )
+    bool TaskCallback::_onRun( NodeInterface * _node )
     {
-        bool skip = _task->isSkip();
+        bool skip = _node->isSkip();
 
-        CallbackObserverPtr callback = Helper::makeCallbackObserver( [_task]( bool _skip )
+        CallbackObserverPtr callback = Helper::makeCallbackObserver( [_node]( bool _skip )
         {
-            _task->complete( true, _skip );
+            _node->complete( true, _skip );
         } );
 
         m_provider->onCallbackProvider( callback, skip );

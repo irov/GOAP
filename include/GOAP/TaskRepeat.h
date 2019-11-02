@@ -25,7 +25,7 @@ namespace GOAP
         ~TaskRepeat() override;
 
     public:
-        bool _onRun( NodeInterface * _task ) override;
+        bool _onRun( NodeInterface * _node ) override;
         void _onFinalize() override;
 
     protected:

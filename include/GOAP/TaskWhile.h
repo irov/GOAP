@@ -24,7 +24,7 @@ namespace GOAP
         ~TaskWhile() override;
 
     public:
-        bool _onRun( NodeInterface * _task ) override;
+        bool _onRun( NodeInterface * _node ) override;
         bool _onFastSkip() override;
         void _onFinalize() override;
 

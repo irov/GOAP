@@ -24,9 +24,9 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskRepeat::_onRun( NodeInterface * _task )
+    bool TaskRepeat::_onRun( NodeInterface * _node )
     {
-        SourcePtr source = _task->makeSource();
+        SourcePtr source = _node->makeSource();
 
         auto [source_while, source_until] = source->addRace<2>();
 
@@ -35,7 +35,7 @@ namespace GOAP
 
         const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 
-        if( _task->injectSource( provider ) == false )
+        if( _node->injectSource( provider ) == false )
         {
             Helper::throw_exception( "TaskRepeat invalid inject source" );
         }

@@ -9,8 +9,8 @@ class TaskRoll::MySchedulerObserver
     : public SchedulerObserver
 {
 public:
-    MySchedulerObserver( GOAP::NodeInterface * _task, uint32_t _roll, uint32_t _max )
-        : m_task( _task )
+    MySchedulerObserver( GOAP::NodeInterface * _node, uint32_t _roll, uint32_t _max )
+        : m_node( _node )
         , m_roll( _roll )
         , m_max( _max )
     {
@@ -26,7 +26,7 @@ protected:
             return;
         }
 
-        m_task->complete();
+        m_node->complete();
     }
 
     void onScheduleStop( uint32_t _id ) override
@@ -34,7 +34,7 @@ protected:
     }
 
 protected:
-    GOAP::NodeInterfacePtr m_task;
+    GOAP::NodeInterfacePtr m_node;
 
     uint32_t m_roll;
     uint32_t m_max;
@@ -53,11 +53,11 @@ TaskRoll::~TaskRoll()
 {
 }
 //////////////////////////////////////////////////////////////////////////
-bool TaskRoll::_onRun( GOAP::NodeInterface * _task )
+bool TaskRoll::_onRun( GOAP::NodeInterface * _node )
 {
     typedef GOAP::IntrusivePtr<MySchedulerObserver> MySchedulerObserverPtr;
 
-    MySchedulerObserverPtr observer( new MySchedulerObserver( _task, m_roll, m_max ) );
+    MySchedulerObserverPtr observer( new MySchedulerObserver( _node, m_roll, m_max ) );
 
     m_id = m_scheduler->schedule( m_delay, true, observer );
 

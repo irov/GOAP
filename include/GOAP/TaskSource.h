@@ -24,7 +24,7 @@ namespace GOAP
         ~TaskSource() override;
 
     public:
-        bool _onRun( NodeInterface * _task ) override;
+        bool _onRun( NodeInterface * _node ) override;
         void _onFinally() override;
 
     protected:

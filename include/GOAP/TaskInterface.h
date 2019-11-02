@@ -26,7 +26,7 @@ namespace GOAP
     protected:
         virtual bool _onValidate() const = 0;
         virtual bool _onCheck() = 0;
-        virtual bool _onRun( class NodeInterface * _task ) = 0;
+        virtual bool _onRun( class NodeInterface * _node ) = 0;
         virtual bool _onSkipable() const = 0;
         virtual void _onSkipNoSkiped() = 0;
         virtual bool _onSkipBlock() = 0;
@@ -35,8 +35,8 @@ namespace GOAP
         virtual void _onSkip() = 0;
         virtual void _onCancel() = 0;
         virtual void _onFinally() = 0;
-        virtual bool _onCheckRun( const class NodeInterface * _task ) const = 0;
-        virtual bool _onCheckSkip( const class NodeInterface * _task ) const = 0;
+        virtual bool _onCheckRun( const class NodeInterface * _node ) const = 0;
+        virtual bool _onCheckSkip( const class NodeInterface * _node ) const = 0;
 
     protected:
         friend class Node;

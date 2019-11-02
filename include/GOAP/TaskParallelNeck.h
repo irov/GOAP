@@ -21,8 +21,8 @@ namespace GOAP
         ~TaskParallelNeck() override;
 
     protected:
-        bool _onCheckRun( const NodeInterface * _task ) const override;
-        bool _onCheckSkip( const NodeInterface * _task ) const override;
+        bool _onCheckRun( const NodeInterface * _node ) const override;
+        bool _onCheckSkip( const NodeInterface * _node ) const override;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TaskParallelNeck> TaskParallelNeckPtr;

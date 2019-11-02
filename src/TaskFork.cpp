@@ -24,13 +24,11 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskFork::_onRun( NodeInterface * _task )
+    bool TaskFork::_onRun( NodeInterface * _node )
     {
-        bool skip = _task->isSkip();
-
         const SourceProviderInterfacePtr & provider = m_source->getSourceProvider();
 
-        if( _task->forkSource( provider ) == false )
+        if( _node->forkSource( provider ) == false )
         {
             Helper::throw_exception( "TaskFork invalid inject source" );
         }

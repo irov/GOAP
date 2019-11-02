@@ -22,11 +22,11 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskEvent::_onRun( NodeInterface * _task )
+    bool TaskEvent::_onRun( NodeInterface * _node )
     {
-        EventProviderPtr provider = Helper::makeEventProvider( [_task]()
+        EventProviderPtr provider = Helper::makeEventProvider( [_node]()
         {
-            _task->complete();
+            _node->complete();
 
             return true;
         } );

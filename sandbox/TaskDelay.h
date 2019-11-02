@@ -11,7 +11,7 @@ public:
     ~TaskDelay() override;
 
 protected:
-    bool _onRun( GOAP::NodeInterface * _task ) override;
+    bool _onRun( GOAP::NodeInterface * _node ) override;
     void _onSkip() override;
 
 protected:

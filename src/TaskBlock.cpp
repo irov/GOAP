@@ -18,9 +18,9 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskBlock::_onRun( NodeInterface * _task )
+    bool TaskBlock::_onRun( NodeInterface * _node )
     {
-        (void)_task;
+        GOAP_UNUSED( _node );
 
         return false;
     }

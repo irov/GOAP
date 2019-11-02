@@ -20,16 +20,16 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskParallelNeck::_onCheckRun( const NodeInterface * _task ) const
+    bool TaskParallelNeck::_onCheckRun( const NodeInterface * _node ) const
     {
-        bool result = _task->isEmptyPrevs();
+        bool result = _node->isEmptyPrevs();
 
         return result;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskParallelNeck::_onCheckSkip( const NodeInterface * _task ) const
+    bool TaskParallelNeck::_onCheckSkip( const NodeInterface * _node ) const
     {
-        bool result = _task->isEmptyPrevs();
+        bool result = _node->isEmptyPrevs();
 
         return result;
     }

@@ -7,23 +7,26 @@ class TaskDelay::MySchedulerObserver
     : public SchedulerObserver
 {
 public:
-    MySchedulerObserver( GOAP::NodeInterface * _task )
-        : m_task( _task )
+    MySchedulerObserver( GOAP::NodeInterface * _node )
+        : m_node( _node )
     {
     }
 
 protected:
     void onScheduleComplete( uint32_t _id ) override
     {
-        m_task->complete();
+        GOAP_UNUSED( _id );
+
+        m_node->complete();
     }
     
     void onScheduleStop( uint32_t _id ) override
     {
+        GOAP_UNUSED( _id );
     }
 
 protected:
-    GOAP::NodeInterfacePtr m_task;
+    GOAP::NodeInterfacePtr m_node;
 };
 //////////////////////////////////////////////////////////////////////////
 TaskDelay::TaskDelay( float _delay, const SchedulerPtr & _scheduler )
@@ -37,11 +40,11 @@ TaskDelay::~TaskDelay()
 {
 }
 //////////////////////////////////////////////////////////////////////////
-bool TaskDelay::_onRun( GOAP::NodeInterface * _task )
+bool TaskDelay::_onRun( GOAP::NodeInterface * _node )
 {
     typedef GOAP::IntrusivePtr<MySchedulerObserver> MySchedulerObserverPtr;
 
-    MySchedulerObserverPtr observer( new MySchedulerObserver( _task ) );
+    MySchedulerObserverPtr observer( new MySchedulerObserver( _node ) );
 
     m_id = m_scheduler->schedule( m_delay, false, observer );
 

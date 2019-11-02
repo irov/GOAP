@@ -27,11 +27,11 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskGenerator::_onRun( NodeInterface * _task )
+    bool TaskGenerator::_onRun( NodeInterface * _node )
     {
-        m_timerProvider = m_timer->addTimer( [this, _task]( float _time )
+        m_timerProvider = m_timer->addTimer( [this, _node]( float _time )
         {
-            this->onTime( _task, _time );
+            this->onTime( _node, _time );
         } );
 
         return false;
@@ -56,7 +56,7 @@ namespace GOAP
         m_timer = nullptr;
     }
     //////////////////////////////////////////////////////////////////////////
-    void TaskGenerator::onTime( NodeInterface * _task, float _time )
+    void TaskGenerator::onTime( NodeInterface * _node, float _time )
     {
         m_time += _time;
 
@@ -64,7 +64,7 @@ namespace GOAP
 
         if( delay <= 0.f )
         {
-            _task->complete();
+            _node->complete();
 
             return;
         }
@@ -78,7 +78,7 @@ namespace GOAP
 
         uint32_t new_iterator = m_iterator + 1;
 
-        SourcePtr source = _task->makeSource();
+        SourcePtr source = _node->makeSource();
 
         auto && [source_generator, source_fork] = source->addParallel<2>();
 
@@ -90,8 +90,8 @@ namespace GOAP
 
         const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 
-        _task->injectSource( provider );
+        _node->injectSource( provider );
 
-        _task->complete();
+        _node->complete();
     }
 }

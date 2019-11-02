@@ -41,9 +41,9 @@ namespace GOAP
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool Task::_onRun( NodeInterface * _task )
+    bool Task::_onRun( NodeInterface * _node )
     {
-        (void)_task;
+        GOAP_UNUSED( _node );
 
         return true;
     }
@@ -84,16 +84,16 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool Task::_onCheckRun( const NodeInterface * _task ) const
+    bool Task::_onCheckRun( const NodeInterface * _node ) const
     {
-        bool result = _task->isEmptyPrevs();
+        bool result = _node->isEmptyPrevs();
 
         return result;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool Task::_onCheckSkip( const NodeInterface * _task ) const
+    bool Task::_onCheckSkip( const NodeInterface * _node ) const
     {
-        bool result = _task->isEmptyPrevs();
+        bool result = _node->isEmptyPrevs();
 
         return result;
     }

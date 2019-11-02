@@ -22,13 +22,13 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskSource::_onRun( NodeInterface * _task )
+    bool TaskSource::_onRun( NodeInterface * _node )
     {
         if( m_source != nullptr )
         {
             const SourceProviderInterfacePtr & provider = m_source->getSourceProvider();
 
-            if( _task->injectSource( provider ) == false )
+            if( _node->injectSource( provider ) == false )
             {
                 Helper::throw_exception( "TaskSource invalid inject source" );
             }

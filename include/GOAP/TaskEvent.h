@@ -22,7 +22,7 @@ namespace GOAP
         ~TaskEvent() override;
 
     public:
-        bool _onRun( NodeInterface * _task ) override;
+        bool _onRun( NodeInterface * _node ) override;
         void _onFinally() override;
         bool _onSkipable() const override;
 

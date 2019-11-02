@@ -30,9 +30,9 @@ TaskPrint::~TaskPrint()
 {
 }
 //////////////////////////////////////////////////////////////////////////
-bool TaskPrint::_onRun( GOAP::NodeInterface * _task )
+bool TaskPrint::_onRun( GOAP::NodeInterface * _node )
 {
-    (void)_task;
+    GOAP_UNUSED( _node );
 
     printf( m_message );
 

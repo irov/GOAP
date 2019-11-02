@@ -77,11 +77,11 @@ namespace GOAP
         return false;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskSemaphore::_onRun( NodeInterface * _task )
+    bool TaskSemaphore::_onRun( NodeInterface * _node )
     {
-        m_provider = m_semaphore->addProvider( [this, _task]()
+        m_provider = m_semaphore->addProvider( [this, _node]()
         {
-            bool result = this->test( _task );
+            bool result = this->test( _node );
 
             return result;
         } );

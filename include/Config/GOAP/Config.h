@@ -7,11 +7,12 @@
 
 #pragma once
 
-#include <stdlib.h>
 #include <stdint.h>
 #include <cstddef>
 
-#define GOAP_UNUSED(VALUE) ((void)VALUE)
+#define GOAP_UNUSED(expr) ((void)(expr))
+
+#include <stdlib.h>
 
 #define GOAP_MALLOC(SIZE) ::malloc(SIZE)
 #define GOAP_FREE(PTR, SIZE) ::free(PTR)

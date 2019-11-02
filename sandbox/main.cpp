@@ -45,9 +45,9 @@ int main()
     v.push_back( 5 );
     v.push_back( 7 );
 
-    for( auto && [source, value] : source->addParallelZip( v ) )
+    for( auto && [value_source, value] : source->addParallelZip( v ) )
     {
-        source->addTask<TaskPrint>( "zip [%d]", value );
+        value_source->addTask<TaskPrint>( "zip [%d]", value );
     }
 
     auto [parallel0, parallel1] = source->addParallel<2>();
@@ -124,6 +124,9 @@ int main()
 
     source->addFor( 10, [sch]( const GOAP::SourcePtr & _scope, uint32_t _iterator, uint32_t _count )
     {
+        GOAP_UNUSED( _iterator );
+        GOAP_UNUSED( _count );
+
         _scope->addTask<TaskDelay>( 500.f, sch );
         _scope->addTask<TaskPrint>( "For!!!!" );
 

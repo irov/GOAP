@@ -24,13 +24,13 @@ namespace GOAP
 
     public:
         bool _onCheck() override;
-        bool _onRun( NodeInterface * _task ) override;
+        bool _onRun( NodeInterface * _node ) override;
         void _onComplete() override;
         void _onFinally() override;
         bool _onSkipable() const override;
 
     protected:
-        bool test( NodeInterface * _task );
+        bool test( NodeInterface * _node );
         void process();
 
     protected:

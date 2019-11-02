@@ -22,9 +22,9 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskWhile::_onRun( NodeInterface * _task )
+    bool TaskWhile::_onRun( NodeInterface * _node )
     {
-        SourcePtr source = _task->makeSource();
+        SourcePtr source = _node->makeSource();
 
         bool injecting = m_provider->onWhile( source );
 
@@ -34,7 +34,7 @@ namespace GOAP
 
             const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 
-            if( _task->injectSource( provider ) == false )
+            if( _node->injectSource( provider ) == false )
             {
                 Helper::throw_exception( "TaskWhile invalid inject source" );
             }

@@ -10,7 +10,7 @@ public:
     ~TaskPrint() override;
 
 protected:
-    bool _onRun( GOAP::NodeInterface * _task ) override;
+    bool _onRun( GOAP::NodeInterface * _node ) override;
 
 protected:
     char m_message[1024];

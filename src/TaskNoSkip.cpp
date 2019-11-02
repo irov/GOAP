@@ -18,8 +18,10 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskNoSkip::_onRun( NodeInterface * _task )
+    bool TaskNoSkip::_onRun( NodeInterface * _node )
     {
+        GOAP_UNUSED( _node );
+
         return true;
     }
     //////////////////////////////////////////////////////////////////////////

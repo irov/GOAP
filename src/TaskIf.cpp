@@ -26,19 +26,19 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool TaskIf::_onRun( NodeInterface * _task )
+    bool TaskIf::_onRun( NodeInterface * _node )
     {
         bool result = m_provider->onIf();
 
         const SourceInterfacePtr & result_source = (result == true) ? m_sourceTrue : m_sourceFalse;
 
-        bool skip = _task->isSkip();
+        bool skip = _node->isSkip();
 
         const SourceProviderInterfacePtr & provider = result_source->getSourceProvider();
 
         provider->setSkip( skip );
 
-        if( _task->injectSource( provider ) == false )
+        if( _node->injectSource( provider ) == false )
         {
             Helper::throw_exception( "TaskIf invalid inject source" );
         }

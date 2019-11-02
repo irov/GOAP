@@ -21,7 +21,7 @@ namespace GOAP
         ~TaskBlock() override;
 
     protected:
-        bool _onRun( NodeInterface * _task ) override;
+        bool _onRun( NodeInterface * _node ) override;
         bool _onSkipable() const override;
     };
     //////////////////////////////////////////////////////////////////////////
