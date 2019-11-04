@@ -68,7 +68,7 @@ set( GOAP_SOURCES
     ${SOURCE_DIR}/TranscriptorRace.h
     ${SOURCE_DIR}/TranscriptorParallelArray.cpp
     ${SOURCE_DIR}/TranscriptorRaceArray.cpp
-    ${SOURCE_DIR}/Semaphore.cpp    
+    ${SOURCE_DIR}/Semaphore.cpp
     ${SOURCE_DIR}/Event.cpp
     ${SOURCE_DIR}/TaskSemaphore.cpp
     ${SOURCE_DIR}/Timer.cpp
@@ -92,7 +92,7 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/Timer.h
 	${INCLUDE_DIR}/GOAP/TimerProvider.h
     ${INCLUDE_DIR}/GOAP/IfProvider.h
-    ${INCLUDE_DIR}/GOAP/TriggerProvider.h    
+    ${INCLUDE_DIR}/GOAP/TriggerProvider.h
     ${INCLUDE_DIR}/GOAP/ScopeProvider.h
     ${INCLUDE_DIR}/GOAP/ForProvider.h
     ${INCLUDE_DIR}/GOAP/Source.h

@@ -19,6 +19,8 @@ public:
 protected:
     void onScheduleComplete( uint32_t _id ) override
     {
+        GOAP_UNUSED( _id );
+
         uint32_t roll = rand() % m_max;
 
         if( roll != m_roll )
@@ -31,6 +33,7 @@ protected:
 
     void onScheduleStop( uint32_t _id ) override
     {
+        GOAP_UNUSED( _id );
     }
 
 protected:
