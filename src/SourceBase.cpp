@@ -162,7 +162,7 @@ namespace GOAP
         this->addTask<TaskGenerator>( _time, _iterator, _timer, _provider );
     }
     //////////////////////////////////////////////////////////////////////////
-    void SourceBase::addTriggerProvider( const EventPtr & _event, const IfProviderPtr & _provider )
+    void SourceBase::addTriggerProvider( const EventPtr & _event, const TriggerProviderPtr & _provider )
     {
         this->addTask<TaskTrigger>( _event, _provider );
     }

@@ -14,7 +14,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class Event> EventPtr;
     typedef IntrusivePtr<class EventProvider> EventProviderPtr;
-    typedef IntrusivePtr<class IfProvider> IfProviderPtr;
+    typedef IntrusivePtr<class TriggerProvider> TriggerProviderPtr;
     //////////////////////////////////////////////////////////////////////////
     class TaskTrigger
         : public Task
@@ -22,7 +22,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( Task );
 
     public:
-        TaskTrigger( const EventPtr & _event, const IfProviderPtr & _provider );
+        TaskTrigger( const EventPtr & _event, const TriggerProviderPtr & _provider );
         ~TaskTrigger() override;
 
     public:
@@ -32,7 +32,7 @@ namespace GOAP
     protected:
         EventPtr m_event;
         EventProviderPtr m_eventProvider;
-        IfProviderPtr m_provider;
+        TriggerProviderPtr m_provider;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TaskTrigger> TaskTriggerPtr;

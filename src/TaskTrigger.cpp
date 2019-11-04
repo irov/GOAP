@@ -9,12 +9,14 @@
 #include "GOAP/Event.h"
 #include "GOAP/EventProvider.h"
 #include "GOAP/NodeInterface.h"
-#include "GOAP/IfProvider.h"
+#include "GOAP/TriggerProvider.h"
+#include "GOAP/SourceInterface.h"
+#include "GOAP/SourceProviderInterface.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskTrigger::TaskTrigger( const EventPtr & _event, const IfProviderPtr & _provider )
+    TaskTrigger::TaskTrigger( const EventPtr & _event, const TriggerProviderPtr & _provider )
         : m_event( _event )
         , m_provider( _provider )
     {
@@ -26,19 +28,33 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskTrigger::_onRun( NodeInterface * _node )
     {
-        bool result = m_provider->onIf();
+        SourceInterfacePtr source = _node->makeSource();
+
+        bool result = m_provider->onTrigger( source );
+
+        const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 
         if( result == true )
         {
+            _node->injectSource( provider );
+
             return true;
         }
 
+        _node->forkSource( provider );
+
         m_eventProvider = Helper::makeEventProvider( [this, _node]()
         {
-            bool result = m_provider->onIf();
+            SourceInterfacePtr source = _node->makeSource();
+
+            bool result = m_provider->onTrigger( source );
+
+            const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 
             if( result == true )
             {
+                _node->injectSource( provider );
+
                 if( _node->isSkip() == false )
                 {
                     _node->complete();
@@ -47,9 +63,13 @@ namespace GOAP
                 {
                     _node->skip();
                 }
+
+                return true;
             }
 
-            return result;
+            _node->forkSource( provider );
+
+            return false;
         } );
 
         m_event->addProvider( m_eventProvider );

@@ -107,7 +107,7 @@ namespace GOAP
         template<class F>
         void addTrigger( const EventPtr & _event, F _f )
         {
-            IfProviderPtr provider = Helper::makeIfProvider( _f );
+            TriggerProviderPtr provider = Helper::makeTriggerProvider( _f );
 
             this->addTriggerProvider( _event, provider );
         }

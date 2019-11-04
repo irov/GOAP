@@ -92,6 +92,7 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/Timer.h
 	${INCLUDE_DIR}/GOAP/TimerProvider.h
     ${INCLUDE_DIR}/GOAP/IfProvider.h
+    ${INCLUDE_DIR}/GOAP/TriggerProvider.h    
     ${INCLUDE_DIR}/GOAP/ScopeProvider.h
     ${INCLUDE_DIR}/GOAP/ForProvider.h
     ${INCLUDE_DIR}/GOAP/Source.h
