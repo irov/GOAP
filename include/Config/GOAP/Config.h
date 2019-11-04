@@ -17,4 +17,4 @@
 #define GOAP_MALLOC(SIZE) ::malloc(SIZE)
 #define GOAP_FREE(PTR, SIZE) ::free(PTR)
 
-#include <type_traits>
+#include <utility>

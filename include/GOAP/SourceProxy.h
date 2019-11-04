@@ -25,13 +25,18 @@ namespace GOAP
         typedef IntrusivePtr<Type> TypeSourcePtr;
 
     public:
-        ArraySources<2> tryTask( const NodePtr & _task )
+        template<class T, class ... Args>
+        ArraySources<2> tryTask( Args && ... _args )
         {
-            this->addTask( _task );
+            TaskInterfacePtr provider = Helper::makeTask<T>( std::forward<Args &&>( _args ) ... );
 
-            ArraySources<2> desc = this->addIf( [_task]()
+            NodePtr node = this->makeNode( provider );
+
+            this->addNode( node );
+
+            ArraySources<2> desc = this->addIf( [node]()
             {
-                if( _task->isError() == true )
+                if( node->isError() == true )
                 {
                     return false;
                 }
