@@ -35,7 +35,7 @@ namespace GOAP
         void addTranscriptor( const TranscriptorInterfacePtr & _transcriptor ) override;
 
     public:
-        NodePtr parse( const ChainPtr & _chain, const NodePtr & _task ) override;
+        NodeInterfacePtr parse( const ChainPtr & _chain, const NodeInterfacePtr & _task ) override;
 
     protected:
         typedef Vector<TranscriptorInterfacePtr> VectorTranscriptors;

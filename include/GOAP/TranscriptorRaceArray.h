@@ -43,7 +43,7 @@ namespace GOAP
         }
 
     public:
-        NodePtr generate( const ChainPtr & _chain, const NodePtr & _task ) override
+        NodeInterfacePtr generate( const ChainPtr & _chain, const NodeInterfacePtr & _task ) override
         {
             if( m_sources.empty() == true )
             {
@@ -54,7 +54,7 @@ namespace GOAP
 
             TaskInterfacePtr provider_parallel_neck = Helper::makeTask<TaskRaceNeck>();
 
-            NodePtr task_parallel_neck = source->makeNode( provider_parallel_neck );
+            NodeInterfacePtr task_parallel_neck = source->makeNode( provider_parallel_neck );
 
             task_parallel_neck->setChain( _chain );
 

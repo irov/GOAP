@@ -15,7 +15,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class SourceProviderInterface> SourceProviderInterfacePtr;
     typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
-    typedef IntrusivePtr<class Node> NodePtr;
+    typedef IntrusivePtr<class NodeInterface> NodeInterfacePtr;
     typedef IntrusivePtr<class TaskInterface> TaskInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class SourceInterface
@@ -28,8 +28,8 @@ namespace GOAP
         virtual SourceInterfacePtr makeSource() = 0;
 
     public:
-        virtual NodePtr makeNode( const TaskInterfacePtr & _provider ) = 0;
-        virtual void addNode( const NodePtr & _task ) = 0;
+        virtual NodeInterfacePtr makeNode( const TaskInterfacePtr & _provider ) = 0;
+        virtual void addNode( const NodeInterfacePtr & _task ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<SourceInterface> SourceInterfacePtr;

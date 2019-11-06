@@ -13,7 +13,7 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Node> NodePtr;
+    typedef IntrusivePtr<class NodeInterface> NodeInterfacePtr;
     typedef IntrusivePtr<class TranscriptorInterface> TranscriptorInterfacePtr;
     typedef IntrusivePtr<class Chain> ChainPtr;
     //////////////////////////////////////////////////////////////////////////
@@ -31,7 +31,7 @@ namespace GOAP
         virtual void addTranscriptor( const TranscriptorInterfacePtr & _transcriptor ) = 0;
 
     public:
-        virtual NodePtr parse( const ChainPtr & _chain, const NodePtr & _task ) = 0;
+        virtual NodeInterfacePtr parse( const ChainPtr & _chain, const NodeInterfacePtr & _task ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<SourceProviderInterface> SourceProviderInterfacePtr;

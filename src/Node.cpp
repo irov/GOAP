@@ -8,6 +8,7 @@
 #include "GOAP/Node.h"
 #include "GOAP/Source.h"
 #include "GOAP/Chain.h"
+#include "GOAP/TaskDummy.h"
 
 #include <algorithm>
 
@@ -107,7 +108,7 @@ namespace GOAP
 
         const ChainPtr & chain = this->getChain();
 
-        NodePtr task = _provider->parse( chain, NodePtr::from( this ) );
+        NodeInterfacePtr task = _provider->parse( chain, NodeInterfacePtr::from( this ) );
 
         if( task == nullptr )
         {
@@ -129,14 +130,11 @@ namespace GOAP
             return true;
         }
 
-        bool skip = this->isSkip();
-        _provider->setSkip( skip );
-
         const ChainPtr & chain = this->getChain();
 
-        NodePtr task = _provider->parse( chain, NodePtr::from( this ) );
+        NodeInterfacePtr node = _provider->parse( chain, NodeInterfacePtr::from( this ) );
 
-        if( task == nullptr )
+        if( node == nullptr )
         {
             return false;
         }
@@ -322,9 +320,9 @@ namespace GOAP
         {
             VectorNodes copy_nexts = m_nexts;
 
-            for( const NodePtr & task : copy_nexts )
+            for( const NodePtr & node : copy_nexts )
             {
-                task->cancel( _withNexts );
+                node->cancel( _withNexts );
             }
         }
 

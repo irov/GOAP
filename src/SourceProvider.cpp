@@ -43,13 +43,13 @@ namespace GOAP
         m_transcriptors.emplace_back( _transcriptor );
     }
     //////////////////////////////////////////////////////////////////////////
-    NodePtr SourceProvider::parse( const ChainPtr & _chain, const NodePtr & _task )
+    NodeInterfacePtr SourceProvider::parse( const ChainPtr & _chain, const NodeInterfacePtr & _task )
     {
-        NodePtr current_task = _task;
+        NodeInterfacePtr current_task = _task;
 
         for( const TranscriptorInterfacePtr & description : m_transcriptors )
         {
-            NodePtr last_task = description->generate( _chain, current_task );
+            NodeInterfacePtr last_task = description->generate( _chain, current_task );
 
             current_task = last_task;
         }

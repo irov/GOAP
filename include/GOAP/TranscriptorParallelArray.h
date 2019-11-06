@@ -19,7 +19,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     namespace Detail
     {
-        void generateParallelSource( const ViewSources<SourceInterface> & _sources, const ChainPtr & _chain, const NodePtr & _task, const NodePtr & _neck );
+        void generateParallelSource( const ViewSources<SourceInterface> & _sources, const ChainPtr & _chain, const NodeInterfacePtr & _task, const NodeInterfacePtr & _neck );
     }
     //////////////////////////////////////////////////////////////////////////
     template<size_t Count>
@@ -43,13 +43,13 @@ namespace GOAP
         }
 
     public:
-        NodePtr generate( const ChainPtr & _chain, const NodePtr & _task ) override
+        NodeInterfacePtr generate( const ChainPtr & _chain, const NodeInterfacePtr & _task ) override
         {
             const SourceInterfacePtr & source = _chain->getSource();
 
             TaskInterfacePtr provider_parallel_neck = Helper::makeTask<TaskParallelNeck>();
 
-            NodePtr task_parallel_neck = source->makeNode( provider_parallel_neck );
+            NodeInterfacePtr task_parallel_neck = source->makeNode( provider_parallel_neck );
 
             task_parallel_neck->setChain( _chain );
 

@@ -28,7 +28,7 @@ namespace GOAP
         return m_sources;
     }
     //////////////////////////////////////////////////////////////////////////
-    NodePtr TranscriptorRace::generate( const ChainPtr & _chain, const NodePtr & _task )
+    NodeInterfacePtr TranscriptorRace::generate( const ChainPtr & _chain, const NodeInterfacePtr & _task )
     {
         if( m_sources.empty() == true )
         {
@@ -39,14 +39,14 @@ namespace GOAP
 
         TaskInterfacePtr provider_parallel_neck = Helper::makeTask<TaskRaceNeck>();
 
-        NodePtr task_parallel_neck = source->makeNode( provider_parallel_neck );
+        NodeInterfacePtr task_parallel_neck = source->makeNode( provider_parallel_neck );
         task_parallel_neck->setChain( _chain );
 
         for( const SourceInterfacePtr & race_source : m_sources )
         {
             const SourceProviderInterfacePtr & race_provider = race_source->getSourceProvider();
 
-            NodePtr task = race_provider->parse( _chain, _task );
+            NodeInterfacePtr task = race_provider->parse( _chain, _task );
 
             task->addNext( task_parallel_neck );
         }

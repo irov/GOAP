@@ -13,14 +13,14 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Node> NodePtr;
+    typedef IntrusivePtr<class NodeInterface> NodeInterfacePtr;
     typedef IntrusivePtr<class Chain> ChainPtr;
     //////////////////////////////////////////////////////////////////////////
     class TranscriptorInterface
         : public Factorable
     {
     public:
-        virtual NodePtr generate( const ChainPtr & _chain, const NodePtr & _task ) = 0;
+        virtual NodeInterfacePtr generate( const ChainPtr & _chain, const NodeInterfacePtr & _task ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TranscriptorInterface> TranscriptorInterfacePtr;

@@ -10,8 +10,9 @@
 #include "GOAP/EventProvider.h"
 #include "GOAP/NodeInterface.h"
 #include "GOAP/TriggerProvider.h"
-#include "GOAP/SourceInterface.h"
+#include "GOAP/Source.h"
 #include "GOAP/SourceProviderInterface.h"
+#include "GOAP/Exception.h"
 
 namespace GOAP
 {
@@ -28,68 +29,35 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskTrigger::_onRun( NodeInterface * _node )
     {
-        SourceInterfacePtr source = _node->makeSource();
+        SourcePtr source = _node->makeSource();
 
-        bool result = m_provider->onTrigger( source );
+        SourcePtr fork_source = source->addFork();
 
+        bool result = m_provider->onTrigger( fork_source );
+
+        if( result == false )
+        {
+            source->addEvent( m_event );
+
+            source->addTriggerProvider( m_event, m_provider );
+        }
+        
         const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 
-        if( result == true )
-        {
-            _node->injectSource( provider );
+        bool skip = _node->isSkip();
+        provider->setSkip( skip );
 
-            return true;
+        if( _node->injectSource( provider ) == false )
+        {
+            Helper::throw_exception( "TaskTrigger invalid fork source" );
         }
 
-        _node->forkSource( provider );
-
-        m_eventProvider = Helper::makeEventProvider( [this, _node]()
-        {
-            SourceInterfacePtr source = _node->makeSource();
-
-            bool result = m_provider->onTrigger( source );
-
-            const SourceProviderInterfacePtr & provider = source->getSourceProvider();
-
-            if( result == true )
-            {
-                _node->injectSource( provider );
-
-                if( _node->isSkip() == false )
-                {
-                    _node->complete();
-                }
-                else
-                {
-                    _node->skip();
-                }
-
-                return true;
-            }
-
-            _node->forkSource( provider );
-
-            return false;
-        } );
-
-        m_event->addProvider( m_eventProvider );
-
-        return false;
+        return true;
     }
     //////////////////////////////////////////////////////////////////////////
     void TaskTrigger::_onFinally()
     {
-        if( m_event != nullptr )
-        {
-            if( m_eventProvider != nullptr )
-            {
-                m_event->removeProvider( m_eventProvider );
-                m_eventProvider = nullptr;
-            }
-
-            m_event = nullptr;
-        }
-
+        m_event = nullptr;
         m_provider = nullptr;
     }
 }

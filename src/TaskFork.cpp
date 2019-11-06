@@ -9,6 +9,7 @@
 
 #include "GOAP/NodeInterface.h"
 #include "GOAP/SourceInterface.h"
+#include "GOAP/SourceProviderInterface.h"
 
 #include "GOAP/Exception.h"
 
@@ -24,13 +25,21 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
+    const SourceInterfacePtr & TaskFork::getSource() const
+    {
+        return m_source;
+    }
+    //////////////////////////////////////////////////////////////////////////
     bool TaskFork::_onRun( NodeInterface * _node )
     {
         const SourceProviderInterfacePtr & provider = m_source->getSourceProvider();
 
+        bool skip = _node->isSkip();
+        provider->setSkip( skip );
+
         if( _node->forkSource( provider ) == false )
         {
-            Helper::throw_exception( "TaskFork invalid inject source" );
+            Helper::throw_exception( "TaskFork invalid fork source" );
         }
 
         m_source = nullptr;

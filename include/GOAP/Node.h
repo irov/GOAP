@@ -40,8 +40,8 @@ namespace GOAP
         ~Node() override;
 
     public:
-        void setChain( const ChainPtr & _chain );
-        const ChainPtr & getChain() const;
+        void setChain( const ChainPtr & _chain ) override;
+        const ChainPtr & getChain() const override;
 
     public:
         SourceInterfacePtr makeSource() override;

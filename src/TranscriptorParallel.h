@@ -29,7 +29,7 @@ namespace GOAP
         const VectorSources & getSources() const;
 
     public:
-        NodePtr generate( const ChainPtr & _chain, const NodePtr & _task ) override;
+        NodeInterfacePtr generate( const ChainPtr & _chain, const NodeInterfacePtr & _task ) override;
 
     protected:
         VectorSources m_sources;

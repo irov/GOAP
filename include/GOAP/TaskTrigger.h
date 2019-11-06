@@ -13,7 +13,6 @@ namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class Event> EventPtr;
-    typedef IntrusivePtr<class EventProvider> EventProviderPtr;
     typedef IntrusivePtr<class TriggerProvider> TriggerProviderPtr;
     //////////////////////////////////////////////////////////////////////////
     class TaskTrigger
@@ -31,7 +30,6 @@ namespace GOAP
 
     protected:
         EventPtr m_event;
-        EventProviderPtr m_eventProvider;
         TriggerProviderPtr m_provider;
     };
     //////////////////////////////////////////////////////////////////////////

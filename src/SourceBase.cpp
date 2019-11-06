@@ -52,14 +52,14 @@ namespace GOAP
         return m_provider;
     }
     //////////////////////////////////////////////////////////////////////////
-    NodePtr SourceBase::makeNode( const TaskInterfacePtr & _task )
+    NodeInterfacePtr SourceBase::makeNode( const TaskInterfacePtr & _task )
     {
         NodePtr task( new Node( _task ) );
 
         return task;
     }
     //////////////////////////////////////////////////////////////////////////
-    void SourceBase::addNode( const NodePtr & _task )
+    void SourceBase::addNode( const NodeInterfacePtr & _task )
     {
         m_provider->addTranscriptor( Helper::makeTranscriptor<TranscriptorBase>( _task ) );
     }

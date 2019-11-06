@@ -24,6 +24,9 @@ namespace GOAP
         ~TaskFork() override;
 
     public:
+        const SourceInterfacePtr & getSource() const;
+
+    public:
         bool _onRun( NodeInterface * _node ) override;
         void _onFinally() override;
 

@@ -15,13 +15,13 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     namespace Detail
     {
-        void generateParallelSource( const ViewSources<SourceInterface> & _sources, const ChainPtr & _chain, const NodePtr & _task, const NodePtr & _neck )
+        void generateParallelSource( const ViewSources<SourceInterface> & _sources, const ChainPtr & _chain, const NodeInterfacePtr & _task, const NodeInterfacePtr & _neck )
         {
             for( const SourceInterfacePtr & source : _sources )
             {
                 const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 
-                NodePtr new_task = provider->parse( _chain, _task );
+                NodeInterfacePtr new_task = provider->parse( _chain, _task );
 
                 new_task->addNext( _neck );
             }
