@@ -192,6 +192,22 @@ namespace GOAP
             this->addForProvider( provider, 0, _count );
         }
 
+        template<class F>
+        void addFor( uint32_t _iterator, uint32_t _count, F _f )
+        {
+            ForProviderPtr provider = Helper::makeForProvider( _f );
+
+            this->addForProvider( provider, _iterator, _count );
+        }
+
+        template<class C, class M, class ... Args>
+        void addFor( uint32_t _iterator, uint32_t _count, C * _self, M _method, Args && ... _args )
+        {
+            ForProviderPtr provider = Helper::makeForProvider( [&, _self, _method, _args ...]( const SourceInterfacePtr & _source, uint32_t _iterator, uint32_t _count ){ return (_self->*_method)(_source, _iterator, _count, _args ...); } );
+
+            this->addForProvider( provider, _iterator, _count );
+        }
+
     public:
         void addSource( const SourceInterfacePtr & _source );
         void addEvent( const EventPtr & _event );
