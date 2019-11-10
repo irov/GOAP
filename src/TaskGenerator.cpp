@@ -62,7 +62,7 @@ namespace GOAP
 
         float delay = m_provider->onDelay( m_iterator );
 
-        if( delay <= 0.f )
+        if( delay < 0.f )
         {
             _node->complete();
 
