@@ -38,6 +38,7 @@ set( GOAP_SOURCES
     ${SOURCE_DIR}/Source.cpp
     ${SOURCE_DIR}/SourceBase.cpp
     ${SOURCE_DIR}/SourceProvider.cpp
+    ${SOURCE_DIR}/IfProviderMember.cpp
     ${SOURCE_DIR}/Node.cpp
     ${SOURCE_DIR}/Task.cpp
     ${SOURCE_DIR}/TaskCallback.cpp
@@ -92,6 +93,7 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/Timer.h
 	${INCLUDE_DIR}/GOAP/TimerProvider.h
     ${INCLUDE_DIR}/GOAP/IfProvider.h
+    ${INCLUDE_DIR}/GOAP/IfProviderMember.h
     ${INCLUDE_DIR}/GOAP/TriggerProvider.h
     ${INCLUDE_DIR}/GOAP/ScopeProvider.h
     ${INCLUDE_DIR}/GOAP/ForProvider.h

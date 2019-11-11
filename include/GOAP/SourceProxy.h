@@ -118,6 +118,16 @@ namespace GOAP
         }
 
         template<class F>
+        ArrayTypeSources<Type, 2> addIf( bool & _member )
+        {
+            IfProviderPtr provider = Helper::makeIfProviderMember( _member );
+
+            ArraySources<2> sources = this->addIfProvider( provider );
+
+            return Helper::ArraySourcesCast<Type>( sources );
+        }
+
+        template<class F>
         ArrayTypeSources<Type, 2> addIf( F _f )
         {
             IfProviderPtr provider = Helper::makeIfProvider( _f );
