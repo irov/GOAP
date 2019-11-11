@@ -10,21 +10,21 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    IfProviderMember::IfProviderMember( bool & _member )
+    IfProviderMember::IfProviderMember( bool * _member )
         : m_member( _member )
     {
     }
     //////////////////////////////////////////////////////////////////////////
     bool IfProviderMember::onIf()
     {
-        bool result = m_member;
+        bool result = *m_member;
 
         return result;
     }
     //////////////////////////////////////////////////////////////////////////
     namespace Helper
     {
-        IfProviderPtr makeIfProviderMember( bool & _member )
+        IfProviderPtr makeIfProviderMember( bool * _member )
         {
             return IfProviderPtr::from( new IfProviderMember( _member ) );
         }

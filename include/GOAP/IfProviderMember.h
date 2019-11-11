@@ -16,18 +16,18 @@ namespace GOAP
         : public IfProvider
     {
     public:
-        explicit IfProviderMember( bool & _member );
+        explicit IfProviderMember( bool * _member );
 
     public:
         bool onIf() override;
 
     protected:
-        bool & m_member;
+        bool * m_member;
     };
     //////////////////////////////////////////////////////////////////////////
     namespace Helper
     {
-        IfProviderPtr makeIfProviderMember( bool & _member );
+        IfProviderPtr makeIfProviderMember( bool * _member );
     }
     //////////////////////////////////////////////////////////////////////////
 }

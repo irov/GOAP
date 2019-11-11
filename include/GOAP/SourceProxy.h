@@ -117,8 +117,7 @@ namespace GOAP
             this->addTriggerProvider( _event, provider );
         }
 
-        template<class F>
-        ArrayTypeSources<Type, 2> addIf( bool & _member )
+        ArrayTypeSources<Type, 2> addIf( bool * _member )
         {
             IfProviderPtr provider = Helper::makeIfProviderMember( _member );
 
