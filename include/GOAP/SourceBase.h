@@ -20,6 +20,7 @@
 #include "GOAP/CallbackProvider.h"
 #include "GOAP/ScopeProvider.h"
 #include "GOAP/IfProvider.h"
+#include "GOAP/IfProviderMember.h"
 #include "GOAP/TriggerProvider.h"
 #include "GOAP/SwitchProvider.h"
 #include "GOAP/GuardProvider.h"
