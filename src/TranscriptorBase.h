@@ -20,7 +20,7 @@ namespace GOAP
         ~TranscriptorBase() override;
 
     public:
-        NodeInterfacePtr generate( const ChainPtr & _chain, const NodeInterfacePtr & _task ) override;
+        NodeInterfacePtr generate( const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task ) override;
 
     protected:
         NodeInterfacePtr m_task;

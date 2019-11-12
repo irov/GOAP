@@ -36,12 +36,12 @@ namespace GOAP
         };
 
     public:
-        Node( const TaskInterfacePtr & _provider );
+        Node( const TaskInterfacePtr & _task );
         ~Node() override;
 
     public:
-        void setChain( const ChainPtr & _chain ) override;
-        const ChainPtr & getChain() const override;
+        void setChain( const ChainInterfacePtr & _chain ) override;
+        const ChainInterfacePtr & getChain() const override;
 
     public:
         SourceInterfacePtr makeSource() override;
@@ -119,7 +119,7 @@ namespace GOAP
 
         ETaskState m_state;
 
-        ChainPtr m_chain;
+        ChainInterfacePtr m_chain;
 
         typedef Vector<NodeInterfacePtr> VectorNodes;
         VectorNodes m_nexts;
@@ -133,4 +133,8 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Node> NodePtr;
     //////////////////////////////////////////////////////////////////////////
+    namespace Helper
+    {
+        NodePtr makeNode( const TaskInterfacePtr & _task );
+    }
 }

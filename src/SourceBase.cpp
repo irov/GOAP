@@ -9,7 +9,6 @@
 #include "GOAP/SourceProvider.h"
 
 #include "GOAP/Node.h"
-#include "GOAP/Chain.h"
 
 #include "GOAP/TaskFunction.h"
 #include "GOAP/TaskFunctionContext.h"
@@ -54,7 +53,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     NodeInterfacePtr SourceBase::makeNode( const TaskInterfacePtr & _task )
     {
-        NodePtr task( new Node( _task ) );
+        NodePtr task = Helper::makeNode( _task );
 
         return task;
     }

@@ -8,20 +8,19 @@
 #include "GOAP/TranscriptorRaceArray.h"
 #include "GOAP/SourceInterface.h"
 #include "GOAP/SourceProviderInterface.h"
-#include "GOAP/Node.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     namespace Detail
     {
-        void generateRaceSource( const ViewSources<SourceInterface> & _sources, const ChainPtr & _chain, const NodePtr & _task, const NodePtr & _neck )
+        void generateRaceSource( const ViewSources<SourceInterface> & _sources, const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task, const NodeInterfacePtr & _neck )
         {
             for( const SourceInterfacePtr & source : _sources )
             {
                 const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 
-                NodePtr new_task = provider->parse( _chain, _task );
+                NodeInterfacePtr new_task = provider->parse( _chain, _task );
 
                 new_task->addNext( _neck );
             }

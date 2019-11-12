@@ -7,7 +7,7 @@
 
 #include "GOAP/SourceProvider.h"
 #include "GOAP/TranscriptorInterface.h"
-#include "GOAP/Node.h"
+#include "GOAP/NodeInterface.h"
 
 namespace GOAP
 {
@@ -43,7 +43,7 @@ namespace GOAP
         m_transcriptors.emplace_back( _transcriptor );
     }
     //////////////////////////////////////////////////////////////////////////
-    NodeInterfacePtr SourceProvider::parse( const ChainPtr & _chain, const NodeInterfacePtr & _task )
+    NodeInterfacePtr SourceProvider::parse( const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task )
     {
         NodeInterfacePtr current_task = _task;
 

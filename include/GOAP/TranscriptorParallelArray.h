@@ -11,15 +11,15 @@
 #include "GOAP/ViewSources.h"
 #include "GOAP/TranscriptorInterface.h"
 #include "GOAP/TaskParallelNeck.h"
-#include "GOAP/Node.h"
-#include "GOAP/Chain.h"
+#include "GOAP/NodeInterface.h"
+#include "GOAP/ChainInterface.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     namespace Detail
     {
-        void generateParallelSource( const ViewSources<SourceInterface> & _sources, const ChainPtr & _chain, const NodeInterfacePtr & _task, const NodeInterfacePtr & _neck );
+        void generateParallelSource( const ViewSources<SourceInterface> & _sources, const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task, const NodeInterfacePtr & _neck );
     }
     //////////////////////////////////////////////////////////////////////////
     template<size_t Count>
@@ -43,7 +43,7 @@ namespace GOAP
         }
 
     public:
-        NodeInterfacePtr generate( const ChainPtr & _chain, const NodeInterfacePtr & _task ) override
+        NodeInterfacePtr generate( const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task ) override
         {
             const SourceInterfacePtr & source = _chain->getSource();
 

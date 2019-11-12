@@ -14,6 +14,7 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
+    typedef IntrusivePtr<class NodeInterface> NodeInterfacePtr;
     typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class ChainInterface
@@ -40,7 +41,13 @@ namespace GOAP
         virtual void cancel() = 0;
 
     public:
+        virtual void runNode( const NodeInterfacePtr & _task ) = 0;
+        virtual void completeNode( const NodeInterfacePtr & _task ) = 0;
+        virtual void processNode( const NodeInterfacePtr & _task, bool _skip ) = 0;
+
+    public:
         virtual bool isComplete() const = 0;
+        virtual bool isCancel() const = 0;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<ChainInterface> ChainInterfacePtr;

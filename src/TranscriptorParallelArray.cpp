@@ -8,14 +8,14 @@
 #include "GOAP/TranscriptorParallelArray.h"
 #include "GOAP/SourceInterface.h"
 #include "GOAP/SourceProviderInterface.h"
-#include "GOAP/Node.h"
+#include "GOAP/NodeInterface.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     namespace Detail
     {
-        void generateParallelSource( const ViewSources<SourceInterface> & _sources, const ChainPtr & _chain, const NodeInterfacePtr & _task, const NodeInterfacePtr & _neck )
+        void generateParallelSource( const ViewSources<SourceInterface> & _sources, const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task, const NodeInterfacePtr & _neck )
         {
             for( const SourceInterfacePtr & source : _sources )
             {

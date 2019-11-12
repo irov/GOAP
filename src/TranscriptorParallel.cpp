@@ -8,7 +8,7 @@
 #include "TranscriptorParallel.h"
 
 #include "GOAP/Source.h"
-#include "GOAP/Node.h"
+#include "GOAP/NodeInterface.h"
 #include "GOAP/TaskParallelNeck.h"
 
 namespace GOAP
@@ -28,7 +28,7 @@ namespace GOAP
         return m_sources;
     }
     //////////////////////////////////////////////////////////////////////////
-    NodeInterfacePtr TranscriptorParallel::generate( const ChainPtr & _chain, const NodeInterfacePtr & _task )
+    NodeInterfacePtr TranscriptorParallel::generate( const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task )
     {
         if( m_sources.empty() == true )
         {

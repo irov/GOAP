@@ -8,7 +8,7 @@
 #include "GOAP/TaskEvent.h"
 #include "GOAP/EventProvider.h"
 
-#include "GOAP/Node.h"
+#include "GOAP/NodeInterface.h"
 
 namespace GOAP
 {

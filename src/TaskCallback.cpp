@@ -6,7 +6,7 @@
 */
 
 #include "GOAP/TaskCallback.h"
-#include "GOAP/Node.h"
+#include "GOAP/NodeInterface.h"
 
 namespace GOAP
 {

@@ -10,16 +10,18 @@
 #include "GOAP/ArraySources.h"
 #include "GOAP/ViewSources.h"
 #include "GOAP/TranscriptorInterface.h"
+#include "GOAP/NodeInterface.h"
+#include "GOAP/SourceInterface.h"
+#include "GOAP/ChainInterface.h"
+
 #include "GOAP/TaskRaceNeck.h"
-#include "GOAP/Node.h"
-#include "GOAP/Chain.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     namespace Detail
     {
-        void generateRaceSource( const ViewSources<SourceInterface> & _sources, const ChainPtr & _chain, const NodePtr & _task, const NodePtr & _neck );
+        void generateRaceSource( const ViewSources<SourceInterface> & _sources, const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task, const NodeInterfacePtr & _neck );
     }
     //////////////////////////////////////////////////////////////////////////
     template<size_t Count>
@@ -43,7 +45,7 @@ namespace GOAP
         }
 
     public:
-        NodeInterfacePtr generate( const ChainPtr & _chain, const NodeInterfacePtr & _task ) override
+        NodeInterfacePtr generate( const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task ) override
         {
             if( m_sources.empty() == true )
             {

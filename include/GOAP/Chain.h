@@ -57,11 +57,12 @@ namespace GOAP
 
     public:
         bool isComplete() const override;
+        bool isCancel() const override;
 
     protected:
-        void runNode( const NodePtr & _task );
-        void completeNode( const NodePtr & _task );
-        void processNode( const NodePtr & _task, bool _skip );
+        void runNode( const NodeInterfacePtr & _task ) override;
+        void completeNode( const NodeInterfacePtr & _task ) override;
+        void processNode( const NodeInterfacePtr & _task, bool _skip ) override;
 
     protected:
         void complete( bool _skip );
@@ -78,14 +79,13 @@ namespace GOAP
 
         ETaskChainState m_state;
 
-        typedef Vector<NodePtr> VectorNodes;
+        typedef Vector<NodeInterfacePtr> VectorNodes;
         VectorNodes m_runningNodes;
 
         ChainProviderPtr m_cb;
 
+        bool m_cancel;
         bool m_complete;
-
-        friend Node;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Chain> ChainPtr;

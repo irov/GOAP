@@ -8,7 +8,7 @@
 #include "TranscriptorRace.h"
 
 #include "GOAP/Source.h"
-#include "GOAP/Node.h"
+#include "GOAP/NodeInterface.h"
 #include "GOAP/TaskRaceNeck.h"
 
 namespace GOAP
@@ -28,7 +28,7 @@ namespace GOAP
         return m_sources;
     }
     //////////////////////////////////////////////////////////////////////////
-    NodeInterfacePtr TranscriptorRace::generate( const ChainPtr & _chain, const NodeInterfacePtr & _task )
+    NodeInterfacePtr TranscriptorRace::generate( const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task )
     {
         if( m_sources.empty() == true )
         {

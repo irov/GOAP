@@ -7,7 +7,7 @@
 
 #include "TranscriptorBase.h"
 
-#include "GOAP/Node.h"
+#include "GOAP/NodeInterface.h"
 
 namespace GOAP
 {
@@ -21,7 +21,7 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    NodeInterfacePtr TranscriptorBase::generate( const ChainPtr & _chain, const NodeInterfacePtr & _task )
+    NodeInterfacePtr TranscriptorBase::generate( const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task )
     {
         m_task->setChain( _chain );
 

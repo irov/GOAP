@@ -6,8 +6,7 @@
 */
 
 #include "GOAP/Task.h"
-#include "GOAP/Source.h"
-#include "GOAP/Chain.h"
+#include "GOAP/NodeInterface.h"
 
 namespace GOAP
 {

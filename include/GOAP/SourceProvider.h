@@ -13,9 +13,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Node> NodePtr;
+    typedef IntrusivePtr<class NodeInterface> NodeInterfacePtr;
     typedef IntrusivePtr<class TaskInterface> TaskInterfacePtr;
-    typedef IntrusivePtr<class Chain> ChainPtr;
+    typedef IntrusivePtr<class ChainInterface> ChainInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class SourceProvider
         : public SourceProviderInterface
@@ -35,7 +35,7 @@ namespace GOAP
         void addTranscriptor( const TranscriptorInterfacePtr & _transcriptor ) override;
 
     public:
-        NodeInterfacePtr parse( const ChainPtr & _chain, const NodeInterfacePtr & _task ) override;
+        NodeInterfacePtr parse( const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task ) override;
 
     protected:
         typedef Vector<TranscriptorInterfacePtr> VectorTranscriptors;

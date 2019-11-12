@@ -6,13 +6,14 @@
 */
 
 #include "GOAP/Chain.h"
-#include "GOAP/Node.h"
-#include "GOAP/Source.h"
-
 #include "GOAP/ChainProvider.h"
+#include "GOAP/NodeInterface.h"
+#include "GOAP/SourceProviderInterface.h"
+#include "GOAP/SourceInterface.h"
 
 #include "GOAP/TaskDummy.h"
 #include "GOAP/TaskFunctionContext.h"
+#include "GOAP/FunctionContextProvider.h"
 
 #include <algorithm>
 
@@ -22,6 +23,7 @@ namespace GOAP
     Chain::Chain( const SourceInterfacePtr & _source )
         : m_source( _source )
         , m_state( TASK_CHAIN_STATE_IDLE )
+        , m_cancel( false )
         , m_complete( false )
     {
     }
@@ -65,13 +67,13 @@ namespace GOAP
 
         TaskInterfacePtr provider_context = Helper::makeTask<TaskFunctionContext>( context );
 
-        NodePtr task = m_source->makeNode( provider_context );
+        NodeInterfacePtr node_complete = m_source->makeNode( provider_context );
 
-        m_source->addNode( task );
+        m_source->addNode( node_complete );
 
         TaskInterfacePtr provider_dummy = Helper::makeTask<TaskDummy>();
 
-        NodePtr task_first = m_source->makeNode( provider_dummy );
+        NodeInterfacePtr task_first = m_source->makeNode( provider_dummy );
 
         task_first->setChain( ChainPtr::from( this ) );
 
@@ -90,6 +92,8 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Chain::cancel()
     {
+        m_cancel = true;
+
         this->incref();
 
         if( m_state != TASK_CHAIN_STATE_IDLE &&
@@ -145,12 +149,17 @@ namespace GOAP
         return m_complete;
     }
     //////////////////////////////////////////////////////////////////////////
-    void Chain::runNode( const NodePtr & _task )
+    bool Chain::isCancel() const
+    {
+        return m_cancel;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void Chain::runNode( const NodeInterfacePtr & _task )
     {
         m_runningNodes.emplace_back( _task );
     }
     //////////////////////////////////////////////////////////////////////////
-    void Chain::completeNode( const NodePtr & _task )
+    void Chain::completeNode( const NodeInterfacePtr & _task )
     {
         VectorNodes::iterator it_found = std::find( m_runningNodes.begin(), m_runningNodes.end(), _task );
 
@@ -162,7 +171,7 @@ namespace GOAP
         m_runningNodes.erase( it_found );
     }
     //////////////////////////////////////////////////////////////////////////
-    void Chain::processNode( const NodePtr & _task, bool _skip )
+    void Chain::processNode( const NodeInterfacePtr & _task, bool _skip )
     {
         if( _skip == true )
         {
@@ -181,7 +190,10 @@ namespace GOAP
 
         ChainProviderPtr cb = std::move( m_cb );
 
-        this->finalize_();
+        if( m_cancel == false )
+        {
+            this->finalize_();
+        }
 
         if( cb != nullptr )
         {
@@ -193,7 +205,7 @@ namespace GOAP
     {
         VectorNodes tasks = m_runningNodes;
 
-        for( const NodePtr & task : tasks )
+        for( const NodeInterfacePtr & task : tasks )
         {
             task->skip();
         }
@@ -203,7 +215,7 @@ namespace GOAP
     {
         VectorNodes tasks = m_runningNodes;
 
-        for( const NodePtr & task : tasks )
+        for( const NodeInterfacePtr & task : tasks )
         {
             task->cancel( true );
         }

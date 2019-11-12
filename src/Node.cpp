@@ -7,7 +7,7 @@
 
 #include "GOAP/Node.h"
 #include "GOAP/Source.h"
-#include "GOAP/Chain.h"
+#include "GOAP/ChainInterface.h"
 #include "GOAP/TaskDummy.h"
 
 #include <algorithm>
@@ -26,12 +26,12 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    void Node::setChain( const ChainPtr & _chain )
+    void Node::setChain( const ChainInterfacePtr & _chain )
     {
         m_chain = _chain;
     }
     //////////////////////////////////////////////////////////////////////////
-    const ChainPtr & Node::getChain() const
+    const ChainInterfacePtr & Node::getChain() const
     {
         return m_chain;
     }
@@ -106,7 +106,7 @@ namespace GOAP
         VectorNodes nexts;
         this->popNexts( nexts );
 
-        const ChainPtr & chain = this->getChain();
+        const ChainInterfacePtr & chain = this->getChain();
 
         NodeInterfacePtr task = _provider->parse( chain, NodeInterfacePtr::from( this ) );
 
@@ -130,7 +130,7 @@ namespace GOAP
             return true;
         }
 
-        const ChainPtr & chain = this->getChain();
+        const ChainInterfacePtr & chain = this->getChain();
 
         NodeInterfacePtr node = _provider->parse( chain, NodeInterfacePtr::from( this ) );
 
@@ -409,7 +409,7 @@ namespace GOAP
             }
         }
 
-        ChainPtr chain = m_chain;
+        ChainInterfacePtr chain = m_chain;
 
         this->finalize_();
 
@@ -679,5 +679,13 @@ namespace GOAP
     void Node::setState( ETaskState _state )
     {
         m_state = _state;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    namespace Helper
+    {
+        NodePtr makeNode( const TaskInterfacePtr & _task )
+        {
+            return NodePtr::from( new Node( _task ) );
+        }
     }
 }

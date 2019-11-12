@@ -7,7 +7,7 @@
 
 #include "GOAP/TaskParallelNeck.h"
 
-#include "GOAP/Node.h"
+#include "GOAP/NodeInterface.h"
 
 namespace GOAP
 {

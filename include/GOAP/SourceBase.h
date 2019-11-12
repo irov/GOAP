@@ -9,11 +9,7 @@
 
 #include "GOAP/SourceInterface.h"
 #include "GOAP/SourceProviderInterface.h"
-
-#include "GOAP/Vector.h"
-#include "GOAP/Zip.h"
-#include "GOAP/Node.h"
-#include "GOAP/Timer.h"
+#include "GOAP/NodeInterface.h"
 
 #include "GOAP/FunctionProvider.h"
 #include "GOAP/FunctionContextProvider.h"
@@ -31,10 +27,13 @@
 #include "GOAP/TranscriptorParallelArray.h"
 #include "GOAP/TranscriptorRaceArray.h"
 
+#include "GOAP/Vector.h"
+#include "GOAP/Zip.h"
+#include "GOAP/Timer.h"
+
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Chain> ChainPtr;
     typedef IntrusivePtr<class TranscriptorInterface> TranscriptorInterfacePtr;
     typedef IntrusivePtr<class Event> EventPtr;
     typedef IntrusivePtr<class Semaphore> SemaphorePtr;
@@ -68,7 +67,7 @@ namespace GOAP
         {
             TaskInterfacePtr provider = Helper::makeTask<T>( std::forward<Args &&>( _args ) ... );
 
-            NodePtr node = this->makeNode( provider );
+            NodeInterfacePtr node = this->makeNode( provider );
 
             this->addNode( node );
         }
@@ -78,7 +77,7 @@ namespace GOAP
         {
             IntrusivePtr<T> provider = Helper::makeTask<T>( std::forward<Args &&>( _args ) ... );
 
-            NodePtr node = this->makeNode( provider );
+            NodeInterfacePtr node = this->makeNode( provider );
 
             this->addNode( node );
 

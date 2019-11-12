@@ -15,7 +15,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class NodeInterface> NodeInterfacePtr;
     typedef IntrusivePtr<class TranscriptorInterface> TranscriptorInterfacePtr;
-    typedef IntrusivePtr<class Chain> ChainPtr;
+    typedef IntrusivePtr<class ChainInterface> ChainInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class SourceProviderInterface
         : public Factorable
@@ -31,7 +31,7 @@ namespace GOAP
         virtual void addTranscriptor( const TranscriptorInterfacePtr & _transcriptor ) = 0;
 
     public:
-        virtual NodeInterfacePtr parse( const ChainPtr & _chain, const NodeInterfacePtr & _task ) = 0;
+        virtual NodeInterfacePtr parse( const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<SourceProviderInterface> SourceProviderInterfacePtr;

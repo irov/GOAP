@@ -9,7 +9,7 @@
 
 #include "GOAP/FunctionContextProvider.h"
 
-#include "GOAP/Node.h"
+#include "GOAP/NodeInterface.h"
 
 namespace GOAP
 {

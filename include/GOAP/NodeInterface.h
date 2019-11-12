@@ -16,7 +16,7 @@ namespace GOAP
     typedef IntrusivePtr<class NodeInterface> NodeInterfacePtr;
     typedef IntrusivePtr<class SourceProviderInterface> SourceProviderInterfacePtr;
     typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
-    typedef IntrusivePtr<class Chain> ChainPtr;
+    typedef IntrusivePtr<class ChainInterface> ChainInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class NodeInterface
         : public Factorable
@@ -25,8 +25,8 @@ namespace GOAP
         virtual SourceInterfacePtr makeSource() = 0;
 
     public:
-        virtual void setChain( const ChainPtr & _chain ) = 0;
-        virtual const ChainPtr & getChain() const = 0;
+        virtual void setChain( const ChainInterfacePtr & _chain ) = 0;
+        virtual const ChainInterfacePtr & getChain() const = 0;
 
     public:
         virtual void throwError() = 0;
