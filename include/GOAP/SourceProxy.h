@@ -30,7 +30,7 @@ namespace GOAP
         {
             TaskInterfacePtr provider = Helper::makeTask<T>( std::forward<Args &&>( _args ) ... );
 
-            NodePtr node = this->makeNode( provider );
+            NodeInterfacePtr node = this->makeNode( provider );
 
             this->addNode( node );
 
@@ -246,9 +246,7 @@ namespace GOAP
             GuardProviderPtr begin_provider = Helper::makeGuardProvider( _begin );
             GuardProviderPtr end_provider = Helper::makeGuardProvider( _end );
 
-            ArrayTypeSources<Type, 2> v = this->addRace<2>();
-
-            auto && [source_guard, source_code] = v;
+            auto && [source_guard, source_code] = this->addRace<2>();
 
             source_guard->addTaskGuard( begin_provider, end_provider );
 
