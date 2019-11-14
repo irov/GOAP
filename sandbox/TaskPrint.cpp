@@ -34,7 +34,7 @@ bool TaskPrint::_onRun( GOAP::NodeInterface * _node )
 {
     GOAP_UNUSED( _node );
 
-    printf( m_message );
+    printf( "%s", m_message );
 
     return true;
 }
