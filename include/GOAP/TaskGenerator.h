@@ -35,14 +35,13 @@ namespace GOAP
         void onTime( NodeInterface * _node, float _time );
 
     protected:
+        float m_time;
+        uint32_t m_iterator;
+
         TimerPtr m_timer;
         GeneratorProviderPtr m_provider;
 
         TimerProviderPtr m_timerProvider;
-
-        uint32_t m_iterator;
-
-        float m_time;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TaskGenerator> TaskGeneratorPtr;
