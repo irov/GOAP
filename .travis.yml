@@ -3,6 +3,15 @@ sudo: required
 
 language: cpp
 
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - cmake
+      - gcc-9
+      - g++-9
+
 os:
     - linux
     - osx
@@ -11,15 +20,6 @@ compiler:
     - gcc
     - clang
     
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test  
-    packages:
-      - gcc-7
-      - g++-7
-      - cmake    
-
 env:
     - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug
     - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release
@@ -39,7 +39,7 @@ matrix:
 
 script:
     # Export CC and CXX to tell cmake which compiler to use
-    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export CC=/usr/bin/gcc-7 && export CXX=/usr/bin/g++-7 && gcc -v && g++ -v && cmake --version; fi
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export CC=/usr/bin/gcc-9 && export CXX=/usr/bin/g++-9 && gcc -v && g++ -v && cmake --version; fi
     # run
     - mkdir build_cmake
     - cd build_cmake
