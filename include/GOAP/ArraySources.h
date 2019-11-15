@@ -26,7 +26,10 @@ namespace GOAP
         template <class T, size_t N, size_t... Is>
         ArrayTypeSources<T, N> ArraySourcesCast( const ArraySources<N> & arr, std::index_sequence<Is...> )
         {
-            return ArrayTypeSources<T, N>{IntrusivePtr<T>( arr[Is] )...};
+            return ArrayTypeSources<T, N>{
+                {
+                    IntrusivePtr<T>( arr[Is] )...
+                }};
         }
 
         template <class T, size_t N>
