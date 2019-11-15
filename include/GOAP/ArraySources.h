@@ -26,13 +26,13 @@ namespace GOAP
         template <class T, size_t N, size_t... Is>
         ArrayTypeSources<T, N> ArraySourcesCast( const ArraySources<N> & arr, std::index_sequence<Is...> )
         {
-            return ArrayTypeSources<T, N>{IntrusivePtr<T>{arr[Is]}...};
+            return ArrayTypeSources<T, N>{ IntrusivePtr<T>( arr[Is] )... };
         }
 
         template <class T, size_t N>
         ArrayTypeSources<T, N> ArraySourcesCast( const ArraySources<N> & arr )
         {
-            return ArraySourcesCast<T>( arr, std::make_index_sequence<N>{} );
+            return ArraySourcesCast<T>( arr, std::make_index_sequence<N>() );
         }
     }
     //////////////////////////////////////////////////////////////////////////
