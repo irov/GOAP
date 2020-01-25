@@ -32,7 +32,7 @@ namespace GOAP
         };
 
     public:
-        explicit Chain( const SourceInterfacePtr & _source );
+        Chain( const SourceInterfacePtr & _source, const char * _file, uint32_t _line );
         ~Chain() override;
 
     public:
@@ -77,6 +77,9 @@ namespace GOAP
     protected:
         SourceInterfacePtr m_source;
 
+        const char * m_file;
+        uint32_t m_line;
+
         ETaskChainState m_state;
 
         typedef Vector<NodeInterfacePtr> VectorNodes;
@@ -92,9 +95,9 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     namespace Helper
     {
-        inline ChainPtr makeChain( const SourceInterfacePtr & _source )
+        inline ChainPtr makeChain( const SourceInterfacePtr & _source, const char * _file, uint32_t _line )
         {
-            return ChainPtr::from( new Chain( _source ) );
+            return ChainPtr::from( new Chain( _source, _file, _line ) );
         }
     }
     //////////////////////////////////////////////////////////////////////////

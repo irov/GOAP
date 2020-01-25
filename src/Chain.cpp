@@ -20,8 +20,10 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    Chain::Chain( const SourceInterfacePtr & _source )
+    Chain::Chain( const SourceInterfacePtr & _source, const char * _file, uint32_t _line )
         : m_source( _source )
+        , m_file( _file )
+        , m_line( _line )
         , m_state( TASK_CHAIN_STATE_IDLE )
         , m_cancel( false )
         , m_complete( false )
