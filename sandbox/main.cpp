@@ -2,10 +2,7 @@
 
 #include "Scheduler.h"
 
-#include "GOAP/Node.h"
-#include "GOAP/Chain.h"
-#include "GOAP/Source.h"
-#include "GOAP/ChainProvider.h"
+#include "GOAP/GOAP.h"
 
 #include "TaskDelay.h"
 #include "TaskPrint.h"
@@ -26,18 +23,42 @@
 #include <string>
 #include <typeinfo>
 
-int main()
+//////////////////////////////////////////////////////////////////////////
+class MyAllocator
+    : public GOAP::Allocator
 {
+protected:
+    void * allocate( size_t _size ) override
+    {
+        void * p = ::malloc( _size );
+
+        return p;
+    }
+    
+    void deallocate( void * _ptr ) override
+    {
+        ::free( _ptr );
+    }
+};
+//////////////////////////////////////////////////////////////////////////
+void test( GOAP::Allocator * _allocator )
+{
+    GOAP::KernelInterfacePtr kernel = GOAP::Helper::makeKernel( _allocator );
+
     SchedulerPtr sch = SchedulerPtr::from( new Scheduler );
 
-    srand( (unsigned int)time( NULL ) );
+    ::srand( (unsigned int)time( nullptr ) );
 
-    printf( "%f %f %f\n", fmod( 0.5, 1.0 ), fmod( 1.3, 1.0 ), fmod( 3.0, 1.0 ) );
+    printf( "%f %f %f\n"
+        , ::fmod( 0.5, 1.0 )
+        , ::fmod( 1.3, 1.0 )
+        , ::fmod( 3.0, 1.0 )
+    );
 
-    GOAP::SourcePtr source = GOAP::Helper::makeSource();
-    
-    source->addTask<TaskPrint>( "begin" );
-    source->addTask<TaskDelay>( 2000.f, sch );
+    GOAP::SourceInterfacePtr source = kernel->makeSource();
+
+    GOAP::Cook::addTask<TaskPrint>( source, "begin" );
+    GOAP::Cook::addTask<TaskDelay>( source, _allocator, 2000.f, sch );
 
     std::vector<int> v;
     v.push_back( 1 );
@@ -45,38 +66,37 @@ int main()
     v.push_back( 5 );
     v.push_back( 7 );
 
-    for( auto && [value_source, value] : source->addParallelZip( v ) )
+    for( auto && [value_source, value] : GOAP::Cook::addParallelZip( source, v ) )
     {
-        value_source->addTask<TaskPrint>( "zip [%d]", value );
+        GOAP::Cook::addTask<TaskPrint>( value_source, "zip [%d]", value );
     }
 
-    auto [parallel0, parallel1] = source->addParallel<2>();
+    auto && [parallel0, parallel1] = GOAP::Cook::addParallel<2>( source );
 
-    parallel0->addTask<TaskDelay>( 1000.f, sch );
-    parallel1->addTask<TaskPrint>( "process" );
+    GOAP::Cook::addTask<TaskDelay>( parallel0, _allocator, 1000.f, sch );
+    GOAP::Cook::addTask<TaskPrint>( parallel1, "process" );
 
-    source->addTask<TaskPrint>( "end" );
-    source->addTask<TaskDelay>( 1000.f, sch );
-    source->addTask<TaskPrint>( "****ROLL*****" );
-    source->addTask<TaskDelay>( 1000.f, sch );
+    GOAP::Cook::addTask<TaskPrint>( source, "end" );
+    GOAP::Cook::addTask<TaskDelay>( source, _allocator, 1000.f, sch );
+    GOAP::Cook::addTask<TaskPrint>( source, "****ROLL*****" );
+    GOAP::Cook::addTask<TaskDelay>( source, _allocator, 1000.f, sch );
 
+    auto && [race0, race1, race2] = GOAP::Cook::addRace<3>( source );
 
-    auto [race0, race1, race2] = source->addRace<3>();
+    GOAP::Cook::addTask<TaskRoll>( race0, _allocator, 200.f, 1, 6, sch );
+    GOAP::Cook::addTask<TaskPrint>( race0, "---1---" );
 
-    race0->addTask<TaskRoll>( 200.f, 1, 6, sch );
-    race0->addTask<TaskPrint>( "---1---" );
+    GOAP::Cook::addTask<TaskRoll>( race1, _allocator, 100.f, 2, 12, sch );
+    GOAP::Cook::addTask<TaskPrint>( race1, "---2---" );
 
-    race1->addTask<TaskRoll>( 100.f, 2, 12, sch );
-    race1->addTask<TaskPrint>( "---2---" );
+    GOAP::Cook::addTask<TaskRoll>( race2, _allocator, 50.f, 4, 24, sch );
+    GOAP::Cook::addTask<TaskPrint>( race2, "---3---" );
 
-    race2->addTask<TaskRoll>( 50.f, 4, 24, sch );
-    race2->addTask<TaskPrint>( "---3---" );
+    GOAP::Cook::addTask<TaskDelay>( source, _allocator, 1000.f, sch );
+    GOAP::Cook::addTask<TaskPrint>( source, "****WIN*****" );
+    GOAP::Cook::addTask<TaskDelay>( source, _allocator, 1000.f, sch );
 
-    source->addTask<TaskDelay>( 1000.f, sch );
-    source->addTask<TaskPrint>( "****WIN*****" );
-    source->addTask<TaskDelay>( 1000.f, sch );
-
-    source->addCallback( []( const GOAP::CallbackObserverPtr & _observer, bool isSkip )
+    GOAP::Cook::addCallback( source, []( const GOAP::CallbackObserverPtr & _observer, bool isSkip )
     {
         printf( "HTTP!!!!!\n" );
 
@@ -85,14 +105,14 @@ int main()
         _observer->onCallback( isSkip );
     } );
 
-    source->addFunction( []()
+    GOAP::Cook::addFunction( source, []()
     {
         printf( "WOW!!\n" );
     } );
 
-    source->addScope( []( const GOAP::SourcePtr & _scope ) -> bool
+    GOAP::Cook::addScope( source, []( const GOAP::SourceInterfacePtr & _scope ) -> bool
     {
-        _scope->addFunction( []()
+        GOAP::Cook::addFunction( _scope, []()
         {
             printf( "SCOPE????? WOW!!!" );
         } );
@@ -100,44 +120,44 @@ int main()
         return true;
     } );
 
-    source->addFunction( []()
+    GOAP::Cook::addFunction( source, []()
     {
         printf( "Oh\n" );
     } );
 
-    auto [source_true, source_false] = source->addIf( []()
+    auto [source_true, source_false] = GOAP::Cook::addIf( source, []()
     {
-        return rand() % 2 ? true : false;
+        return ::rand() % 2 ? true : false;
     } );
 
-    source_true->addTask<TaskPrint>( "---TRUE---" );
-    source_false->addTask<TaskPrint>( "---FALSE---" );
+    GOAP::Cook::addTask<TaskPrint>( source_true, "---TRUE---" );
+    GOAP::Cook::addTask<TaskPrint>( source_false, "---FALSE---" );
 
-    const GOAP::ViewSources<GOAP::Source> & source_switch = source->addSwitch( 3, []()
+    const GOAP::ViewSources<GOAP::SourceInterface> & source_switch = GOAP::Cook::addSwitch( source, 3, []()
     {
-        return rand() % 3;
+        return ::rand() % 3;
     } );
 
-    source_switch[0]->addTask<TaskPrint>( "---Switch 1---" );
-    source_switch[1]->addTask<TaskPrint>( "---Switch 2---" );
-    source_switch[2]->addTask<TaskPrint>( "---Switch 3---" );
+    GOAP::Cook::addTask<TaskPrint>( source_switch[0], "---Switch 1---" );
+    GOAP::Cook::addTask<TaskPrint>( source_switch[1], "---Switch 2---" );
+    GOAP::Cook::addTask<TaskPrint>( source_switch[2], "---Switch 3---" );
 
-    source->addFor( 10, [sch]( const GOAP::SourcePtr & _scope, uint32_t _iterator, uint32_t _count )
+    GOAP::Cook::addFor( source, 10, [sch, _allocator]( const GOAP::SourceInterfacePtr & _scope, uint32_t _iterator, uint32_t _count )
     {
         GOAP_UNUSED( _iterator );
         GOAP_UNUSED( _count );
 
-        _scope->addTask<TaskDelay>( 500.f, sch );
-        _scope->addTask<TaskPrint>( "For!!!!" );
+        GOAP::Cook::addTask<TaskDelay>( _scope, _allocator, 500.f, sch );
+        GOAP::Cook::addTask<TaskPrint>( _scope, "For!!!!" );
 
         return true;
     } );
 
     uint32_t count = 0;
-    source->addWhile( [sch, &count]( const GOAP::SourcePtr & _scope )
+    GOAP::Cook::addWhile( source, [sch, _allocator, &count]( const GOAP::SourceInterfacePtr & _scope )
     {
-        _scope->addTask<TaskDelay>( 1000.f, sch );
-        _scope->addTask<TaskPrint>( "While!!!!" );
+        GOAP::Cook::addTask<TaskDelay>( _scope, _allocator, 1000.f, sch );
+        GOAP::Cook::addTask<TaskPrint>( _scope, "While!!!!" );
 
         if( ++count == 5 )
         {
@@ -147,9 +167,9 @@ int main()
         return true;
     } );
 
-    GOAP::TimerPtr timer = GOAP::Helper::makeTimer();
+    GOAP::TimerInterfacePtr timer = kernel->makeTimer();
 
-    source->addGenerator( timer, []( uint32_t _iterator )
+    GOAP::Cook::addGenerator( source, timer, []( uint32_t _iterator )
     {
         if( _iterator == 10 )
         {
@@ -157,26 +177,26 @@ int main()
         }
 
         return 100.f;
-    }, [sch]( const GOAP::SourcePtr & _source, uint32_t _iterator, float _delay )
+    }, [_allocator, sch]( const GOAP::SourceInterfacePtr & _source, uint32_t _iterator, float _delay )
     {
-        _source->addTask<TaskPrint>( "Gen [%d] time (%f) go!", _iterator, _delay );
-        _source->addTask<TaskDelay>( 1000.f, sch );
-        _source->addTask<TaskPrint>( "Gen [%d] time (%f) end!", _iterator, _delay );
+        GOAP::Cook::addTask<TaskPrint>( _source, "Gen [%d] time (%f) go!", _iterator, _delay );
+        GOAP::Cook::addTask<TaskDelay>( _source, _allocator, 1000.f, sch );
+        GOAP::Cook::addTask<TaskPrint>( _source, "Gen [%d] time (%f) end!", _iterator, _delay );
     } );
 
-    source->addTask<TaskPrint>( "Generator [COMPLETE]" );
+    GOAP::Cook::addTask<TaskPrint>( source, "Generator [COMPLETE]" );
 
-    GOAP::SourcePtr source_until = source->addRepeat( [sch]( const GOAP::SourcePtr & _scope )
+    GOAP::SourceInterfacePtr source_until = GOAP::Cook::addRepeat( source, [_allocator, sch]( const GOAP::SourceInterfacePtr & _scope )
     {
-        _scope->addTask<TaskDelay>( 1000.f, sch );
-        _scope->addTask<TaskPrint>( "REPEAT!!!!" );
+        GOAP::Cook::addTask<TaskDelay>( _scope, _allocator, 1000.f, sch );
+        GOAP::Cook::addTask<TaskPrint>( _scope, "REPEAT!!!!" );
 
         return true;
     } );
 
-    source_until->addTask<TaskDelay>( 10000.f, sch );
+    GOAP::Cook::addTask<TaskDelay>( source_until, _allocator, 10000.f, sch );
 
-    GOAP::ChainPtr tc = GOAP::Helper::makeChain( source );
+    GOAP::ChainInterfacePtr tc = kernel->makeChain( source, __FILE__, __LINE__ );
 
     tc->run();
 
@@ -189,6 +209,15 @@ int main()
     }
 
     printf( "FINALIZE\n" );
+}
+//////////////////////////////////////////////////////////////////////////
+int main()
+{
+    MyAllocator * allocator = new MyAllocator;
+
+    test( allocator );
+
+    delete allocator;
 
     return 0;
 }

@@ -6,9 +6,8 @@
 */
 
 #include "GOAP/TaskRepeat.h"
-#include "GOAP/Source.h"
+#include "GOAP/Cook.h"
 #include "GOAP/NodeInterface.h"
-
 #include "GOAP/Exception.h"
 
 namespace GOAP
@@ -26,12 +25,12 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskRepeat::_onRun( NodeInterface * _node )
     {
-        SourcePtr source = _node->makeSource();
+        SourceInterfacePtr source = _node->makeSource();
 
-        auto [source_while, source_until] = source->addRace<2>();
+        auto [source_while, source_until] = Cook::addRace<2>( source );
 
-        source_while->addWhileProvider( m_provider );
-        source_until->addSource( m_sourceUntil );
+        Cook::addWhileProvider( source_while, m_provider );
+        Cook::addSource( source_until, m_sourceUntil );
 
         const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 

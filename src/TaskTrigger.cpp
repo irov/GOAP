@@ -7,17 +7,16 @@
 
 #include "GOAP/TaskTrigger.h"
 #include "GOAP/Event.h"
-#include "GOAP/EventProvider.h"
 #include "GOAP/NodeInterface.h"
 #include "GOAP/TriggerProvider.h"
-#include "GOAP/Source.h"
+#include "GOAP/Cook.h"
 #include "GOAP/SourceProviderInterface.h"
 #include "GOAP/Exception.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskTrigger::TaskTrigger( const EventPtr & _event, const TriggerProviderPtr & _provider )
+    TaskTrigger::TaskTrigger( const EventInterfacePtr & _event, const TriggerProviderPtr & _provider )
         : m_event( _event )
         , m_provider( _provider )
     {
@@ -29,17 +28,17 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskTrigger::_onRun( NodeInterface * _node )
     {
-        SourcePtr source = _node->makeSource();
+        SourceInterfacePtr source = _node->makeSource();
 
-        SourcePtr fork_source = source->addFork();
+        SourceInterfacePtr fork_source = Cook::addFork( source );
 
         bool result = m_provider->onTrigger( fork_source );
 
         if( result == false )
         {
-            source->addEvent( m_event );
+            Cook::addEvent( source, m_event );
 
-            source->addTriggerProvider( m_event, m_provider );
+            Cook::addTriggerProvider( source, m_event, m_provider );
         }
         
         const SourceProviderInterfacePtr & provider = source->getSourceProvider();

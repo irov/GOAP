@@ -10,22 +10,23 @@
 #include "GOAP/Factorable.h"
 #include "GOAP/IntrusivePtr.h"
 #include "GOAP/Vector.h"
+#include "GOAP/Allocator.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    class TimerProvider
+    class TimerProviderInterface
         : public Factorable
     {
     public:
         virtual void onTime( float _time ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<TimerProvider> TimerProviderPtr;
+    typedef IntrusivePtr<TimerProviderInterface> TimerProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     template<class F>
     class TimerProviderT
-        : public TimerProvider
+        : public TimerProviderInterface
     {
     public:
         explicit TimerProviderT( F _f )
@@ -46,9 +47,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        TimerProviderPtr makeTimerProvider( F _f )
+        TimerProviderInterfacePtr makeTimerProvider( Allocator * _allocator, F _f )
         {
-            return TimerProviderPtr::from( new TimerProviderT<F>( _f ) );
+            TimerProviderInterface * provider = _allocator->allocateT<TimerProviderT<F>>( _f );
+
+            return TimerProviderInterfacePtr::from( provider );
         }
     }
 }

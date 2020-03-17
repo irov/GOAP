@@ -7,31 +7,28 @@
 
 #pragma once
 
-#include "GOAP/TimerProvider.h"
-
+#include "GOAP/TimerInterface.h"
 #include "GOAP/Vector.h"
+#include "GOAP/Allocator.h"
 
 namespace GOAP
 {    
-    //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class TimerProvider> TimerProviderPtr;
-    //////////////////////////////////////////////////////////////////////////
     class Timer
-        : public Factorable
+        : public TimerInterface
     {
     public:
         Timer();
         ~Timer() override;
 
     public:
-        void addTimerProvider( const TimerProviderPtr & _provider );
-        void removeTimerProvider( const TimerProviderPtr & _provider );
+        void addTimerProvider( const TimerProviderInterfacePtr & _provider );
+        void removeTimerProvider( const TimerProviderInterfacePtr & _provider );
 
     public:
         template<class F>
-        TimerProviderPtr addTimer( F _f )
+        TimerProviderInterfacePtr addTimer( F _f )
         {
-            TimerProviderPtr provider = Helper::makeTimerProvider( _f );
+            TimerProviderInterfacePtr provider = Helper::makeTimerProvider( m_allocator, _f );
 
             this->addTimerProvider( provider );
 
@@ -43,8 +40,8 @@ namespace GOAP
 
     protected:
         struct TimerDesc
-        {            
-            TimerProviderPtr provider;
+        {
+            TimerProviderInterfacePtr provider;
             bool dead;
         };
 
@@ -54,13 +51,5 @@ namespace GOAP
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Timer> TimerPtr;
-    //////////////////////////////////////////////////////////////////////////
-    namespace Helper
-    {
-        inline TimerPtr makeTimer()
-        {
-            return TimerPtr::from( new Timer() );
-        }
-    }
     //////////////////////////////////////////////////////////////////////////
 }

@@ -16,7 +16,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     TaskSwitch::TaskSwitch( const SwitchProviderPtr & _provider, VectorSources && _sources )
         : m_provider( _provider )
-        , m_sources( std::forward<VectorSources &&>( _sources ) )
+        , m_sources( std::forward<VectorSources>( _sources ) )
     {
     }
     //////////////////////////////////////////////////////////////////////////

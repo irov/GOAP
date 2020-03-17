@@ -8,12 +8,18 @@
 #pragma once
 
 #include "GOAP/Factorable.h"
+#include "GOAP/Allocator.h"
 #include "GOAP/IntrusivePtr.h"
+#include "GOAP/ArraySources.h"
+#include "GOAP/VectorSources.h"
+#include "GOAP/ViewSources.h"
+#include "GOAP/Zip.h"
+
+#include "GOAP/SourceProviderInterface.h"
 
 namespace GOAP
 {
-    //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class SourceProviderInterface> SourceProviderInterfacePtr;
+    //////////////////////////////////////////////////////////////////////////    
     typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     typedef IntrusivePtr<class NodeInterface> NodeInterfacePtr;
     typedef IntrusivePtr<class TaskInterface> TaskInterfacePtr;
@@ -30,6 +36,13 @@ namespace GOAP
     public:
         virtual NodeInterfacePtr makeNode( const TaskInterfacePtr & _provider ) = 0;
         virtual void addNode( const NodeInterfacePtr & _task ) = 0;
+
+    public:
+        virtual Allocator * getAllocator() const = 0;
+
+    public:
+        virtual const VectorSources & addRaceTranscriptor( uint32_t _count ) = 0;
+        virtual const VectorSources & addParallelTranscriptor( uint32_t _count ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<SourceInterface> SourceInterfacePtr;

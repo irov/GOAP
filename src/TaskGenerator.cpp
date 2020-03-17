@@ -8,15 +8,16 @@
 #include "GOAP/TaskGenerator.h"
 #include "GOAP/GeneratorProvider.h"
 
-#include "GOAP/Source.h"
+#include "GOAP/Cook.h"
 
 #include "GOAP/Exception.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskGenerator::TaskGenerator( float _time, uint32_t _iterator, const TimerPtr & _timer, const GeneratorProviderPtr & _provider )
-        : m_time( _time )
+    TaskGenerator::TaskGenerator( Allocator * _allocator, float _time, uint32_t _iterator, const TimerInterfacePtr & _timer, const GeneratorProviderPtr & _provider )
+        : m_allocator( _allocator )
+        , m_time( _time )
         , m_iterator( _iterator )
         , m_timer( _timer )
         , m_provider( _provider )
@@ -29,7 +30,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskGenerator::_onRun( NodeInterface * _node )
     {
-        m_timerProvider = m_timer->addTimer( [this, _node]( float _time )
+        m_timerProvider = m_timer->addTimer( m_allocator, [this, _node]( float _time )
         {
             this->onTime( _node, _time );
         } );
@@ -78,13 +79,13 @@ namespace GOAP
 
         uint32_t new_iterator = m_iterator + 1;
 
-        SourcePtr source = _node->makeSource();
+        SourceInterfacePtr source = _node->makeSource();
 
-        auto && [source_generator, source_fork] = source->addParallel<2>();
+        auto && [source_generator, source_fork] = Cook::addParallel<2>( source );
 
-        source_generator->addGeneratorProvider( m_time, new_iterator, m_timer, m_provider );
+        Cook::addGeneratorProvider( source_generator, m_time, new_iterator, m_timer, m_provider );
 
-        SourceInterfacePtr source_event = source_fork->addFork();
+        SourceInterfacePtr source_event = Cook::addFork( source_fork );
 
         m_provider->onEvent( source_event, m_iterator, delay );
 

@@ -6,15 +6,14 @@
 */
 
 #include "GOAP/TaskSemaphore.h"
-#include "GOAP/EventProvider.h"
-
 #include "GOAP/NodeInterface.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskSemaphore::TaskSemaphore( const SemaphorePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply )
-        : m_semaphore( _semaphore )
+    TaskSemaphore::TaskSemaphore( Allocator * _allocator, const SemaphoreInterfacePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply )
+        : m_allocator( _allocator )
+        , m_semaphore( _semaphore )
         , m_flags( _flags )
         , m_test( _test )
         , m_apply( _apply )
@@ -79,7 +78,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskSemaphore::_onRun( NodeInterface * _node )
     {
-        m_provider = m_semaphore->addProvider( [this, _node]()
+        m_provider = m_semaphore->addProvider( m_allocator, [this, _node]()
         {
             bool result = this->test( _node );
 

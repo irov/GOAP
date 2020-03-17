@@ -7,22 +7,20 @@
 
 #pragma once
 
-#include "GOAP/Vector.h"
-
 #include "GOAP/TranscriptorInterface.h"
+
+#include "GOAP/VectorSources.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
-    typedef Vector<SourceInterfacePtr> VectorSources;
-    //////////////////////////////////////////////////////////////////////////
     class TranscriptorParallel
         : public TranscriptorInterface
     {
     public:
-        explicit TranscriptorParallel( VectorSources && _sources );
+        TranscriptorParallel( Allocator * _allocator, VectorSources && _sources );
         ~TranscriptorParallel() override;
 
     public:
@@ -32,6 +30,8 @@ namespace GOAP
         NodeInterfacePtr generate( const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task ) override;
 
     protected:
+        Allocator * m_allocator;
+
         VectorSources m_sources;
     };
     //////////////////////////////////////////////////////////////////////////

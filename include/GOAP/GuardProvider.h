@@ -9,6 +9,7 @@
 
 #include "GOAP/Factorable.h"
 #include "GOAP/IntrusivePtr.h"
+#include "GOAP/Allocator.h"
 
 namespace GOAP
 {
@@ -45,9 +46,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        GuardProviderPtr makeGuardProvider( F _f )
-        {            
-            return GuardProviderPtr::from( new GuardProviderT<F>( _f ) );
+        GuardProviderPtr makeGuardProvider( Allocator * _allocator, F _f )
+        {
+            GuardProvider * provider = _allocator->allocateT<GuardProviderT<F>>( _f );
+
+            return GuardProviderPtr::from( provider );
         }
     }
 }

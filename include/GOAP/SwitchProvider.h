@@ -47,9 +47,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        SwitchProviderPtr makeSwitchProvider( F _f )
+        SwitchProviderPtr makeSwitchProvider( Allocator * _allocator, F _f )
         {
-            return SwitchProviderPtr::from( new SwitchProviderT<F>( _f ) );
+            SwitchProvider * provider = _allocator->allocateT<SwitchProviderT<F>>( _f );
+
+            return SwitchProviderPtr::from( provider );
         }
     }
     //////////////////////////////////////////////////////////////////////////

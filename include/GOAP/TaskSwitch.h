@@ -8,15 +8,13 @@
 #pragma once
 
 #include "GOAP/Task.h"
-#include "GOAP/Vector.h"
+#include "GOAP/VectorSources.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     typedef IntrusivePtr<class SwitchProvider> SwitchProviderPtr;
-    //////////////////////////////////////////////////////////////////////////
-    typedef Vector<SourceInterfacePtr> VectorSources;
     //////////////////////////////////////////////////////////////////////////
     class TaskSwitch
         : public Task

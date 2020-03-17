@@ -8,20 +8,18 @@
 #pragma once
 
 #include "GOAP/Task.h"
+#include "GOAP/EventInterface.h"
+#include "GOAP/TriggerProvider.h"
 
 namespace GOAP
 {
-    //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Event> EventPtr;
-    typedef IntrusivePtr<class TriggerProvider> TriggerProviderPtr;
-    //////////////////////////////////////////////////////////////////////////
     class TaskTrigger
         : public Task
     {
         GOAP_DECLARE_VISITABLE( Task );
 
     public:
-        TaskTrigger( const EventPtr & _event, const TriggerProviderPtr & _provider );
+        TaskTrigger( const EventInterfacePtr & _event, const TriggerProviderPtr & _provider );
         ~TaskTrigger() override;
 
     public:
@@ -29,7 +27,7 @@ namespace GOAP
         void _onFinally() override;
 
     protected:
-        EventPtr m_event;
+        EventInterfacePtr m_event;
         TriggerProviderPtr m_provider;
     };
     //////////////////////////////////////////////////////////////////////////

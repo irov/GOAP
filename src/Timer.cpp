@@ -6,6 +6,7 @@
 */
 
 #include "GOAP/Timer.h"
+#include "GOAP/TimerProviderInterface.h"
 
 #include <algorithm>
 
@@ -20,7 +21,7 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    void Timer::addTimerProvider( const TimerProviderPtr & _provider )
+    void Timer::addTimerProvider( const TimerProviderInterfacePtr & _provider )
     {
         TimerDesc desc;
 
@@ -30,7 +31,7 @@ namespace GOAP
         m_providerAdd.push_back( desc );
     }
     //////////////////////////////////////////////////////////////////////////
-    void Timer::removeTimerProvider( const TimerProviderPtr & _provider )
+    void Timer::removeTimerProvider( const TimerProviderInterfacePtr & _provider )
     {
         VectorTimerProvider::iterator it_found = std::find_if( m_provider.begin(), m_provider.end(), [&_provider]( const TimerDesc & _desc )
         {
@@ -72,7 +73,7 @@ namespace GOAP
                 continue;
             }
 
-            const TimerProviderPtr & provider = desc.provider;
+            const TimerProviderInterfacePtr & provider = desc.provider;
 
             provider->onTime( _time );
         }
@@ -82,4 +83,5 @@ namespace GOAP
             return _desc.dead;
         } ), m_provider.end() );
     }
+    //////////////////////////////////////////////////////////////////////////
 }

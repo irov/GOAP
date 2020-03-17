@@ -16,18 +16,33 @@ namespace GOAP
         : public IfProvider
     {
     public:
-        explicit IfProviderMember( bool * _member );
+        GOAP_INLINE explicit IfProviderMember( const bool * _member )
+            : m_member( _member )
+        {
+        }
 
     public:
-        bool onIf() override;
+        GOAP_INLINE bool onIf() const override
+        {
+            bool result = *m_member;
+
+            return result;
+        }
 
     protected:
-        bool * m_member;
+        const bool * m_member;
     };
+    //////////////////////////////////////////////////////////////////////////
+    typedef IntrusivePtr<IfProviderMember> IfProviderMemberPtr;
     //////////////////////////////////////////////////////////////////////////
     namespace Helper
     {
-        IfProviderPtr makeIfProviderMember( bool * _member );
+        GOAP_INLINE IfProviderMemberPtr makeIfProviderMember( Allocator * _allocator, const bool * _member )
+        {
+            IfProviderMember * provider = _allocator->allocateT<IfProviderMember>( _member );
+
+            return IfProviderMemberPtr::from( provider );
+        }
     }
     //////////////////////////////////////////////////////////////////////////
 }

@@ -6,7 +6,7 @@
 */
 
 #include "GOAP/Event.h"
-#include "GOAP/EventProvider.h"
+#include "GOAP/EventProviderInterface.h"
 
 #include <algorithm>
 
@@ -22,7 +22,7 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    void Event::addProvider( const EventProviderPtr & _eventProvider )
+    void Event::addProvider( const EventProviderInterfacePtr & _eventProvider )
     {
         ProviderDesc desc;
         desc.provider = _eventProvider;
@@ -38,7 +38,7 @@ namespace GOAP
         }
     }
     //////////////////////////////////////////////////////////////////////////
-    bool Event::removeProvider( const EventProviderPtr & _eventProvider )
+    bool Event::removeProvider( const EventProviderInterfacePtr & _eventProvider )
     {
         VectorProviders::iterator it_found_add = std::find_if( m_providersAdd.begin(), m_providersAdd.end(), [&_eventProvider]( const Event::ProviderDesc & _desc )
         {
@@ -90,7 +90,7 @@ namespace GOAP
                 continue;
             }
 
-            EventProviderPtr provider = desc.provider;
+            EventProviderInterfacePtr provider = desc.provider;
 
             bool remove = provider->onEvent();
 

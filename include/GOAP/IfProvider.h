@@ -9,6 +9,7 @@
 
 #include "GOAP/Factorable.h"
 #include "GOAP/IntrusivePtr.h"
+#include "GOAP/Allocator.h"
 
 namespace GOAP
 {
@@ -17,7 +18,7 @@ namespace GOAP
         : public Factorable
     {
     public:
-        virtual bool onIf() = 0;
+        virtual bool onIf() const = 0;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<IfProvider> IfProviderPtr;
@@ -33,7 +34,7 @@ namespace GOAP
         }
 
     public:
-        bool onIf() override
+        bool onIf() const override
         {
             bool result = m_f();
 
@@ -47,9 +48,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        IfProviderPtr makeIfProvider( F _f )
+        IfProviderPtr makeIfProvider( Allocator * _allocator, F _f )
         {
-            return IfProviderPtr::from( new IfProviderT<F>( _f ) );
+            IfProvider * provider = _allocator->allocateT<IfProviderT<F>>( _f );
+
+            return IfProviderPtr::from( provider );
         }
     }
     //////////////////////////////////////////////////////////////////////////

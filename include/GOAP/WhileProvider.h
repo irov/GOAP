@@ -49,9 +49,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        WhileProviderPtr makeWhileProvider( F _f )
+        WhileProviderPtr makeWhileProvider( Allocator * _allocator, F _f )
         {
-            return WhileProviderPtr::from( new WhileProviderT<F>( _f ) );
+            WhileProvider * provider = _allocator->allocateT<WhileProviderT<F>>( _f );
+
+            return WhileProviderPtr::from( provider );
         }
     }
     //////////////////////////////////////////////////////////////////////////

@@ -57,9 +57,11 @@ namespace GOAP
     namespace Helper
     {
         template<class FD, class FE>
-        GeneratorProviderPtr makeGeneratorProvider( FD _fdelay, FE _fevent )
+        GeneratorProviderPtr makeGeneratorProvider( Allocator * _allocator, FD _fdelay, FE _fevent )
         {
-            return GeneratorProviderPtr::from( new GeneratorProviderT<FD, FE>( _fdelay, _fevent ) );;
+            GeneratorProvider * provider = _allocator->allocateT<GeneratorProviderT<FD, FE>>( _fdelay, _fevent );
+
+            return GeneratorProviderPtr::from( provider );
         }
     }
 }

@@ -9,20 +9,20 @@
 
 #include "GOAP/Task.h"
 
+#include "GOAP/TimerInterface.h"
+#include "GOAP/GeneratorProvider.h"
+
+#include "GOAP/Allocator.h"
+
 namespace GOAP
 {
-    //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Timer> TimerPtr;
-    typedef IntrusivePtr<class TimerProvider> TimerProviderPtr;
-    typedef IntrusivePtr<class GeneratorProvider> GeneratorProviderPtr;    
-    //////////////////////////////////////////////////////////////////////////
     class TaskGenerator
         : public Task
     {
         GOAP_DECLARE_VISITABLE( Task );
 
     public:
-        TaskGenerator( float _time, uint32_t _iterator, const TimerPtr & _timer, const GeneratorProviderPtr & _provider );
+        TaskGenerator( Allocator * _allocator, float _time, uint32_t _iterator, const TimerInterfacePtr & _timer, const GeneratorProviderPtr & _provider );
         ~TaskGenerator() override;
 
     public:
@@ -35,13 +35,15 @@ namespace GOAP
         void onTime( NodeInterface * _node, float _time );
 
     protected:
+        Allocator * m_allocator;
+
         float m_time;
         uint32_t m_iterator;
 
-        TimerPtr m_timer;
+        TimerInterfacePtr m_timer;
         GeneratorProviderPtr m_provider;
 
-        TimerProviderPtr m_timerProvider;
+        TimerProviderInterfacePtr m_timerProvider;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TaskGenerator> TaskGeneratorPtr;

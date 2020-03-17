@@ -8,7 +8,7 @@
 #pragma once
 
 #include "GOAP/Task.h"
-#include "GOAP/Event.h"
+#include "GOAP/EventInterface.h"
 
 namespace GOAP
 {
@@ -18,7 +18,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskEvent( const EventPtr & _event );
+        TaskEvent( Allocator * _allocator, const EventInterfacePtr & _event );
         ~TaskEvent() override;
 
     public:
@@ -27,8 +27,10 @@ namespace GOAP
         bool _onSkipable() const override;
 
     protected:
-        EventPtr m_event;
-        EventProviderPtr m_provider;
+        Allocator * m_allocator;
+
+        EventInterfacePtr m_event;
+        EventProviderInterfacePtr m_provider;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TaskEvent> TaskEventPtr;

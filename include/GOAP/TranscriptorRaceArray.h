@@ -9,6 +9,7 @@
 
 #include "GOAP/ArraySources.h"
 #include "GOAP/ViewSources.h"
+#include "GOAP/TaskInterface.h"
 #include "GOAP/TranscriptorInterface.h"
 #include "GOAP/NodeInterface.h"
 #include "GOAP/SourceInterface.h"
@@ -29,8 +30,9 @@ namespace GOAP
         : public TranscriptorInterface
     {
     public:
-        TranscriptorRaceArray( ArraySources<Count> && _sources )
-            : m_sources( std::forward<ArraySources<Count> &&>( _sources ) )
+        TranscriptorRaceArray( Allocator * _allocator, ArraySources<Count> && _sources )
+            : m_allocator( _allocator )
+            , m_sources( std::forward<ArraySources<Count>>( _sources ) )
         {
         }
 
@@ -54,7 +56,7 @@ namespace GOAP
 
             const SourceInterfacePtr & source = _chain->getSource();
 
-            TaskInterfacePtr provider_parallel_neck = Helper::makeTask<TaskRaceNeck>();
+            TaskInterfacePtr provider_parallel_neck = Helper::makeTask<TaskRaceNeck>( m_allocator );
 
             NodeInterfacePtr task_parallel_neck = source->makeNode( provider_parallel_neck );
 
@@ -66,6 +68,8 @@ namespace GOAP
         }
 
     protected:
+        Allocator * m_allocator;
+
         ArraySources<Count> m_sources;
     };
     //////////////////////////////////////////////////////////////////////////
@@ -75,9 +79,11 @@ namespace GOAP
     namespace Helper
     {
         template<size_t Count>
-        TranscriptorRaceArrayPtr<Count> makeTranscriptorRaceArray( ArraySources<Count> && _sources )
+        TranscriptorRaceArrayPtr<Count> makeTranscriptorRaceArray( Allocator * _allocator, ArraySources<Count> && _sources )
         {
-            return TranscriptorRaceArrayPtr<Count>::from( new TranscriptorRaceArray<Count>( std::forward<ArraySources<Count> &&>( _sources ) ) );
+            TranscriptorRaceArray<Count> * transcriptor = _allocator->allocateT<TranscriptorRaceArray<Count>>( _allocator, std::forward<ArraySources<Count>>( _sources ) );
+
+            return TranscriptorRaceArrayPtr<Count>::from( transcriptor );
         }
     }
     //////////////////////////////////////////////////////////////////////////

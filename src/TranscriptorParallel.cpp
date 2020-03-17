@@ -14,8 +14,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TranscriptorParallel::TranscriptorParallel( VectorSources && _sources )
-        : m_sources( std::forward<VectorSources &&>( _sources ) )
+    TranscriptorParallel::TranscriptorParallel( Allocator * _allocator, VectorSources && _sources )
+        : m_allocator( _allocator )
+        , m_sources( std::forward<VectorSources>( _sources ) )
     {
     }
     //////////////////////////////////////////////////////////////////////////
@@ -37,7 +38,7 @@ namespace GOAP
 
         const SourceInterfacePtr & source = _chain->getSource();
 
-        TaskInterfacePtr provider_parallel_neck = Helper::makeTask<TaskParallelNeck>();
+        TaskInterfacePtr provider_parallel_neck = Helper::makeTask<TaskParallelNeck>( m_allocator );
 
         NodeInterfacePtr task_parallel_neck = source->makeNode( provider_parallel_neck );
 

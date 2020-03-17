@@ -25,7 +25,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskScope::_onRun( NodeInterface * _node )
     {
-        SourcePtr source = _node->makeSource();
+        SourceInterfacePtr source = _node->makeSource();
 
         m_provider->onScope( source );
 

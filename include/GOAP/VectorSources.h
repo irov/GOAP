@@ -5,28 +5,15 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/IfProviderMember.h"
+#pragma once
+
+#include "GOAP/Vector.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    IfProviderMember::IfProviderMember( bool * _member )
-        : m_member( _member )
-    {
-    }
+    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
-    bool IfProviderMember::onIf()
-    {
-        bool result = *m_member;
-
-        return result;
-    }
+    typedef Vector<SourceInterfacePtr> VectorSources;
     //////////////////////////////////////////////////////////////////////////
-    namespace Helper
-    {
-        IfProviderPtr makeIfProviderMember( bool * _member )
-        {
-            return IfProviderPtr::from( new IfProviderMember( _member ) );
-        }
-    }
 }

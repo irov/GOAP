@@ -6,7 +6,7 @@
 */
 
 #include "GOAP/TaskFor.h"
-#include "GOAP/Source.h"
+#include "GOAP/Cook.h"
 #include "GOAP/ForProvider.h"
 
 #include "GOAP/Exception.h"
@@ -37,14 +37,14 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskFor::_onRun( NodeInterface * _node )
     {
-        SourcePtr source = _node->makeSource();
+        SourceInterfacePtr source = _node->makeSource();
 
         if( m_providerFor->onFor( source, m_iterator, m_count ) == false )
         {
             return true;
         }
 
-        source->addForProvider( m_providerFor, m_iterator + 1, m_count );
+        Cook::addForProvider( source, m_providerFor, m_iterator + 1, m_count );
 
         m_providerFor = nullptr;
 

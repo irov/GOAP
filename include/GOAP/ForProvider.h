@@ -49,9 +49,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        ForProviderPtr makeForProvider( F _f )
+        ForProviderPtr makeForProvider( Allocator * _allocator, F _f )
         {
-            return ForProviderPtr::from( new ForProviderT<F>( _f ) );
+            ForProvider * provider = _allocator->allocateT<ForProviderT<F>>( _f );
+
+            return ForProviderPtr::from( provider );
         }
     }
     //////////////////////////////////////////////////////////////////////////

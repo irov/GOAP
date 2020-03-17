@@ -12,9 +12,6 @@
 
 namespace GOAP
 {
-    //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class Node> NodePtr;
-    //////////////////////////////////////////////////////////////////////////
     class Chain
         : public ChainInterface
     {
@@ -32,14 +29,14 @@ namespace GOAP
         };
 
     public:
-        Chain( const SourceInterfacePtr & _source, const char * _file, uint32_t _line );
+        Chain( Allocator * _allocator, const SourceInterfacePtr & _source, const char * _file, uint32_t _line );
         ~Chain() override;
 
     public:
         template<class F>
         void setCallback( F _f )
         {
-            ChainProviderPtr untilChainProvider = Helper::makeChainProvider( _f );
+            ChainProviderPtr untilChainProvider = Helper::makeChainProvider( m_allocator, _f );
 
             this->setCallbackProvider( untilChainProvider );
         }
@@ -75,6 +72,8 @@ namespace GOAP
         ETaskChainState getState_() const;
 
     protected:
+        Allocator * m_allocator;
+
         SourceInterfacePtr m_source;
 
         const char * m_file;
@@ -92,13 +91,5 @@ namespace GOAP
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Chain> ChainPtr;
-    //////////////////////////////////////////////////////////////////////////
-    namespace Helper
-    {
-        inline ChainPtr makeChain( const SourceInterfacePtr & _source, const char * _file, uint32_t _line )
-        {
-            return ChainPtr::from( new Chain( _source, _file, _line ) );
-        }
-    }
     //////////////////////////////////////////////////////////////////////////
 }

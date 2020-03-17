@@ -7,56 +7,38 @@
 
 #pragma once
 
-#include "GOAP/Factorable.h"
-#include "GOAP/IntrusivePtr.h"
-#include "GOAP/Event.h"
-#include "GOAP/EventProvider.h"
+#include "GOAP/SemaphoreInterface.h"
+#include "GOAP/EventInterface.h"
+#include "GOAP/EventProviderInterface.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     class Semaphore
-        : public Factorable
+        : public SemaphoreInterface
     {
     public:
-        Semaphore( const EventPtr & _event, int32_t _value );
+        Semaphore( Allocator * _allocator, const EventInterfacePtr & _event, int32_t _value );
         ~Semaphore() override;
 
     public:
-        void setValue( int32_t _value );
-        int32_t getValue() const;
+        void setValue( int32_t _value ) override;
+        int32_t getValue() const override;
 
     public:
-        void subtractValue( int32_t _value );
-        void addValue( int32_t _value );
+        void subtractValue( int32_t _value ) override;
+        void addValue( int32_t _value ) override;
 
     public:
-        void addObserverProvider( const EventProviderPtr & _event );
-        void removeObserverProvider( const EventProviderPtr & _event );
-
-    public:
-        template<class F>
-        EventProviderPtr addProvider( F _f )
-        {
-            EventProviderPtr provider = Helper::makeEventProvider( _f );
-
-            this->addObserverProvider( provider );
-
-            return provider;
-        }
+        void addObserverProvider( const EventProviderInterfacePtr & _event ) override;
+        void removeObserverProvider( const EventProviderInterfacePtr & _event ) override;
 
     protected:
-        EventPtr m_event;
+        Allocator * m_allocator;
+        EventInterfacePtr m_event;
         int32_t m_value;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Semaphore> SemaphorePtr;
     //////////////////////////////////////////////////////////////////////////
-    namespace Helper
-    {
-        inline SemaphorePtr makeSemaphore( const EventPtr & _event, int32_t _value )
-        {
-            return SemaphorePtr::from( new Semaphore( _event, _value ) );
-        }
-    }
 }

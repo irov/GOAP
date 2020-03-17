@@ -8,11 +8,13 @@
 #pragma once
 
 #include "GOAP/ArraySources.h"
-#include "GOAP/SourceInterface.h"
 #include "GOAP/Vector.h"
 
 namespace GOAP
 {
+    //////////////////////////////////////////////////////////////////////////
+    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
+    //////////////////////////////////////////////////////////////////////////
     template<class Type>
     class ViewSources
     {
@@ -63,7 +65,7 @@ namespace GOAP
         public:
             iterator & operator = ( const iterator & _it )
             {
-                this->m_source = m_source;
+                this->m_source = _it.m_source;
 
                 return *this;
             }
@@ -96,12 +98,16 @@ namespace GOAP
         public:
             IntrusivePtr<Type> operator * () const
             {
-                return intrusive_static_cast<IntrusivePtr<Type>>(*m_source);
+                const SourceInterface * source = m_source->get();
+
+                return IntrusivePtr<Type>::from( source );
             }
 
             IntrusivePtr<Type> operator -> () const
             {
-                return intrusive_static_cast<IntrusivePtr<Type>>(*m_source);
+                const SourceInterface * source = m_source->get();
+
+                return IntrusivePtr<Type>::from( source );
             }
 
         protected:

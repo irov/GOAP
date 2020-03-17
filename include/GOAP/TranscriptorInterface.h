@@ -9,6 +9,7 @@
 
 #include "GOAP/Factorable.h"
 #include "GOAP/IntrusivePtr.h"
+#include "GOAP/Allocator.h"
 
 namespace GOAP
 {
@@ -28,9 +29,11 @@ namespace GOAP
     namespace Helper
     {
         template<class T, class ... Args>
-        IntrusivePtr<T> makeTranscriptor( Args && ... _args )
+        IntrusivePtr<T> makeTranscriptor( Allocator * _allocator, Args && ... _args )
         {
-            return IntrusivePtr<T>::from( new T( std::forward<Args &&>( _args ) ... ) );
+            T * transcriptor = _allocator->allocateT<T>( _allocator, std::forward<Args>( _args ) ... );
+
+            return IntrusivePtr<T>::from( transcriptor );
         }
     }
     //////////////////////////////////////////////////////////////////////////

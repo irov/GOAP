@@ -7,33 +7,34 @@
 
 #pragma once
 
-#include "GOAP/Factorable.h"
-#include "GOAP/IntrusivePtr.h"
+#include "GOAP/EventInterface.h"
+
 #include "GOAP/Vector.h"
+#include "GOAP/Allocator.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class EventProvider> EventProviderPtr;
+    typedef IntrusivePtr<class EventProviderInterface> EventProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class Event
-        : public Factorable
+        : public EventInterface
     {
     public:
         Event();
-        ~Event();
+        ~Event() override;
 
     public:
-        void addProvider( const EventProviderPtr & _eventProvider );
-        bool removeProvider( const EventProviderPtr & _eventProvider );
+        void addProvider( const EventProviderInterfacePtr & _eventProvider ) override;
+        bool removeProvider( const EventProviderInterfacePtr & _eventProvider ) override;
 
     public:
-        void call();
+        void call() override;
 
     protected:
         struct ProviderDesc
         {
-            EventProviderPtr provider;
+            EventProviderInterfacePtr provider;
             bool dead;
         };
 
@@ -46,11 +47,4 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Event> EventPtr;
     //////////////////////////////////////////////////////////////////////////
-    namespace Helper
-    {
-        inline EventPtr makeEvent()
-        {
-            return EventPtr::from( new Event() );
-        }
-    }
 }

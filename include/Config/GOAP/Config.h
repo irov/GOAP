@@ -11,10 +11,6 @@
 #include <cstddef>
 
 #define GOAP_UNUSED(expr) ((void)(expr))
+#define GOAP_INLINE inline
 
 #include <stdlib.h>
-
-#define GOAP_MALLOC(SIZE) ::malloc(SIZE)
-#define GOAP_FREE(PTR, SIZE) ::free(PTR)
-
-#include <utility>

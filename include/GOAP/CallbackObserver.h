@@ -45,9 +45,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        CallbackObserverPtr makeCallbackObserver( F _f )
+        CallbackObserverPtr makeCallbackObserver( Allocator * _allocator, F _f )
         {
-            return CallbackObserverPtr::from( new CallbackObserverT<F>( _f ) );
+            CallbackObserver * observer = _allocator->allocateT<CallbackObserverT<F>>( _f );
+
+            return CallbackObserverPtr::from( observer );
         }
     }
     //////////////////////////////////////////////////////////////////////////

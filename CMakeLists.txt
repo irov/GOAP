@@ -32,6 +32,7 @@ IF(NOT LIBGOAP_EXTERNAL_BUILD)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4738")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4820")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4711")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4250")
     endif()
     
     SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib/${CMAKE_GENERATOR})
@@ -47,12 +48,13 @@ SET(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set( GOAP_SOURCES
     ${SOURCE_DIR}/Alias.cpp
     ${SOURCE_DIR}/Chain.cpp
+    ${SOURCE_DIR}/Cook.cpp
     ${SOURCE_DIR}/Factorable.cpp
     ${SOURCE_DIR}/Exception.cpp
     ${SOURCE_DIR}/Source.cpp
     ${SOURCE_DIR}/SourceBase.cpp
     ${SOURCE_DIR}/SourceProvider.cpp
-    ${SOURCE_DIR}/IfProviderMember.cpp
+    ${SOURCE_DIR}/Kernel.cpp
     ${SOURCE_DIR}/Node.cpp
     ${SOURCE_DIR}/Task.cpp
     ${SOURCE_DIR}/TaskCallback.cpp
@@ -90,6 +92,7 @@ set( GOAP_SOURCES
 )
 
 set( GOAP_HEADERS
+    ${INCLUDE_DIR}/GOAP/Allocator.h
     ${INCLUDE_DIR}/GOAP/Alias.h
     ${INCLUDE_DIR}/GOAP/ArraySources.h
     ${INCLUDE_DIR}/GOAP/ViewSources.h
@@ -98,26 +101,29 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/Chain.h
     ${INCLUDE_DIR}/GOAP/ChainInterface.h
     ${INCLUDE_DIR}/GOAP/ChainProvider.h
+    ${INCLUDE_DIR}/GOAP/Cook.h
     ${INCLUDE_DIR}/GOAP/Exception.h
     ${INCLUDE_DIR}/GOAP/Factorable.h
     ${INCLUDE_DIR}/GOAP/FunctionProvider.h
     ${INCLUDE_DIR}/GOAP/FunctionContextProvider.h
     ${INCLUDE_DIR}/GOAP/GOAP.h
     ${INCLUDE_DIR}/GOAP/GuardProvider.h
+    ${INCLUDE_DIR}/GOAP/TimerInterface.h
     ${INCLUDE_DIR}/GOAP/Timer.h
-	${INCLUDE_DIR}/GOAP/TimerProvider.h
+	${INCLUDE_DIR}/GOAP/TimerProviderInterface.h
     ${INCLUDE_DIR}/GOAP/IfProvider.h
     ${INCLUDE_DIR}/GOAP/IfProviderMember.h
     ${INCLUDE_DIR}/GOAP/TriggerProvider.h
     ${INCLUDE_DIR}/GOAP/ScopeProvider.h
     ${INCLUDE_DIR}/GOAP/ForProvider.h
     ${INCLUDE_DIR}/GOAP/Source.h
-    ${INCLUDE_DIR}/GOAP/SourceBase.h
-    ${INCLUDE_DIR}/GOAP/SourceProxy.h
+    ${INCLUDE_DIR}/GOAP/SourceBase.h    
     ${INCLUDE_DIR}/GOAP/SourceInterface.h
     ${INCLUDE_DIR}/GOAP/SourceProviderInterface.h
     ${INCLUDE_DIR}/GOAP/SourceProvider.h
-    ${INCLUDE_DIR}/GOAP/SwitchProvider.h
+    ${INCLUDE_DIR}/GOAP/SwitchProvider.h    
+    ${INCLUDE_DIR}/GOAP/KernelInterface.h
+    ${INCLUDE_DIR}/GOAP/Kernel.h
     ${INCLUDE_DIR}/GOAP/Node.h
     ${INCLUDE_DIR}/GOAP/NodeInterface.h
     ${INCLUDE_DIR}/GOAP/TaskInterface.h
@@ -145,11 +151,14 @@ set( GOAP_HEADERS
     ${INCLUDE_DIR}/GOAP/TranscriptorInterface.h
     ${INCLUDE_DIR}/GOAP/TranscriptorParallelArray.h
     ${INCLUDE_DIR}/GOAP/TranscriptorRaceArray.h
+    ${INCLUDE_DIR}/GOAP/SemaphoreInterface.h
     ${INCLUDE_DIR}/GOAP/Semaphore.h
     ${INCLUDE_DIR}/GOAP/Event.h
-    ${INCLUDE_DIR}/GOAP/EventProvider.h
+    ${INCLUDE_DIR}/GOAP/EventInterface.h
+    ${INCLUDE_DIR}/GOAP/EventProviderInterface.h
     ${INCLUDE_DIR}/GOAP/TaskSemaphore.h
     ${INCLUDE_DIR}/GOAP/SemaphoreFlags.h
+    ${INCLUDE_DIR}/GOAP/VectorSources.h
     ${INCLUDE_DIR}/GOAP/Visitor.h
     ${INCLUDE_DIR}/GOAP/Visitable.h
     ${INCLUDE_DIR}/GOAP/GeneratorProvider.h
@@ -166,7 +175,7 @@ ELSE()
         ${INCLUDE_DIR}/Config/GOAP/Tuple.h
         ${INCLUDE_DIR}/Config/GOAP/Vector.h
         ${INCLUDE_DIR}/Config/GOAP/IntrusivePtrBase.h
-        ${INCLUDE_DIR}/Config/GOAP/IntrusivePtr.h
+        ${INCLUDE_DIR}/Config/GOAP/IntrusivePtr.h        
         ${INCLUDE_DIR}/Config/GOAP/Mixin.h
     )
     

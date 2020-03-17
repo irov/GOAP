@@ -6,15 +6,14 @@
 */
 
 #include "GOAP/TaskEvent.h"
-#include "GOAP/EventProvider.h"
-
 #include "GOAP/NodeInterface.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskEvent::TaskEvent( const EventPtr & _event )
-        : m_event( _event )
+    TaskEvent::TaskEvent( Allocator * _allocator, const EventInterfacePtr & _event )
+        : m_allocator( _allocator )
+        , m_event( _event )
     {
     }
     //////////////////////////////////////////////////////////////////////////
@@ -24,7 +23,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskEvent::_onRun( NodeInterface * _node )
     {
-        EventProviderPtr provider = Helper::makeEventProvider( [_node]()
+        EventProviderInterfacePtr provider = Helper::makeEventProvider( m_allocator, [_node]()
         {
             _node->complete();
 

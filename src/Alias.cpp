@@ -7,6 +7,7 @@
 
 #include "GOAP/Alias.h"
 #include "GOAP/Source.h"
+#include "GOAP/Cook.h"
 #include "GOAP/Exception.h"
 
 namespace GOAP
@@ -22,9 +23,9 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////    
     bool Alias::_onRun( NodeInterface * _node )
     {
-        SourcePtr source = _node->makeSource();
+        SourceInterfacePtr source = _node->makeSource();
 
-        SourceInterfacePtr guard_source = source->addGuard( [this]()
+        SourceInterfacePtr guard_source = Cook::addGuard( source, [this]()
         {
             this->incref();
         }

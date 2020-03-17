@@ -9,22 +9,23 @@
 
 #include "GOAP/Factorable.h"
 #include "GOAP/IntrusivePtr.h"
+#include "GOAP/Allocator.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    class EventProvider
+    class EventProviderInterface
         : public Factorable
     {
     public:
         virtual bool onEvent() = 0;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<EventProvider> EventProviderPtr;
+    typedef IntrusivePtr<EventProviderInterface> EventProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     template<class F>
     class EventProviderT
-        : public EventProvider
+        : public EventProviderInterface
     {
     public:
         explicit EventProviderT( F _f )
@@ -47,9 +48,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        EventProviderPtr makeEventProvider( F _f )
+        EventProviderInterfacePtr makeEventProvider( Allocator * _allocator, F _f )
         {
-            return EventProviderPtr::from( new EventProviderT<F>( _f ) );
+            EventProviderInterface * provider = _allocator->allocateT<EventProviderT<F>>( _f );
+
+            return EventProviderInterfacePtr::from( provider );
         }
     }
 }

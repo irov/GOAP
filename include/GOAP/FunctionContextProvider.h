@@ -45,9 +45,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        FunctionContextProviderPtr makeFunctionContextProvider( F _f )
+        FunctionContextProviderPtr makeFunctionContextProvider( Allocator * _allocator, F _f )
         {
-            return FunctionContextProviderPtr::from( new FunctionContextProviderT<F>( _f ) );
+            FunctionContextProvider * provider = _allocator->allocateT<FunctionContextProviderT<F>>( _f );
+
+            return FunctionContextProviderPtr::from( provider );
         }
     }
     //////////////////////////////////////////////////////////////////////////

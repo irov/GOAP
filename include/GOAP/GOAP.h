@@ -7,8 +7,11 @@
 
 #pragma once
 
-#include "GOAP/Chain.h"
-#include "GOAP/Source.h"
-#include "GOAP/Node.h"
+#include "GOAP/KernelInterface.h"
+#include "GOAP/ChainInterface.h"
+#include "GOAP/SourceInterface.h"
+#include "GOAP/TaskInterface.h"
+#include "GOAP/SemaphoreInterface.h"
+#include "GOAP/TimerInterface.h"
+#include "GOAP/Cook.h"
 #include "GOAP/Alias.h"
-#include "GOAP/Semaphore.h"

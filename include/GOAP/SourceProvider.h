@@ -9,6 +9,7 @@
 
 #include "GOAP/SourceProviderInterface.h"
 #include "GOAP/Vector.h"
+#include "GOAP/Allocator.h"
 
 namespace GOAP
 {
@@ -46,8 +47,4 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<SourceProvider> SourceProviderPtr;
     //////////////////////////////////////////////////////////////////////////
-    namespace Helper
-    {
-        SourceProviderPtr makeSourceProvider();
-    }
 }

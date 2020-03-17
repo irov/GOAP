@@ -49,9 +49,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        TriggerProviderPtr makeTriggerProvider( F _f )
+        TriggerProviderPtr makeTriggerProvider( Allocator * _allocator, F _f )
         {
-            return TriggerProviderPtr::from( new TriggerProviderT<F>( _f ) );
+            TriggerProviderPtr provider = _allocator->allocateT<TriggerProviderT<F>>( _f );
+
+            return provider;
         }
     }
     //////////////////////////////////////////////////////////////////////////

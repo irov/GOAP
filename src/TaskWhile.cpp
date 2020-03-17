@@ -6,7 +6,7 @@
 */
 
 #include "GOAP/TaskWhile.h"
-#include "GOAP/Source.h"
+#include "GOAP/Cook.h"
 
 #include "GOAP/Exception.h"
 
@@ -24,13 +24,13 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskWhile::_onRun( NodeInterface * _node )
     {
-        SourcePtr source = _node->makeSource();
+        SourceInterfacePtr source = _node->makeSource();
 
         bool injecting = m_provider->onWhile( source );
 
         if( injecting == true )
         {
-            source->addWhileProvider( m_provider );
+            Cook::addWhileProvider( source, m_provider );
 
             const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 

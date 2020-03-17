@@ -58,14 +58,4 @@ namespace GOAP
 
         return current_task;
     }
-    //////////////////////////////////////////////////////////////////////////
-    namespace Helper
-    {
-        SourceProviderPtr makeSourceProvider()
-        {
-            SourceProviderPtr provider( new SourceProvider );
-
-            return provider;
-        }
-    }
 }

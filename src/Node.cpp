@@ -88,7 +88,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     void Node::popNexts( VectorNodes & _clone )
     {
-        for( const NodePtr & next : m_nexts )
+        for( const NodeInterfacePtr & next : m_nexts )
         {
             next->removePrev( NodeInterfacePtr::from( this ) );
         }
@@ -115,7 +115,7 @@ namespace GOAP
             return false;
         }
 
-        for( const NodePtr & next : nexts )
+        for( const NodeInterfacePtr & next : nexts )
         {
             task->addNext( next );
         }
@@ -156,7 +156,7 @@ namespace GOAP
 
         this->setState( TASK_STATE_RUN );
 
-        m_chain->runNode( NodePtr::from( this ) );
+        m_chain->runNode( NodeInterfacePtr::from( this ) );
 
         if( this->onInitialize() == false )
         {
@@ -247,7 +247,7 @@ namespace GOAP
                     return false;
                 }
 
-                m_chain->runNode( NodePtr::from( this ) );
+                m_chain->runNode( NodeInterfacePtr::from( this ) );
 
                 if( this->onFastSkip() == false )
                 {
@@ -313,14 +313,14 @@ namespace GOAP
             this->onCancel();
             this->onFinally();
 
-            m_chain->completeNode( NodePtr::from( this ) );
+            m_chain->completeNode( NodeInterfacePtr::from( this ) );
         }
 
         if( _withNexts == true )
         {
             VectorNodes copy_nexts = m_nexts;
 
-            for( const NodePtr & node : copy_nexts )
+            for( const NodeInterfacePtr & node : copy_nexts )
             {
                 node->cancel( _withNexts );
             }
@@ -336,7 +336,7 @@ namespace GOAP
             return;
         }
 
-        m_chain->completeNode( NodePtr::from( this ) );
+        m_chain->completeNode( NodeInterfacePtr::from( this ) );
 
         VectorNodes copy_nexts = std::move( m_nexts );
 
@@ -413,7 +413,7 @@ namespace GOAP
 
         this->finalize_();
 
-        chain->completeNode( NodePtr::from( this ) );
+        chain->completeNode( NodeInterfacePtr::from( this ) );
     }
     //////////////////////////////////////////////////////////////////////////
     bool Node::prevSkip_( const NodePtr & _task )
@@ -679,13 +679,5 @@ namespace GOAP
     void Node::setState( ETaskState _state )
     {
         m_state = _state;
-    }
-    //////////////////////////////////////////////////////////////////////////
-    namespace Helper
-    {
-        NodePtr makeNode( const TaskInterfacePtr & _task )
-        {
-            return NodePtr::from( new Node( _task ) );
-        }
     }
 }

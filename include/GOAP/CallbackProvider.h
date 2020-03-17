@@ -44,9 +44,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        CallbackProviderPtr makeCallbackProvider( F _f )
+        CallbackProviderPtr makeCallbackProvider( Allocator * _allocator, F _f )
         {
-            return CallbackProviderPtr::from( new CallbackProviderT<F>( _f ) );
+            CallbackProvider * provider = _allocator->allocateT<CallbackProviderT<F>>( _f );
+
+            return CallbackProviderPtr::from( provider );
         }
     }
     //////////////////////////////////////////////////////////////////////////

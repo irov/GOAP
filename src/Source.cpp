@@ -11,18 +11,20 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    SourceInterfacePtr Source::_makeSource()
+    Source::Source( const KernelInterfacePtr & _kernel, const SourceProviderInterfacePtr & _provider )
+        : SourceBase( _kernel, _provider )
     {
-        return Helper::makeSource();
     }
     //////////////////////////////////////////////////////////////////////////
-    namespace Helper
+    Source::~Source()
     {
-        SourcePtr makeSource()
-        {
-            SourceProviderPtr provider = Helper::makeSourceProvider();
-
-            return SourcePtr::from( new Source( provider ) );
-        }
     }
+    //////////////////////////////////////////////////////////////////////////
+    SourceInterfacePtr Source::_makeSource()
+    {
+        SourceInterfacePtr source = m_kernel->makeSource();
+
+        return source;
+    }
+    //////////////////////////////////////////////////////////////////////////
 }

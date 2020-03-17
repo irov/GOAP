@@ -11,6 +11,8 @@
 
 namespace GOAP
 {
+    class Allocator;
+
     class Factorable
         : public Mixin
     {
@@ -19,17 +21,17 @@ namespace GOAP
         virtual ~Factorable();
 
     public:
+        void setAllocator( Allocator * _allocator );
+        Allocator * getAllocator() const;
+
+    public:
         uint32_t incref() override;
         void decref() override;
         uint32_t getrefcount() const override;
 
-    public:
-        void * operator new (size_t _size);
-        void operator delete (void * _ptr, size_t _size);
-        void * operator new[]( size_t _size );
-        void operator delete[]( void * _ptr, size_t _size );
-
     protected:
+        Allocator * m_allocator;
+
         uint32_t m_reference;
     };
 }

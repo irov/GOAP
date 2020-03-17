@@ -20,7 +20,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        explicit TaskFork( const SourceInterfacePtr & _source );
+        TaskFork( const SourceInterfacePtr & _source );
         ~TaskFork() override;
 
     public:

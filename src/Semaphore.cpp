@@ -10,8 +10,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    Semaphore::Semaphore( const EventPtr & _event, int32_t _value )
-        : m_event( _event )
+    Semaphore::Semaphore( Allocator * _allocator, const EventInterfacePtr & _event, int32_t _value )
+        : m_allocator( _allocator )
+        , m_event( _event )
         , m_value( _value )
     {
     }
@@ -46,14 +47,13 @@ namespace GOAP
         m_event->call();
     }
     //////////////////////////////////////////////////////////////////////////
-    void Semaphore::addObserverProvider( const EventProviderPtr & _event )
+    void Semaphore::addObserverProvider( const EventProviderInterfacePtr & _event )
     {
         m_event->addProvider( _event );
     }
     //////////////////////////////////////////////////////////////////////////
-    void Semaphore::removeObserverProvider( const EventProviderPtr & _event )
+    void Semaphore::removeObserverProvider( const EventProviderInterfacePtr & _event )
     {
         m_event->removeProvider( _event );
     }
-    //////////////////////////////////////////////////////////////////////////
 }

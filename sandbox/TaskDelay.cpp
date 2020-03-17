@@ -29,8 +29,9 @@ protected:
     GOAP::NodeInterfacePtr m_node;
 };
 //////////////////////////////////////////////////////////////////////////
-TaskDelay::TaskDelay( float _delay, const SchedulerPtr & _scheduler )
-    : m_delay( _delay )
+TaskDelay::TaskDelay( GOAP::Allocator * _allocator, float _delay, const SchedulerPtr & _scheduler )
+    : m_allocator( _allocator )
+    , m_delay( _delay )
     , m_scheduler( _scheduler )
     , m_id( 0 )
 {
@@ -44,9 +45,9 @@ bool TaskDelay::_onRun( GOAP::NodeInterface * _node )
 {
     typedef GOAP::IntrusivePtr<MySchedulerObserver> MySchedulerObserverPtr;
 
-    MySchedulerObserverPtr observer( new MySchedulerObserver( _node ) );
+    MySchedulerObserver * observer = m_allocator->allocateT<MySchedulerObserver>( _node );
 
-    m_id = m_scheduler->schedule( m_delay, false, observer );
+    m_id = m_scheduler->schedule( m_delay, false, MySchedulerObserverPtr::from( observer ) );
 
     return false;
 }

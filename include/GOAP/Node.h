@@ -15,8 +15,6 @@ namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class Node> NodePtr;
-    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
-    typedef IntrusivePtr<class Chain> ChainPtr;
     //////////////////////////////////////////////////////////////////////////
     class Node
         : public NodeInterface
@@ -133,8 +131,4 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Node> NodePtr;
     //////////////////////////////////////////////////////////////////////////
-    namespace Helper
-    {
-        NodePtr makeNode( const TaskInterfacePtr & _task );
-    }
 }

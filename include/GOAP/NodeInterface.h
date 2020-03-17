@@ -7,7 +7,8 @@
 
 #pragma once
 
-#include "GOAP/TaskInterface.h"
+#include "GOAP/Factorable.h"
+#include "GOAP/IntrusivePtr.h"
 #include "GOAP/Vector.h"
 
 namespace GOAP

@@ -7,27 +7,23 @@
 
 #pragma once
 
-#include "GOAP/SourceProxy.h"
-#include "GOAP/Vector.h"
+#include "GOAP/SourceInterface.h"
+#include "GOAP/SourceBase.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     class Source
-        : public SourceProxy<Source>
+        : public SourceBase
     {   
     public:
-        using SourceProxy::SourceProxy;
+        Source( const KernelInterfacePtr & _kernel, const SourceProviderInterfacePtr & _provider );
+        ~Source() override;
 
     protected:
         SourceInterfacePtr _makeSource() override;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<Source> SourcePtr;
-    //////////////////////////////////////////////////////////////////////////
-    namespace Helper
-    {
-        SourcePtr makeSource();
-    }
     //////////////////////////////////////////////////////////////////////////
 }

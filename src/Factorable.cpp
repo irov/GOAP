@@ -6,19 +6,31 @@
 */
 
 #include "GOAP/Factorable.h"
+#include "GOAP/Allocator.h"
 #include "GOAP/Config.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     Factorable::Factorable()
-        : m_reference( 0 )
+        : m_allocator( nullptr )
+        , m_reference( 0 )
     {
     }
     //////////////////////////////////////////////////////////////////////////
     Factorable::~Factorable()
     {
     };
+    //////////////////////////////////////////////////////////////////////////
+    void Factorable::setAllocator( Allocator * _allocator )
+    {
+        m_allocator = _allocator;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    Allocator * Factorable::getAllocator() const
+    {
+        return m_allocator;
+    }
     //////////////////////////////////////////////////////////////////////////
     uint32_t Factorable::incref()
     {
@@ -31,36 +43,12 @@ namespace GOAP
     {
         if( --m_reference == 0 )
         {
-            delete this;
+            m_allocator->deallocateT( this );
         }
     }
     //////////////////////////////////////////////////////////////////////////
     uint32_t Factorable::getrefcount() const
     {
         return m_reference;
-    }
-    //////////////////////////////////////////////////////////////////////////
-    void * Factorable::operator new (size_t _size)
-    {
-        return GOAP_MALLOC( _size );
-    }
-    //////////////////////////////////////////////////////////////////////////
-    void Factorable::operator delete (void * _ptr, size_t _size)
-    {
-        GOAP_UNUSED( _size );
-
-        GOAP_FREE( _ptr, _size );
-    }
-    //////////////////////////////////////////////////////////////////////////
-    void * Factorable::operator new []( size_t _size )
-    {
-        return GOAP_MALLOC( _size );
-    }
-    //////////////////////////////////////////////////////////////////////////
-    void Factorable::operator delete []( void * _ptr, size_t _size )
-    {
-        GOAP_UNUSED( _size );
-
-        GOAP_FREE( _ptr, _size );
     }
 }

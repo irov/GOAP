@@ -8,7 +8,7 @@
 #pragma once
 
 #include "GOAP/Task.h"
-#include "GOAP/Semaphore.h"
+#include "GOAP/SemaphoreInterface.h"
 #include "GOAP/SemaphoreFlags.h"
 
 namespace GOAP
@@ -19,7 +19,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( Task );
 
     public:
-        TaskSemaphore( const SemaphorePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply );
+        TaskSemaphore( Allocator * _allocator, const SemaphoreInterfacePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply );
         ~TaskSemaphore() override;
 
     public:
@@ -34,12 +34,14 @@ namespace GOAP
         void process();
 
     protected:
-        SemaphorePtr m_semaphore;
+        Allocator * m_allocator;
+
+        SemaphoreInterfacePtr m_semaphore;
         uint32_t m_flags;
         int32_t m_test;
         int32_t m_apply;
 
-        EventProviderPtr m_provider;
+        EventProviderInterfacePtr m_provider;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TaskSemaphore> TaskSemaphorePtr;
