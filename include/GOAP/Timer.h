@@ -21,22 +21,11 @@ namespace GOAP
         ~Timer() override;
 
     public:
-        void addTimerProvider( const TimerProviderInterfacePtr & _provider );
-        void removeTimerProvider( const TimerProviderInterfacePtr & _provider );
+        void addTimerProvider( const TimerProviderInterfacePtr & _provider ) override;
+        void removeTimerProvider( const TimerProviderInterfacePtr & _provider ) override;
 
     public:
-        template<class F>
-        TimerProviderInterfacePtr addTimer( F _f )
-        {
-            TimerProviderInterfacePtr provider = Helper::makeTimerProvider( m_allocator, _f );
-
-            this->addTimerProvider( provider );
-
-            return provider;
-        }
-
-    public:
-        void update( float _time );
+        void update( float _time ) override;
 
     protected:
         struct TimerDesc

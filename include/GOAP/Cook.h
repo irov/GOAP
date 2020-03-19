@@ -39,6 +39,39 @@ namespace GOAP
     namespace Cook
     {
         //////////////////////////////////////////////////////////////////////////
+        void addBlock( const SourceInterfacePtr & _source );
+        void addNoSkip( const SourceInterfacePtr & _source );
+        void addSource( const SourceInterfacePtr & _source, const SourceInterfacePtr & _other );
+        void addEvent( const SourceInterfacePtr & _source, const EventInterfacePtr & _event );
+        void addSemaphore( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply );
+        void addSemaphoreEqual( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test );
+        void addSemaphoreNotEqual( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test );
+        void addSemaphoreGreater( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test );
+        void addSemaphoreLess( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test );
+        void addSemaphoreGreaterEqual( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test );
+        void addSemaphoreLessEqual( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test );
+        void addSemaphoreAssign( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _apply );
+        void addSemaphoreAdd( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _apply );
+        void addSemaphoreSubtract( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _apply );
+        void addFunctionProvider( const SourceInterfacePtr & _source, const FunctionProviderPtr & _provider );
+        void addFunctionContextProvider( const SourceInterfacePtr & _source, const FunctionContextProviderPtr & _provider );
+        void addCallbackProvider( const SourceInterfacePtr & _source, const CallbackProviderPtr & _provider );
+        void addScopeProvider( const SourceInterfacePtr & _source, const ScopeProviderPtr & _provider );
+        void addWhileProvider( const SourceInterfacePtr & _source, const WhileProviderPtr & _provider );
+        void addForProvider( const SourceInterfacePtr & _source, const ForProviderPtr & _provider, uint32_t _iterator, uint32_t _count );
+        void addGeneratorProvider( const SourceInterfacePtr & _source, float _time, uint32_t _iterator, const TimerInterfacePtr & _timer, const GeneratorProviderPtr & _provider );
+        void addTriggerProvider( const SourceInterfacePtr & _source, const EventInterfacePtr & _event, const TriggerProviderPtr & _provider );
+        ArraySources<2> addIfProvider( const SourceInterfacePtr & _source, const IfProviderPtr & _provider );
+        void addTaskFork( const SourceInterfacePtr & _source, const SourceInterfacePtr & _other );
+        void addTaskGuard( const SourceInterfacePtr & _source, const GuardProviderPtr & _begin, const GuardProviderPtr & _end );
+        void addTaskIf( const SourceInterfacePtr & _source, const IfProviderPtr & _provider, const SourceInterfacePtr & _sourceTrue, const SourceInterfacePtr & _sourceFalse );
+        void addTaskRepeat( const SourceInterfacePtr & _source, const WhileProviderPtr & _provider, const SourceInterfacePtr & _sourceUntil );
+        ViewSources<class SourceInterface> addParallel( const SourceInterfacePtr & _source, uint32_t _count );
+        ViewSources<SourceInterface> addRace( const SourceInterfacePtr & _source, uint32_t _count );
+        ArrayTypeSources<SourceInterface, 2> addIf( const SourceInterfacePtr & _source, bool * _member );
+        SourceInterfacePtr addFork( const SourceInterfacePtr & _source );
+        const VectorSources & addTaskSwitch( const SourceInterfacePtr & _source, uint32_t _count, const SwitchProviderPtr & _provider );
+        //////////////////////////////////////////////////////////////////////////
         template<class T, class ... Args>
         void addTask( const SourceInterfacePtr & _source, Args && ... _args )
         {
@@ -64,9 +97,6 @@ namespace GOAP
 
             return provider;
         }
-        //////////////////////////////////////////////////////////////////////////
-        void addBlock( const SourceInterfacePtr & _source );
-        void addNoSkip( const SourceInterfacePtr & _source );
         //////////////////////////////////////////////////////////////////////////
         template<class F>
         void addFunction( const SourceInterfacePtr & _source, F _f )
@@ -230,36 +260,6 @@ namespace GOAP
             addForProvider( _source, provider, _iterator, _count );
         }
         //////////////////////////////////////////////////////////////////////////
-        void addSource( const SourceInterfacePtr & _source, const SourceInterfacePtr & _other );
-        void addEvent( const SourceInterfacePtr & _source, const EventInterfacePtr & _event );
-        //////////////////////////////////////////////////////////////////////////
-        void addSemaphore( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply );
-        //////////////////////////////////////////////////////////////////////////
-        void addSemaphoreEqual( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test );
-        void addSemaphoreNotEqual( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test );
-        void addSemaphoreGreater( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test );
-        void addSemaphoreLess( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test );
-        void addSemaphoreGreaterEqual( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test );
-        void addSemaphoreLessEqual( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test );
-        void addSemaphoreAssign( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _apply );
-        void addSemaphoreAdd( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _apply );
-        void addSemaphoreSubtract( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _apply );
-        //////////////////////////////////////////////////////////////////////////
-        void addFunctionProvider( const SourceInterfacePtr & _source, const FunctionProviderPtr & _provider );
-        void addFunctionContextProvider( const SourceInterfacePtr & _source, const FunctionContextProviderPtr & _provider );
-        void addCallbackProvider( const SourceInterfacePtr & _source, const CallbackProviderPtr & _provider );
-        void addScopeProvider( const SourceInterfacePtr & _source, const ScopeProviderPtr & _provider );
-        void addWhileProvider( const SourceInterfacePtr & _source, const WhileProviderPtr & _provider );
-        void addForProvider( const SourceInterfacePtr & _source, const ForProviderPtr & _provider, uint32_t _iterator, uint32_t _count );
-        void addGeneratorProvider( const SourceInterfacePtr & _source, float _time, uint32_t _iterator, const TimerInterfacePtr & _timer, const GeneratorProviderPtr & _provider );
-        void addTriggerProvider( const SourceInterfacePtr & _source, const EventInterfacePtr & _event, const TriggerProviderPtr & _provider );
-        ArraySources<2> addIfProvider( const SourceInterfacePtr & _source, const IfProviderPtr & _provider );
-        //////////////////////////////////////////////////////////////////////////
-        void addTaskFork( const SourceInterfacePtr & _source, const SourceInterfacePtr & _other );
-        void addTaskGuard( const SourceInterfacePtr & _source, const GuardProviderPtr & _begin, const GuardProviderPtr & _end );
-        void addTaskIf( const SourceInterfacePtr & _source, const IfProviderPtr & _provider, const SourceInterfacePtr & _sourceTrue, const SourceInterfacePtr & _sourceFalse );
-        void addTaskRepeat( const SourceInterfacePtr & _source, const WhileProviderPtr & _provider, const SourceInterfacePtr & _sourceUntil );
-        //////////////////////////////////////////////////////////////////////////
         template<class T, class ... Args>
         ArraySources<2> tryTask( const SourceInterfacePtr & _source, Args && ... _args )
         {
@@ -284,8 +284,6 @@ namespace GOAP
             return desc;
         }
         //////////////////////////////////////////////////////////////////////////
-        ViewSources<class SourceInterface> addParallel( const SourceInterfacePtr & _source, uint32_t _count );
-        //////////////////////////////////////////////////////////////////////////
         template<size_t Count>
         ArrayTypeSources<SourceInterface, Count> addParallel( const SourceInterfacePtr & _source )
         {
@@ -308,8 +306,6 @@ namespace GOAP
 
             return Helper::ArraySourcesCast<SourceInterface>( transcriptor_sources );
         }
-        //////////////////////////////////////////////////////////////////////////
-        ViewSources<SourceInterface> addRace( const SourceInterfacePtr & _source, uint32_t _count );
         //////////////////////////////////////////////////////////////////////////
         template<size_t Count>
         ArraySources<Count> addRace( const SourceInterfacePtr & _source )
@@ -334,8 +330,6 @@ namespace GOAP
             return Helper::ArraySourcesCast<SourceInterface>( transcriptor_sources );
         }
         //////////////////////////////////////////////////////////////////////////
-        SourceInterfacePtr addFork( const SourceInterfacePtr & _source );
-        //////////////////////////////////////////////////////////////////////////
         template<class F>
         void addTrigger( const SourceInterfacePtr & _source, const EventInterfacePtr & _event, F _f )
         {
@@ -345,8 +339,6 @@ namespace GOAP
 
             addTriggerProvider( _source, _event, provider );
         }
-        //////////////////////////////////////////////////////////////////////////
-        ArrayTypeSources<SourceInterface, 2> addIf( const SourceInterfacePtr & _source, bool * _member );
         //////////////////////////////////////////////////////////////////////////
         template<class F>
         ArrayTypeSources<SourceInterface, 2> addIf( const SourceInterfacePtr & _source, F _f )
@@ -455,8 +447,6 @@ namespace GOAP
 
             return ArrayTypeSources<SourceInterface, 2>{sources[1], sources[0]};
         }
-        //////////////////////////////////////////////////////////////////////////
-        const VectorSources & addTaskSwitch( const SourceInterfacePtr & _source, uint32_t _count, const SwitchProviderPtr & _provider );
         //////////////////////////////////////////////////////////////////////////
         template<class F>
         ViewSources<SourceInterface> addSwitch( const SourceInterfacePtr & _source, uint32_t _count, F _f )
@@ -569,5 +559,6 @@ namespace GOAP
 
             return Helper::makeZip<SourceInterfacePtr>( parallel_sources.begin(), parallel_sources.end(), _c.begin(), _c.end() );
         }
+        //////////////////////////////////////////////////////////////////////////
     }
 }

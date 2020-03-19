@@ -5,8 +5,6 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#pragma once
-
 #include "GOAP/Kernel.h"
 
 #include "GOAP/Node.h"

@@ -13,6 +13,7 @@
 #include "GOAP/TaskParallelNeck.h"
 #include "GOAP/NodeInterface.h"
 #include "GOAP/ChainInterface.h"
+#include "GOAP/SourceInterface.h"
 
 namespace GOAP
 {
