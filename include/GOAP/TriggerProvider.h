@@ -51,9 +51,9 @@ namespace GOAP
         template<class F>
         TriggerProviderPtr makeTriggerProvider( Allocator * _allocator, F _f )
         {
-            TriggerProviderPtr provider = _allocator->allocateT<TriggerProviderT<F>>( _f );
+            TriggerProvider * provider = _allocator->allocateT<TriggerProviderT<F>>( _f );
 
-            return provider;
+            return TriggerProviderPtr::from( provider );
         }
     }
     //////////////////////////////////////////////////////////////////////////

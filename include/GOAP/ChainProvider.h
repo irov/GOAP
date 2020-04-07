@@ -48,9 +48,9 @@ namespace GOAP
         template<class F>
         ChainProviderPtr makeChainProvider( Allocator * _allocator, F _f )
         {
-            ChainProviderPtr provider = _allocator->allocateT<ChainProviderT<F>>( _f );
+            ChainProvider * provider = _allocator->allocateT<ChainProviderT<F>>( _f );
 
-            return provider;
+            return ChainProviderPtr::from( provider );
         }
     }
 }
