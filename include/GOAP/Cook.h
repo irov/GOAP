@@ -430,7 +430,10 @@ namespace GOAP
 
             ArraySources<2> sources = addIfProvider( _source, provider );
 
-            return ArrayTypeSources<SourceInterface, 2>{sources[1], sources[0]};
+            return ArrayTypeSources<SourceInterface, 2>{
+                {
+                    sources[1], sources[0]
+                }};
         }
         //////////////////////////////////////////////////////////////////////////
         template<class C, class M, class ... Args>
@@ -445,7 +448,10 @@ namespace GOAP
 
             ArraySources<2> sources = addIfProvider( _source, provider );
 
-            return ArrayTypeSources<SourceInterface, 2>{sources[1], sources[0]};
+            return ArrayTypeSources<SourceInterface, 2>{
+                {
+                    sources[1], sources[0]
+                }};
         }
         //////////////////////////////////////////////////////////////////////////
         template<class F>

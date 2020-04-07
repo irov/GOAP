@@ -125,13 +125,21 @@ void test( GOAP::Allocator * _allocator )
         printf( "Oh\n" );
     } );
 
-    auto [source_true, source_false] = GOAP::Cook::addIf( source, []()
+    auto && [source_true, source_false] = GOAP::Cook::addIf( source, []()
     {
         return ::rand() % 2 ? true : false;
     } );
 
     GOAP::Cook::addTask<TaskPrint>( source_true, "---TRUE---" );
     GOAP::Cook::addTask<TaskPrint>( source_false, "---FALSE---" );
+
+    auto && [source_true2, source_false2] = GOAP::Cook::addUnless( source, []()
+    {
+        return ::rand() % 2 ? true : false;
+    } );
+
+    GOAP::Cook::addTask<TaskPrint>( source_true2, "---TRUE---" );
+    GOAP::Cook::addTask<TaskPrint>( source_false2, "---FALSE---" );
 
     const GOAP::ViewSources<GOAP::SourceInterface> & source_switch = GOAP::Cook::addSwitch( source, 3, []()
     {
