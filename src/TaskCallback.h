@@ -8,7 +8,7 @@
 #pragma once
 
 #include "GOAP/TaskInterface.h"
-#include "GOAP/CallbackProvider.h"
+#include "GOAP/CallbackProviderInterface.h"
 
 namespace GOAP
 {
@@ -18,7 +18,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        explicit TaskCallback( Allocator * _allocator, const CallbackProviderPtr & _provider );
+        explicit TaskCallback( Allocator * _allocator, const CallbackProviderInterfacePtr & _provider );
         ~TaskCallback() override;
 
     public:
@@ -29,7 +29,7 @@ namespace GOAP
     protected:
         Allocator * m_allocator;
 
-        CallbackProviderPtr m_provider;
+        CallbackProviderInterfacePtr m_provider;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TaskCallback> TaskCallbackPtr;

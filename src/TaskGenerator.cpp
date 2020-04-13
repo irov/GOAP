@@ -7,14 +7,14 @@
 
 #include "TaskGenerator.h"
 
-#include "GOAP/GeneratorProvider.h"
+#include "GOAP/GeneratorProviderInterface.h"
 #include "GOAP/Cook.h"
 #include "GOAP/Exception.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskGenerator::TaskGenerator( Allocator * _allocator, float _time, uint32_t _iterator, const TimerInterfacePtr & _timer, const GeneratorProviderPtr & _provider )
+    TaskGenerator::TaskGenerator( Allocator * _allocator, float _time, uint32_t _iterator, const TimerInterfacePtr & _timer, const GeneratorProviderInterfacePtr & _provider )
         : m_allocator( _allocator )
         , m_time( _time )
         , m_iterator( _iterator )

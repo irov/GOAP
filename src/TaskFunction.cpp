@@ -7,12 +7,12 @@
 
 #include "TaskFunction.h"
 
-#include "GOAP/FunctionProvider.h"
+#include "GOAP/FunctionProviderInterface.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskFunction::TaskFunction( const FunctionProviderPtr & _provider )
+    TaskFunction::TaskFunction( const FunctionProviderInterfacePtr & _provider )
         : m_provider( _provider )
     {
     }

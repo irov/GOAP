@@ -10,13 +10,13 @@
 #include "GOAP/SourceInterface.h"
 #include "GOAP/SourceProviderInterface.h"
 #include "GOAP/NodeInterface.h"
-#include "GOAP/IfProvider.h"
+#include "GOAP/IfProviderInterface.h"
 #include "GOAP/Exception.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskIf::TaskIf( const IfProviderPtr & _provider, const SourceInterfacePtr & _sourceTrue, const SourceInterfacePtr & _sourceFalse )
+    TaskIf::TaskIf( const IfProviderInterfacePtr & _provider, const SourceInterfacePtr & _sourceTrue, const SourceInterfacePtr & _sourceFalse )
         : m_provider( _provider )
         , m_sourceTrue( _sourceTrue )
         , m_sourceFalse( _sourceFalse )

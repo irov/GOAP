@@ -15,7 +15,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
-    class GeneratorProvider
+    class GeneratorProviderInterface
         : public Factorable
     {
     public:
@@ -23,11 +23,11 @@ namespace GOAP
         virtual void onEvent( const SourceInterfacePtr & _source, uint32_t _index, float _time ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<GeneratorProvider> GeneratorProviderPtr;
+    typedef IntrusivePtr<GeneratorProviderInterface> GeneratorProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     template<class FD, class FE>
     class GeneratorProviderT
-        : public GeneratorProvider
+        : public GeneratorProviderInterface
     {
     public:
         explicit GeneratorProviderT( FD _fdelay, FE _fevent )
@@ -57,11 +57,11 @@ namespace GOAP
     namespace Helper
     {
         template<class FD, class FE>
-        GeneratorProviderPtr makeGeneratorProvider( Allocator * _allocator, FD _fdelay, FE _fevent )
+        GeneratorProviderInterfacePtr makeGeneratorProvider( Allocator * _allocator, FD _fdelay, FE _fevent )
         {
-            GeneratorProvider * provider = _allocator->allocateT<GeneratorProviderT<FD, FE>>( _fdelay, _fevent );
+            GeneratorProviderInterface * provider = _allocator->allocateT<GeneratorProviderT<FD, FE>>( _fdelay, _fevent );
 
-            return GeneratorProviderPtr::from( provider );
+            return GeneratorProviderInterfacePtr::from( provider );
         }
     }
 }

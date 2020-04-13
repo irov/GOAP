@@ -7,13 +7,13 @@
 
 #pragma once
 
-#include "GOAP/IfProvider.h"
+#include "GOAP/IfProviderInterface.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     class IfProviderMember
-        : public IfProvider
+        : public IfProviderInterface
     {
     public:
         GOAP_INLINE explicit IfProviderMember( const bool * _member )

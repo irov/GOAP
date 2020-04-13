@@ -7,11 +7,11 @@
 
 #include "Chain.h"
 
-#include "GOAP/ChainProvider.h"
+#include "GOAP/ChainProviderInterface.h"
 #include "GOAP/NodeInterface.h"
 #include "GOAP/SourceProviderInterface.h"
 #include "GOAP/SourceInterface.h"
-#include "GOAP/FunctionContextProvider.h"
+#include "GOAP/FunctionContextProviderInterface.h"
 
 #include "TaskDummy.h"
 #include "TaskFunctionContext.h"
@@ -36,12 +36,12 @@ namespace GOAP
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    void Chain::setCallbackProvider( const ChainProviderPtr & _cb )
+    void Chain::setCallbackProvider( const ChainProviderInterfacePtr & _cb )
     {
         m_cb = _cb;
     }
     //////////////////////////////////////////////////////////////////////////
-    const ChainProviderPtr & Chain::getCallbackProvider() const
+    const ChainProviderInterfacePtr & Chain::getCallbackProvider() const
     {
         return m_cb;
     }
@@ -64,7 +64,7 @@ namespace GOAP
 
         this->setState_( TASK_CHAIN_STATE_RUN );
 
-        FunctionContextProviderPtr context = Helper::makeFunctionContextProvider( m_allocator, [this]( bool _isSkip )
+        FunctionContextProviderInterfacePtr context = Helper::makeFunctionContextProvider( m_allocator, [this]( bool _isSkip )
         {
             this->complete( _isSkip );
         } );
@@ -118,7 +118,7 @@ namespace GOAP
             //}
         }
 
-        ChainProviderPtr cb = std::move( m_cb );
+        ChainProviderInterfacePtr cb = std::move( m_cb );
 
         if( m_state != TASK_CHAIN_STATE_CANCEL &&
             m_state != TASK_CHAIN_STATE_FINALIZE )
@@ -192,7 +192,7 @@ namespace GOAP
         m_complete = true;
         this->setState_( TASK_CHAIN_STATE_COMPLETE );
 
-        ChainProviderPtr cb = std::move( m_cb );
+        ChainProviderInterfacePtr cb = std::move( m_cb );
 
         if( m_cancel == false )
         {

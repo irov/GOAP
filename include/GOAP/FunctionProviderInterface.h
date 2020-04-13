@@ -7,34 +7,36 @@
 
 #pragma once
 
-#include "GOAP/CallbackObserver.h"
+#include "GOAP/Factorable.h"
+#include "GOAP/IntrusivePtr.h"
+#include "GOAP/Allocator.h"
 
 namespace GOAP
-{ 
+{
     //////////////////////////////////////////////////////////////////////////
-    class CallbackProvider
+    class FunctionProviderInterface
         : public Factorable
     {
     public:
-        virtual void onCallbackProvider( const CallbackObserverPtr & _callback, bool _skip ) = 0;
+        virtual void onFunction() = 0;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<CallbackProvider> CallbackProviderPtr;
+    typedef IntrusivePtr<FunctionProviderInterface> FunctionProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     template<class F>
-    class CallbackProviderT
-        : public CallbackProvider
+    class FunctionProviderT
+        : public FunctionProviderInterface
     {
     public:
-        explicit CallbackProviderT( F _f )
+        explicit FunctionProviderT( F _f )
             : m_f( _f )
         {
         }
 
     public:
-        void onCallbackProvider( const CallbackObserverPtr & _callback, bool _skip ) override
+        void onFunction() override
         {
-            m_f( _callback, _skip );
+            m_f();
         }
 
     protected:
@@ -44,11 +46,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        CallbackProviderPtr makeCallbackProvider( Allocator * _allocator, F _f )
+        FunctionProviderInterfacePtr makeFunctionProvider( Allocator * _allocator, F _f )
         {
-            CallbackProvider * provider = _allocator->allocateT<CallbackProviderT<F>>( _f );
+            FunctionProviderInterface * provider = _allocator->allocateT<FunctionProviderT<F>>( _f );
 
-            return CallbackProviderPtr::from( provider );
+            return FunctionProviderInterfacePtr::from( provider );
         }
     }
     //////////////////////////////////////////////////////////////////////////

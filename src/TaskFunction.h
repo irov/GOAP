@@ -12,7 +12,7 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class FunctionProvider> FunctionProviderPtr;
+    typedef IntrusivePtr<class FunctionProviderInterface> FunctionProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class TaskFunction
         : public TaskInterface
@@ -20,7 +20,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        explicit TaskFunction( const FunctionProviderPtr & _provider );
+        explicit TaskFunction( const FunctionProviderInterfacePtr & _provider );
         ~TaskFunction() override;
 
     public:
@@ -28,7 +28,7 @@ namespace GOAP
         void _onFinally() override;
 
     protected:
-        FunctionProviderPtr m_provider;
+        FunctionProviderInterfacePtr m_provider;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TaskFunction> TaskFunctionPtr;

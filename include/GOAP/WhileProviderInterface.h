@@ -15,31 +15,31 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
-    class TriggerProvider
+    class WhileProviderInterface
         : public Factorable
     {
     public:
-        virtual bool onTrigger( const SourceInterfacePtr & _source ) = 0;
+        virtual bool onWhile( const SourceInterfacePtr & _source ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<TriggerProvider> TriggerProviderPtr;
+    typedef IntrusivePtr<WhileProviderInterface> WhileProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     template<class F>
-    class TriggerProviderT
-        : public TriggerProvider
+    class WhileProviderT
+        : public WhileProviderInterface
     {
     public:
-        explicit TriggerProviderT( F _f )
+        explicit WhileProviderT( F _f )
             : m_f( _f )
         {
         }
 
     public:
-        bool onTrigger( const SourceInterfacePtr & _source ) override
+        bool onWhile( const SourceInterfacePtr & _source ) override
         {
-            bool result = m_f( _source );
+            bool successful = m_f( _source );
 
-            return result;
+            return successful;
         }
 
     protected:
@@ -49,11 +49,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        TriggerProviderPtr makeTriggerProvider( Allocator * _allocator, F _f )
+        WhileProviderInterfacePtr makeWhileProvider( Allocator * _allocator, F _f )
         {
-            TriggerProvider * provider = _allocator->allocateT<TriggerProviderT<F>>( _f );
+            WhileProviderInterface * provider = _allocator->allocateT<WhileProviderT<F>>( _f );
 
-            return TriggerProviderPtr::from( provider );
+            return WhileProviderInterfacePtr::from( provider );
         }
     }
     //////////////////////////////////////////////////////////////////////////

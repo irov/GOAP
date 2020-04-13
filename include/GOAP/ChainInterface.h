@@ -9,7 +9,7 @@
 
 #include "GOAP/Factorable.h"
 #include "GOAP/IntrusivePtr.h"
-#include "GOAP/ChainProvider.h"
+#include "GOAP/ChainProviderInterface.h"
 
 namespace GOAP
 {
@@ -21,16 +21,8 @@ namespace GOAP
         : public Factorable
     {
     public:
-        //template<class F>
-        //void setCallback( F _f )
-        //{
-        //    ChainProviderPtr untilChainProvider = Helper::makeChainProvider( m_allocator, _f );
-
-        //    this->setCallbackProvider( untilChainProvider );
-        //}
-
-        virtual void setCallbackProvider( const ChainProviderPtr & _cb ) = 0;
-        virtual const ChainProviderPtr & getCallbackProvider() const = 0;
+        virtual void setCallbackProvider( const ChainProviderInterfacePtr & _cb ) = 0;
+        virtual const ChainProviderInterfacePtr & getCallbackProvider() const = 0;
 
     public:
         virtual const SourceInterfacePtr & getSource() const = 0;

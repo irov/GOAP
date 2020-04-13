@@ -14,31 +14,29 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    class IfProvider
+    class ChainProviderInterface
         : public Factorable
     {
     public:
-        virtual bool onIf() const = 0;
+        virtual void onChain( bool _skip, bool _cancel ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<IfProvider> IfProviderPtr;
+    typedef IntrusivePtr<ChainProviderInterface> ChainProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     template<class F>
-    class IfProviderT
-        : public IfProvider
+    class ChainProviderT
+        : public ChainProviderInterface
     {
     public:
-        explicit IfProviderT( F _f )
+        explicit ChainProviderT( F _f )
             : m_f( _f )
         {
         }
 
     public:
-        bool onIf() const override
+        void onChain( bool _skip, bool _cancel ) override
         {
-            bool result = m_f();
-
-            return result;
+            m_f( _skip, _cancel );
         }
 
     protected:
@@ -48,12 +46,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        IfProviderPtr makeIfProvider( Allocator * _allocator, F _f )
+        ChainProviderInterfacePtr makeChainProvider( Allocator * _allocator, F _f )
         {
-            IfProvider * provider = _allocator->allocateT<IfProviderT<F>>( _f );
+            ChainProviderInterface * provider = _allocator->allocateT<ChainProviderT<F>>( _f );
 
-            return IfProviderPtr::from( provider );
+            return ChainProviderInterfacePtr::from( provider );
         }
     }
-    //////////////////////////////////////////////////////////////////////////
 }

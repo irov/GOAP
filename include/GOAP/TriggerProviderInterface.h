@@ -9,34 +9,37 @@
 
 #include "GOAP/Factorable.h"
 #include "GOAP/IntrusivePtr.h"
-#include "GOAP/Allocator.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    class FunctionProvider
+    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
+    //////////////////////////////////////////////////////////////////////////
+    class TriggerProviderInterface
         : public Factorable
     {
     public:
-        virtual void onFunction() = 0;
+        virtual bool onTrigger( const SourceInterfacePtr & _source ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<FunctionProvider> FunctionProviderPtr;
+    typedef IntrusivePtr<TriggerProviderInterface> TriggerProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     template<class F>
-    class FunctionProviderT
-        : public FunctionProvider
+    class TriggerProviderT
+        : public TriggerProviderInterface
     {
     public:
-        explicit FunctionProviderT( F _f )
+        explicit TriggerProviderT( F _f )
             : m_f( _f )
         {
         }
 
     public:
-        void onFunction() override
+        bool onTrigger( const SourceInterfacePtr & _source ) override
         {
-            m_f();
+            bool result = m_f( _source );
+
+            return result;
         }
 
     protected:
@@ -46,11 +49,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        FunctionProviderPtr makeFunctionProvider( Allocator * _allocator, F _f )
+        TriggerProviderInterfacePtr makeTriggerProvider( Allocator * _allocator, F _f )
         {
-            FunctionProvider * provider = _allocator->allocateT<FunctionProviderT<F>>( _f );
+            TriggerProviderInterface * provider = _allocator->allocateT<TriggerProviderT<F>>( _f );
 
-            return FunctionProviderPtr::from( provider );
+            return TriggerProviderInterfacePtr::from( provider );
         }
     }
     //////////////////////////////////////////////////////////////////////////

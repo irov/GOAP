@@ -36,13 +36,13 @@ namespace GOAP
         template<class F>
         void setCallback( F _f )
         {
-            ChainProviderPtr untilChainProvider = Helper::makeChainProvider( m_allocator, _f );
+            ChainProviderInterfacePtr untilChainProvider = Helper::makeChainProvider( m_allocator, _f );
 
             this->setCallbackProvider( untilChainProvider );
         }
 
-        void setCallbackProvider( const ChainProviderPtr & _cb ) override;
-        const ChainProviderPtr & getCallbackProvider() const override;
+        void setCallbackProvider( const ChainProviderInterfacePtr & _cb ) override;
+        const ChainProviderInterfacePtr & getCallbackProvider() const override;
 
     public:
         const SourceInterfacePtr & getSource() const override;
@@ -84,7 +84,7 @@ namespace GOAP
         typedef Vector<NodeInterfacePtr> VectorNodes;
         VectorNodes m_runningNodes;
 
-        ChainProviderPtr m_cb;
+        ChainProviderInterfacePtr m_cb;
 
         bool m_cancel;
         bool m_complete;

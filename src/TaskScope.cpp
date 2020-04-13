@@ -8,14 +8,14 @@
 #include "TaskScope.h"
 
 #include "GOAP/SourceInterface.h"
-#include "GOAP/ScopeProvider.h"
+#include "GOAP/ScopeProviderInterface.h"
 
 #include "GOAP/Exception.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskScope::TaskScope( const ScopeProviderPtr & _provider )
+    TaskScope::TaskScope( const ScopeProviderInterfacePtr & _provider )
         : m_provider( _provider )
     {
     }

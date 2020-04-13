@@ -9,7 +9,7 @@
 
 #include "GOAP/EventInterface.h"
 #include "GOAP/NodeInterface.h"
-#include "GOAP/TriggerProvider.h"
+#include "GOAP/TriggerProviderInterface.h"
 #include "GOAP/Cook.h"
 #include "GOAP/SourceProviderInterface.h"
 #include "GOAP/Exception.h"
@@ -17,7 +17,7 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskTrigger::TaskTrigger( const EventInterfacePtr & _event, const TriggerProviderPtr & _provider )
+    TaskTrigger::TaskTrigger( const EventInterfacePtr & _event, const TriggerProviderInterfacePtr & _provider )
         : m_event( _event )
         , m_provider( _provider )
     {

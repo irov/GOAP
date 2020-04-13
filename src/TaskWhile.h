@@ -12,7 +12,7 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class WhileProvider> WhileProviderPtr;
+    typedef IntrusivePtr<class WhileProviderInterface> WhileProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class TaskWhile
         : public TaskInterface
@@ -20,7 +20,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        explicit TaskWhile( const WhileProviderPtr & _providerWhile );
+        explicit TaskWhile( const WhileProviderInterfacePtr & _providerWhile );
         ~TaskWhile() override;
 
     public:
@@ -29,7 +29,7 @@ namespace GOAP
         void _onFinalize() override;
 
     protected:
-        WhileProviderPtr m_provider;
+        WhileProviderInterfacePtr m_provider;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TaskWhile> TaskWhilePtr;

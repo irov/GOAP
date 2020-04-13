@@ -79,7 +79,7 @@ namespace GOAP
         {
             Allocator * allocator = _source->getAllocator();
 
-            IfProviderPtr provider = Helper::makeIfProviderMember( allocator, _member );
+            IfProviderInterfacePtr provider = Helper::makeIfProviderMember( allocator, _member );
 
             ArraySources<2> sources = addIfProvider( _source, provider );
 
@@ -168,29 +168,29 @@ namespace GOAP
             addTask<TaskSemaphore>( _source, allocator, _semaphore, FLAG_SEMAPHORE_APPLY_SUBTRACT, 0, _apply );
         }
         //////////////////////////////////////////////////////////////////////////
-        void addWhileProvider( const SourceInterfacePtr & _source, const WhileProviderPtr & _provider )
+        void addWhileProvider( const SourceInterfacePtr & _source, const WhileProviderInterfacePtr & _provider )
         {
             addTask<TaskWhile>( _source, _provider );
         }
         //////////////////////////////////////////////////////////////////////////
-        void addForProvider( const SourceInterfacePtr & _source, const ForProviderPtr & _provider, uint32_t _iterator, uint32_t _count )
+        void addForProvider( const SourceInterfacePtr & _source, const ForProviderInterfacePtr & _provider, uint32_t _iterator, uint32_t _count )
         {
             addTask<TaskFor>( _source, _provider, _iterator, _count );
         }
         //////////////////////////////////////////////////////////////////////////
-        void addGeneratorProvider( const SourceInterfacePtr & _source, float _time, uint32_t _iterator, const TimerInterfacePtr & _timer, const GeneratorProviderPtr & _provider )
+        void addGeneratorProvider( const SourceInterfacePtr & _source, float _time, uint32_t _iterator, const TimerInterfacePtr & _timer, const GeneratorProviderInterfacePtr & _provider )
         {
             Allocator * allocator = _source->getAllocator();
 
             addTask<TaskGenerator>( _source, allocator, _time, _iterator, _timer, _provider );
         }
         //////////////////////////////////////////////////////////////////////////
-        void addTriggerProvider( const SourceInterfacePtr & _source, const EventInterfacePtr & _event, const TriggerProviderPtr & _provider )
+        void addTriggerProvider( const SourceInterfacePtr & _source, const EventInterfacePtr & _event, const TriggerProviderInterfacePtr & _provider )
         {
             addTask<TaskTrigger>( _source, _event, _provider );
         }
         //////////////////////////////////////////////////////////////////////////
-        ArraySources<2> addIfProvider( const SourceInterfacePtr & _source, const IfProviderPtr & _provider )
+        ArraySources<2> addIfProvider( const SourceInterfacePtr & _source, const IfProviderInterfacePtr & _provider )
         {
             ArraySources<2> sources;
 
@@ -202,24 +202,24 @@ namespace GOAP
             return sources;
         }
         //////////////////////////////////////////////////////////////////////////
-        void addFunctionProvider( const SourceInterfacePtr & _source, const FunctionProviderPtr & _provider )
+        void addFunctionProvider( const SourceInterfacePtr & _source, const FunctionProviderInterfacePtr & _provider )
         {
             addTask<TaskFunction>( _source, _provider );
         }
         //////////////////////////////////////////////////////////////////////////
-        void addFunctionContextProvider( const SourceInterfacePtr & _source, const FunctionContextProviderPtr & _provider )
+        void addFunctionContextProvider( const SourceInterfacePtr & _source, const FunctionContextProviderInterfacePtr & _provider )
         {
             addTask<TaskFunctionContext>( _source, _provider );
         }
         //////////////////////////////////////////////////////////////////////////
-        void addCallbackProvider( const SourceInterfacePtr & _source, const CallbackProviderPtr & _provider )
+        void addCallbackProvider( const SourceInterfacePtr & _source, const CallbackProviderInterfacePtr & _provider )
         {
             Allocator * allocator = _source->getAllocator();
 
             addTask<TaskCallback>( _source, allocator, _provider );
         }
         //////////////////////////////////////////////////////////////////////////
-        void addScopeProvider( const SourceInterfacePtr & _source, const ScopeProviderPtr & _provider )
+        void addScopeProvider( const SourceInterfacePtr & _source, const ScopeProviderInterfacePtr & _provider )
         {
             addTask<TaskScope>( _source, _provider );
         }
@@ -229,17 +229,17 @@ namespace GOAP
             addTask<TaskFork>( _source, _other );
         }
         //////////////////////////////////////////////////////////////////////////
-        void addTaskGuard( const SourceInterfacePtr & _source, const GuardProviderPtr & _begin, const GuardProviderPtr & _end )
+        void addTaskGuard( const SourceInterfacePtr & _source, const GuardProviderInterfacePtr & _begin, const GuardProviderInterfacePtr & _end )
         {
             addTask<TaskGuard>( _source, _begin, _end );
         }
         //////////////////////////////////////////////////////////////////////////
-        void addTaskIf( const SourceInterfacePtr & _source, const IfProviderPtr & _provider, const SourceInterfacePtr & _sourceTrue, const SourceInterfacePtr & _sourceFalse )
+        void addTaskIf( const SourceInterfacePtr & _source, const IfProviderInterfacePtr & _provider, const SourceInterfacePtr & _sourceTrue, const SourceInterfacePtr & _sourceFalse )
         {
             addTask<TaskIf>( _source, _provider, _sourceTrue, _sourceFalse );
         }
         //////////////////////////////////////////////////////////////////////////
-        void addTaskRepeat( const SourceInterfacePtr & _source, const WhileProviderPtr & _provider, const SourceInterfacePtr & _sourceUntil )
+        void addTaskRepeat( const SourceInterfacePtr & _source, const WhileProviderInterfacePtr & _provider, const SourceInterfacePtr & _sourceUntil )
         {
             addTask<TaskRepeat>( _source, _provider, _sourceUntil );
         }
@@ -293,7 +293,7 @@ namespace GOAP
             return sources_race;
         }
         //////////////////////////////////////////////////////////////////////////
-        const VectorSources & addTaskSwitch( const SourceInterfacePtr & _source, uint32_t _count, const SwitchProviderPtr & _provider )
+        const VectorSources & addTaskSwitch( const SourceInterfacePtr & _source, uint32_t _count, const SwitchProviderInterfacePtr & _provider )
         {
             VectorSources sources;
             Detail::makeSources( _source, sources, _count );

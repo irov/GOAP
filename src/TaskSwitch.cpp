@@ -8,14 +8,14 @@
 #include "TaskSwitch.h"
 
 #include "GOAP/SourceInterface.h"
-#include "GOAP/SwitchProvider.h"
+#include "GOAP/SwitchProviderInterface.h"
 
 #include "GOAP/Exception.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskSwitch::TaskSwitch( const SwitchProviderPtr & _provider, VectorSources && _sources )
+    TaskSwitch::TaskSwitch( const SwitchProviderInterfacePtr & _provider, VectorSources && _sources )
         : m_provider( _provider )
         , m_sources( std::forward<VectorSources>( _sources ) )
     {

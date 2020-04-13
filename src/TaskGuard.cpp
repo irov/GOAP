@@ -7,12 +7,12 @@
 
 #include "TaskGuard.h"
 
-#include "GOAP/GuardProvider.h"
+#include "GOAP/GuardProviderInterface.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskGuard::TaskGuard( const GuardProviderPtr & _begin, const GuardProviderPtr & _end )
+    TaskGuard::TaskGuard( const GuardProviderInterfacePtr & _begin, const GuardProviderInterfacePtr & _end )
         : m_begin( _begin )
         , m_end( _end )
     {

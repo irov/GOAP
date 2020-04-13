@@ -13,7 +13,7 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskWhile::TaskWhile( const WhileProviderPtr & _provider )
+    TaskWhile::TaskWhile( const WhileProviderInterfacePtr & _provider )
         : m_provider( _provider )
     {
     }

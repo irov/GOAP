@@ -9,34 +9,35 @@
 
 #include "GOAP/Factorable.h"
 #include "GOAP/IntrusivePtr.h"
-#include "GOAP/Allocator.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    class ChainProvider
+    class SwitchProviderInterface
         : public Factorable
     {
     public:
-        virtual void onChain( bool _skip, bool _cancel ) = 0;
+        virtual uint32_t onSwitch() = 0;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<ChainProvider> ChainProviderPtr;
+    typedef IntrusivePtr<SwitchProviderInterface> SwitchProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     template<class F>
-    class ChainProviderT
-        : public ChainProvider
+    class SwitchProviderT
+        : public SwitchProviderInterface
     {
     public:
-        explicit ChainProviderT( F _f )
+        explicit SwitchProviderT( F _f )
             : m_f( _f )
         {
         }
 
     public:
-        void onChain( bool _skip, bool _cancel ) override
+        uint32_t onSwitch() override
         {
-            m_f( _skip, _cancel );
+            uint32_t result = m_f();
+
+            return result;
         }
 
     protected:
@@ -46,11 +47,12 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        ChainProviderPtr makeChainProvider( Allocator * _allocator, F _f )
+        SwitchProviderInterfacePtr makeSwitchProvider( Allocator * _allocator, F _f )
         {
-            ChainProvider * provider = _allocator->allocateT<ChainProviderT<F>>( _f );
+            SwitchProviderInterface * provider = _allocator->allocateT<SwitchProviderT<F>>( _f );
 
-            return ChainProviderPtr::from( provider );
+            return SwitchProviderInterfacePtr::from( provider );
         }
     }
+    //////////////////////////////////////////////////////////////////////////
 }

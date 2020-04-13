@@ -7,39 +7,34 @@
 
 #pragma once
 
-#include "GOAP/Factorable.h"
-#include "GOAP/IntrusivePtr.h"
+#include "GOAP/CallbackObserverInterface.h"
 
 namespace GOAP
-{
+{ 
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
-    //////////////////////////////////////////////////////////////////////////
-    class WhileProvider
+    class CallbackProviderInterface
         : public Factorable
     {
     public:
-        virtual bool onWhile( const SourceInterfacePtr & _source ) = 0;
+        virtual void onCallbackProvider( const CallbackObserverInterfacePtr & _callback, bool _skip ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<WhileProvider> WhileProviderPtr;
+    typedef IntrusivePtr<CallbackProviderInterface> CallbackProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     template<class F>
-    class WhileProviderT
-        : public WhileProvider
+    class CallbackProviderT
+        : public CallbackProviderInterface
     {
     public:
-        explicit WhileProviderT( F _f )
+        explicit CallbackProviderT( F _f )
             : m_f( _f )
         {
         }
 
     public:
-        bool onWhile( const SourceInterfacePtr & _source ) override
+        void onCallbackProvider( const CallbackObserverInterfacePtr & _callback, bool _skip ) override
         {
-            bool successful = m_f( _source );
-
-            return successful;
+            m_f( _callback, _skip );
         }
 
     protected:
@@ -49,11 +44,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        WhileProviderPtr makeWhileProvider( Allocator * _allocator, F _f )
+        CallbackProviderInterfacePtr makeCallbackProvider( Allocator * _allocator, F _f )
         {
-            WhileProvider * provider = _allocator->allocateT<WhileProviderT<F>>( _f );
+            CallbackProviderInterface * provider = _allocator->allocateT<CallbackProviderT<F>>( _f );
 
-            return WhileProviderPtr::from( provider );
+            return CallbackProviderInterfacePtr::from( provider );
         }
     }
     //////////////////////////////////////////////////////////////////////////

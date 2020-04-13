@@ -8,14 +8,14 @@
 #include "TaskFor.h"
 
 #include "GOAP/Cook.h"
-#include "GOAP/ForProvider.h"
+#include "GOAP/ForProviderInterface.h"
 
 #include "GOAP/Exception.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskFor::TaskFor( const ForProviderPtr & _providerFor, uint32_t _iterator, uint32_t _count )
+    TaskFor::TaskFor( const ForProviderInterfacePtr & _providerFor, uint32_t _iterator, uint32_t _count )
         : m_providerFor( _providerFor )
         , m_iterator( _iterator )
         , m_count( _count )

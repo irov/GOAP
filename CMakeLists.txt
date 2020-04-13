@@ -41,26 +41,32 @@ ENDIF()
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-SET(PRIVATE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 SET(PUBLIC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+SET(PRIVATE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-file(GLOB files_public_headers ${PUBLIC_DIR}/*.h)
+file(GLOB files_public_headers ${PUBLIC_DIR}/GOAP/*.h)
 file(GLOB files_private_headers ${PRIVATE_DIR}/*.h)
 file(GLOB files_private_sources ${PRIVATE_DIR}/*.cpp)
 
+
 IF(LIBGOAP_EXTERNAL_CONFIG_INCLUDE)
-    file(GLOB files_external_public_headers ${LIBGOAP_EXTERNAL_CONFIG_INCLUDE_PATH}/GOAP/*.h)
+    file(GLOB files_config_headers ${LIBGOAP_EXTERNAL_CONFIG_INCLUDE_PATH}/GOAP/*.h)
 
     include_directories(${PROJECT_NAME} ${LIBGOAP_EXTERNAL_CONFIG_INCLUDE_PATH})
 ELSE()
-    file(GLOB files_external_public_headers ${PUBLIC_DIR}/Config/GOAP/*.h)
+    file(GLOB files_config_headers ${PUBLIC_DIR}/Config/GOAP/*.h)
     
     include_directories(${PROJECT_NAME} ${PUBLIC_DIR}/Config)
 ENDIF()
 
+SOURCE_GROUP(Interface FILES ${files_public_headers})
+SOURCE_GROUP(Config FILES ${files_config_headers})
+SOURCE_GROUP(Headers FILES ${files_private_headers})
+SOURCE_GROUP(Sources FILES ${files_private_sources})
+
 include_directories(${PROJECT_NAME} ${PUBLIC_DIR})
 
-add_library(${PROJECT_NAME} STATIC ${files_public_headers} ${files_private_headers} ${files_private_sources} ${files_external_public_headers})
+add_library(${PROJECT_NAME} STATIC ${files_public_headers} ${files_private_headers} ${files_private_sources} ${files_config_headers})
 
 if(LIBGOAP_INSTALL)
     install(DIRECTORY include

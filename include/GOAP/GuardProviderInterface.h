@@ -9,35 +9,34 @@
 
 #include "GOAP/Factorable.h"
 #include "GOAP/IntrusivePtr.h"
+#include "GOAP/Allocator.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    class SwitchProvider
+    class GuardProviderInterface
         : public Factorable
     {
     public:
-        virtual uint32_t onSwitch() = 0;
+        virtual void onGuard() = 0;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<SwitchProvider> SwitchProviderPtr;
+    typedef IntrusivePtr<GuardProviderInterface> GuardProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     template<class F>
-    class SwitchProviderT
-        : public SwitchProvider
+    class GuardProviderT
+        : public GuardProviderInterface
     {
     public:
-        explicit SwitchProviderT( F _f )
+        explicit GuardProviderT( F _f )
             : m_f( _f )
         {
         }
 
     public:
-        uint32_t onSwitch() override
+        void onGuard() override
         {
-            uint32_t result = m_f();
-
-            return result;
+            m_f();
         }
 
     protected:
@@ -47,12 +46,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        SwitchProviderPtr makeSwitchProvider( Allocator * _allocator, F _f )
+        GuardProviderInterfacePtr makeGuardProvider( Allocator * _allocator, F _f )
         {
-            SwitchProvider * provider = _allocator->allocateT<SwitchProviderT<F>>( _f );
+            GuardProviderInterface * provider = _allocator->allocateT<GuardProviderT<F>>( _f );
 
-            return SwitchProviderPtr::from( provider );
+            return GuardProviderInterfacePtr::from( provider );
         }
     }
-    //////////////////////////////////////////////////////////////////////////
 }

@@ -12,7 +12,7 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class GuardProvider> GuardProviderPtr;
+    typedef IntrusivePtr<class GuardProviderInterface> GuardProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class TaskGuard
         : public TaskInterface
@@ -20,7 +20,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskGuard( const GuardProviderPtr & _begin, const GuardProviderPtr & _end );
+        TaskGuard( const GuardProviderInterfacePtr & _begin, const GuardProviderInterfacePtr & _end );
         ~TaskGuard() override;
 
     public:
@@ -32,8 +32,8 @@ namespace GOAP
         bool _onSkipable() const override;
 
     protected:
-        GuardProviderPtr m_begin;
-        GuardProviderPtr m_end;
+        GuardProviderInterfacePtr m_begin;
+        GuardProviderInterfacePtr m_end;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TaskGuard> TaskGuardPtr;

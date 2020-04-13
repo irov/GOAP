@@ -9,7 +9,7 @@
 
 #include "GOAP/TaskInterface.h"
 #include "GOAP/EventInterface.h"
-#include "GOAP/TriggerProvider.h"
+#include "GOAP/TriggerProviderInterface.h"
 
 namespace GOAP
 {
@@ -19,7 +19,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskTrigger( const EventInterfacePtr & _event, const TriggerProviderPtr & _provider );
+        TaskTrigger( const EventInterfacePtr & _event, const TriggerProviderInterfacePtr & _provider );
         ~TaskTrigger() override;
 
     public:
@@ -28,7 +28,7 @@ namespace GOAP
 
     protected:
         EventInterfacePtr m_event;
-        TriggerProviderPtr m_provider;
+        TriggerProviderInterfacePtr m_provider;
     };
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<TaskTrigger> TaskTriggerPtr;

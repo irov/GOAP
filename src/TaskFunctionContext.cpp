@@ -7,14 +7,14 @@
 
 #include "TaskFunctionContext.h"
 
-#include "GOAP/FunctionContextProvider.h"
+#include "GOAP/FunctionContextProviderInterface.h"
 
 #include "GOAP/NodeInterface.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskFunctionContext::TaskFunctionContext( const FunctionContextProviderPtr & _provider )
+    TaskFunctionContext::TaskFunctionContext( const FunctionContextProviderInterfacePtr & _provider )
         : m_provider( _provider )
     {
     }

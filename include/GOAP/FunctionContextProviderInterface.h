@@ -13,18 +13,18 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    class FunctionContextProvider
+    class FunctionContextProviderInterface
         : public Factorable
     {
     public:
         virtual void onFunctionContext( bool _isSkip ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<FunctionContextProvider> FunctionContextProviderPtr;
+    typedef IntrusivePtr<FunctionContextProviderInterface> FunctionContextProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     template<class F>
     class FunctionContextProviderT
-        : public FunctionContextProvider
+        : public FunctionContextProviderInterface
     {
     public:
         explicit FunctionContextProviderT( F _f )
@@ -45,11 +45,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        FunctionContextProviderPtr makeFunctionContextProvider( Allocator * _allocator, F _f )
+        FunctionContextProviderInterfacePtr makeFunctionContextProvider( Allocator * _allocator, F _f )
         {
-            FunctionContextProvider * provider = _allocator->allocateT<FunctionContextProviderT<F>>( _f );
+            FunctionContextProviderInterface * provider = _allocator->allocateT<FunctionContextProviderT<F>>( _f );
 
-            return FunctionContextProviderPtr::from( provider );
+            return FunctionContextProviderInterfacePtr::from( provider );
         }
     }
     //////////////////////////////////////////////////////////////////////////

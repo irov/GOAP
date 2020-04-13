@@ -15,18 +15,18 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
-    class ForProvider
+    class ForProviderInterface
         : public Factorable
     {
     public:
         virtual bool onFor( const SourceInterfacePtr & _source, uint32_t _iterator, uint32_t _count ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<ForProvider> ForProviderPtr;
+    typedef IntrusivePtr<ForProviderInterface> ForProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     template<class F>
     class ForProviderT
-        : public ForProvider
+        : public ForProviderInterface
     {
     public:
         explicit ForProviderT( F _f )
@@ -49,11 +49,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        ForProviderPtr makeForProvider( Allocator * _allocator, F _f )
+        ForProviderInterfacePtr makeForProvider( Allocator * _allocator, F _f )
         {
-            ForProvider * provider = _allocator->allocateT<ForProviderT<F>>( _f );
+            ForProviderInterface * provider = _allocator->allocateT<ForProviderT<F>>( _f );
 
-            return ForProviderPtr::from( provider );
+            return ForProviderInterfacePtr::from( provider );
         }
     }
     //////////////////////////////////////////////////////////////////////////

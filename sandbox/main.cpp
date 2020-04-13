@@ -96,7 +96,7 @@ void test( GOAP::Allocator * _allocator )
     GOAP::Cook::addTask<TaskPrint>( source, "****WIN*****" );
     GOAP::Cook::addTask<TaskDelay>( source, _allocator, 1000.f, sch );
 
-    GOAP::Cook::addCallback( source, []( const GOAP::CallbackObserverPtr & _observer, bool isSkip )
+    GOAP::Cook::addCallback( source, []( const GOAP::CallbackObserverInterfacePtr & _observer, bool isSkip )
     {
         printf( "HTTP!!!!!\n" );
 

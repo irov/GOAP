@@ -12,7 +12,7 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class WhileProvider> WhileProviderPtr;
+    typedef IntrusivePtr<class WhileProviderInterface> WhileProviderInterfacePtr;
     typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class TaskRepeat
@@ -21,7 +21,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskRepeat( const WhileProviderPtr & _provider, const SourceInterfacePtr & _until );
+        TaskRepeat( const WhileProviderInterfacePtr & _provider, const SourceInterfacePtr & _until );
         ~TaskRepeat() override;
 
     public:
@@ -29,7 +29,7 @@ namespace GOAP
         void _onFinalize() override;
 
     protected:
-        WhileProviderPtr m_provider;
+        WhileProviderInterfacePtr m_provider;
         SourceInterfacePtr m_sourceUntil;
     };
     //////////////////////////////////////////////////////////////////////////

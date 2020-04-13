@@ -13,7 +13,7 @@ namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
-    typedef IntrusivePtr<class IfProvider> IfProviderPtr;
+    typedef IntrusivePtr<class IfProviderInterface> IfProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class TaskIf
         : public TaskInterface
@@ -21,7 +21,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskIf( const IfProviderPtr & _provider, const SourceInterfacePtr & _sourceTrue, const SourceInterfacePtr & _sourceFalse );
+        TaskIf( const IfProviderInterfacePtr & _provider, const SourceInterfacePtr & _sourceTrue, const SourceInterfacePtr & _sourceFalse );
         ~TaskIf() override;
 
     public:
@@ -29,7 +29,7 @@ namespace GOAP
         void _onFinally() override;
 
     protected:
-        IfProviderPtr m_provider;
+        IfProviderInterfacePtr m_provider;
 
         SourceInterfacePtr m_sourceTrue;
         SourceInterfacePtr m_sourceFalse;

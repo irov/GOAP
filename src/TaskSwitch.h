@@ -15,7 +15,7 @@ namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
-    typedef IntrusivePtr<class SwitchProvider> SwitchProviderPtr;
+    typedef IntrusivePtr<class SwitchProviderInterface> SwitchProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class TaskSwitch
         : public TaskInterface
@@ -23,7 +23,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskSwitch( const SwitchProviderPtr & _provider, VectorSources && _sources );
+        TaskSwitch( const SwitchProviderInterfacePtr & _provider, VectorSources && _sources );
         ~TaskSwitch() override;
 
     public:
@@ -34,7 +34,7 @@ namespace GOAP
         void _onFinally() override;
 
     protected:
-        SwitchProviderPtr m_provider;
+        SwitchProviderInterfacePtr m_provider;
 
         VectorSources m_sources;
     };

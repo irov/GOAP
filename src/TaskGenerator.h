@@ -10,7 +10,7 @@
 #include "GOAP/TaskInterface.h"
 
 #include "GOAP/TimerInterface.h"
-#include "GOAP/GeneratorProvider.h"
+#include "GOAP/GeneratorProviderInterface.h"
 
 #include "GOAP/Allocator.h"
 
@@ -22,7 +22,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskGenerator( Allocator * _allocator, float _time, uint32_t _iterator, const TimerInterfacePtr & _timer, const GeneratorProviderPtr & _provider );
+        TaskGenerator( Allocator * _allocator, float _time, uint32_t _iterator, const TimerInterfacePtr & _timer, const GeneratorProviderInterfacePtr & _provider );
         ~TaskGenerator() override;
 
     public:
@@ -41,7 +41,7 @@ namespace GOAP
         uint32_t m_iterator;
 
         TimerInterfacePtr m_timer;
-        GeneratorProviderPtr m_provider;
+        GeneratorProviderInterfacePtr m_provider;
 
         TimerProviderInterfacePtr m_timerProvider;
     };

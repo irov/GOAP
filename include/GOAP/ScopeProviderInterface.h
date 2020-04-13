@@ -15,18 +15,18 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
-    class ScopeProvider
+    class ScopeProviderInterface
         : public Factorable
     {
     public:
         virtual void onScope( const SourceInterfacePtr & _source ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<ScopeProvider> ScopeProviderPtr;
+    typedef IntrusivePtr<ScopeProviderInterface> ScopeProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     template<class F>
     class ScopeProviderT
-        : public ScopeProvider
+        : public ScopeProviderInterface
     {
     public:
         explicit ScopeProviderT( F _f )
@@ -47,11 +47,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        ScopeProviderPtr makeScopeProvider( Allocator * _allocator, F _f )
+        ScopeProviderInterfacePtr makeScopeProvider( Allocator * _allocator, F _f )
         {
-            ScopeProvider * provider = _allocator->allocateT<ScopeProviderT<F>>( _f );
+            ScopeProviderInterface * provider = _allocator->allocateT<ScopeProviderT<F>>( _f );
 
-            return ScopeProviderPtr::from( provider );
+            return ScopeProviderInterfacePtr::from( provider );
         }
     }
     //////////////////////////////////////////////////////////////////////////

@@ -12,7 +12,7 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskCallback::TaskCallback( Allocator * _allocator, const CallbackProviderPtr & _provider )
+    TaskCallback::TaskCallback( Allocator * _allocator, const CallbackProviderInterfacePtr & _provider )
         : m_allocator( _allocator )
         , m_provider( _provider )
     {
@@ -26,7 +26,7 @@ namespace GOAP
     {
         bool skip = _node->isSkip();
 
-        CallbackObserverPtr callback = Helper::makeCallbackObserver( m_allocator, [_node]( bool _skip )
+        CallbackObserverInterfacePtr callback = Helper::makeCallbackObserver( m_allocator, [_node]( bool _skip )
         {
             _node->complete( true, _skip );
         } );

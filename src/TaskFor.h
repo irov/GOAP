@@ -12,7 +12,7 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class ForProvider> ForProviderPtr;
+    typedef IntrusivePtr<class ForProviderInterface> ForProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class TaskFor
         : public TaskInterface
@@ -20,7 +20,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskFor( const ForProviderPtr & _providerFor, uint32_t _iterator, uint32_t _count );
+        TaskFor( const ForProviderInterfacePtr & _providerFor, uint32_t _iterator, uint32_t _count );
         ~TaskFor() override;
 
     public:
@@ -29,7 +29,7 @@ namespace GOAP
         void _onFinally() override;
 
     protected:
-        ForProviderPtr m_providerFor;
+        ForProviderInterfacePtr m_providerFor;
         uint32_t m_iterator;
         uint32_t m_count;
     };

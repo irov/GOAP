@@ -13,18 +13,18 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    class CallbackObserver
+    class CallbackObserverInterface
         : public Factorable
     {
     public:
         virtual void onCallback( bool _skip ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<CallbackObserver> CallbackObserverPtr;
+    typedef IntrusivePtr<CallbackObserverInterface> CallbackObserverInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     template<class F>
     class CallbackObserverT
-        : public CallbackObserver
+        : public CallbackObserverInterface
     {
     public:
         explicit CallbackObserverT( F _f )
@@ -45,11 +45,11 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        CallbackObserverPtr makeCallbackObserver( Allocator * _allocator, F _f )
+        CallbackObserverInterfacePtr makeCallbackObserver( Allocator * _allocator, F _f )
         {
-            CallbackObserver * observer = _allocator->allocateT<CallbackObserverT<F>>( _f );
+            CallbackObserverInterface * observer = _allocator->allocateT<CallbackObserverT<F>>( _f );
 
-            return CallbackObserverPtr::from( observer );
+            return CallbackObserverInterfacePtr::from( observer );
         }
     }
     //////////////////////////////////////////////////////////////////////////

@@ -14,29 +14,31 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    class GuardProvider
+    class IfProviderInterface
         : public Factorable
     {
     public:
-        virtual void onGuard() = 0;
+        virtual bool onIf() const = 0;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<GuardProvider> GuardProviderPtr;
+    typedef IntrusivePtr<IfProviderInterface> IfProviderInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     template<class F>
-    class GuardProviderT
-        : public GuardProvider
+    class IfProviderT
+        : public IfProviderInterface
     {
     public:
-        explicit GuardProviderT( F _f )
+        explicit IfProviderT( F _f )
             : m_f( _f )
         {
         }
 
     public:
-        void onGuard() override
+        bool onIf() const override
         {
-            m_f();
+            bool result = m_f();
+
+            return result;
         }
 
     protected:
@@ -46,11 +48,12 @@ namespace GOAP
     namespace Helper
     {
         template<class F>
-        GuardProviderPtr makeGuardProvider( Allocator * _allocator, F _f )
+        IfProviderInterfacePtr makeIfProvider( Allocator * _allocator, F _f )
         {
-            GuardProvider * provider = _allocator->allocateT<GuardProviderT<F>>( _f );
+            IfProviderInterface * provider = _allocator->allocateT<IfProviderT<F>>( _f );
 
-            return GuardProviderPtr::from( provider );
+            return IfProviderInterfacePtr::from( provider );
         }
     }
+    //////////////////////////////////////////////////////////////////////////
 }
