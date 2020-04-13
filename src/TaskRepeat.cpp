@@ -5,7 +5,8 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/TaskRepeat.h"
+#include "TaskRepeat.h"
+
 #include "GOAP/Cook.h"
 #include "GOAP/NodeInterface.h"
 #include "GOAP/Exception.h"

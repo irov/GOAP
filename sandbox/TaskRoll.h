@@ -1,11 +1,11 @@
 #pragma once
 
-#include "GOAP/Task.h"
+#include "GOAP/TaskInterface.h"
 
 #include "Scheduler.h"
 
 class TaskRoll
-    : public GOAP::Task
+    : public GOAP::TaskInterface
 {
 public:
     TaskRoll( GOAP::Allocator * _allocator, float _delay, uint32_t _roll, uint32_t _max, const SchedulerPtr & _scheduler );

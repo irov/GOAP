@@ -15,13 +15,12 @@
 #include "GOAP/SourceInterface.h"
 #include "GOAP/ChainInterface.h"
 
-#include "GOAP/TaskRaceNeck.h"
-
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     namespace Detail
     {
+        TaskInterfacePtr makeTaskRaceNeck( Allocator * _allocator );
         void generateRaceSource( const ViewSources<SourceInterface> & _sources, const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task, const NodeInterfacePtr & _neck );
     }
     //////////////////////////////////////////////////////////////////////////
@@ -56,7 +55,7 @@ namespace GOAP
 
             const SourceInterfacePtr & source = _chain->getSource();
 
-            TaskInterfacePtr provider_parallel_neck = Helper::makeTask<TaskRaceNeck>( m_allocator );
+            TaskInterfacePtr provider_parallel_neck = Detail::makeTaskRaceNeck( m_allocator );
 
             NodeInterfacePtr task_parallel_neck = source->makeNode( provider_parallel_neck );
 

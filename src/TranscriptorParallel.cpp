@@ -7,9 +7,11 @@
 
 #include "TranscriptorParallel.h"
 
-#include "GOAP/Source.h"
+#include "GOAP/SourceInterface.h"
+#include "GOAP/ChainInterface.h"
 #include "GOAP/NodeInterface.h"
-#include "GOAP/TaskParallelNeck.h"
+
+#include "TaskParallelNeck.h"
 
 namespace GOAP
 {

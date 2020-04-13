@@ -9,11 +9,21 @@
 #include "GOAP/SourceInterface.h"
 #include "GOAP/SourceProviderInterface.h"
 
+#include "TaskRaceNeck.h"
+
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     namespace Detail
     {
+        //////////////////////////////////////////////////////////////////////////
+        TaskInterfacePtr makeTaskRaceNeck( Allocator * _allocator )
+        {
+            TaskInterfacePtr parallel_neck = Helper::makeTask<TaskRaceNeck>( _allocator );
+
+            return parallel_neck;
+        }
+        //////////////////////////////////////////////////////////////////////////
         void generateRaceSource( const ViewSources<SourceInterface> & _sources, const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task, const NodeInterfacePtr & _neck )
         {
             for( const SourceInterfacePtr & source : _sources )

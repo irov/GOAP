@@ -7,35 +7,34 @@
 
 #pragma once
 
-#include "GOAP/Task.h"
+#include "GOAP/TaskInterface.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class GuardProvider> GuardProviderPtr;
+    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
+    typedef IntrusivePtr<class IfProvider> IfProviderPtr;
     //////////////////////////////////////////////////////////////////////////
-    class TaskGuard
-        : public Task
+    class TaskIf
+        : public TaskInterface
     {
-        GOAP_DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskGuard( const GuardProviderPtr & _begin, const GuardProviderPtr & _end );
-        ~TaskGuard() override;
+        TaskIf( const IfProviderPtr & _provider, const SourceInterfacePtr & _sourceTrue, const SourceInterfacePtr & _sourceFalse );
+        ~TaskIf() override;
 
     public:
         bool _onRun( NodeInterface * _node ) override;
-        void _onCancel() override;
         void _onFinally() override;
 
-    public:
-        bool _onSkipable() const override;
-
     protected:
-        GuardProviderPtr m_begin;
-        GuardProviderPtr m_end;
+        IfProviderPtr m_provider;
+
+        SourceInterfacePtr m_sourceTrue;
+        SourceInterfacePtr m_sourceFalse;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<TaskGuard> TaskGuardPtr;
+    typedef IntrusivePtr<TaskIf> TaskIfPtr;
     //////////////////////////////////////////////////////////////////////////
 }

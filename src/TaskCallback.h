@@ -7,24 +7,31 @@
 
 #pragma once
 
-#include "GOAP/Task.h"
+#include "GOAP/TaskInterface.h"
+#include "GOAP/CallbackProvider.h"
 
 namespace GOAP
 {
-    class TaskBlock
-        : public Task
+    class TaskCallback
+        : public TaskInterface
     {
-        GOAP_DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskBlock();
-        ~TaskBlock() override;
+        explicit TaskCallback( Allocator * _allocator, const CallbackProviderPtr & _provider );
+        ~TaskCallback() override;
+
+    public:
+        bool _onRun( NodeInterface * _node ) override;
+        void _onFinally() override;
+        bool _onSkipable() const override;
 
     protected:
-        bool _onRun( NodeInterface * _node ) override;
-        bool _onSkipable() const override;
+        Allocator * m_allocator;
+
+        CallbackProviderPtr m_provider;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<TaskBlock> TaskBlockPtr;
+    typedef IntrusivePtr<TaskCallback> TaskCallbackPtr;
     //////////////////////////////////////////////////////////////////////////
 }

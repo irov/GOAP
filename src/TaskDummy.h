@@ -7,24 +7,20 @@
 
 #pragma once
 
-#include "GOAP/Task.h"
+#include "GOAP/TaskInterface.h"
 
 namespace GOAP
 {
-    class TaskParallelNeck
-        : public Task
+    class TaskDummy
+        : public TaskInterface
     {
-        GOAP_DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskParallelNeck();
-        ~TaskParallelNeck() override;
-
-    protected:
-        bool _onCheckRun( const NodeInterface * _node ) const override;
-        bool _onCheckSkip( const NodeInterface * _node ) const override;
+        TaskDummy();
+        ~TaskDummy() override;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<TaskParallelNeck> TaskParallelNeckPtr;
+    typedef IntrusivePtr<TaskDummy> TaskDummyPtr;
     //////////////////////////////////////////////////////////////////////////
 }

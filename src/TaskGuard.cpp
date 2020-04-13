@@ -5,7 +5,8 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/TaskGuard.h"
+#include "TaskGuard.h"
+
 #include "GOAP/GuardProvider.h"
 
 namespace GOAP

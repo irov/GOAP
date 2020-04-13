@@ -5,7 +5,7 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/TaskFunction.h"
+#include "TaskFunction.h"
 
 #include "GOAP/FunctionProvider.h"
 

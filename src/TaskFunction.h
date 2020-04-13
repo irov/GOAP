@@ -7,30 +7,30 @@
 
 #pragma once
 
-#include "GOAP/Task.h"
+#include "GOAP/TaskInterface.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class ScopeProvider> ScopeProviderPtr;
+    typedef IntrusivePtr<class FunctionProvider> FunctionProviderPtr;
     //////////////////////////////////////////////////////////////////////////
-    class TaskScope
-        : public Task
+    class TaskFunction
+        : public TaskInterface
     {
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        explicit TaskScope( const ScopeProviderPtr & _provider );
-        ~TaskScope() override;
+        explicit TaskFunction( const FunctionProviderPtr & _provider );
+        ~TaskFunction() override;
 
     public:
         bool _onRun( NodeInterface * _node ) override;
         void _onFinally() override;
 
     protected:
-        ScopeProviderPtr m_provider;
+        FunctionProviderPtr m_provider;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<TaskScope> TaskScopePtr;
+    typedef IntrusivePtr<TaskFunction> TaskFunctionPtr;
     //////////////////////////////////////////////////////////////////////////
 }

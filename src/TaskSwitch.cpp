@@ -5,8 +5,9 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/TaskSwitch.h"
-#include "GOAP/Source.h"
+#include "TaskSwitch.h"
+
+#include "GOAP/SourceInterface.h"
 #include "GOAP/SwitchProvider.h"
 
 #include "GOAP/Exception.h"

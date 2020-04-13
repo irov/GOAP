@@ -5,7 +5,8 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/TaskIf.h"
+#include "TaskIf.h"
+
 #include "GOAP/SourceInterface.h"
 #include "GOAP/SourceProviderInterface.h"
 #include "GOAP/NodeInterface.h"

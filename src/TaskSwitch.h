@@ -7,30 +7,38 @@
 
 #pragma once
 
-#include "GOAP/Task.h"
+#include "GOAP/TaskInterface.h"
+
+#include "GOAP/VectorSources.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class FunctionContextProvider> FunctionContextProviderPtr;
+    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
+    typedef IntrusivePtr<class SwitchProvider> SwitchProviderPtr;
     //////////////////////////////////////////////////////////////////////////
-    class TaskFunctionContext
-        : public Task
+    class TaskSwitch
+        : public TaskInterface
     {
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        explicit TaskFunctionContext( const FunctionContextProviderPtr & _provider );
-        ~TaskFunctionContext() override;
+        TaskSwitch( const SwitchProviderPtr & _provider, VectorSources && _sources );
+        ~TaskSwitch() override;
+
+    public:
+        const VectorSources & getSources() const;
 
     public:
         bool _onRun( NodeInterface * _node ) override;
         void _onFinally() override;
 
     protected:
-        FunctionContextProviderPtr m_provider;
+        SwitchProviderPtr m_provider;
+
+        VectorSources m_sources;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<TaskFunctionContext> TaskFunctionContextPtr;
+    typedef IntrusivePtr<TaskSwitch> TaskSwitchPtr;
     //////////////////////////////////////////////////////////////////////////
 }

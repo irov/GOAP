@@ -1,6 +1,6 @@
 #include "TaskDelay.h"
 
-#include "GOAP/Node.h"
+#include "GOAP/NodeInterface.h"
 
 //////////////////////////////////////////////////////////////////////////
 class TaskDelay::MySchedulerObserver

@@ -5,7 +5,7 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/TaskFunctionContext.h"
+#include "TaskFunctionContext.h"
 
 #include "GOAP/FunctionContextProvider.h"
 

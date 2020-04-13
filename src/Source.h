@@ -7,24 +7,24 @@
 
 #pragma once
 
-#include "GOAP/Task.h"
+#include "GOAP/SourceInterface.h"
+
+#include "SourceBase.h"
 
 namespace GOAP
 {
-    class TaskRaceNeck
-        : public Task
-    {
-        GOAP_DECLARE_VISITABLE( Task );
-
+    //////////////////////////////////////////////////////////////////////////
+    class Source
+        : public SourceBase
+    {   
     public:
-        TaskRaceNeck();
-        ~TaskRaceNeck() override;
+        Source( const KernelInterfacePtr & _kernel, const SourceProviderInterfacePtr & _provider );
+        ~Source() override;
 
     protected:
-        bool _onCheckRun( const NodeInterface * _node ) const override;
-        bool _onCheckSkip( const NodeInterface * _node ) const override;
+        SourceInterfacePtr _makeSource() override;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<TaskRaceNeck> TaskRaceNeckPtr;
+    typedef IntrusivePtr<Source> SourcePtr;
     //////////////////////////////////////////////////////////////////////////
 }

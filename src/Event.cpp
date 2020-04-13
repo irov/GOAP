@@ -5,7 +5,7 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/Event.h"
+#include "Event.h"
 #include "GOAP/EventProviderInterface.h"
 
 #include <algorithm>

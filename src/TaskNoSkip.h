@@ -7,14 +7,14 @@
 
 #pragma once
 
-#include "GOAP/Task.h"
+#include "GOAP/TaskInterface.h"
 
 namespace GOAP
 {
     class TaskNoSkip
-        : public Task
+        : public TaskInterface
     {
-        GOAP_DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
         TaskNoSkip();

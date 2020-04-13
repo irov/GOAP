@@ -5,16 +5,15 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/Kernel.h"
+#include "Kernel.h"
 
-#include "GOAP/Node.h"
-#include "GOAP/Task.h"
-#include "GOAP/Chain.h"
-#include "GOAP/Event.h"
-#include "GOAP/Semaphore.h"
-#include "GOAP/SourceProvider.h"
-#include "GOAP/Source.h"
-#include "GOAP/Timer.h"
+#include "Node.h"
+#include "Chain.h"
+#include "Event.h"
+#include "Semaphore.h"
+#include "SourceProvider.h"
+#include "Source.h"
+#include "Timer.h"
 
 namespace GOAP
 { 

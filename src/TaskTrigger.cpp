@@ -5,8 +5,9 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/TaskTrigger.h"
-#include "GOAP/Event.h"
+#include "TaskTrigger.h"
+
+#include "GOAP/EventInterface.h"
 #include "GOAP/NodeInterface.h"
 #include "GOAP/TriggerProvider.h"
 #include "GOAP/Cook.h"

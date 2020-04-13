@@ -10,7 +10,6 @@
 #include "GOAP/ArraySources.h"
 #include "GOAP/ViewSources.h"
 #include "GOAP/TranscriptorInterface.h"
-#include "GOAP/TaskParallelNeck.h"
 #include "GOAP/NodeInterface.h"
 #include "GOAP/ChainInterface.h"
 #include "GOAP/SourceInterface.h"
@@ -20,6 +19,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     namespace Detail
     {
+        TaskInterfacePtr makeTaskParallelNeck( Allocator * _allocator );
         void generateParallelSource( const ViewSources<SourceInterface> & _sources, const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task, const NodeInterfacePtr & _neck );
     }
     //////////////////////////////////////////////////////////////////////////
@@ -49,7 +49,7 @@ namespace GOAP
         {
             const SourceInterfacePtr & source = _chain->getSource();
 
-            TaskInterfacePtr provider_parallel_neck = Helper::makeTask<TaskParallelNeck>( m_allocator );
+            TaskInterfacePtr provider_parallel_neck = Detail::makeTaskParallelNeck( m_allocator );
 
             NodeInterfacePtr task_parallel_neck = source->makeNode( provider_parallel_neck );
 

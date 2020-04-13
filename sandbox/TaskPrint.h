@@ -1,9 +1,9 @@
 #pragma once
 
-#include "GOAP/Task.h"
+#include "GOAP/TaskInterface.h"
 
 class TaskPrint
-    : public GOAP::Task
+    : public GOAP::TaskInterface
 {
 public:
     TaskPrint( const char * _format, ... );

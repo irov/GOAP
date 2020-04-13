@@ -5,7 +5,7 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/TaskBlock.h"
+#include "TaskBlock.h"
 
 namespace GOAP
 {

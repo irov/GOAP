@@ -7,31 +7,30 @@
 
 #pragma once
 
-#include "GOAP/Task.h"
+#include "GOAP/TaskInterface.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class WhileProvider> WhileProviderPtr;
+    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
-    class TaskWhile
-        : public Task
+    class TaskSource
+        : public TaskInterface
     {
-        GOAP_DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        explicit TaskWhile( const WhileProviderPtr & _providerWhile );
-        ~TaskWhile() override;
+        TaskSource( const SourceInterfacePtr & _source );
+        ~TaskSource() override;
 
     public:
         bool _onRun( NodeInterface * _node ) override;
-        bool _onFastSkip() override;
-        void _onFinalize() override;
+        void _onFinally() override;
 
     protected:
-        WhileProviderPtr m_provider;
+        SourceInterfacePtr m_source;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<TaskWhile> TaskWhilePtr;
+    typedef IntrusivePtr<TaskSource> TaskSourcePtr;
     //////////////////////////////////////////////////////////////////////////
 }

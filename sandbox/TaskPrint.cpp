@@ -1,6 +1,6 @@
 #include "TaskPrint.h"
 
-#include "GOAP/Node.h"
+#include "GOAP/NodeInterface.h"
 
 #include <stdio.h>
 #include <stdarg.h>

@@ -5,7 +5,7 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/Semaphore.h"
+#include "Semaphore.h"
 
 namespace GOAP
 {

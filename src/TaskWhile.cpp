@@ -5,9 +5,9 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/TaskWhile.h"
-#include "GOAP/Cook.h"
+#include "TaskWhile.h"
 
+#include "GOAP/Cook.h"
 #include "GOAP/Exception.h"
 
 namespace GOAP

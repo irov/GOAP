@@ -5,8 +5,9 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/TaskScope.h"
-#include "GOAP/Source.h"
+#include "TaskScope.h"
+
+#include "GOAP/SourceInterface.h"
 #include "GOAP/ScopeProvider.h"
 
 #include "GOAP/Exception.h"

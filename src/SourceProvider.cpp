@@ -5,7 +5,8 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/SourceProvider.h"
+#include "SourceProvider.h"
+
 #include "GOAP/TranscriptorInterface.h"
 #include "GOAP/NodeInterface.h"
 

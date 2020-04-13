@@ -7,20 +7,24 @@
 
 #pragma once
 
-#include "GOAP/Task.h"
+#include "GOAP/TaskInterface.h"
 
 namespace GOAP
 {
-    class TaskDummy
-        : public Task
+    class TaskBlock
+        : public TaskInterface
     {
-        GOAP_DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskDummy();
-        ~TaskDummy() override;
+        TaskBlock();
+        ~TaskBlock() override;
+
+    protected:
+        bool _onRun( NodeInterface * _node ) override;
+        bool _onSkipable() const override;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<TaskDummy> TaskDummyPtr;
+    typedef IntrusivePtr<TaskBlock> TaskBlockPtr;
     //////////////////////////////////////////////////////////////////////////
 }

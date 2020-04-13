@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "GOAP/Task.h"
+#include "GOAP/TaskInterface.h"
 
 namespace GOAP
 {
@@ -15,9 +15,9 @@ namespace GOAP
     typedef IntrusivePtr<class ForProvider> ForProviderPtr;
     //////////////////////////////////////////////////////////////////////////
     class TaskFor
-        : public Task
+        : public TaskInterface
     {
-        GOAP_DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
         TaskFor( const ForProviderPtr & _providerFor, uint32_t _iterator, uint32_t _count );

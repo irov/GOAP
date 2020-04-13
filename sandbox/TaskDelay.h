@@ -1,10 +1,11 @@
 #pragma once
 
-#include "GOAP/Task.h"
+#include "GOAP/TaskInterface.h"
+
 #include "Scheduler.h"
 
 class TaskDelay
-    : public GOAP::Task
+    : public GOAP::TaskInterface
 {
 public:
     TaskDelay( GOAP::Allocator * _allocator, float _delay, const SchedulerPtr & _scheduler );

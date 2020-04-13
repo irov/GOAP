@@ -5,7 +5,7 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/TaskNoSkip.h"
+#include "TaskNoSkip.h"
 
 namespace GOAP
 {

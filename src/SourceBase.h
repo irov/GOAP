@@ -17,7 +17,6 @@
 #include "GOAP/CallbackProvider.h"
 #include "GOAP/ScopeProvider.h"
 #include "GOAP/IfProvider.h"
-#include "GOAP/IfProviderMember.h"
 #include "GOAP/TriggerProvider.h"
 #include "GOAP/SwitchProvider.h"
 #include "GOAP/GuardProvider.h"
@@ -30,7 +29,8 @@
 
 #include "GOAP/Vector.h"
 #include "GOAP/Zip.h"
-#include "GOAP/Timer.h"
+
+#include "Timer.h"
 
 namespace GOAP
 {

@@ -5,8 +5,9 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/Source.h"
-#include "GOAP/SourceProvider.h"
+#include "Source.h"
+
+#include "SourceProvider.h"
 
 namespace GOAP
 {

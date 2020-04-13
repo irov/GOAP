@@ -7,9 +7,11 @@
 
 #include "TranscriptorRace.h"
 
-#include "GOAP/Source.h"
 #include "GOAP/NodeInterface.h"
-#include "GOAP/TaskRaceNeck.h"
+#include "GOAP/ChainInterface.h"
+#include "GOAP/SourceInterface.h"
+
+#include "TaskRaceNeck.h"
 
 namespace GOAP
 {

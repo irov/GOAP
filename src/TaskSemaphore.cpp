@@ -5,7 +5,8 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/TaskSemaphore.h"
+#include "TaskSemaphore.h"
+
 #include "GOAP/NodeInterface.h"
 
 namespace GOAP

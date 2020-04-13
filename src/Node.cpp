@@ -5,10 +5,12 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/Node.h"
-#include "GOAP/Source.h"
+#include "Node.h"
+
+#include "GOAP/SourceInterface.h"
 #include "GOAP/ChainInterface.h"
-#include "GOAP/TaskDummy.h"
+
+#include "TaskDummy.h"
 
 #include <algorithm>
 

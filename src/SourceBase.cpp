@@ -5,29 +5,10 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/SourceBase.h"
-#include "GOAP/SourceProvider.h"
+#include "SourceBase.h"
+#include "SourceProvider.h"
 
-#include "GOAP/Node.h"
-
-#include "GOAP/TaskFunction.h"
-#include "GOAP/TaskFunctionContext.h"
-#include "GOAP/TaskCallback.h"
-#include "GOAP/TaskScope.h"
-#include "GOAP/TaskSource.h"
-#include "GOAP/TaskIf.h"
-#include "GOAP/TaskRepeat.h"
-#include "GOAP/TaskSwitch.h"
-#include "GOAP/TaskFork.h"
-#include "GOAP/TaskGuard.h"
-#include "GOAP/TaskGenerator.h"
-#include "GOAP/TaskBlock.h"
-#include "GOAP/TaskNoSkip.h"
-#include "GOAP/TaskWhile.h"
-#include "GOAP/TaskSemaphore.h"
-#include "GOAP/TaskEvent.h"
-#include "GOAP/TaskFor.h"
-#include "GOAP/TaskTrigger.h"
+#include "GOAP/NodeInterface.h"
 
 #include "TranscriptorBase.h"
 #include "TranscriptorParallel.h"
@@ -54,7 +35,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     NodeInterfacePtr SourceBase::makeNode( const TaskInterfacePtr & _task )
     {
-        NodePtr task = m_kernel->makeNode( _task );
+        NodeInterfacePtr task = m_kernel->makeNode( _task );
 
         return task;
     }

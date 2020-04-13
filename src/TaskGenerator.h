@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "GOAP/Task.h"
+#include "GOAP/TaskInterface.h"
 
 #include "GOAP/TimerInterface.h"
 #include "GOAP/GeneratorProvider.h"
@@ -17,9 +17,9 @@
 namespace GOAP
 {
     class TaskGenerator
-        : public Task
+        : public TaskInterface
     {
-        GOAP_DECLARE_VISITABLE( Task );
+        GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
         TaskGenerator( Allocator * _allocator, float _time, uint32_t _iterator, const TimerInterfacePtr & _timer, const GeneratorProviderPtr & _provider );

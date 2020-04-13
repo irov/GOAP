@@ -6,7 +6,7 @@
 */
 
 #include "GOAP/Alias.h"
-#include "GOAP/Source.h"
+#include "GOAP/SourceInterface.h"
 #include "GOAP/Cook.h"
 #include "GOAP/Exception.h"
 

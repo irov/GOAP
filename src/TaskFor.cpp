@@ -5,7 +5,8 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/TaskFor.h"
+#include "TaskFor.h"
+
 #include "GOAP/Cook.h"
 #include "GOAP/ForProvider.h"
 

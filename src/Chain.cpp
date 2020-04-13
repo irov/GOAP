@@ -5,15 +5,16 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/Chain.h"
+#include "Chain.h"
+
 #include "GOAP/ChainProvider.h"
 #include "GOAP/NodeInterface.h"
 #include "GOAP/SourceProviderInterface.h"
 #include "GOAP/SourceInterface.h"
-
-#include "GOAP/TaskDummy.h"
-#include "GOAP/TaskFunctionContext.h"
 #include "GOAP/FunctionContextProvider.h"
+
+#include "TaskDummy.h"
+#include "TaskFunctionContext.h"
 
 #include <algorithm>
 

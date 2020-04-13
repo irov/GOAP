@@ -7,33 +7,32 @@
 
 #pragma once
 
-#include "GOAP/Task.h"
+#include "GOAP/TaskInterface.h"
+#include "GOAP/EventInterface.h"
 
 namespace GOAP
 {
-    //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
-    //////////////////////////////////////////////////////////////////////////
-    class TaskFork
-        : public Task
+    class TaskEvent
+        : public TaskInterface
     {
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskFork( const SourceInterfacePtr & _source );
-        ~TaskFork() override;
-
-    public:
-        const SourceInterfacePtr & getSource() const;
+        TaskEvent( Allocator * _allocator, const EventInterfacePtr & _event );
+        ~TaskEvent() override;
 
     public:
         bool _onRun( NodeInterface * _node ) override;
         void _onFinally() override;
+        bool _onSkipable() const override;
 
     protected:
-        SourceInterfacePtr m_source;
+        Allocator * m_allocator;
+
+        EventInterfacePtr m_event;
+        EventProviderInterfacePtr m_provider;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<TaskFork> TaskForkPtr;
+    typedef IntrusivePtr<TaskEvent> TaskEventPtr;
     //////////////////////////////////////////////////////////////////////////
 }

@@ -1,6 +1,6 @@
 #include "TaskRoll.h"
 
-#include "GOAP/Node.h"
+#include "GOAP/NodeInterface.h"
 
 #include <stdlib.h>
 

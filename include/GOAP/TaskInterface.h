@@ -21,23 +21,87 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE_BASE();
 
     protected:
-        virtual bool _onInitialize() = 0;
-        virtual void _onFinalize() = 0;
+        virtual bool _onInitialize()
+        {
+            return true;
+        };
+
+        virtual void _onFinalize()
+        {
+            //Empty
+        }
 
     protected:
-        virtual bool _onValidate() const = 0;
-        virtual bool _onCheck() = 0;
-        virtual bool _onRun( NodeInterface * _node ) = 0;
-        virtual bool _onSkipable() const = 0;
-        virtual void _onSkipNoSkiped() = 0;
-        virtual bool _onSkipBlock() = 0;
-        virtual void _onComplete() = 0;
-        virtual bool _onFastSkip() = 0;
-        virtual void _onSkip() = 0;
-        virtual void _onCancel() = 0;
-        virtual void _onFinally() = 0;
-        virtual bool _onCheckRun( const NodeInterface * _node ) const = 0;
-        virtual bool _onCheckSkip( const NodeInterface * _node ) const = 0;
+        virtual bool _onValidate() const
+        {
+            return true;
+        }
+
+        virtual bool _onCheck()
+        {
+            return true;
+        }
+
+        virtual bool _onRun( NodeInterface * _node )
+        {
+            GOAP_UNUSED( _node );
+
+            return true;
+        }
+
+        virtual bool _onSkipable() const
+        {
+            return true;
+        }
+
+        virtual void _onSkipNoSkiped()
+        {
+            //Empty
+        }
+
+        virtual bool _onSkipBlock()
+        {
+            return false;
+        }
+
+        virtual void _onComplete()
+        {
+            //Empty
+        };
+
+        virtual bool _onFastSkip()
+        {
+            return false;
+        }
+
+        virtual void _onSkip()
+        {
+            //Empty
+        }
+
+        virtual void _onCancel()
+        {
+            //Empty
+        }
+
+        virtual void _onFinally()
+        {
+            //Empty
+        }
+
+        virtual bool _onCheckRun( const NodeInterface * _node ) const
+        {
+            bool result = _node->isEmptyPrevs();
+
+            return result;
+        }
+
+        virtual bool _onCheckSkip( const NodeInterface * _node ) const
+        {
+            bool result = _node->isEmptyPrevs();
+
+            return result;
+        }
 
     protected:
         friend class Node;

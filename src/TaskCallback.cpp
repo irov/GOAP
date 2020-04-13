@@ -5,7 +5,8 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/TaskCallback.h"
+#include "TaskCallback.h"
+
 #include "GOAP/NodeInterface.h"
 
 namespace GOAP

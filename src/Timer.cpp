@@ -5,7 +5,8 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/Timer.h"
+#include "Timer.h"
+
 #include "GOAP/TimerProviderInterface.h"
 
 #include <algorithm>

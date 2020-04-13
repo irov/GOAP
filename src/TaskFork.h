@@ -7,21 +7,24 @@
 
 #pragma once
 
-#include "GOAP/Task.h"
+#include "GOAP/TaskInterface.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
-    class TaskSource
-        : public Task
+    class TaskFork
+        : public TaskInterface
     {
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskSource( const SourceInterfacePtr & _source );
-        ~TaskSource() override;
+        TaskFork( const SourceInterfacePtr & _source );
+        ~TaskFork() override;
+
+    public:
+        const SourceInterfacePtr & getSource() const;
 
     public:
         bool _onRun( NodeInterface * _node ) override;
@@ -31,6 +34,6 @@ namespace GOAP
         SourceInterfacePtr m_source;
     };
     //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<TaskSource> TaskSourcePtr;
+    typedef IntrusivePtr<TaskFork> TaskForkPtr;
     //////////////////////////////////////////////////////////////////////////
 }

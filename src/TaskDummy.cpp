@@ -5,7 +5,7 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/TaskDummy.h"
+#include "TaskDummy.h"
 
 namespace GOAP
 {

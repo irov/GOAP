@@ -5,7 +5,7 @@
 * of the MIT license.  See the LICENSE file for details.
 */
 
-#include "GOAP/TaskParallelNeck.h"
+#include "TaskParallelNeck.h"
 
 #include "GOAP/NodeInterface.h"
 

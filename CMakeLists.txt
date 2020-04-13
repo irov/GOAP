@@ -41,150 +41,26 @@ ENDIF()
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-SET(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
-SET(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+SET(PRIVATE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+SET(PUBLIC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-# OUR SOURCES
-set( GOAP_SOURCES
-    ${SOURCE_DIR}/Alias.cpp
-    ${SOURCE_DIR}/Chain.cpp
-    ${SOURCE_DIR}/Cook.cpp
-    ${SOURCE_DIR}/Factorable.cpp
-    ${SOURCE_DIR}/Exception.cpp
-    ${SOURCE_DIR}/Source.cpp
-    ${SOURCE_DIR}/SourceBase.cpp
-    ${SOURCE_DIR}/SourceProvider.cpp
-    ${SOURCE_DIR}/Kernel.cpp
-    ${SOURCE_DIR}/Node.cpp
-    ${SOURCE_DIR}/Task.cpp
-    ${SOURCE_DIR}/TaskCallback.cpp
-    ${SOURCE_DIR}/TaskBlock.cpp
-    ${SOURCE_DIR}/TaskNoSkip.cpp
-    ${SOURCE_DIR}/TaskDummy.cpp
-    ${SOURCE_DIR}/TaskFork.cpp
-    ${SOURCE_DIR}/TaskFunction.cpp
-    ${SOURCE_DIR}/TaskFunctionContext.cpp
-    ${SOURCE_DIR}/TaskGenerator.cpp
-    ${SOURCE_DIR}/TaskGuard.cpp
-    ${SOURCE_DIR}/TaskIf.cpp
-    ${SOURCE_DIR}/TaskParallelNeck.cpp
-    ${SOURCE_DIR}/TaskRaceNeck.cpp
-    ${SOURCE_DIR}/TaskRepeat.cpp
-    ${SOURCE_DIR}/TaskScope.cpp
-    ${SOURCE_DIR}/TaskSource.cpp
-    ${SOURCE_DIR}/TaskEvent.cpp
-    ${SOURCE_DIR}/TaskSwitch.cpp
-    ${SOURCE_DIR}/TaskWhile.cpp
-    ${SOURCE_DIR}/TaskFor.cpp
-    ${SOURCE_DIR}/TaskTrigger.cpp
-    ${SOURCE_DIR}/TranscriptorBase.cpp
-    ${SOURCE_DIR}/TranscriptorBase.h
-    ${SOURCE_DIR}/TranscriptorParallel.cpp
-    ${SOURCE_DIR}/TranscriptorParallel.h
-    ${SOURCE_DIR}/TranscriptorRace.cpp
-    ${SOURCE_DIR}/TranscriptorRace.h
-    ${SOURCE_DIR}/TranscriptorParallelArray.cpp
-    ${SOURCE_DIR}/TranscriptorRaceArray.cpp
-    ${SOURCE_DIR}/Semaphore.cpp
-    ${SOURCE_DIR}/Event.cpp
-    ${SOURCE_DIR}/TaskSemaphore.cpp
-    ${SOURCE_DIR}/Timer.cpp
-)
-
-set( GOAP_HEADERS
-    ${INCLUDE_DIR}/GOAP/Allocator.h
-    ${INCLUDE_DIR}/GOAP/Alias.h
-    ${INCLUDE_DIR}/GOAP/ArraySources.h
-    ${INCLUDE_DIR}/GOAP/ViewSources.h
-    ${INCLUDE_DIR}/GOAP/CallbackObserver.h
-    ${INCLUDE_DIR}/GOAP/CallbackProvider.h    
-    ${INCLUDE_DIR}/GOAP/Chain.h
-    ${INCLUDE_DIR}/GOAP/ChainInterface.h
-    ${INCLUDE_DIR}/GOAP/ChainProvider.h
-    ${INCLUDE_DIR}/GOAP/Cook.h
-    ${INCLUDE_DIR}/GOAP/Exception.h
-    ${INCLUDE_DIR}/GOAP/Factorable.h
-    ${INCLUDE_DIR}/GOAP/FunctionProvider.h
-    ${INCLUDE_DIR}/GOAP/FunctionContextProvider.h
-    ${INCLUDE_DIR}/GOAP/GOAP.h
-    ${INCLUDE_DIR}/GOAP/GuardProvider.h
-    ${INCLUDE_DIR}/GOAP/TimerInterface.h
-    ${INCLUDE_DIR}/GOAP/Timer.h
-	${INCLUDE_DIR}/GOAP/TimerProviderInterface.h
-    ${INCLUDE_DIR}/GOAP/IfProvider.h
-    ${INCLUDE_DIR}/GOAP/IfProviderMember.h
-    ${INCLUDE_DIR}/GOAP/TriggerProvider.h
-    ${INCLUDE_DIR}/GOAP/ScopeProvider.h
-    ${INCLUDE_DIR}/GOAP/ForProvider.h
-    ${INCLUDE_DIR}/GOAP/Source.h
-    ${INCLUDE_DIR}/GOAP/SourceBase.h    
-    ${INCLUDE_DIR}/GOAP/SourceInterface.h
-    ${INCLUDE_DIR}/GOAP/SourceProviderInterface.h
-    ${INCLUDE_DIR}/GOAP/SourceProvider.h
-    ${INCLUDE_DIR}/GOAP/SwitchProvider.h    
-    ${INCLUDE_DIR}/GOAP/KernelInterface.h
-    ${INCLUDE_DIR}/GOAP/Kernel.h
-    ${INCLUDE_DIR}/GOAP/Node.h
-    ${INCLUDE_DIR}/GOAP/NodeInterface.h
-    ${INCLUDE_DIR}/GOAP/TaskInterface.h
-    ${INCLUDE_DIR}/GOAP/Task.h
-    ${INCLUDE_DIR}/GOAP/TaskCallback.h
-    ${INCLUDE_DIR}/GOAP/TaskBlock.h
-    ${INCLUDE_DIR}/GOAP/TaskNoSkip.h
-    ${INCLUDE_DIR}/GOAP/TaskDummy.h
-    ${INCLUDE_DIR}/GOAP/TaskFork.h
-    ${INCLUDE_DIR}/GOAP/TaskFunction.h
-    ${INCLUDE_DIR}/GOAP/TaskFunctionContext.h
-    ${INCLUDE_DIR}/GOAP/TaskGenerator.h
-    ${INCLUDE_DIR}/GOAP/TaskGuard.h
-    ${INCLUDE_DIR}/GOAP/TaskIf.h
-    ${INCLUDE_DIR}/GOAP/TaskParallelNeck.h
-    ${INCLUDE_DIR}/GOAP/TaskRepeat.h
-    ${INCLUDE_DIR}/GOAP/TaskRaceNeck.h
-    ${INCLUDE_DIR}/GOAP/TaskScope.h
-    ${INCLUDE_DIR}/GOAP/TaskSource.h    
-    ${INCLUDE_DIR}/GOAP/TaskEvent.h
-    ${INCLUDE_DIR}/GOAP/TaskSwitch.h
-    ${INCLUDE_DIR}/GOAP/TaskWhile.h
-    ${INCLUDE_DIR}/GOAP/TaskFor.h
-    ${INCLUDE_DIR}/GOAP/TaskTrigger.h
-    ${INCLUDE_DIR}/GOAP/TranscriptorInterface.h
-    ${INCLUDE_DIR}/GOAP/TranscriptorParallelArray.h
-    ${INCLUDE_DIR}/GOAP/TranscriptorRaceArray.h
-    ${INCLUDE_DIR}/GOAP/SemaphoreInterface.h
-    ${INCLUDE_DIR}/GOAP/Semaphore.h
-    ${INCLUDE_DIR}/GOAP/Event.h
-    ${INCLUDE_DIR}/GOAP/EventInterface.h
-    ${INCLUDE_DIR}/GOAP/EventProviderInterface.h
-    ${INCLUDE_DIR}/GOAP/TaskSemaphore.h
-    ${INCLUDE_DIR}/GOAP/SemaphoreFlags.h
-    ${INCLUDE_DIR}/GOAP/VectorSources.h
-    ${INCLUDE_DIR}/GOAP/Visitor.h
-    ${INCLUDE_DIR}/GOAP/Visitable.h
-    ${INCLUDE_DIR}/GOAP/GeneratorProvider.h
-    ${INCLUDE_DIR}/GOAP/WhileProvider.h
-    ${INCLUDE_DIR}/GOAP/Zip.h
-)
+file(GLOB files_public_headers ${PUBLIC_DIR}/*.h)
+file(GLOB files_private_headers ${PRIVATE_DIR}/*.h)
+file(GLOB files_private_sources ${PRIVATE_DIR}/*.cpp)
 
 IF(LIBGOAP_EXTERNAL_CONFIG_INCLUDE)
+    file(GLOB files_external_public_headers ${LIBGOAP_EXTERNAL_CONFIG_INCLUDE_PATH}/GOAP/*.h)
+
     include_directories(${PROJECT_NAME} ${LIBGOAP_EXTERNAL_CONFIG_INCLUDE_PATH})
 ELSE()
-    set( GOAP_HEADERS ${GOAP_HEADERS}
-        ${INCLUDE_DIR}/Config/GOAP/Config.h
-        ${INCLUDE_DIR}/Config/GOAP/Array.h
-        ${INCLUDE_DIR}/Config/GOAP/Tuple.h
-        ${INCLUDE_DIR}/Config/GOAP/Vector.h
-        ${INCLUDE_DIR}/Config/GOAP/IntrusivePtrBase.h
-        ${INCLUDE_DIR}/Config/GOAP/IntrusivePtr.h        
-        ${INCLUDE_DIR}/Config/GOAP/Mixin.h
-    )
+    file(GLOB files_external_public_headers ${PUBLIC_DIR}/Config/GOAP/*.h)
     
-    include_directories(${PROJECT_NAME} ${INCLUDE_DIR}/Config)
+    include_directories(${PROJECT_NAME} ${PUBLIC_DIR}/Config)
 ENDIF()
 
-include_directories(${PROJECT_NAME} ${INCLUDE_DIR})
+include_directories(${PROJECT_NAME} ${PUBLIC_DIR})
 
-add_library(${PROJECT_NAME} STATIC ${GOAP_SOURCES} ${GOAP_HEADERS})
+add_library(${PROJECT_NAME} STATIC ${files_public_headers} ${files_private_headers} ${files_private_sources} ${files_external_public_headers})
 
 if(LIBGOAP_INSTALL)
     install(DIRECTORY include
@@ -213,7 +89,7 @@ if(LIBGOAP_BUILD_TEST)
     
     ADD_DEFINITIONS(-D_CRT_SECURE_NO_DEPRECATE -D_SCL_SECURE_NO_WARNINGS)
 
-    INCLUDE_DIRECTORIES(Sandbox ${INCLUDE_DIR})
+    INCLUDE_DIRECTORIES(Sandbox ${PUBLIC_DIR})
 
     ADD_EXECUTABLE(Sandbox ${Sandbox_SOURCES})
 
