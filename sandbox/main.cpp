@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include <cstdlib>
 
 #include "Scheduler.h"
 
@@ -16,8 +16,8 @@
 #   define GOAP_SLEEP(Time) (::usleep(Time * 1000))
 #endif
 
-#include <time.h>
-#include <math.h>
+#include <ctime>
+#include <cmath>
 
 #include <array>
 #include <string>

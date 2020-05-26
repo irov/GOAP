@@ -7,10 +7,10 @@
 
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
 #include <cstddef>
 
 #define GOAP_UNUSED(expr) ((void)(expr))
 #define GOAP_INLINE inline
 
-#include <stdlib.h>
+#include <cstdlib>

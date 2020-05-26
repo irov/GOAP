@@ -2,8 +2,8 @@
 
 #include "GOAP/NodeInterface.h"
 
-#include <stdio.h>
-#include <stdarg.h>
+#include <cstdio>
+#include <cstdarg>
 
 //////////////////////////////////////////////////////////////////////////
 TaskPrint::TaskPrint( const char * _format, ... )

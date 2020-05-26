@@ -2,7 +2,7 @@
 
 #include "GOAP/NodeInterface.h"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 //////////////////////////////////////////////////////////////////////////
 class TaskRoll::MySchedulerObserver
