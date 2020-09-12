@@ -28,35 +28,45 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     NodeInterfacePtr Kernel::makeNode( const TaskInterfacePtr & _task )
     {
-        Node * node = m_allocator->allocateT<Node>( _task );
+        Allocator * allocator = this->getAllocator();
+
+        Node * node = allocator->allocateT<Node>( _task );
 
         return NodeInterfacePtr::from( node );
     }
     //////////////////////////////////////////////////////////////////////////
     ChainInterfacePtr Kernel::makeChain( const SourceInterfacePtr & _source, const char * _file, uint32_t _line )
     {
-        Chain * chain = m_allocator->allocateT<Chain>( m_allocator, _source, _file, _line );
+        Allocator * allocator = this->getAllocator();
+
+        Chain * chain = allocator->allocateT<Chain>( _source, _file, _line );
 
         return ChainInterfacePtr::from( chain );
     }
     //////////////////////////////////////////////////////////////////////////
     EventInterfacePtr Kernel::makeEvent()
     {
-        Event * event = m_allocator->allocateT<Event>();
+        Allocator * allocator = this->getAllocator();
+
+        Event * event = allocator->allocateT<Event>();
 
         return EventInterfacePtr::from( event );
     }
     //////////////////////////////////////////////////////////////////////////
     SemaphoreInterfacePtr Kernel::makeSemaphore( const EventInterfacePtr & _event, int32_t _value )
     {
-        Semaphore * semaphore = m_allocator->allocateT<Semaphore>( m_allocator, _event, _value );
+        Allocator * allocator = this->getAllocator();
+
+        Semaphore * semaphore = allocator->allocateT<Semaphore>( _event, _value );
 
         return SemaphoreInterfacePtr::from( semaphore );
     }
     //////////////////////////////////////////////////////////////////////////
     SourceProviderInterfacePtr Kernel::makeSourceProvider()
     {
-        SourceProvider * provider = m_allocator->allocateT<SourceProvider>();
+        Allocator * allocator = this->getAllocator();
+
+        SourceProvider * provider = allocator->allocateT<SourceProvider>();
 
         return SourceProviderInterfacePtr::from( provider );
     }
@@ -65,14 +75,18 @@ namespace GOAP
     {
         SourceProviderInterfacePtr provider = this->makeSourceProvider();
 
-        Source * source = m_allocator->allocateT<Source>( KernelInterfacePtr::from( this ), provider );
+        Allocator * allocator = this->getAllocator();
+
+        Source * source = allocator->allocateT<Source>( KernelInterfacePtr::from( this ), provider );
 
         return SourceInterfacePtr::from( source );
     }
     //////////////////////////////////////////////////////////////////////////
     TimerInterfacePtr Kernel::makeTimer()
     {
-        Timer * timer = m_allocator->allocateT<Timer>();
+        Allocator * allocator = this->getAllocator();
+
+        Timer * timer = allocator->allocateT<Timer>();
 
         return TimerInterfacePtr::from( timer );
     }

@@ -12,9 +12,8 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskEvent::TaskEvent( Allocator * _allocator, const EventInterfacePtr & _event )
-        : m_allocator( _allocator )
-        , m_event( _event )
+    TaskEvent::TaskEvent( const EventInterfacePtr & _event )
+        : m_event( _event )
     {
     }
     //////////////////////////////////////////////////////////////////////////
@@ -24,7 +23,9 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskEvent::_onRun( NodeInterface * _node )
     {
-        EventProviderInterfacePtr provider = Helper::makeEventProvider( m_allocator, [_node]()
+        Allocator * allocator = this->getAllocator();
+
+        EventProviderInterfacePtr provider = Helper::makeEventProvider( allocator, [_node]()
         {
             _node->complete();
 

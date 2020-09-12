@@ -28,9 +28,8 @@ namespace GOAP
         : public TranscriptorInterface
     {
     public:
-        TranscriptorParallelArray( Allocator * _allocator, ArraySources<Count> && _sources )
-            : m_allocator( _allocator )
-            , m_sources( std::forward<ArraySources<Count>>( _sources ) )
+        TranscriptorParallelArray( ArraySources<Count> && _sources )
+            : m_sources( std::forward<ArraySources<Count>>( _sources ) )
         {
         }
 
@@ -49,7 +48,9 @@ namespace GOAP
         {
             const SourceInterfacePtr & source = _chain->getSource();
 
-            TaskInterfacePtr provider_parallel_neck = Detail::makeTaskParallelNeck( m_allocator );
+            Allocator * allocator = this->getAllocator();
+
+            TaskInterfacePtr provider_parallel_neck = Detail::makeTaskParallelNeck( allocator );
 
             NodeInterfacePtr task_parallel_neck = source->makeNode( provider_parallel_neck );
 
@@ -61,8 +62,6 @@ namespace GOAP
         }
 
     protected:
-        Allocator * m_allocator;
-
         ArraySources<Count> m_sources;
     };
     //////////////////////////////////////////////////////////////////////////
@@ -74,7 +73,7 @@ namespace GOAP
         template<size_t Count>
         TranscriptorParallelArrayPtr<Count> makeTranscriptorParallelArray( Allocator * _allocator, ArraySources<Count> && _sources )
         {
-            TranscriptorParallelArray<Count> * transcriptor = _allocator->allocateT<TranscriptorParallelArray<Count>>( _allocator, std::forward<ArraySources<Count>>( _sources ) );
+            TranscriptorParallelArray<Count> * transcriptor = _allocator->allocateT<TranscriptorParallelArray<Count>>( std::forward<ArraySources<Count>>( _sources ) );
 
             return TranscriptorParallelArrayPtr<Count>::from( transcriptor );
         }

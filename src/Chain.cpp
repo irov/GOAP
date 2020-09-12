@@ -21,9 +21,8 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    Chain::Chain( Allocator * _allocator, const SourceInterfacePtr & _source, const char * _file, uint32_t _line )
-        : m_allocator( _allocator )
-        , m_source( _source )
+    Chain::Chain( const SourceInterfacePtr & _source, const char * _file, uint32_t _line )
+        : m_source( _source )
         , m_file( _file )
         , m_line( _line )
         , m_state( TASK_CHAIN_STATE_IDLE )
@@ -64,18 +63,20 @@ namespace GOAP
 
         this->setState_( TASK_CHAIN_STATE_RUN );
 
-        FunctionContextProviderInterfacePtr context = Helper::makeFunctionContextProvider( m_allocator, [this]( bool _isSkip )
+        Allocator * allocator = this->getAllocator();
+
+        FunctionContextProviderInterfacePtr context = Helper::makeFunctionContextProvider( allocator, [this]( bool _isSkip )
         {
             this->complete( _isSkip );
         } );
 
-        TaskInterfacePtr provider_context = Helper::makeTask<TaskFunctionContext>( m_allocator, context );
+        TaskInterfacePtr provider_context = Helper::makeTask<TaskFunctionContext>( allocator, context );
 
         NodeInterfacePtr node_complete = m_source->makeNode( provider_context );
 
         m_source->addNode( node_complete );
 
-        TaskInterfacePtr provider_dummy = Helper::makeTask<TaskDummy>( m_allocator );
+        TaskInterfacePtr provider_dummy = Helper::makeTask<TaskDummy>( allocator );
 
         NodeInterfacePtr task_first = m_source->makeNode( provider_dummy );
 

@@ -29,7 +29,7 @@ namespace GOAP
         };
 
     public:
-        Chain( Allocator * _allocator, const SourceInterfacePtr & _source, const char * _file, uint32_t _line );
+        Chain( const SourceInterfacePtr & _source, const char * _file, uint32_t _line );
         ~Chain() override;
 
     public:
@@ -72,8 +72,6 @@ namespace GOAP
         ETaskChainState getState_() const;
 
     protected:
-        Allocator * m_allocator;
-
         SourceInterfacePtr m_source;
 
         const char * m_file;

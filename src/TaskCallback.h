@@ -18,7 +18,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        explicit TaskCallback( Allocator * _allocator, const CallbackProviderInterfacePtr & _provider );
+        explicit TaskCallback( const CallbackProviderInterfacePtr & _provider );
         ~TaskCallback() override;
 
     public:
@@ -27,8 +27,6 @@ namespace GOAP
         bool _onSkipable() const override;
 
     protected:
-        Allocator * m_allocator;
-
         CallbackProviderInterfacePtr m_provider;
     };
     //////////////////////////////////////////////////////////////////////////

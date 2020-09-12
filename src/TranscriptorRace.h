@@ -20,7 +20,7 @@ namespace GOAP
         : public TranscriptorInterface
     {
     public:
-        TranscriptorRace( Allocator * _allocator, VectorSources && _sources );
+        TranscriptorRace( VectorSources && _sources );
         ~TranscriptorRace() override;
 
     public:
@@ -30,8 +30,6 @@ namespace GOAP
         NodeInterfacePtr generate( const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task ) override;
 
     protected:
-        Allocator * m_allocator;
-
         VectorSources m_sources;
     };
     //////////////////////////////////////////////////////////////////////////

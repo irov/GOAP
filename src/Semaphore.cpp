@@ -10,9 +10,8 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    Semaphore::Semaphore( Allocator * _allocator, const EventInterfacePtr & _event, int32_t _value )
-        : m_allocator( _allocator )
-        , m_event( _event )
+    Semaphore::Semaphore( const EventInterfacePtr & _event, int32_t _value )
+        : m_event( _event )
         , m_value( _value )
     {
     }

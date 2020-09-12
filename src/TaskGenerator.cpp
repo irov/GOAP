@@ -14,9 +14,8 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskGenerator::TaskGenerator( Allocator * _allocator, float _time, uint32_t _iterator, const TimerInterfacePtr & _timer, const GeneratorProviderInterfacePtr & _provider )
-        : m_allocator( _allocator )
-        , m_time( _time )
+    TaskGenerator::TaskGenerator( float _time, uint32_t _iterator, const TimerInterfacePtr & _timer, const GeneratorProviderInterfacePtr & _provider )
+        : m_time( _time )
         , m_iterator( _iterator )
         , m_timer( _timer )
         , m_provider( _provider )
@@ -29,7 +28,9 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskGenerator::_onRun( NodeInterface * _node )
     {
-        m_timerProvider = m_timer->addTimer( m_allocator, [this, _node]( float _time )
+        Allocator * allocator = this->getAllocator();
+
+        m_timerProvider = m_timer->addTimer( allocator, [this, _node]( float _time )
         {
             this->onTime( _node, _time );
         } );

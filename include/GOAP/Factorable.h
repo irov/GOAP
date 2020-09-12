@@ -29,7 +29,7 @@ namespace GOAP
         void decref() override;
         uint32_t getrefcount() const override;
 
-    protected:
+    private:
         Allocator * m_allocator;
 
         uint32_t m_reference;

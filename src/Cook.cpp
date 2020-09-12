@@ -93,79 +93,57 @@ namespace GOAP
         //////////////////////////////////////////////////////////////////////////
         void addEvent( const SourceInterfacePtr & _source, const EventInterfacePtr & _event )
         {
-            Allocator * allocator = _source->getAllocator();
-
-            addTask<TaskEvent>( _source, allocator, _event );
+            addTask<TaskEvent>( _source, _event );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphore( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply )
         {
-            Allocator * allocator = _source->getAllocator();
-
-            addTask<TaskSemaphore>( _source, allocator, _semaphore, _flags, _test, _apply );
+            addTask<TaskSemaphore>( _source, _semaphore, _flags, _test, _apply );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphoreEqual( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test )
         {
-            Allocator * allocator = _source->getAllocator();
-
-            addTask<TaskSemaphore>( _source, allocator, _semaphore, FLAG_SEMAPHORE_TEST_EQUAL, _test, 0 );
+            addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_TEST_EQUAL, _test, 0 );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphoreNotEqual( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test )
         {
-            Allocator * allocator = _source->getAllocator();
-
-            addTask<TaskSemaphore>( _source, allocator, _semaphore, FLAG_SEMAPHORE_TEST_NOTEQUAL, _test, 0 );
+            addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_TEST_NOTEQUAL, _test, 0 );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphoreGreater( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test )
         {
-            Allocator * allocator = _source->getAllocator();
-
-            addTask<TaskSemaphore>( _source, allocator, _semaphore, FLAG_SEMAPHORE_TEST_GREATER, _test, 0 );
+            addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_TEST_GREATER, _test, 0 );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphoreLess( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test )
         {
-            Allocator * allocator = _source->getAllocator();
-
-            addTask<TaskSemaphore>( _source, allocator, _semaphore, FLAG_SEMAPHORE_TEST_LESS, _test, 0 );
+            addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_TEST_LESS, _test, 0 );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphoreGreaterEqual( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test )
         {
-            Allocator * allocator = _source->getAllocator();
-
-            addTask<TaskSemaphore>( _source, allocator, _semaphore, FLAG_SEMAPHORE_TEST_GREATEREQUAL, _test, 0 );
+            addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_TEST_GREATEREQUAL, _test, 0 );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphoreLessEqual( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test )
         {
-            Allocator * allocator = _source->getAllocator();
-
-            addTask<TaskSemaphore>( _source, allocator, _semaphore, FLAG_SEMAPHORE_TEST_LESSEQUAL, _test, 0 );
+            addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_TEST_LESSEQUAL, _test, 0 );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphoreAssign( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _apply )
         {
-            Allocator * allocator = _source->getAllocator();
-
-            addTask<TaskSemaphore>( _source, allocator, _semaphore, FLAG_SEMAPHORE_APPLY_ASSIGN, 0, _apply );
+            addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_APPLY_ASSIGN, 0, _apply );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphoreAdd( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _apply )
         {
-            Allocator * allocator = _source->getAllocator();
-
-            addTask<TaskSemaphore>( _source, allocator, _semaphore, FLAG_SEMAPHORE_APPLY_ADD, 0, _apply );
+            addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_APPLY_ADD, 0, _apply );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphoreSubtract( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _apply )
         {
-            Allocator * allocator = _source->getAllocator();
-
-            addTask<TaskSemaphore>( _source, allocator, _semaphore, FLAG_SEMAPHORE_APPLY_SUBTRACT, 0, _apply );
+            addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_APPLY_SUBTRACT, 0, _apply );
         }
         //////////////////////////////////////////////////////////////////////////
         void addWhileProvider( const SourceInterfacePtr & _source, const WhileProviderInterfacePtr & _provider )
@@ -180,9 +158,7 @@ namespace GOAP
         //////////////////////////////////////////////////////////////////////////
         void addGeneratorProvider( const SourceInterfacePtr & _source, float _time, uint32_t _iterator, const TimerInterfacePtr & _timer, const GeneratorProviderInterfacePtr & _provider )
         {
-            Allocator * allocator = _source->getAllocator();
-
-            addTask<TaskGenerator>( _source, allocator, _time, _iterator, _timer, _provider );
+            addTask<TaskGenerator>( _source, _time, _iterator, _timer, _provider );
         }
         //////////////////////////////////////////////////////////////////////////
         void addTriggerProvider( const SourceInterfacePtr & _source, const EventInterfacePtr & _event, const TriggerProviderInterfacePtr & _provider )
@@ -214,9 +190,7 @@ namespace GOAP
         //////////////////////////////////////////////////////////////////////////
         void addCallbackProvider( const SourceInterfacePtr & _source, const CallbackProviderInterfacePtr & _provider )
         {
-            Allocator * allocator = _source->getAllocator();
-
-            addTask<TaskCallback>( _source, allocator, _provider );
+            addTask<TaskCallback>( _source, _provider );
         }
         //////////////////////////////////////////////////////////////////////////
         void addScopeProvider( const SourceInterfacePtr & _source, const ScopeProviderInterfacePtr & _provider )

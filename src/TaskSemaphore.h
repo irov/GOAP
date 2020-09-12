@@ -19,7 +19,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskSemaphore( Allocator * _allocator, const SemaphoreInterfacePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply );
+        TaskSemaphore( const SemaphoreInterfacePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply );
         ~TaskSemaphore() override;
 
     public:
@@ -34,8 +34,6 @@ namespace GOAP
         void process();
 
     protected:
-        Allocator * m_allocator;
-
         SemaphoreInterfacePtr m_semaphore;
         uint32_t m_flags;
         int32_t m_test;

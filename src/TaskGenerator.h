@@ -22,7 +22,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskGenerator( Allocator * _allocator, float _time, uint32_t _iterator, const TimerInterfacePtr & _timer, const GeneratorProviderInterfacePtr & _provider );
+        TaskGenerator( float _time, uint32_t _iterator, const TimerInterfacePtr & _timer, const GeneratorProviderInterfacePtr & _provider );
         ~TaskGenerator() override;
 
     public:
@@ -35,8 +35,6 @@ namespace GOAP
         void onTime( NodeInterface * _node, float _time );
 
     protected:
-        Allocator * m_allocator;
-
         float m_time;
         uint32_t m_iterator;
 

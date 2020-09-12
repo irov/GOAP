@@ -43,9 +43,8 @@ protected:
     uint32_t m_max;
 };
 //////////////////////////////////////////////////////////////////////////
-TaskRoll::TaskRoll( GOAP::Allocator * _allocator, float _delay, uint32_t _roll, uint32_t _max, const SchedulerPtr & _scheduler )
-    : m_allocator( _allocator )
-    , m_delay( _delay )
+TaskRoll::TaskRoll( float _delay, uint32_t _roll, uint32_t _max, const SchedulerPtr & _scheduler )
+    : m_delay( _delay )
     , m_roll( _roll )
     , m_max( _max )
     , m_scheduler( _scheduler )
@@ -61,7 +60,9 @@ bool TaskRoll::_onRun( GOAP::NodeInterface * _node )
 {
     typedef GOAP::IntrusivePtr<MySchedulerObserver> MySchedulerObserverPtr;
 
-    MySchedulerObserver * observer = m_allocator->allocateT<MySchedulerObserver>( _node, m_roll, m_max );
+    GOAP::Allocator * allocator = this->getAllocator();
+
+    MySchedulerObserver * observer = allocator->allocateT<MySchedulerObserver>( _node, m_roll, m_max );
 
     m_id = m_scheduler->schedule( m_delay, true, MySchedulerObserverPtr::from( observer ) );
 

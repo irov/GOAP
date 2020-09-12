@@ -31,7 +31,7 @@ namespace GOAP
         template<class T, class ... Args>
         IntrusivePtr<T> makeTranscriptor( Allocator * _allocator, Args && ... _args )
         {
-            T * transcriptor = _allocator->allocateT<T>( _allocator, std::forward<Args>( _args ) ... );
+            T * transcriptor = _allocator->allocateT<T>( std::forward<Args>( _args ) ... );
 
             return IntrusivePtr<T>::from( transcriptor );
         }

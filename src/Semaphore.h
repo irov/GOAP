@@ -18,7 +18,7 @@ namespace GOAP
         : public SemaphoreInterface
     {
     public:
-        Semaphore( Allocator * _allocator, const EventInterfacePtr & _event, int32_t _value );
+        Semaphore( const EventInterfacePtr & _event, int32_t _value );
         ~Semaphore() override;
 
     public:
@@ -34,7 +34,6 @@ namespace GOAP
         void removeObserverProvider( const EventProviderInterfacePtr & _event ) override;
 
     protected:
-        Allocator * m_allocator;
         EventInterfacePtr m_event;
         int32_t m_value;
     };

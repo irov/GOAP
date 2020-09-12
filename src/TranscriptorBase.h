@@ -16,15 +16,13 @@ namespace GOAP
         : public TranscriptorInterface
     {
     public:
-        explicit TranscriptorBase( Allocator * _allocator, const NodeInterfacePtr & _task );
+        explicit TranscriptorBase( const NodeInterfacePtr & _task );
         ~TranscriptorBase() override;
 
     public:
         NodeInterfacePtr generate( const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task ) override;
 
     protected:
-        Allocator * m_allocator;
-
         NodeInterfacePtr m_task;
     };
     //////////////////////////////////////////////////////////////////////////

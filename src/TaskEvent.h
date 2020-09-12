@@ -18,7 +18,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskEvent( Allocator * _allocator, const EventInterfacePtr & _event );
+        explicit TaskEvent( const EventInterfacePtr & _event );
         ~TaskEvent() override;
 
     public:
@@ -27,8 +27,6 @@ namespace GOAP
         bool _onSkipable() const override;
 
     protected:
-        Allocator * m_allocator;
-
         EventInterfacePtr m_event;
         EventProviderInterfacePtr m_provider;
     };
