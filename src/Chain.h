@@ -36,7 +36,9 @@ namespace GOAP
         template<class F>
         void setCallback( F _f )
         {
-            ChainProviderInterfacePtr untilChainProvider = Helper::makeChainProvider( m_allocator, _f );
+            Allocator * allocator = this->getAllocator();
+
+            ChainProviderInterfacePtr untilChainProvider = Helper::makeChainProvider( allocator, _f );
 
             this->setCallbackProvider( untilChainProvider );
         }
