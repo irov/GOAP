@@ -25,7 +25,8 @@ namespace GOAP
     {
         GOAP_UNUSED( _node );
 
-        m_provider->onFunction();
+        FunctionProviderInterfacePtr provider = std::move( m_provider );
+        provider->onFunction();
 
         return true;
     }

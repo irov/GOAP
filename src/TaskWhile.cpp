@@ -26,21 +26,21 @@ namespace GOAP
     {
         SourceInterfacePtr source = _node->makeSource();
 
-        bool injecting = m_provider->onWhile( source );
+        WhileProviderInterfacePtr provider = std::move( m_provider );
+
+        bool injecting = provider->onWhile( source );
 
         if( injecting == true )
         {
-            Cook::addWhileProvider( source, m_provider );
+            Cook::addWhileProvider( source, provider );
 
-            const SourceProviderInterfacePtr & provider = source->getSourceProvider();
+            const SourceProviderInterfacePtr & source_provider = source->getSourceProvider();
 
-            if( _node->injectSource( provider ) == false )
+            if( _node->injectSource( source_provider ) == false )
             {
                 Helper::throw_exception( "TaskWhile invalid inject source" );
             }
         }
-
-        m_provider = nullptr;
 
         return true;
     }

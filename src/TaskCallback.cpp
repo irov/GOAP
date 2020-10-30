@@ -32,7 +32,8 @@ namespace GOAP
             _node->complete( true, _skip );
         } );
 
-        m_provider->onCallbackProvider( callback, skip );
+        CallbackProviderInterfacePtr provider = std::move( m_provider );
+        provider->onCallbackProvider( callback, skip );
 
         return false;
     }

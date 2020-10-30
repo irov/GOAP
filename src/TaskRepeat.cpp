@@ -30,8 +30,8 @@ namespace GOAP
 
         auto [source_while, source_until] = Cook::addRace<2>( source );
 
-        Cook::addWhileProvider( source_while, m_provider );
-        Cook::addSource( source_until, m_sourceUntil );
+        Cook::addWhileProvider( source_while, std::move( m_provider ) );
+        Cook::addSource( source_until, std::move( m_sourceUntil ) );
 
         const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 
@@ -39,9 +39,6 @@ namespace GOAP
         {
             Helper::throw_exception( "TaskRepeat invalid inject source" );
         }
-
-        m_provider = nullptr;
-        m_sourceUntil = nullptr;
 
         return true;
     }

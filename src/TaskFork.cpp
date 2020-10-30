@@ -32,7 +32,9 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     bool TaskFork::_onRun( NodeInterface * _node )
     {
-        const SourceProviderInterfacePtr & provider = m_source->getSourceProvider();
+        SourceInterfacePtr source = std::move( m_source );
+
+        const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 
         bool skip = _node->isSkip();
         provider->setSkip( skip );
@@ -41,8 +43,6 @@ namespace GOAP
         {
             Helper::throw_exception( "TaskFork invalid fork source" );
         }
-
-        m_source = nullptr;
 
         return true;
     }

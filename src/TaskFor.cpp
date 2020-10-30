@@ -40,14 +40,14 @@ namespace GOAP
     {
         SourceInterfacePtr source = _node->makeSource();
 
-        if( m_providerFor->onFor( source, m_iterator, m_count ) == false )
+        ForProviderInterfacePtr providerFor = std::move( m_providerFor );
+
+        if( providerFor->onFor( source, m_iterator, m_count ) == false )
         {
             return true;
         }
 
-        Cook::addForProvider( source, m_providerFor, m_iterator + 1, m_count );
-
-        m_providerFor = nullptr;
+        Cook::addForProvider( source, providerFor, m_iterator + 1, m_count );
 
         const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 

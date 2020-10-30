@@ -27,7 +27,8 @@ namespace GOAP
     {
         bool skip = _node->isSkip();
 
-        m_provider->onFunctionContext( skip );
+        FunctionContextProviderInterfacePtr provider = std::move( m_provider );
+        provider->onFunctionContext( skip );
 
         return true;
     }
