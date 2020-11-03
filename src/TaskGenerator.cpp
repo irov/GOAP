@@ -54,6 +54,7 @@ namespace GOAP
 
         m_timer->removeTimerProvider( m_timerProvider );
         m_timerProvider = nullptr;
+
         m_timer = nullptr;
     }
     //////////////////////////////////////////////////////////////////////////
@@ -61,7 +62,9 @@ namespace GOAP
     {
         m_time += _time;
 
-        float delay = m_provider->onDelay( m_iterator );
+        GeneratorProviderInterfacePtr provider = m_provider;
+
+        float delay = provider->onDelay( m_iterator );
 
         if( delay < 0.f )
         {
@@ -83,15 +86,15 @@ namespace GOAP
 
         auto && [source_generator, source_fork] = Cook::addParallel<2>( source );
 
-        Cook::addGeneratorProvider( source_generator, m_time, new_iterator, m_timer, m_provider );
+        Cook::addGeneratorProvider( source_generator, m_time, new_iterator, m_timer, provider );
 
         SourceInterfacePtr source_event = Cook::addFork( source_fork );
 
-        m_provider->onEvent( source_event, m_iterator, delay );
+        provider->onEvent( source_event, m_iterator, delay );
 
-        const SourceProviderInterfacePtr & provider = source->getSourceProvider();
+        const SourceProviderInterfacePtr & sourceProvider = source->getSourceProvider();
 
-        _node->injectSource( provider );
+        _node->injectSource( sourceProvider );
 
         _node->complete();
     }
