@@ -32,6 +32,7 @@ namespace GOAP
     public:
         void addObserverProvider( const EventProviderInterfacePtr & _event ) override;
         void removeObserverProvider( const EventProviderInterfacePtr & _event ) override;
+        void clearObserverProviders() override;
 
     protected:
         EventInterfacePtr m_event;

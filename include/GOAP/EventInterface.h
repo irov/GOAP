@@ -20,6 +20,7 @@ namespace GOAP
     public:
         virtual void addProvider( const EventProviderInterfacePtr & _eventProvider ) = 0;
         virtual bool removeProvider( const EventProviderInterfacePtr & _eventProvider ) = 0;
+        virtual void clearProviders() = 0;
 
     public:
         virtual void call() = 0;

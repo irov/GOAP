@@ -28,6 +28,7 @@ namespace GOAP
     public:
         virtual void addObserverProvider( const EventProviderInterfacePtr & _event ) = 0;
         virtual void removeObserverProvider( const EventProviderInterfacePtr & _event ) = 0;
+        virtual void clearObserverProviders() = 0;
 
     public:
         template<class F>

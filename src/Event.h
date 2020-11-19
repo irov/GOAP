@@ -27,6 +27,7 @@ namespace GOAP
     public:
         void addProvider( const EventProviderInterfacePtr & _eventProvider ) override;
         bool removeProvider( const EventProviderInterfacePtr & _eventProvider ) override;
+        void clearProviders() override;
 
     public:
         void call() override;

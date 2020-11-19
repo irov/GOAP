@@ -77,6 +77,23 @@ namespace GOAP
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
+    void Event::clearProviders()
+    {
+        m_providersAdd.clear();
+
+        if( m_process != 0 )
+        {
+            for( ProviderDesc & desc : m_providers )
+            {
+                desc.dead = true;
+            }
+
+            return;
+        }
+
+        m_providers.clear();
+    }
+    //////////////////////////////////////////////////////////////////////////
     void Event::call()
     {
         this->incref();
