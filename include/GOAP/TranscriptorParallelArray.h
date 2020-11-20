@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "GOAP/KernelInterface.h"
 #include "GOAP/ArraySources.h"
 #include "GOAP/ViewSources.h"
 #include "GOAP/TranscriptorInterface.h"
