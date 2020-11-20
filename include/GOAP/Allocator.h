@@ -14,7 +14,7 @@
 #include <new>
 
 namespace GOAP
-{ 
+{
     class Allocator
     {
     public:

@@ -12,7 +12,7 @@
 #include "GOAP/Allocator.h"
 
 namespace GOAP
-{    
+{
     class Timer
         : public TimerInterface
     {

@@ -37,7 +37,7 @@ namespace GOAP
         const SourceInterfacePtr & source = m_sources[id];
 
         const SourceProviderInterfacePtr & provider = source->getSourceProvider();
-        
+
         bool skip = _node->isSkip();
         provider->setSkip( skip );
 

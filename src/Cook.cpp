@@ -44,12 +44,12 @@ namespace GOAP
         //////////////////////////////////////////////////////////////////////////
         void addBlock( const SourceInterfacePtr & _source )
         {
-            addTask<TaskBlock>( _source );
+            Cook::addTask<TaskBlock>( _source );
         }
         //////////////////////////////////////////////////////////////////////////
         void addNoSkip( const SourceInterfacePtr & _source )
         {
-            addTask<TaskNoSkip>( _source );
+            Cook::addTask<TaskNoSkip>( _source );
         }
         //////////////////////////////////////////////////////////////////////////
         ViewSources<SourceInterface> addParallel( const SourceInterfacePtr & _source, uint32_t _count )
@@ -70,7 +70,7 @@ namespace GOAP
         {
             SourceInterfacePtr source = _source->makeSource();
 
-            addTaskFork( _source, source );
+            Cook::addTaskFork( _source, source );
 
             return source;
         }
@@ -81,89 +81,89 @@ namespace GOAP
 
             IfProviderInterfacePtr provider = Helper::makeIfProviderMember( allocator, _member );
 
-            ArraySources<2> sources = addIfProvider( _source, provider );
+            ArraySources<2> sources = Cook::addIfProvider( _source, provider );
 
             return Helper::ArraySourcesCast<SourceInterface>( sources );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSource( const SourceInterfacePtr & _source, const SourceInterfacePtr & _other )
         {
-            addTask<TaskSource>( _source, _other );
+            Cook::addTask<TaskSource>( _source, _other );
         }
         //////////////////////////////////////////////////////////////////////////
         void addEvent( const SourceInterfacePtr & _source, const EventInterfacePtr & _event )
         {
-            addTask<TaskEvent>( _source, _event );
+            Cook::addTask<TaskEvent>( _source, _event );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphore( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply )
         {
-            addTask<TaskSemaphore>( _source, _semaphore, _flags, _test, _apply );
+            Cook::addTask<TaskSemaphore>( _source, _semaphore, _flags, _test, _apply );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphoreEqual( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test )
         {
-            addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_TEST_EQUAL, _test, 0 );
+            Cook::addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_TEST_EQUAL, _test, 0 );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphoreNotEqual( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test )
         {
-            addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_TEST_NOTEQUAL, _test, 0 );
+            Cook::addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_TEST_NOTEQUAL, _test, 0 );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphoreGreater( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test )
         {
-            addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_TEST_GREATER, _test, 0 );
+            Cook::addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_TEST_GREATER, _test, 0 );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphoreLess( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test )
         {
-            addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_TEST_LESS, _test, 0 );
+            Cook::addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_TEST_LESS, _test, 0 );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphoreGreaterEqual( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test )
         {
-            addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_TEST_GREATEREQUAL, _test, 0 );
+            Cook::addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_TEST_GREATEREQUAL, _test, 0 );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphoreLessEqual( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _test )
         {
-            addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_TEST_LESSEQUAL, _test, 0 );
+            Cook::addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_TEST_LESSEQUAL, _test, 0 );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphoreAssign( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _apply )
         {
-            addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_APPLY_ASSIGN, 0, _apply );
+            Cook::addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_APPLY_ASSIGN, 0, _apply );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphoreAdd( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _apply )
         {
-            addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_APPLY_ADD, 0, _apply );
+            Cook::addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_APPLY_ADD, 0, _apply );
         }
         //////////////////////////////////////////////////////////////////////////
         void addSemaphoreSubtract( const SourceInterfacePtr & _source, const SemaphoreInterfacePtr & _semaphore, int32_t _apply )
         {
-            addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_APPLY_SUBTRACT, 0, _apply );
+            Cook::addTask<TaskSemaphore>( _source, _semaphore, FLAG_SEMAPHORE_APPLY_SUBTRACT, 0, _apply );
         }
         //////////////////////////////////////////////////////////////////////////
         void addWhileProvider( const SourceInterfacePtr & _source, const WhileProviderInterfacePtr & _provider )
         {
-            addTask<TaskWhile>( _source, _provider );
+            Cook::addTask<TaskWhile>( _source, _provider );
         }
         //////////////////////////////////////////////////////////////////////////
         void addForProvider( const SourceInterfacePtr & _source, const ForProviderInterfacePtr & _provider, uint32_t _iterator, uint32_t _count )
         {
-            addTask<TaskFor>( _source, _provider, _iterator, _count );
+            Cook::addTask<TaskFor>( _source, _provider, _iterator, _count );
         }
         //////////////////////////////////////////////////////////////////////////
         void addGeneratorProvider( const SourceInterfacePtr & _source, float _time, uint32_t _iterator, const TimerInterfacePtr & _timer, const GeneratorProviderInterfacePtr & _provider )
         {
-            addTask<TaskGenerator>( _source, _time, _iterator, _timer, _provider );
+            Cook::addTask<TaskGenerator>( _source, _time, _iterator, _timer, _provider );
         }
         //////////////////////////////////////////////////////////////////////////
         void addTriggerProvider( const SourceInterfacePtr & _source, const EventInterfacePtr & _event, const TriggerProviderInterfacePtr & _provider )
         {
-            addTask<TaskTrigger>( _source, _event, _provider );
+            Cook::addTask<TaskTrigger>( _source, _event, _provider );
         }
         //////////////////////////////////////////////////////////////////////////
         ArraySources<2> addIfProvider( const SourceInterfacePtr & _source, const IfProviderInterfacePtr & _provider )
@@ -173,49 +173,49 @@ namespace GOAP
             sources[0] = _source->makeSource();
             sources[1] = _source->makeSource();
 
-            addTaskIf( _source, _provider, sources[0], sources[1] );
+            Cook::addTaskIf( _source, _provider, sources[0], sources[1] );
 
             return sources;
         }
         //////////////////////////////////////////////////////////////////////////
         void addFunctionProvider( const SourceInterfacePtr & _source, const FunctionProviderInterfacePtr & _provider )
         {
-            addTask<TaskFunction>( _source, _provider );
+            Cook::addTask<TaskFunction>( _source, _provider );
         }
         //////////////////////////////////////////////////////////////////////////
         void addFunctionContextProvider( const SourceInterfacePtr & _source, const FunctionContextProviderInterfacePtr & _provider )
         {
-            addTask<TaskFunctionContext>( _source, _provider );
+            Cook::addTask<TaskFunctionContext>( _source, _provider );
         }
         //////////////////////////////////////////////////////////////////////////
         void addCallbackProvider( const SourceInterfacePtr & _source, const CallbackProviderInterfacePtr & _provider )
         {
-            addTask<TaskCallback>( _source, _provider );
+            Cook::addTask<TaskCallback>( _source, _provider );
         }
         //////////////////////////////////////////////////////////////////////////
         void addScopeProvider( const SourceInterfacePtr & _source, const ScopeProviderInterfacePtr & _provider )
         {
-            addTask<TaskScope>( _source, _provider );
+            Cook::addTask<TaskScope>( _source, _provider );
         }
         //////////////////////////////////////////////////////////////////////////
         void addTaskFork( const SourceInterfacePtr & _source, const SourceInterfacePtr & _other )
         {
-            addTask<TaskFork>( _source, _other );
+            Cook::addTask<TaskFork>( _source, _other );
         }
         //////////////////////////////////////////////////////////////////////////
         void addTaskGuard( const SourceInterfacePtr & _source, const GuardProviderInterfacePtr & _begin, const GuardProviderInterfacePtr & _end )
         {
-            addTask<TaskGuard>( _source, _begin, _end );
+            Cook::addTask<TaskGuard>( _source, _begin, _end );
         }
         //////////////////////////////////////////////////////////////////////////
         void addTaskIf( const SourceInterfacePtr & _source, const IfProviderInterfacePtr & _provider, const SourceInterfacePtr & _sourceTrue, const SourceInterfacePtr & _sourceFalse )
         {
-            addTask<TaskIf>( _source, _provider, _sourceTrue, _sourceFalse );
+            Cook::addTask<TaskIf>( _source, _provider, _sourceTrue, _sourceFalse );
         }
         //////////////////////////////////////////////////////////////////////////
         void addTaskRepeat( const SourceInterfacePtr & _source, const WhileProviderInterfacePtr & _provider, const SourceInterfacePtr & _sourceUntil )
         {
-            addTask<TaskRepeat>( _source, _provider, _sourceUntil );
+            Cook::addTask<TaskRepeat>( _source, _provider, _sourceUntil );
         }
         //////////////////////////////////////////////////////////////////////////
         namespace Detail
@@ -272,7 +272,7 @@ namespace GOAP
             VectorSources sources;
             Detail::makeSources( _source, sources, _count );
 
-            TaskSwitchPtr task = emplaceTask<TaskSwitch>( _source, _provider, std::move( sources ) );
+            TaskSwitchPtr task = Cook::emplaceTask<TaskSwitch>( _source, _provider, std::move( sources ) );
 
             const VectorSources & sources_switch = task->getSources();
 

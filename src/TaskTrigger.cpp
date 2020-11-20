@@ -41,7 +41,7 @@ namespace GOAP
 
             Cook::addTriggerProvider( source, m_event, m_provider );
         }
-        
+
         const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 
         bool skip = _node->isSkip();

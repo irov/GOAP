@@ -7,6 +7,7 @@
 
 #include "TranscriptorRace.h"
 
+#include "GOAP/KernelInterface.h"
 #include "GOAP/NodeInterface.h"
 #include "GOAP/ChainInterface.h"
 #include "GOAP/SourceInterface.h"
@@ -37,13 +38,13 @@ namespace GOAP
             return _task;
         }
 
-        const SourceInterfacePtr & source = _chain->getSource();
+        KernelInterface * kernel = _chain->getKernel();
 
         Allocator * allocator = this->getAllocator();
 
         TaskInterfacePtr provider_parallel_neck = Helper::makeTask<TaskRaceNeck>( allocator );
 
-        NodeInterfacePtr task_parallel_neck = source->makeNode( provider_parallel_neck );
+        NodeInterfacePtr task_parallel_neck = kernel->makeNode( provider_parallel_neck );
         task_parallel_neck->setChain( _chain );
 
         for( const SourceInterfacePtr & race_source : m_sources )

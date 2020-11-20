@@ -16,7 +16,7 @@
 #include "Timer.h"
 
 namespace GOAP
-{ 
+{
     //////////////////////////////////////////////////////////////////////////
     Kernel::Kernel()
     {
@@ -39,7 +39,7 @@ namespace GOAP
     {
         Allocator * allocator = this->getAllocator();
 
-        Chain * chain = allocator->allocateT<Chain>( _source, _file, _line );
+        Chain * chain = allocator->allocateT<Chain>( this, _source, _file, _line );
 
         return ChainInterfacePtr::from( chain );
     }
@@ -77,7 +77,7 @@ namespace GOAP
 
         Allocator * allocator = this->getAllocator();
 
-        Source * source = allocator->allocateT<Source>( KernelInterfacePtr::from( this ), provider );
+        Source * source = allocator->allocateT<Source>( this, provider );
 
         return SourceInterfacePtr::from( source );
     }

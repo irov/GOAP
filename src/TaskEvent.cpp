@@ -53,5 +53,6 @@ namespace GOAP
     bool TaskEvent::_onSkipable() const
     {
         return false;
-    }    
+    }
+    //////////////////////////////////////////////////////////////////////////
 }

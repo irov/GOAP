@@ -9,6 +9,7 @@
 
 #include "GOAP/ArraySources.h"
 #include "GOAP/ViewSources.h"
+#include "GOAP/KernelInterface.h"
 #include "GOAP/TaskInterface.h"
 #include "GOAP/TranscriptorInterface.h"
 #include "GOAP/NodeInterface.h"
@@ -52,13 +53,13 @@ namespace GOAP
                 return _task;
             }
 
-            const SourceInterfacePtr & source = _chain->getSource();
+            KernelInterface * kernel = _chain->getKernel();
 
             Allocator * allocator = this->getAllocator();
 
             TaskInterfacePtr provider_parallel_neck = Detail::makeTaskRaceNeck( allocator );
 
-            NodeInterfacePtr task_parallel_neck = source->makeNode( provider_parallel_neck );
+            NodeInterfacePtr task_parallel_neck = kernel->makeNode( provider_parallel_neck );
 
             task_parallel_neck->setChain( _chain );
 

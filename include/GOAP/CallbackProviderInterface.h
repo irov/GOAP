@@ -10,7 +10,7 @@
 #include "GOAP/CallbackObserverInterface.h"
 
 namespace GOAP
-{ 
+{
     //////////////////////////////////////////////////////////////////////////
     class CallbackProviderInterface
         : public Factorable

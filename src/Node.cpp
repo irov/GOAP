@@ -9,8 +9,7 @@
 
 #include "GOAP/SourceInterface.h"
 #include "GOAP/ChainInterface.h"
-
-#include "TaskDummy.h"
+#include "GOAP/KernelInterface.h"
 
 #include <algorithm>
 
@@ -40,9 +39,9 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     SourceInterfacePtr Node::makeSource()
     {
-        const SourceInterfacePtr & chain_source = m_chain->getSource();
+        KernelInterface * kernel = m_chain->getKernel();
 
-        SourceInterfacePtr source = chain_source->makeSource();
+        SourceInterfacePtr source = kernel->makeSource();
 
         const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 

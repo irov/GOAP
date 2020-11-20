@@ -13,7 +13,7 @@
 #include "GOAP/Allocator.h"
 
 namespace GOAP
-{ 
+{
     //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class NodeInterface> NodeInterfacePtr;
     typedef IntrusivePtr<class TaskInterface> TaskInterfacePtr;

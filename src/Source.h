@@ -7,24 +7,65 @@
 
 #pragma once
 
+#include "GOAP/KernelInterface.h"
 #include "GOAP/SourceInterface.h"
+#include "GOAP/SourceProviderInterface.h"
+#include "GOAP/NodeInterface.h"
 
-#include "SourceBase.h"
+#include "GOAP/FunctionProviderInterface.h"
+#include "GOAP/FunctionContextProviderInterface.h"
+#include "GOAP/CallbackProviderInterface.h"
+#include "GOAP/ScopeProviderInterface.h"
+#include "GOAP/IfProviderInterface.h"
+#include "GOAP/TriggerProviderInterface.h"
+#include "GOAP/SwitchProviderInterface.h"
+#include "GOAP/GuardProviderInterface.h"
+#include "GOAP/ForProviderInterface.h"
+#include "GOAP/GeneratorProviderInterface.h"
+#include "GOAP/SemaphoreFlags.h"
+#include "GOAP/WhileProviderInterface.h"
+#include "GOAP/TranscriptorParallelArray.h"
+#include "GOAP/TranscriptorRaceArray.h"
+
+#include "GOAP/Vector.h"
+#include "GOAP/Zip.h"
+
+#include "Timer.h"
 
 namespace GOAP
 {
-    //////////////////////////////////////////////////////////////////////////
     class Source
-        : public SourceBase
-    {   
+        : public SourceInterface
+    {
     public:
-        Source( const KernelInterfacePtr & _kernel, const SourceProviderInterfacePtr & _provider );
+        Source( KernelInterface * _kernel, const SourceProviderInterfacePtr & _provider );
         ~Source() override;
 
+    public:
+        const SourceProviderInterfacePtr & getSourceProvider() const override;
+
+    public:
+        SourceInterfacePtr makeSource() override;
+
     protected:
-        SourceInterfacePtr _makeSource() override;
+        KernelInterface * getKernel() const override;
+
+    protected:
+        Allocator * getAllocator() const override;
+
+    public:
+        void addNode( const NodeInterfacePtr & _task ) override;
+
+    public:
+        const VectorSources & addParallelTranscriptor( uint32_t _count ) override;
+        const VectorSources & addRaceTranscriptor( uint32_t _count ) override;
+
+    protected:
+        void makeSources_( VectorSources & _sources, uint32_t _count );
+
+    protected:
+        KernelInterface * m_kernel;
+
+        SourceProviderInterfacePtr m_provider;
     };
-    //////////////////////////////////////////////////////////////////////////
-    typedef IntrusivePtr<Source> SourcePtr;
-    //////////////////////////////////////////////////////////////////////////
 }

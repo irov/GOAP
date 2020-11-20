@@ -46,13 +46,13 @@ namespace GOAP
     public:
         NodeInterfacePtr generate( const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task ) override
         {
-            const SourceInterfacePtr & source = _chain->getSource();
+            KernelInterface * kernel = _chain->getKernel();
 
             Allocator * allocator = this->getAllocator();
 
             TaskInterfacePtr provider_parallel_neck = Detail::makeTaskParallelNeck( allocator );
 
-            NodeInterfacePtr task_parallel_neck = source->makeNode( provider_parallel_neck );
+            NodeInterfacePtr task_parallel_neck = kernel->makeNode( provider_parallel_neck );
 
             task_parallel_neck->setChain( _chain );
 

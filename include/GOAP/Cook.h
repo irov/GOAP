@@ -79,7 +79,9 @@ namespace GOAP
 
             TaskInterfacePtr provider = Helper::makeTask<T>( allocator, std::forward<Args>( _args ) ... );
 
-            NodeInterfacePtr node = _source->makeNode( provider );
+            KernelInterface * kernel = _source->getKernel();
+
+            NodeInterfacePtr node = kernel->makeNode( provider );
 
             _source->addNode( node );
         }
@@ -91,7 +93,9 @@ namespace GOAP
 
             IntrusivePtr<T> provider = Helper::makeTask<T>( allocator, std::forward<Args>( _args ) ... );
 
-            NodeInterfacePtr node = _source->makeNode( provider );
+            KernelInterface * kernel = _source->getKernel();
+
+            NodeInterfacePtr node = kernel->makeNode( provider );
 
             _source->addNode( node );
 
@@ -267,7 +271,9 @@ namespace GOAP
 
             TaskInterfacePtr provider = Helper::makeTask<T>( allocator, std::forward<Args>( _args ) ... );
 
-            NodeInterfacePtr node = _source->makeNode( provider );
+            KernelInterface * kernel = _source->getKernel();
+
+            NodeInterfacePtr node = kernel->makeNode( provider );
 
             _source->addNode( node );
 

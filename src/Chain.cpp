@@ -8,6 +8,7 @@
 #include "Chain.h"
 
 #include "GOAP/ChainProviderInterface.h"
+#include "GOAP/KernelInterface.h"
 #include "GOAP/NodeInterface.h"
 #include "GOAP/SourceProviderInterface.h"
 #include "GOAP/SourceInterface.h"
@@ -21,8 +22,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    Chain::Chain( const SourceInterfacePtr & _source, const char * _file, uint32_t _line )
-        : m_source( _source )
+    Chain::Chain( KernelInterface * _kernel, const SourceInterfacePtr & _source, const char * _file, uint32_t _line )
+        : m_kernel( _kernel )
+        , m_source( _source )
         , m_file( _file )
         , m_line( _line )
         , m_state( TASK_CHAIN_STATE_IDLE )
@@ -33,6 +35,11 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     Chain::~Chain()
     {
+    }
+    //////////////////////////////////////////////////////////////////////////
+    KernelInterface * Chain::getKernel() const
+    {
+        return m_kernel;
     }
     //////////////////////////////////////////////////////////////////////////
     void Chain::setCallbackProvider( const ChainProviderInterfacePtr & _cb )
@@ -72,13 +79,13 @@ namespace GOAP
 
         TaskInterfacePtr provider_context = Helper::makeTask<TaskFunctionContext>( allocator, context );
 
-        NodeInterfacePtr node_complete = m_source->makeNode( provider_context );
+        NodeInterfacePtr node_complete = m_kernel->makeNode( provider_context );
 
         m_source->addNode( node_complete );
 
         TaskInterfacePtr provider_dummy = Helper::makeTask<TaskDummy>( allocator );
 
-        NodeInterfacePtr task_first = m_source->makeNode( provider_dummy );
+        NodeInterfacePtr task_first = m_kernel->makeNode( provider_dummy );
 
         task_first->setChain( ChainInterfacePtr::from( this ) );
 
@@ -89,6 +96,8 @@ namespace GOAP
         bool skip = source_provider->isSkip();
 
         this->processNode( task_first, skip );
+
+        m_source = nullptr;
 
         this->decref();
 

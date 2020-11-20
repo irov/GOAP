@@ -14,12 +14,17 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
+    class KernelInterface;
+    //////////////////////////////////////////////////////////////////////////
     typedef IntrusivePtr<class NodeInterface> NodeInterfacePtr;
     typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     //////////////////////////////////////////////////////////////////////////
     class ChainInterface
         : public Factorable
     {
+    public:
+        virtual KernelInterface * getKernel() const = 0;
+
     public:
         virtual void setCallbackProvider( const ChainProviderInterfacePtr & _cb ) = 0;
         virtual const ChainProviderInterfacePtr & getCallbackProvider() const = 0;

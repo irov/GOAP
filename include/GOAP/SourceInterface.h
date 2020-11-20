@@ -19,6 +19,8 @@
 
 namespace GOAP
 {
+    //////////////////////////////////////////////////////////////////////////
+    class KernelInterface;
     //////////////////////////////////////////////////////////////////////////    
     typedef IntrusivePtr<class SourceInterface> SourceInterfacePtr;
     typedef IntrusivePtr<class NodeInterface> NodeInterfacePtr;
@@ -28,17 +30,19 @@ namespace GOAP
         : public Factorable
     {
     public:
+        virtual KernelInterface * getKernel() const = 0;
+
+    public:
+        virtual Allocator * getAllocator() const = 0;
+
+    public:
         virtual const SourceProviderInterfacePtr & getSourceProvider() const = 0;
 
     public:
         virtual SourceInterfacePtr makeSource() = 0;
 
     public:
-        virtual NodeInterfacePtr makeNode( const TaskInterfacePtr & _provider ) = 0;
         virtual void addNode( const NodeInterfacePtr & _task ) = 0;
-
-    public:
-        virtual Allocator * getAllocator() const = 0;
 
     public:
         virtual const VectorSources & addRaceTranscriptor( uint32_t _count ) = 0;
