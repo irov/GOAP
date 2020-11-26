@@ -16,7 +16,7 @@ namespace GOAP
         : public TranscriptorInterface
     {
     public:
-        explicit TranscriptorBase( const NodeInterfacePtr & _task );
+        TranscriptorBase( Allocator * _allocator, const NodeInterfacePtr & _task );
         ~TranscriptorBase() override;
 
     public:

@@ -14,8 +14,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskGenerator::TaskGenerator( float _time, uint32_t _iterator, const TimerInterfacePtr & _timer, const GeneratorProviderInterfacePtr & _provider )
-        : m_time( _time )
+    TaskGenerator::TaskGenerator( Allocator * _allocator, float _time, uint32_t _iterator, const TimerInterfacePtr & _timer, const GeneratorProviderInterfacePtr & _provider )
+        : TaskInterface( _allocator )
+        , m_time( _time )
         , m_iterator( _iterator )
         , m_timer( _timer )
         , m_provider( _provider )

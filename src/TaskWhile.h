@@ -20,7 +20,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        explicit TaskWhile( const WhileProviderInterfacePtr & _providerWhile );
+        TaskWhile( Allocator * _allocator, const WhileProviderInterfacePtr & _providerWhile );
         ~TaskWhile() override;
 
     public:

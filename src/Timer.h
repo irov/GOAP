@@ -17,7 +17,7 @@ namespace GOAP
         : public TimerInterface
     {
     public:
-        Timer();
+        Timer( Allocator * _allocator );
         ~Timer() override;
 
     public:

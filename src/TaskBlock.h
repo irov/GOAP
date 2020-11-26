@@ -17,7 +17,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskBlock();
+        TaskBlock( Allocator * _allocator );
         ~TaskBlock() override;
 
     protected:

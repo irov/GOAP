@@ -18,6 +18,12 @@ namespace GOAP
         : public Factorable
     {
     public:
+        IfProviderInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
+    public:
         virtual bool onIf() const = 0;
     };
     //////////////////////////////////////////////////////////////////////////
@@ -28,8 +34,9 @@ namespace GOAP
         : public IfProviderInterface
     {
     public:
-        explicit IfProviderT( F _f )
-            : m_f( _f )
+        IfProviderT( Allocator * _allocator, F _f )
+            : IfProviderInterface( _allocator )
+            , m_f( _f )
         {
         }
 

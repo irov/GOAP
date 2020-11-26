@@ -7,18 +7,20 @@
 
 #include "TranscriptorParallel.h"
 
-#include "GOAP/KernelInterface.h"
 #include "GOAP/SourceInterface.h"
 #include "GOAP/ChainInterface.h"
 #include "GOAP/NodeInterface.h"
+
+#include "GOAP/AllocatorHelper.h"
 
 #include "TaskParallelNeck.h"
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TranscriptorParallel::TranscriptorParallel( VectorSources && _sources )
-        : m_sources( std::forward<VectorSources>( _sources ) )
+    TranscriptorParallel::TranscriptorParallel( Allocator * _allocator, VectorSources && _sources )
+        : TranscriptorInterface( _allocator )
+        , m_sources( std::forward<VectorSources>( _sources ) )
     {
     }
     //////////////////////////////////////////////////////////////////////////
@@ -38,13 +40,11 @@ namespace GOAP
             return _task;
         }
 
-        KernelInterface * kernel = _chain->getKernel();
-
         Allocator * allocator = this->getAllocator();
 
         TaskInterfacePtr provider_parallel_neck = Helper::makeTask<TaskParallelNeck>( allocator );
 
-        NodeInterfacePtr task_parallel_neck = kernel->makeNode( provider_parallel_neck );
+        NodeInterfacePtr task_parallel_neck = Helper::makeNode( allocator, provider_parallel_neck );
 
         task_parallel_neck->setChain( _chain );
 

@@ -19,6 +19,12 @@ namespace GOAP
         : public Factorable
     {
     public:
+        EventInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
+    public:
         virtual void addProvider( const EventProviderInterfacePtr & _eventProvider ) = 0;
         virtual bool removeProvider( const EventProviderInterfacePtr & _eventProvider ) = 0;
         virtual void clearProviders() = 0;

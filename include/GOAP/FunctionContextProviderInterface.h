@@ -17,6 +17,12 @@ namespace GOAP
         : public Factorable
     {
     public:
+        FunctionContextProviderInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
+    public:
         virtual void onFunctionContext( bool _isSkip ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
@@ -27,8 +33,9 @@ namespace GOAP
         : public FunctionContextProviderInterface
     {
     public:
-        explicit FunctionContextProviderT( F _f )
-            : m_f( _f )
+        FunctionContextProviderT( Allocator * _allocator, F _f )
+            : FunctionContextProviderInterface( _allocator )
+            , m_f( _f )
         {
         }
 

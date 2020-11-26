@@ -17,6 +17,12 @@ namespace GOAP
     class FunctionProviderInterface
         : public Factorable
     {
+    protected:
+        FunctionProviderInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
     public:
         virtual void onFunction() = 0;
     };
@@ -28,8 +34,9 @@ namespace GOAP
         : public FunctionProviderInterface
     {
     public:
-        explicit FunctionProviderT( F _f )
-            : m_f( _f )
+        FunctionProviderT( Allocator * _allocator, F _f )
+            : FunctionProviderInterface( _allocator )
+            , m_f( _f )
         {
         }
 

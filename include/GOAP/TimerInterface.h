@@ -17,6 +17,12 @@ namespace GOAP
     class TimerInterface
         : public Factorable
     {
+    protected:
+        TimerInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
     public:
         virtual void addTimerProvider( const TimerProviderInterfacePtr & _provider ) = 0;
         virtual void removeTimerProvider( const TimerProviderInterfacePtr & _provider ) = 0;

@@ -18,6 +18,12 @@ namespace GOAP
     class WhileProviderInterface
         : public Factorable
     {
+    protected:
+        WhileProviderInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
     public:
         virtual bool onWhile( const SourceInterfacePtr & _source ) = 0;
     };
@@ -29,8 +35,9 @@ namespace GOAP
         : public WhileProviderInterface
     {
     public:
-        explicit WhileProviderT( F _f )
-            : m_f( _f )
+        WhileProviderT( Allocator * _allocator, F _f )
+            : WhileProviderInterface( _allocator )
+            , m_f( _f )
         {
         }
 

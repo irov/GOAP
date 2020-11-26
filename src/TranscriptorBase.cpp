@@ -12,8 +12,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TranscriptorBase::TranscriptorBase( const NodeInterfacePtr & _task )
-        : m_task( _task )
+    TranscriptorBase::TranscriptorBase( Allocator * _allocator, const NodeInterfacePtr & _task )
+        : TranscriptorInterface( _allocator )
+        , m_task( _task )
     {
     }
     //////////////////////////////////////////////////////////////////////////

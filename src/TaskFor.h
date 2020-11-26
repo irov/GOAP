@@ -20,7 +20,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskFor( const ForProviderInterfacePtr & _providerFor, uint32_t _iterator, uint32_t _count );
+        TaskFor( Allocator * _allocator, const ForProviderInterfacePtr & _providerFor, uint32_t _iterator, uint32_t _count );
         ~TaskFor() override;
 
     public:

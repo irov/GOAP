@@ -12,8 +12,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskSemaphore::TaskSemaphore( const SemaphoreInterfacePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply )
-        : m_semaphore( _semaphore )
+    TaskSemaphore::TaskSemaphore( Allocator * _allocator, const SemaphoreInterfacePtr & _semaphore, uint32_t _flags, int32_t _test, int32_t _apply )
+        : TaskInterface( _allocator )
+        , m_semaphore( _semaphore )
         , m_flags( _flags )
         , m_test( _test )
         , m_apply( _apply )

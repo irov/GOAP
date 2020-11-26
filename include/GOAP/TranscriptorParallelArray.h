@@ -7,13 +7,14 @@
 
 #pragma once
 
-#include "GOAP/KernelInterface.h"
 #include "GOAP/ArraySources.h"
 #include "GOAP/ViewSources.h"
 #include "GOAP/TranscriptorInterface.h"
 #include "GOAP/NodeInterface.h"
 #include "GOAP/ChainInterface.h"
 #include "GOAP/SourceInterface.h"
+
+#include "GOAP/AllocatorHelper.h"
 
 namespace GOAP
 {
@@ -29,8 +30,9 @@ namespace GOAP
         : public TranscriptorInterface
     {
     public:
-        TranscriptorParallelArray( ArraySources<Count> && _sources )
-            : m_sources( std::forward<ArraySources<Count>>( _sources ) )
+        TranscriptorParallelArray( Allocator * _allocator, ArraySources<Count> && _sources )
+            : TranscriptorInterface( _allocator )
+            , m_sources( std::forward<ArraySources<Count>>( _sources ) )
         {
         }
 
@@ -47,13 +49,11 @@ namespace GOAP
     public:
         NodeInterfacePtr generate( const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task ) override
         {
-            KernelInterface * kernel = _chain->getKernel();
-
             Allocator * allocator = this->getAllocator();
 
             TaskInterfacePtr provider_parallel_neck = Detail::makeTaskParallelNeck( allocator );
 
-            NodeInterfacePtr task_parallel_neck = kernel->makeNode( provider_parallel_neck );
+            NodeInterfacePtr task_parallel_neck = Helper::makeNode( allocator, provider_parallel_neck );
 
             task_parallel_neck->setChain( _chain );
 

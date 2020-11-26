@@ -18,6 +18,12 @@ namespace GOAP
     class ForProviderInterface
         : public Factorable
     {
+    protected:
+        ForProviderInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
     public:
         virtual bool onFor( const SourceInterfacePtr & _source, uint32_t _iterator, uint32_t _count ) = 0;
     };
@@ -29,8 +35,9 @@ namespace GOAP
         : public ForProviderInterface
     {
     public:
-        explicit ForProviderT( F _f )
-            : m_f( _f )
+        ForProviderT( Allocator * _allocator, F _f )
+            : ForProviderInterface( _allocator )
+            , m_f( _f )
         {
         }
 

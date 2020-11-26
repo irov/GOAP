@@ -20,6 +20,12 @@ namespace GOAP
     {
         GOAP_DECLARE_VISITABLE_BASE();
 
+    public:
+        TaskInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
     protected:
         virtual bool _onInitialize()
         {

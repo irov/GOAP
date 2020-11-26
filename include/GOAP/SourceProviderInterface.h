@@ -20,6 +20,12 @@ namespace GOAP
     class SourceProviderInterface
         : public Factorable
     {
+    protected:
+        SourceProviderInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
     public:
         virtual void setSkip( bool _skip ) = 0;
         virtual bool isSkip() const = 0;

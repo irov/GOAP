@@ -17,7 +17,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskParallelNeck();
+        TaskParallelNeck( Allocator * _allocator );
         ~TaskParallelNeck() override;
 
     protected:

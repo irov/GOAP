@@ -9,7 +9,6 @@
 
 #include "GOAP/Factorable.h"
 #include "GOAP/IntrusivePtr.h"
-#include "GOAP/Vector.h"
 
 namespace GOAP
 {
@@ -22,6 +21,12 @@ namespace GOAP
     class NodeInterface
         : public Factorable
     {
+    public:
+        NodeInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
     public:
         virtual SourceInterfacePtr makeSource() = 0;
 

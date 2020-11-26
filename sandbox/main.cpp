@@ -43,9 +43,7 @@ protected:
 //////////////////////////////////////////////////////////////////////////
 void test( GOAP::Allocator * _allocator )
 {
-    GOAP::KernelInterfacePtr kernel = GOAP::Helper::makeKernel( _allocator );
-
-    SchedulerPtr sch = SchedulerPtr::from( new Scheduler );
+    SchedulerPtr sch = SchedulerPtr::from( _allocator->allocateT<Scheduler>() );
 
     ::srand( (unsigned int)time( nullptr ) );
 
@@ -55,7 +53,7 @@ void test( GOAP::Allocator * _allocator )
         , ::fmod( 3.0, 1.0 )
     );
 
-    GOAP::SourceInterfacePtr source = kernel->makeSource();
+    GOAP::SourceInterfacePtr source = GOAP::Helper::makeSource( _allocator );
 
     GOAP::Cook::addTask<TaskPrint>( source, "begin" );
     GOAP::Cook::addTask<TaskDelay>( source, 2000.f, sch );
@@ -175,7 +173,7 @@ void test( GOAP::Allocator * _allocator )
         return true;
     } );
 
-    GOAP::TimerInterfacePtr timer = kernel->makeTimer();
+    GOAP::TimerInterfacePtr timer = GOAP::Helper::makeTimer( _allocator );
 
     GOAP::Cook::addGenerator( source, timer, []( uint32_t _iterator )
     {
@@ -204,7 +202,7 @@ void test( GOAP::Allocator * _allocator )
 
     GOAP::Cook::addTask<TaskDelay>( source_until, 10000.f, sch );
 
-    GOAP::ChainInterfacePtr tc = kernel->makeChain( source, __FILE__, __LINE__ );
+    GOAP::ChainInterfacePtr tc = GOAP::Helper::makeChain( _allocator, source, __FILE__, __LINE__ );
 
     tc->run();
 

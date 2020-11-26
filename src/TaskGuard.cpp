@@ -12,8 +12,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskGuard::TaskGuard( const GuardProviderInterfacePtr & _begin, const GuardProviderInterfacePtr & _end )
-        : m_begin( _begin )
+    TaskGuard::TaskGuard( Allocator * _allocator, const GuardProviderInterfacePtr & _begin, const GuardProviderInterfacePtr & _end )
+        : TaskInterface( _allocator )
+        , m_begin( _begin )
         , m_end( _end )
     {
     }

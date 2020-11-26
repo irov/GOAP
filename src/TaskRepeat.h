@@ -21,7 +21,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskRepeat( const WhileProviderInterfacePtr & _provider, const SourceInterfacePtr & _until );
+        TaskRepeat( Allocator * _allocator, const WhileProviderInterfacePtr & _provider, const SourceInterfacePtr & _until );
         ~TaskRepeat() override;
 
     public:

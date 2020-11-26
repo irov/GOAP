@@ -34,7 +34,7 @@ namespace GOAP
         };
 
     public:
-        Node( const TaskInterfacePtr & _task );
+        Node( Allocator * _allocator, const TaskInterfacePtr & _task );
         ~Node() override;
 
     public:

@@ -17,11 +17,10 @@ namespace GOAP
         : public Mixin
     {
     public:
-        Factorable();
+        Factorable( Allocator * _allocator );
         virtual ~Factorable();
 
     public:
-        void setAllocator( Allocator * _allocator );
         Allocator * getAllocator() const;
 
     public:
@@ -29,9 +28,10 @@ namespace GOAP
         void decref() override;
         uint32_t getrefcount() const override;
 
-    private:
+    protected:
         Allocator * m_allocator;
 
+    private:
         uint32_t m_reference;
     };
 }

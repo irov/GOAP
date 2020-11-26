@@ -21,6 +21,12 @@ namespace GOAP
         : public Factorable
     {
     public:
+        TranscriptorInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
+    public:
         virtual NodeInterfacePtr generate( const ChainInterfacePtr & _chain, const NodeInterfacePtr & _task ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////

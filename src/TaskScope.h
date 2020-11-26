@@ -20,7 +20,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        explicit TaskScope( const ScopeProviderInterfacePtr & _provider );
+        TaskScope( Allocator * _allocator, const ScopeProviderInterfacePtr & _provider );
         ~TaskScope() override;
 
     public:

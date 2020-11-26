@@ -12,8 +12,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskCallback::TaskCallback( const CallbackProviderInterfacePtr & _provider )
-        : m_provider( _provider )
+    TaskCallback::TaskCallback( Allocator * _allocator, const CallbackProviderInterfacePtr & _provider )
+        : TaskInterface( _allocator )
+        , m_provider( _provider )
     {
     }
     //////////////////////////////////////////////////////////////////////////

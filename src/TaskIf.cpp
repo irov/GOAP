@@ -16,8 +16,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskIf::TaskIf( const IfProviderInterfacePtr & _provider, const SourceInterfacePtr & _sourceTrue, const SourceInterfacePtr & _sourceFalse )
-        : m_provider( _provider )
+    TaskIf::TaskIf( Allocator * _allocator, const IfProviderInterfacePtr & _provider, const SourceInterfacePtr & _sourceTrue, const SourceInterfacePtr & _sourceFalse )
+        : TaskInterface( _allocator )
+        , m_provider( _provider )
         , m_sourceTrue( _sourceTrue )
         , m_sourceFalse( _sourceFalse )
     {

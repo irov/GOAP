@@ -18,6 +18,12 @@ namespace GOAP
         : public Factorable
     {
     public:
+        GuardProviderInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
+    public:
         virtual void onGuard() = 0;
     };
     //////////////////////////////////////////////////////////////////////////
@@ -28,8 +34,9 @@ namespace GOAP
         : public GuardProviderInterface
     {
     public:
-        explicit GuardProviderT( F _f )
-            : m_f( _f )
+        GuardProviderT( Allocator * _allocator, F _f )
+            : GuardProviderInterface( _allocator )
+            , m_f( _f )
         {
         }
 

@@ -14,7 +14,10 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    Timer::Timer()
+    Timer::Timer( Allocator * _allocator )
+        : TimerInterface( _allocator )
+        , m_providerAdd( StlAllocator<TimerDesc>( _allocator ) )
+        , m_provider( StlAllocator<TimerDesc>( _allocator ) )
     {
     }
     //////////////////////////////////////////////////////////////////////////

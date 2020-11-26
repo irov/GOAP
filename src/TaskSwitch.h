@@ -23,7 +23,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskSwitch( const SwitchProviderInterfacePtr & _provider, VectorSources && _sources );
+        TaskSwitch( Allocator * _allocator, const SwitchProviderInterfacePtr & _provider, VectorSources && _sources );
         ~TaskSwitch() override;
 
     public:

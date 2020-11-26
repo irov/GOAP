@@ -8,7 +8,7 @@ class TaskDelay
     : public GOAP::TaskInterface
 {
 public:
-    TaskDelay( float _delay, const SchedulerPtr & _scheduler );
+    TaskDelay( GOAP::Allocator * _allocator, float _delay, const SchedulerPtr & _scheduler );
     ~TaskDelay() override;
 
 protected:

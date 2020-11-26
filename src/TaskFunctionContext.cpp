@@ -14,8 +14,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskFunctionContext::TaskFunctionContext( const FunctionContextProviderInterfacePtr & _provider )
-        : m_provider( _provider )
+    TaskFunctionContext::TaskFunctionContext( Allocator * _allocator, const FunctionContextProviderInterfacePtr & _provider )
+        : TaskInterface( _allocator )
+        , m_provider( _provider )
     {
     }
     //////////////////////////////////////////////////////////////////////////

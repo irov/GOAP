@@ -12,8 +12,8 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    Factorable::Factorable()
-        : m_allocator( nullptr )
+    Factorable::Factorable( Allocator * _allocator )
+        : m_allocator( _allocator )
         , m_reference( 0 )
     {
     }
@@ -21,11 +21,6 @@ namespace GOAP
     Factorable::~Factorable()
     {
     };
-    //////////////////////////////////////////////////////////////////////////
-    void Factorable::setAllocator( Allocator * _allocator )
-    {
-        m_allocator = _allocator;
-    }
     //////////////////////////////////////////////////////////////////////////
     Allocator * Factorable::getAllocator() const
     {

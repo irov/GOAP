@@ -7,8 +7,9 @@ class TaskDelay::MySchedulerObserver
     : public SchedulerObserver
 {
 public:
-    MySchedulerObserver( GOAP::NodeInterface * _node )
-        : m_node( _node )
+    MySchedulerObserver( GOAP::Allocator * _allocator, GOAP::NodeInterface * _node )
+        : SchedulerObserver( _allocator )
+        , m_node( _node )
     {
     }
 
@@ -29,8 +30,9 @@ protected:
     GOAP::NodeInterfacePtr m_node;
 };
 //////////////////////////////////////////////////////////////////////////
-TaskDelay::TaskDelay( float _delay, const SchedulerPtr & _scheduler )
-    : m_delay( _delay )
+TaskDelay::TaskDelay( GOAP::Allocator * _allocator, float _delay, const SchedulerPtr & _scheduler )
+    : TaskInterface( _allocator )
+    , m_delay( _delay )
     , m_scheduler( _scheduler )
     , m_id( 0 )
 {

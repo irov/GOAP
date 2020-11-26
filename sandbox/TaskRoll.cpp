@@ -9,8 +9,9 @@ class TaskRoll::MySchedulerObserver
     : public SchedulerObserver
 {
 public:
-    MySchedulerObserver( GOAP::NodeInterface * _node, uint32_t _roll, uint32_t _max )
-        : m_node( _node )
+    MySchedulerObserver( GOAP::Allocator * _allocator, GOAP::NodeInterface * _node, uint32_t _roll, uint32_t _max )
+        : SchedulerObserver( _allocator )
+        , m_node( _node )
         , m_roll( _roll )
         , m_max( _max )
     {
@@ -43,8 +44,9 @@ protected:
     uint32_t m_max;
 };
 //////////////////////////////////////////////////////////////////////////
-TaskRoll::TaskRoll( float _delay, uint32_t _roll, uint32_t _max, const SchedulerPtr & _scheduler )
-    : m_delay( _delay )
+TaskRoll::TaskRoll( GOAP::Allocator * _allocator, float _delay, uint32_t _roll, uint32_t _max, const SchedulerPtr & _scheduler )
+    : TaskInterface( _allocator )
+    , m_delay( _delay )
     , m_roll( _roll )
     , m_max( _max )
     , m_scheduler( _scheduler )

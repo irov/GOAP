@@ -13,8 +13,10 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    SourceProvider::SourceProvider()
-        : m_skip( false )
+    SourceProvider::SourceProvider( Allocator * _allocator )
+        : SourceProviderInterface( _allocator )
+        , m_skip( false )
+        , m_transcriptors( StlAllocator< TranscriptorInterfacePtr>( _allocator ) )
     {
     }
     //////////////////////////////////////////////////////////////////////////

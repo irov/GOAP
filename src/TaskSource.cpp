@@ -14,8 +14,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskSource::TaskSource( const SourceInterfacePtr & _source )
-        : m_source( _source )
+    TaskSource::TaskSource( Allocator * _allocator, const SourceInterfacePtr & _source )
+        : TaskInterface( _allocator )
+        , m_source( _source )
     {
     }
     //////////////////////////////////////////////////////////////////////////

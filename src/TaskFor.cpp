@@ -15,8 +15,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskFor::TaskFor( const ForProviderInterfacePtr & _providerFor, uint32_t _iterator, uint32_t _count )
-        : m_providerFor( _providerFor )
+    TaskFor::TaskFor( Allocator * _allocator, const ForProviderInterfacePtr & _providerFor, uint32_t _iterator, uint32_t _count )
+        : TaskInterface( _allocator )
+        , m_providerFor( _providerFor )
         , m_iterator( _iterator )
         , m_count( _count )
     {

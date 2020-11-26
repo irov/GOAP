@@ -28,10 +28,7 @@ namespace GOAP
             const size_t s = sizeof( T );
             void * p = this->allocate( s );
 
-            new (p) T( std::forward<Args>( _args ) ... );
-
-            Factorable * f = static_cast<Factorable *>(p);
-            f->setAllocator( this );
+            new (p) T( this, std::forward<Args>( _args ) ... );
 
             return static_cast<T *>(p);
         }
@@ -44,7 +41,7 @@ namespace GOAP
             this->deallocate( _t );
         }
 
-    protected:
+    public:
         virtual void * allocate( size_t _size ) = 0;
         virtual void deallocate( void * _ptr ) = 0;
     };

@@ -12,8 +12,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskEvent::TaskEvent( const EventInterfacePtr & _event )
-        : m_event( _event )
+    TaskEvent::TaskEvent( Allocator * _allocator, const EventInterfacePtr & _event )
+        : TaskInterface( _allocator )
+        , m_event( _event )
     {
     }
     //////////////////////////////////////////////////////////////////////////

@@ -15,8 +15,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskSwitch::TaskSwitch( const SwitchProviderInterfacePtr & _provider, VectorSources && _sources )
-        : m_provider( _provider )
+    TaskSwitch::TaskSwitch( Allocator * _allocator, const SwitchProviderInterfacePtr & _provider, VectorSources && _sources )
+        : TaskInterface( _allocator )
+        , m_provider( _provider )
         , m_sources( std::forward<VectorSources>( _sources ) )
     {
     }

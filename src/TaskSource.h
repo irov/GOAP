@@ -20,7 +20,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskSource( const SourceInterfacePtr & _source );
+        TaskSource( Allocator * _allocator, const SourceInterfacePtr & _source );
         ~TaskSource() override;
 
     public:

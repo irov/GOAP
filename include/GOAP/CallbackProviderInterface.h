@@ -15,6 +15,12 @@ namespace GOAP
     class CallbackProviderInterface
         : public Factorable
     {
+    protected:
+        CallbackProviderInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
     public:
         virtual void onCallbackProvider( const CallbackObserverInterfacePtr & _callback, bool _skip ) = 0;
     };
@@ -26,8 +32,9 @@ namespace GOAP
         : public CallbackProviderInterface
     {
     public:
-        explicit CallbackProviderT( F _f )
-            : m_f( _f )
+        CallbackProviderT( Allocator * _allocator, F _f )
+            : CallbackProviderInterface( _allocator )
+            , m_f( _f )
         {
         }
 

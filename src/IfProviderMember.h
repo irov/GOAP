@@ -16,8 +16,9 @@ namespace GOAP
         : public IfProviderInterface
     {
     public:
-        GOAP_INLINE explicit IfProviderMember( const bool * _member )
-            : m_member( _member )
+        GOAP_INLINE IfProviderMember( Allocator * _allocator, const bool * _member )
+            : IfProviderInterface( _allocator )
+            , m_member( _member )
         {
         }
 

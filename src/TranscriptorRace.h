@@ -20,7 +20,7 @@ namespace GOAP
         : public TranscriptorInterface
     {
     public:
-        TranscriptorRace( VectorSources && _sources );
+        TranscriptorRace( Allocator * _allocator, VectorSources && _sources );
         ~TranscriptorRace() override;
 
     public:

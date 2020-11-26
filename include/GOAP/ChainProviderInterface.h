@@ -17,6 +17,12 @@ namespace GOAP
     class ChainProviderInterface
         : public Factorable
     {
+    protected:
+        ChainProviderInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
     public:
         virtual void onChain( bool _skip, bool _cancel ) = 0;
     };
@@ -28,8 +34,9 @@ namespace GOAP
         : public ChainProviderInterface
     {
     public:
-        explicit ChainProviderT( F _f )
-            : m_f( _f )
+        ChainProviderT( Allocator * _allocator, F _f )
+            : ChainProviderInterface( _allocator )
+            , m_f( _f )
         {
         }
 

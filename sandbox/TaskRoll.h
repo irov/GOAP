@@ -8,7 +8,7 @@ class TaskRoll
     : public GOAP::TaskInterface
 {
 public:
-    TaskRoll( float _delay, uint32_t _roll, uint32_t _max, const SchedulerPtr & _scheduler );
+    TaskRoll( GOAP::Allocator * _allocator, float _delay, uint32_t _roll, uint32_t _max, const SchedulerPtr & _scheduler );
     ~TaskRoll() override;
 
 protected:

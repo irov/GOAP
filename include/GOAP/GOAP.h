@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include "GOAP/KernelInterface.h"
 #include "GOAP/ChainInterface.h"
 #include "GOAP/SourceInterface.h"
 #include "GOAP/TaskInterface.h"
@@ -15,3 +14,4 @@
 #include "GOAP/TimerInterface.h"
 #include "GOAP/Cook.h"
 #include "GOAP/Alias.h"
+#include "GOAP/AllocatorHelper.h"

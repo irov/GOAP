@@ -29,11 +29,8 @@ namespace GOAP
         };
 
     public:
-        Chain( KernelInterface * _kernel, const SourceInterfacePtr & _source, const char * _file, uint32_t _line );
+        Chain( Allocator * _allocator, const SourceInterfacePtr & _source, const char * _file, uint32_t _line );
         ~Chain() override;
-
-    public:
-        KernelInterface * getKernel() const override;
 
     public:
         template<class F>
@@ -77,8 +74,6 @@ namespace GOAP
         ETaskChainState getState_() const;
 
     protected:
-        KernelInterface * m_kernel;
-
         SourceInterfacePtr m_source;
 
         const char * m_file;

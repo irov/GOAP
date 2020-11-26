@@ -17,7 +17,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskDummy();
+        TaskDummy( Allocator * _allocator );
         ~TaskDummy() override;
     };
     //////////////////////////////////////////////////////////////////////////

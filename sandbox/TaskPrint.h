@@ -6,7 +6,7 @@ class TaskPrint
     : public GOAP::TaskInterface
 {
 public:
-    TaskPrint( const char * _format, ... );
+    TaskPrint( GOAP::Allocator * _allocator, const char * _format, ... );
     ~TaskPrint() override;
 
 protected:

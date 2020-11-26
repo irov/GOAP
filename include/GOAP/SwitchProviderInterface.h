@@ -16,6 +16,12 @@ namespace GOAP
     class SwitchProviderInterface
         : public Factorable
     {
+    protected:
+        SwitchProviderInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
     public:
         virtual uint32_t onSwitch() = 0;
     };
@@ -27,8 +33,9 @@ namespace GOAP
         : public SwitchProviderInterface
     {
     public:
-        explicit SwitchProviderT( F _f )
-            : m_f( _f )
+        SwitchProviderT( Allocator * _allocator, F _f )
+            : SwitchProviderInterface( _allocator )
+            , m_f( _f )
         {
         }
 

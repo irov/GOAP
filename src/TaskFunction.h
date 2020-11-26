@@ -20,7 +20,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        explicit TaskFunction( const FunctionProviderInterfacePtr & _provider );
+        TaskFunction( Allocator * _allocator, const FunctionProviderInterfacePtr & _provider );
         ~TaskFunction() override;
 
     public:

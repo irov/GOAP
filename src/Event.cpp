@@ -6,15 +6,21 @@
 */
 
 #include "Event.h"
+
 #include "GOAP/EventProviderInterface.h"
+
+#include "GOAP/StlAllocator.h"
 
 #include <algorithm>
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    Event::Event()
-        : m_process( 0 )
+    Event::Event( Allocator * _allocator )
+        : EventInterface( _allocator )
+        , m_process( 0 )
+        , m_providers( StlAllocator<ProviderDesc>( _allocator ) )
+        , m_providersAdd( StlAllocator<ProviderDesc>( _allocator ) )
     {
     }
     //////////////////////////////////////////////////////////////////////////

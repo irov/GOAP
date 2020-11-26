@@ -21,7 +21,7 @@ namespace GOAP
         : public EventInterface
     {
     public:
-        Event();
+        Event( Allocator * _allocator );
         ~Event() override;
 
     public:

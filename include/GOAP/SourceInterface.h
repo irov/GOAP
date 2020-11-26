@@ -29,11 +29,11 @@ namespace GOAP
     class SourceInterface
         : public Factorable
     {
-    public:
-        virtual KernelInterface * getKernel() const = 0;
-
-    public:
-        virtual Allocator * getAllocator() const = 0;
+    protected:
+        SourceInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
 
     public:
         virtual const SourceProviderInterfacePtr & getSourceProvider() const = 0;

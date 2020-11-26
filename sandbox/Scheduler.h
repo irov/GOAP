@@ -8,6 +8,12 @@
 class SchedulerObserver
     : public GOAP::Factorable
 {
+protected:
+    SchedulerObserver( GOAP::Allocator * _allocator )
+        : GOAP::Factorable( _allocator )
+    {
+    }
+
 public:
     virtual void onScheduleComplete( uint32_t _id ) = 0;
     virtual void onScheduleStop( uint32_t _id ) = 0;
@@ -19,7 +25,7 @@ class Scheduler
     : public GOAP::Factorable
 {
 public:
-    Scheduler();
+    Scheduler( GOAP::Allocator * _allocator );
     ~Scheduler();
 
 public:

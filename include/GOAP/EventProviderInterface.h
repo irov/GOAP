@@ -18,6 +18,12 @@ namespace GOAP
         : public Factorable
     {
     public:
+        EventProviderInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
+    public:
         virtual bool onEvent() = 0;
     };
     //////////////////////////////////////////////////////////////////////////
@@ -28,8 +34,9 @@ namespace GOAP
         : public EventProviderInterface
     {
     public:
-        explicit EventProviderT( F _f )
-            : m_f( _f )
+        EventProviderT( Allocator * _allocator, F _f )
+            : EventProviderInterface( _allocator )
+            , m_f( _f )
         {
         }
 

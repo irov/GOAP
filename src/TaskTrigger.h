@@ -19,7 +19,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskTrigger( const EventInterfacePtr & _event, const TriggerProviderInterfacePtr & _provider );
+        TaskTrigger( Allocator * _allocator, const EventInterfacePtr & _event, const TriggerProviderInterfacePtr & _provider );
         ~TaskTrigger() override;
 
     public:

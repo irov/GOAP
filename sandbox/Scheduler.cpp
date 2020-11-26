@@ -2,8 +2,11 @@
 
 #include <algorithm>
 
-Scheduler::Scheduler()
-    : m_enumerator( 0 )
+Scheduler::Scheduler( GOAP::Allocator * _allocator )
+    : Factorable( _allocator )
+    , m_enumerator( 0 )
+    , m_schedulersAdd( GOAP::StlAllocator<Description>( _allocator ) )
+    , m_schedulers( GOAP::StlAllocator<Description>( _allocator ) )
 {
 }
 

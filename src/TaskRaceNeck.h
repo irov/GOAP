@@ -17,7 +17,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskRaceNeck();
+        TaskRaceNeck( Allocator * _allocator );
         ~TaskRaceNeck() override;
 
     protected:

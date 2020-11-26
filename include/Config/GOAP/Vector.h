@@ -7,10 +7,12 @@
 
 #pragma once
 
+#include "GOAP/StlAllocator.h"
+
 #include <vector>
 
 namespace GOAP
 {
-    template<class T>
-    using Vector = std::vector<T>;
+    template<class T, class A = StlAllocator<T>>
+    using Vector = std::vector<T, A>;
 }

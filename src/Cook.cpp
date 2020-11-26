@@ -6,6 +6,7 @@
 */
 
 #include "GOAP/Cook.h"
+#include "GOAP/StlAllocator.h"
 
 #include "SourceProvider.h"
 
@@ -233,10 +234,10 @@ namespace GOAP
         //////////////////////////////////////////////////////////////////////////
         const VectorSources & addParallelTranscriptor( const SourceInterfacePtr & _source, uint32_t _count )
         {
-            VectorSources sources;
-            Detail::makeSources( _source, sources, _count );
-
             Allocator * allocator = _source->getAllocator();
+
+            VectorSources sources{StlAllocator<SourceInterfacePtr>( allocator )};
+            Detail::makeSources( _source, sources, _count );            
 
             TranscriptorParallelPtr transcriptor = Helper::makeTranscriptor<TranscriptorParallel>( allocator, std::move( sources ) );
 
@@ -251,10 +252,10 @@ namespace GOAP
         //////////////////////////////////////////////////////////////////////////
         const VectorSources & addRaceTranscriptor( const SourceInterfacePtr & _source, uint32_t _count )
         {
-            VectorSources sources;
-            Detail::makeSources( _source, sources, _count );
-
             Allocator * allocator = _source->getAllocator();
+
+            VectorSources sources{StlAllocator<SourceInterfacePtr>( allocator )};
+            Detail::makeSources( _source, sources, _count );
 
             TranscriptorRacePtr transcriptor = Helper::makeTranscriptor<TranscriptorRace>( allocator, std::move( sources ) );
 
@@ -269,7 +270,9 @@ namespace GOAP
         //////////////////////////////////////////////////////////////////////////
         const VectorSources & addTaskSwitch( const SourceInterfacePtr & _source, uint32_t _count, const SwitchProviderInterfacePtr & _provider )
         {
-            VectorSources sources;
+            Allocator * allocator = _source->getAllocator();
+
+            VectorSources sources{StlAllocator<SourceInterfacePtr>( allocator )};
             Detail::makeSources( _source, sources, _count );
 
             TaskSwitchPtr task = Cook::emplaceTask<TaskSwitch>( _source, _provider, std::move( sources ) );

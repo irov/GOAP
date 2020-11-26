@@ -18,6 +18,12 @@ namespace GOAP
     class ScopeProviderInterface
         : public Factorable
     {
+    protected:
+        ScopeProviderInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
     public:
         virtual void onScope( const SourceInterfacePtr & _source ) = 0;
     };
@@ -29,8 +35,9 @@ namespace GOAP
         : public ScopeProviderInterface
     {
     public:
-        explicit ScopeProviderT( F _f )
-            : m_f( _f )
+        ScopeProviderT( Allocator * _allocator, F _f )
+            : ScopeProviderInterface( _allocator )
+            , m_f( _f )
         {
         }
 

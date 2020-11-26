@@ -20,7 +20,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskGuard( const GuardProviderInterfacePtr & _begin, const GuardProviderInterfacePtr & _end );
+        TaskGuard( Allocator * _allocator, const GuardProviderInterfacePtr & _begin, const GuardProviderInterfacePtr & _end );
         ~TaskGuard() override;
 
     public:

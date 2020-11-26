@@ -18,6 +18,12 @@ namespace GOAP
     class TimerProviderInterface
         : public Factorable
     {
+    protected:
+        TimerProviderInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
     public:
         virtual void onTime( float _time ) = 0;
     };
@@ -29,8 +35,9 @@ namespace GOAP
         : public TimerProviderInterface
     {
     public:
-        explicit TimerProviderT( F _f )
-            : m_f( _f )
+        TimerProviderT( Allocator * _allocator, F _f )
+            : TimerProviderInterface( _allocator )
+            , m_f( _f )
         {
         }
 

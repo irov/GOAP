@@ -6,7 +6,8 @@
 #include <cstdarg>
 
 //////////////////////////////////////////////////////////////////////////
-TaskPrint::TaskPrint( const char * _format, ... )
+TaskPrint::TaskPrint( GOAP::Allocator * _allocator, const char * _format, ... )
+    : GOAP::TaskInterface( _allocator )
 {
     va_list args;
     va_start( args, _format );

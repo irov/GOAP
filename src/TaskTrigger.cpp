@@ -17,8 +17,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskTrigger::TaskTrigger( const EventInterfacePtr & _event, const TriggerProviderInterfacePtr & _provider )
-        : m_event( _event )
+    TaskTrigger::TaskTrigger( Allocator * _allocator, const EventInterfacePtr & _event, const TriggerProviderInterfacePtr & _provider )
+        : TaskInterface( _allocator )
+        , m_event( _event )
         , m_provider( _provider )
     {
     }

@@ -23,7 +23,10 @@ namespace GOAP
         : public Factorable
     {
     public:
-        virtual KernelInterface * getKernel() const = 0;
+        ChainInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
 
     public:
         virtual void setCallbackProvider( const ChainProviderInterfacePtr & _cb ) = 0;

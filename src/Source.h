@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include "GOAP/KernelInterface.h"
 #include "GOAP/SourceInterface.h"
 #include "GOAP/SourceProviderInterface.h"
 #include "GOAP/NodeInterface.h"
@@ -38,7 +37,7 @@ namespace GOAP
         : public SourceInterface
     {
     public:
-        Source( KernelInterface * _kernel, const SourceProviderInterfacePtr & _provider );
+        Source( Allocator * _allocator, const SourceProviderInterfacePtr & _provider );
         ~Source() override;
 
     public:
@@ -46,12 +45,6 @@ namespace GOAP
 
     public:
         SourceInterfacePtr makeSource() override;
-
-    protected:
-        KernelInterface * getKernel() const override;
-
-    protected:
-        Allocator * getAllocator() const override;
 
     public:
         void addNode( const NodeInterfacePtr & _task ) override;
@@ -64,8 +57,6 @@ namespace GOAP
         void makeSources_( VectorSources & _sources, uint32_t _count );
 
     protected:
-        KernelInterface * m_kernel;
-
         SourceProviderInterfacePtr m_provider;
     };
 }

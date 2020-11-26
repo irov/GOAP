@@ -22,7 +22,7 @@ namespace GOAP
         : public SourceProviderInterface
     {
     public:
-        SourceProvider();
+        SourceProvider( Allocator * _allocator );
         ~SourceProvider() override;
 
     public:

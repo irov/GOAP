@@ -16,6 +16,12 @@ namespace GOAP
     class CallbackObserverInterface
         : public Factorable
     {
+    protected:
+        CallbackObserverInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
     public:
         virtual void onCallback( bool _skip ) = 0;
     };
@@ -27,8 +33,9 @@ namespace GOAP
         : public CallbackObserverInterface
     {
     public:
-        explicit CallbackObserverT( F _f )
-            : m_f( _f )
+        CallbackObserverT( Allocator * _allocator, F _f )
+            : CallbackObserverInterface( _allocator )
+            , m_f( _f )
         {
         }
 

@@ -17,6 +17,12 @@ namespace GOAP
     class SemaphoreInterface
         : public Factorable
     {
+    protected:
+        SemaphoreInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
     public:
         virtual void setValue( int32_t _value ) = 0;
         virtual int32_t getValue() const = 0;

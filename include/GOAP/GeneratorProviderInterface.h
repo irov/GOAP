@@ -18,6 +18,12 @@ namespace GOAP
     class GeneratorProviderInterface
         : public Factorable
     {
+    protected:
+        GeneratorProviderInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
     public:
         virtual float onDelay( uint32_t _index ) = 0;
         virtual void onEvent( const SourceInterfacePtr & _source, uint32_t _index, float _time ) = 0;
@@ -30,8 +36,9 @@ namespace GOAP
         : public GeneratorProviderInterface
     {
     public:
-        explicit GeneratorProviderT( FD _fdelay, FE _fevent )
-            : m_fdelay( _fdelay )
+        GeneratorProviderT( Allocator * _allocator, FD _fdelay, FE _fevent )
+            : GeneratorProviderInterface( _allocator )
+            , m_fdelay( _fdelay )
             , m_fevent( _fevent )
         {
         }

@@ -17,7 +17,7 @@ namespace GOAP
         GOAP_DECLARE_VISITABLE( TaskInterface );
 
     public:
-        TaskNoSkip();
+        TaskNoSkip( Allocator * _allocator );
         ~TaskNoSkip() override;
 
     protected:

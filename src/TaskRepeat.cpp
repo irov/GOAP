@@ -14,8 +14,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskRepeat::TaskRepeat( const WhileProviderInterfacePtr & _provider, const SourceInterfacePtr & _until )
-        : m_provider( _provider )
+    TaskRepeat::TaskRepeat( Allocator * _allocator, const WhileProviderInterfacePtr & _provider, const SourceInterfacePtr & _until )
+        : TaskInterface( _allocator )
+        , m_provider( _provider )
         , m_sourceUntil( _until )
     {
     }

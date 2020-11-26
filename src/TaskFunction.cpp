@@ -12,8 +12,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskFunction::TaskFunction( const FunctionProviderInterfacePtr & _provider )
-        : m_provider( _provider )
+    TaskFunction::TaskFunction( Allocator * _allocator, const FunctionProviderInterfacePtr & _provider )
+        : TaskInterface(_allocator)
+        , m_provider( _provider )
     {
     }
     //////////////////////////////////////////////////////////////////////////

@@ -9,17 +9,21 @@
 
 #include "GOAP/SourceInterface.h"
 #include "GOAP/ChainInterface.h"
-#include "GOAP/KernelInterface.h"
+
+#include "GOAP/AllocatorHelper.h"
 
 #include <algorithm>
 
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    Node::Node( const TaskInterfacePtr & _provider )
-        : m_provider( _provider )
+    Node::Node( Allocator * _allocator, const TaskInterfacePtr & _provider )
+        : NodeInterface( _allocator )
+        , m_provider( _provider )
         , m_state( TASK_STATE_IDLE )
         , m_skip( false )
+        , m_nexts( StlAllocator<NodeInterfacePtr>( _allocator ) )
+        , m_prevs( StlAllocator<NodeInterfacePtr>( _allocator ) )
     {
     }
     //////////////////////////////////////////////////////////////////////////
@@ -39,9 +43,7 @@ namespace GOAP
     //////////////////////////////////////////////////////////////////////////
     SourceInterfacePtr Node::makeSource()
     {
-        KernelInterface * kernel = m_chain->getKernel();
-
-        SourceInterfacePtr source = kernel->makeSource();
+        SourceInterfacePtr source = Helper::makeSource( m_allocator );
 
         const SourceProviderInterfacePtr & provider = source->getSourceProvider();
 
@@ -104,7 +106,7 @@ namespace GOAP
             return true;
         }
 
-        VectorNodes nexts;
+        VectorNodes nexts{StlAllocator<NodeInterfacePtr>( m_allocator )};
         this->popNexts( nexts );
 
         const ChainInterfacePtr & chain = this->getChain();

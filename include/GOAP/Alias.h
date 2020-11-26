@@ -16,7 +16,7 @@ namespace GOAP
         : public TaskInterface
     {
     public:
-        Alias();
+        Alias( Allocator * _allocator );
         ~Alias() override;
 
     protected:

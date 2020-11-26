@@ -16,8 +16,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskFork::TaskFork( const SourceInterfacePtr & _source )
-        : m_source( _source )
+    TaskFork::TaskFork( Allocator * _allocator, const SourceInterfacePtr & _source )
+        : TaskInterface( _allocator )
+        , m_source( _source )
     {
     }
     //////////////////////////////////////////////////////////////////////////

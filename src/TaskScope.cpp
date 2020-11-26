@@ -15,8 +15,9 @@
 namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
-    TaskScope::TaskScope( const ScopeProviderInterfacePtr & _provider )
-        : m_provider( _provider )
+    TaskScope::TaskScope( Allocator * _allocator, const ScopeProviderInterfacePtr & _provider )
+        : TaskInterface( _allocator )
+        , m_provider( _provider )
     {
     }
     //////////////////////////////////////////////////////////////////////////
