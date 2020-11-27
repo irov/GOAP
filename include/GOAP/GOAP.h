@@ -8,6 +8,7 @@
 #pragma once
 
 #include "GOAP/ChainInterface.h"
+#include "GOAP/SourceProviderInterface.h"
 #include "GOAP/SourceInterface.h"
 #include "GOAP/TaskInterface.h"
 #include "GOAP/SemaphoreInterface.h"
