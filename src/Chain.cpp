@@ -30,9 +30,9 @@ namespace GOAP
         , m_file( _file )
         , m_line( _line )
         , m_state( TASK_CHAIN_STATE_IDLE )
+        , m_runningNodes( StlAllocator<NodeInterfacePtr>( _allocator ) )
         , m_cancel( false )
         , m_complete( false )
-        , m_runningNodes( StlAllocator<NodeInterfacePtr>( _allocator ) )
     {
     }
     //////////////////////////////////////////////////////////////////////////
