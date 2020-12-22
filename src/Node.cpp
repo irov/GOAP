@@ -20,10 +20,10 @@ namespace GOAP
     Node::Node( Allocator * _allocator, const TaskInterfacePtr & _provider )
         : NodeInterface( _allocator )
         , m_provider( _provider )
-        , m_state( TASK_STATE_IDLE )
-        , m_skip( false )
+        , m_state( TASK_STATE_IDLE )        
         , m_nexts( StlAllocator<NodeInterfacePtr>( _allocator ) )
         , m_prevs( StlAllocator<NodeInterfacePtr>( _allocator ) )
+        , m_skip( false )
     {
     }
     //////////////////////////////////////////////////////////////////////////

@@ -17,10 +17,10 @@ namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     Event::Event( Allocator * _allocator )
-        : EventInterface( _allocator )
-        , m_process( 0 )
+        : EventInterface( _allocator )        
         , m_providers( StlAllocator<ProviderDesc>( _allocator ) )
         , m_providersAdd( StlAllocator<ProviderDesc>( _allocator ) )
+        , m_process( 0 )
     {
     }
     //////////////////////////////////////////////////////////////////////////

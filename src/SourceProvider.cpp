@@ -14,9 +14,9 @@ namespace GOAP
 {
     //////////////////////////////////////////////////////////////////////////
     SourceProvider::SourceProvider( Allocator * _allocator )
-        : SourceProviderInterface( _allocator )
-        , m_skip( false )
+        : SourceProviderInterface( _allocator )        
         , m_transcriptors( StlAllocator<TranscriptorInterfacePtr>( _allocator ) )
+        , m_skip( false )
     {
     }
     //////////////////////////////////////////////////////////////////////////
