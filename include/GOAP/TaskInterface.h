@@ -14,6 +14,7 @@
 
 namespace GOAP
 {
+    //////////////////////////////////////////////////////////////////////////
     class TaskInterface
         : public Factorable
         , public Visitable
@@ -125,4 +126,5 @@ namespace GOAP
             return IntrusivePtr<T>::from( task );
         }
     }
+    //////////////////////////////////////////////////////////////////////////
 }

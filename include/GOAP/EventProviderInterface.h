@@ -62,4 +62,5 @@ namespace GOAP
             return EventProviderInterfacePtr::from( provider );
         }
     }
+    //////////////////////////////////////////////////////////////////////////
 }

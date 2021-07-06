@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "GOAP/Config.h"
+
 #include <exception>
 
 namespace GOAP
@@ -30,5 +32,6 @@ namespace GOAP
     {
         void throw_exception( const char * _format, ... );
     }
+    //////////////////////////////////////////////////////////////////////////
 }
 

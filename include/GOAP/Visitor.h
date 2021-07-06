@@ -7,8 +7,11 @@
 
 #pragma once
 
+#include "GOAP/Config.h"
+
 namespace GOAP
 {
+    //////////////////////////////////////////////////////////////////////////
     class Visitor
     {
     public:
@@ -27,4 +30,5 @@ namespace GOAP
     public:
         virtual void accept( T * _visited ) = 0;
     };
+    //////////////////////////////////////////////////////////////////////////
 }

@@ -19,6 +19,12 @@ namespace GOAP
         : public Factorable
     {
     public:
+        TriggerProviderInterface( Allocator * _allocator )
+            : Factorable( _allocator )
+        {
+        }
+
+    public:
         virtual bool onTrigger( const SourceInterfacePtr & _source ) = 0;
     };
     //////////////////////////////////////////////////////////////////////////
@@ -29,8 +35,9 @@ namespace GOAP
         : public TriggerProviderInterface
     {
     public:
-        explicit TriggerProviderT( F _f )
-            : m_f( _f )
+        explicit TriggerProviderT( Allocator * _allocator, F _f )
+            : TriggerProviderInterface( _allocator )
+            , m_f( _f )
         {
         }
 

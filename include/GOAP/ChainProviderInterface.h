@@ -60,4 +60,5 @@ namespace GOAP
             return ChainProviderInterfacePtr::from( provider );
         }
     }
+    //////////////////////////////////////////////////////////////////////////
 }

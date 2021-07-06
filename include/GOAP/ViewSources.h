@@ -135,4 +135,5 @@ namespace GOAP
         const SourceInterfacePtr * m_begin;
         const SourceInterfacePtr * m_end;
     };
+    //////////////////////////////////////////////////////////////////////////
 }

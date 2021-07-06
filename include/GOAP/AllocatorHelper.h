@@ -33,4 +33,5 @@ namespace GOAP
         SourceInterfacePtr makeSource( Allocator * _allocator );
         TimerInterfacePtr makeTimer( Allocator * _allocator );
     }
+    //////////////////////////////////////////////////////////////////////////
 }
