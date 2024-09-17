@@ -113,7 +113,7 @@ namespace GOAP
         {
             Allocator * allocator = _source->getAllocator();
 
-            FunctionProviderInterfacePtr provider = Helper::makeFunctionProvider( allocator, [&, _self, _method, _args ...]()
+            FunctionProviderInterfacePtr provider = Helper::makeFunctionProvider( allocator, [_self, _method, _args ...]()
             {
                 (_self->*_method)(_args ...);
             } );
@@ -136,7 +136,7 @@ namespace GOAP
         {
             Allocator * allocator = _source->getAllocator();
 
-            FunctionContextProviderInterfacePtr provider = Helper::makeFunctionContextProvider( allocator, [&, _self, _method, _args ...]( bool _skip )
+            FunctionContextProviderInterfacePtr provider = Helper::makeFunctionContextProvider( allocator, [_self, _method, _args ...]( bool _skip )
             {
                 (_self->*_method)(_skip, _args ...);
             } );
@@ -159,7 +159,7 @@ namespace GOAP
         {
             Allocator * allocator = _source->getAllocator();
 
-            CallbackProviderInterfacePtr provider = Helper::makeCallbackProvider( allocator, [&, _self, _method, _args ...]( const CallbackObserverInterfacePtr & _callback, bool _skip )
+            CallbackProviderInterfacePtr provider = Helper::makeCallbackProvider( allocator, [_self, _method, _args ...]( const CallbackObserverInterfacePtr & _callback, bool _skip )
             {
                 (_self->*_method)(_callback, _skip, _args ...);
             } );
@@ -182,7 +182,7 @@ namespace GOAP
         {
             Allocator * allocator = _source->getAllocator();
 
-            ScopeProviderInterfacePtr provider = Helper::makeScopeProvider( allocator, [&, _self, _method, _args ...]( const SourceInterfacePtr & _source )
+            ScopeProviderInterfacePtr provider = Helper::makeScopeProvider( allocator, [_self, _method, _args ...]( const SourceInterfacePtr & _source )
             {
                 (_self->*_method)(_source, _args ...);
             } );
@@ -215,7 +215,10 @@ namespace GOAP
         {
             Allocator * allocator = _source->getAllocator();
 
-            WhileProviderInterfacePtr provider = Helper::makeWhileProvider( allocator, [&, _self, _method, _args ...]( const SourceInterfacePtr & _source ){ return (_self->*_method)(_source, _args ...); } );
+            WhileProviderInterfacePtr provider = Helper::makeWhileProvider( allocator, [_self, _method, _args ...]( const SourceInterfacePtr & _source )
+            {
+                return (_self->*_method)(_source, _args ...);
+            } );
 
             Cook::addWhileProvider( _source, provider );
         }
@@ -235,7 +238,10 @@ namespace GOAP
         {
             Allocator * allocator = _source->getAllocator();
 
-            ForProviderInterfacePtr provider = Helper::makeForProvider( allocator, [&, _self, _method, _args ...]( const SourceInterfacePtr & _source, uint32_t _iterator, uint32_t _count ){ return (_self->*_method)(_source, _iterator, _count, _args ...); } );
+            ForProviderInterfacePtr provider = Helper::makeForProvider( allocator, [_self, _method, _args ...]( const SourceInterfacePtr & _source, uint32_t _iterator, uint32_t _count )
+            {
+                return (_self->*_method)(_source, _iterator, _count, _args ...);
+            } );
 
             Cook::addForProvider( _source, provider, 0, _count );
         }
@@ -255,7 +261,10 @@ namespace GOAP
         {
             Allocator * allocator = _source->getAllocator();
 
-            ForProviderInterfacePtr provider = Helper::makeForProvider( allocator, [&, _self, _method, _args ...]( const SourceInterfacePtr & _source, uint32_t _iterator, uint32_t _count ){ return (_self->*_method)(_source, _iterator, _count, _args ...); } );
+            ForProviderInterfacePtr provider = Helper::makeForProvider( allocator, [_self, _method, _args ...]( const SourceInterfacePtr & _source, uint32_t _iterator, uint32_t _count )
+            {
+                return (_self->*_method)(_source, _iterator, _count, _args ...);
+            } );
 
             Cook::addForProvider( _source, provider, _iterator, _count );
         }
@@ -357,7 +366,7 @@ namespace GOAP
         {
             Allocator * allocator = _source->getAllocator();
 
-            IfProviderInterfacePtr provider = Helper::makeIfProvider( allocator, [&, _self, _method, _args ...]()
+            IfProviderInterfacePtr provider = Helper::makeIfProvider( allocator, [_self, _method, _args ...]()
             {
                 return (_self->*_method)(_args ...);
             } );
@@ -411,7 +420,7 @@ namespace GOAP
         {
             Allocator * allocator = _source->getAllocator();
 
-            IfProviderInterfacePtr provider = Helper::makeIfProvider( allocator, [&, _self, _method, _args ...]()
+            IfProviderInterfacePtr provider = Helper::makeIfProvider( allocator, [_self, _method, _args ...]()
             {
                 return (_self->*_method)(_args ...);
             } );
@@ -441,7 +450,7 @@ namespace GOAP
         {
             Allocator * allocator = _source->getAllocator();
 
-            IfProviderInterfacePtr provider = Helper::makeIfProvider( allocator, [&, _self, _method, _args ...]()
+            IfProviderInterfacePtr provider = Helper::makeIfProvider( allocator, [_self, _method, _args ...]()
             {
                 return (_self->*_method)(_args ...);
             } );
@@ -485,7 +494,7 @@ namespace GOAP
         {
             Allocator * allocator = _source->getAllocator();
 
-            WhileProviderInterfacePtr provider = Helper::makeWhileProvider( allocator, [&, _self, _method, _args ...]( const SourceInterfacePtr & _source )
+            WhileProviderInterfacePtr provider = Helper::makeWhileProvider( allocator, [_self, _method, _args ...]( const SourceInterfacePtr & _source )
             {
                 return (_self->*_method)(_source, _args ...);
             } );
