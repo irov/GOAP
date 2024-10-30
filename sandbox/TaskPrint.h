@@ -13,5 +13,5 @@ protected:
     bool _onRun( GOAP::NodeInterface * _node ) override;
 
 protected:
-    char m_message[1024];
+    char m_message[1024 + 1];
 };

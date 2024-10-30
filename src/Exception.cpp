@@ -36,8 +36,8 @@ namespace GOAP
 
             va_start( argList, _format );
 
-            char message[4096] = {0};
-            vsprintf( message, _format, argList );
+            char message[4096 + 1] = {'\0'};
+            vsnprintf( message, 4096, _format, argList );
 
             va_end( argList );
 

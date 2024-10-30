@@ -12,7 +12,7 @@ TaskPrint::TaskPrint( GOAP::Allocator * _allocator, const char * _format, ... )
     va_list args;
     va_start( args, _format );
 
-    int size = vsprintf( m_message, _format, args );
+    int size = vsnprintf( m_message, 1024, _format, args );
     
     va_end( args );
 
