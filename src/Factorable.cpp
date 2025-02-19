@@ -27,14 +27,14 @@ namespace GOAP
         return m_allocator;
     }
     //////////////////////////////////////////////////////////////////////////
-    uint32_t Factorable::incref()
+    uint32_t Factorable::incref() noexcept
     {
         ++m_reference;
 
         return m_reference;
     }
     //////////////////////////////////////////////////////////////////////////
-    void Factorable::decref()
+    void Factorable::decref() noexcept
     {
         if( --m_reference == 0 )
         {
@@ -42,7 +42,7 @@ namespace GOAP
         }
     }
     //////////////////////////////////////////////////////////////////////////
-    uint32_t Factorable::getrefcount() const
+    uint32_t Factorable::getrefcount() const noexcept
     {
         return m_reference;
     }

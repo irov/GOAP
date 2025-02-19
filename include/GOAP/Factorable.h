@@ -24,9 +24,9 @@ namespace GOAP
         Allocator * getAllocator() const;
 
     public:
-        uint32_t incref() override;
-        void decref() override;
-        uint32_t getrefcount() const override;
+        uint32_t incref() noexcept override;
+        void decref() noexcept override;
+        uint32_t getrefcount() const noexcept override;
 
     protected:
         Allocator * m_allocator;
